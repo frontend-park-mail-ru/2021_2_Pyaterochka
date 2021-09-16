@@ -1,0 +1,29 @@
+{
+  "name": "patreon-frontend",
+  "version": "1.0.0",
+  "description": "Проект Patreon команды \"Пятерочка\"",
+  "scripts": {
+    "dev": "node ./server",
+    "linter": "npx eslint public server --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/frontend-park-mail-ru/2021_2_Pyaterochka.git"
+  },
+  "author": "Pyaterochka team from Technopark",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/frontend-park-mail-ru/2021_2_Pyaterochka/issues"
+  },
+  "homepage": "https://github.com/frontend-park-mail-ru/2021_2_Pyaterochka#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.24.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.0"
+  }
+}
