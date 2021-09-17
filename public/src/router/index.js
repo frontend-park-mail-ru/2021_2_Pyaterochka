@@ -1,7 +1,4 @@
 class Route {
-    // url;
-    // title;
-    // component;
     constructor (url, component, title = '') {
         this.url = url
         this.component = component
@@ -10,21 +7,46 @@ class Route {
 }
 
 class Router {
-    // routes = []
-    // container;
+    constructor (container, routes = []) {
+        this.routes = routes
+        this.container = container
+        this.addRouterListeners()
+    }
+
     addRoute (route) {
         this.routes.push(route)
     }
 
-    getCurrentRoute () {
-        return this.routes[0]
+    getRoute (url) {
+        const route = this.routes.find((route) => {
+            if (route.url === '') return true
+
+            const res = (new RegExp(route.url, 'gi')).exec(url)
+            if (!res) return false
+            return res.join('') === url
+        })
+        return route
     }
 
-    go (url) {
-        this.container.innerHtml = ''
-        history.pushState({}, url)
-        const component = this.getCurrentRoute().component.render()
-        this.container.appendChild()
+    start () {
+        let url = location.hash.substr(1)
+        if (url === '') url = '/'
+        this.go(url)
+    }
+
+    go (url = '') {
+        history.pushState(url, location.href)
+        location.hash = url
+
+        const route = this.getRoute(url)
+        this.renderRoute(route)
+    }
+
+    renderRoute (route) {
+        document.title = route.title
+
+        this.container.innerHTML = ''
+        this.container.appendChild(route.component.render())
     }
 
     setContainer (container) {
@@ -32,12 +54,21 @@ class Router {
     }
 
     addRouterListeners () {
-        window.addEventListener('click', (ev) => {
-
+        this.container.addEventListener('click', (e) => {
+            if (e.target instanceof Element) {
+                if (e.target.hasAttribute('router-go')) {
+                    e.preventDefault()
+                    this.go(e.target.getAttribute('router-go'))
+                }
+            }
+            e.preventDefault()
         })
-
-        window.addEventListener('popstate', () => {
-
+        window.addEventListener('popstate', (e) => {
+            this.renderRoute(this.getRoute(e.state))
         })
     }
 }
+
+export default Router
+
+export { Route }

@@ -1,6 +1,12 @@
 class Component {
-    // attributes = {}
+    constructor () {
+        this.attributes = []
+        this.slot = null
+    }
+
     render () {
-    // return Element;
+
     }
 }
+
+export default Component
