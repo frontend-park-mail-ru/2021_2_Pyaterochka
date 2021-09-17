@@ -1,5 +1,6 @@
 import Component from './basecomponent.js'
 import Button from './button.js'
+import LockMessage from './lock-message.js'
 
 class PostCard extends Component {
     timeDiff (date) {
@@ -63,16 +64,6 @@ class PostCard extends Component {
         element.innerHTML = `
             <div class="post-card-image">
                 <div class="image ${this.attributes.opened ? '' : 'blur'}" style="background-image:url(${this.attributes.image})"></div>
-                ${this.attributes.opened
-        ? ''
-        : `
-                    <div class="look">
-                        <div class="icon">
-                        </div>
-                        <span> ${this.attributes.level}</span>
-                    </div>
-                `}
-                
             </div>
             <div class="post-card-body">
                 <div class="post-card-title">
@@ -103,6 +94,15 @@ class PostCard extends Component {
 
         const btn = new Button({ text: 'Открыть материал' })
         element.querySelector('.post-card-body').appendChild(btn.render())
+        if (!this.attributes.opened) {
+            const lockMessage = new LockMessage(
+                {
+                    text: this.attributes.level,
+                    dark: false
+                }
+            )
+            element.querySelector('.post-card-image').appendChild(lockMessage.render())
+        }
 
         return element
     }
@@ -198,6 +198,13 @@ const styles = `
     height:100%;
     background: linear-gradient(0deg, rgb(255, 255, 255),rgba(255,255,255, 0) 50% );
 }
+.post-card-image .lock-message {
+    position:absolute;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+}
 
 @media (max-width: 600px) {
     .post-card {
@@ -228,26 +235,6 @@ width: 100%;
 height: 100%;
 font-size: 20px;
 font-weight: 500;
-}
-.look .icon {
-    width:80px;
-    height: 80px;
-    border-radius: 100%;
-    margin-bottom: 10px;
-    box-shadow: 0px 2px 10px 0px #FFFFFF66;
-    background:#fff;
-}
-.look .icon::after{
-    content: '';
-    width:56px;
-    height:56px;
-    display:block;
-    background-color: var(--color-primary);
-    mask-image: url(/imgs/icons/lock_outline_28.svg);
-    mask-repeat: no-repeat;
-    mask-position: center;
-    mask-size: contain;
-    margin: 12px; 
 }
 `
 const styleElement = document.createElement('style')

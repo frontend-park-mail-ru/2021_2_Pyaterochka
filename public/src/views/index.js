@@ -2,6 +2,7 @@ import Component from '../components/basecomponent.js'
 import Button from '../components/button.js'
 import InputField from '../components/input-field.js'
 import LevelCard from '../components/level-card.js'
+import LockMessage from '../components/lock-message.js'
 import Navbar from '../components/navbar.js'
 import PostCard from '../components/post-card.js'
 
@@ -24,12 +25,18 @@ class IndexView extends Component {
         const components = [
             new Navbar(),
             new Navbar({ user: { username: 'Person', avatar: 'https://thispersondoesnotexist.com/image' } }),
+            new LockMessage(
+                {
+                    text: 'Стань патроном, чтобы продолжить наслаждаться работами автора'
+                },
+                new Button({ text: 'Стать патроном', color: 'primary' })
+            ),
             new PostCard({
                 title: 'Новый выпуск игрового ролика о невероятных машинах нашего времени',
                 published: new Date(new Date() - 60 * 1000 * 5),
                 views: 10000,
                 likes: 5000,
-                description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam elementum efficitur velit, et aliquam ex condimentum vel. In pulvinar lorem augue, a bibendum justo sagittis ut. Sed semper suscipit arcu non sodales. Curabitur dapibus vulputate mauris, egestas ultricies elit consequat ut. Integer ut velit ut velit viverra viverra. Maecenas non porttitor nibh. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed lectus tortor, congue a dui nec, varius mattis neque. Fusce rutrum lacinia dapibus. Donec lacus ante, scelerisque vel interdum id, facilisis sit amet tortor. Duis vestibulum sollicitudin libero sed egestas. Fusce ante lorem, tincidunt non vestibulum ac, ullamcorper vitae velit. Curabitur nec consectetur metus, vel suscipit odio. Sed et libero eget sapien efficitur placerat',
+                description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam elementum efficitur velit, et aliquam ex condimentum vel. In pulvinar lorem augue, a bibendum justo sagittis ut. Sed semper suscipit arcu non sodales. Curabitur dapibus vulputate mauris, egestas ultricies elit consequat ut. Integer ut velit ut velit viverra viverra. Maecenas non porttitor nibh. Class aptent taciti sociosqu ad litor',
                 level: 'Профессионал',
                 image: 'https://w-dog.ru/wallpapers/12/12/456213867326621/fraktaly-prelomlenie-sveta-cvetovaya-gamma-figury-geometrii-triptix.jpg'
             }),
@@ -39,7 +46,7 @@ class IndexView extends Component {
                 views: 10000,
                 likes: 5000,
                 opened: false,
-                description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam elementum efficitur velit, et aliquam ex condimentum vel. In pulvinar lorem augue, a bibendum justo sagittis ut. Sed semper suscipit arcu non sodales. Curabitur dapibus vulputate mauris, egestas ultricies elit consequat ut. Integer ut velit ut velit viverra viverra. Maecenas non porttitor nibh. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed lectus tortor, congue a dui nec, varius mattis neque. Fusce rutrum lacinia dapibus. Donec lacus ante, scelerisque vel interdum id, facilisis sit amet tortor. Duis vestibulum sollicitudin libero sed egestas. Fusce ante lorem, tincidunt non vestibulum ac, ullamcorper vitae velit. Curabitur nec consectetur metus, vel suscipit odio. Sed et libero eget sapien efficitur placerat',
+                description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam elementum efficitur velit, et aliquam ex condimentum vel. In pulvinar lorem augue, a bibendum justo sagittis ut. Sed semper suscipit arcu non sodales. Curabitur dapibus vulputate mauris, egestas ultricies elit consequat ut. Integer ut velit ut velit viverra viverra. Maecenas non porttitor nibh. Class aptent taciti sociosqu ad litor',
                 level: 'Профессионал',
                 image: 'https://w-dog.ru/wallpapers/12/12/456213867326621/fraktaly-prelomlenie-sveta-cvetovaya-gamma-figury-geometrii-triptix.jpg'
             }),
@@ -89,7 +96,9 @@ class IndexView extends Component {
             })
             element.appendChild(table)
             element.appendChild(component.render())
-            element.appendChild(document.createElement('p'))
+            element.appendChild(document.createElement('br'))
+            element.appendChild(document.createElement('br'))
+            element.appendChild(document.createElement('br'))
         })
         return element
     }
