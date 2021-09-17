@@ -41,7 +41,7 @@ class SignupView extends Component {
                 placeholder: 'Имя',
                 validation: [
                     (value) => {
-                        return value !== "" ? null : 'Поле не должно быть пустым'
+                        return value !== '' ? null : 'Поле не должно быть пустым'
                     },
                     (value) => {
                         return length < 255 ? null : 'Имя слишком длинное'
@@ -66,7 +66,7 @@ class SignupView extends Component {
                 type: 'password',
                 validation: [
                     (value) => {
-                        return value !== "" ? null : 'Поле не должно быть пустым'
+                        return value !== '' ? null : 'Поле не должно быть пустым'
                     },
                     (value) => {
                         return passwordInput.getValue() === value ? null : 'Пароли не совпадают'
@@ -83,11 +83,11 @@ class SignupView extends Component {
             text: 'Зарегистрироваться',
             color: 'primary',
             rounded: true,
-            onclick: () => { 
-                const errors = Math.max(...form.map((e)=>e.validate().length));
-                if (errors) return;
-                alert("Валидация прошла")
-             }
+            onclick: () => {
+                const errors = Math.max(...form.map((e) => e.validate().length))
+                if (errors) return
+                alert('Валидация прошла')
+            }
         })
         element.querySelector('.auth-card').appendChild(btn.render())
 

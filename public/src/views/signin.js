@@ -57,23 +57,21 @@ class SigninView extends Component {
             element.querySelector('.auth-card').appendChild(field.render())
         })
 
-
         const btn = new Button({
             text: 'Войти',
             color: 'primary',
             rounded: true,
-            onclick: async () => { 
-                const errors = Math.max(...form.map((e)=>e.validate().length));
-                if (errors) return;
+            onclick: async () => {
+                const errors = Math.max(...form.map((e) => e.validate().length))
+                if (errors) return
                 await api.login({
                     email: form[0].getValue(),
-                    password: form[1].getValue(),
+                    password: form[1].getValue()
                 })
 
-                user.update();
-                router.go("/");
-
-             }
+                user.update()
+                router.go('/')
+            }
         })
         element.querySelector('.auth-card').appendChild(btn.render())
 

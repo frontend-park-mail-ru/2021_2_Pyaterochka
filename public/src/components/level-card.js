@@ -2,14 +2,14 @@ import Component from './basecomponent.js'
 import Button from './button.js'
 
 class LevelCard extends Component {
-    constructor({
+    constructor ({
         id = null,
-        name = "",
+        name = '',
         parentName = null,
         benefits = [],
-        cover = "",
-        price = "0 $",
-        color = "primary"
+        cover = '',
+        price = '0 $',
+        color = 'primary'
     }) {
         super()
         this.attributes.id = id
@@ -21,9 +21,9 @@ class LevelCard extends Component {
         this.attributes.color = color
     }
 
-    render() {
+    render () {
         const element = document.createElement('div')
-        element.className = "level-card"
+        element.className = 'level-card'
 
         element.innerHTML = `
             <div>
@@ -40,19 +40,21 @@ class LevelCard extends Component {
                 </div>
             </div>
             <div class="level-card__body">
-                ${this.attributes.parentName ? `
+                ${this.attributes.parentName
+        ? `
                     <div class="level-card__body__parent-level">
                         Все из уровня <b>${this.attributes.parentName}</b>, а также:
                     </div>
-                `: ""}
+                `
+        : ''}
                 ${this.attributes.benefits.map(b => {
-            return `
+        return `
                     <div class="level-card__body__benefit">
                         ${b}
                     </div>
                     `
-        }).join('')
-            }
+    }).join('')
+}
                
             </div>
             </div>
@@ -70,8 +72,8 @@ class LevelCard extends Component {
 
             </div>
         `
-        const btn = new Button({ text: "Выбрать уровень", color: this.attributes.color })
-        element.querySelector(".level-card__action").appendChild(btn.render())
+        const btn = new Button({ text: 'Выбрать уровень', color: this.attributes.color })
+        element.querySelector('.level-card__action').appendChild(btn.render())
         return element
     }
 }
@@ -82,7 +84,6 @@ const styles = `
     width: 260px;
     height: 420px;
     border-radius:5px;
-    border:1px solid #E9E9E9;
     display: flex;
     flex-direction: column;
     justify-content: space-between;

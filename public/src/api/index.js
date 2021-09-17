@@ -1,33 +1,33 @@
-const basename = "http://localhost:3000/api"
+const basename = 'http://localhost:3000/api'
 
 export default {
-    async login({email, password}) {
-        let req = await fetch(basename + "/login",{
-            method: "post",
+    async login ({ email, password }) {
+        const req = await fetch(basename + '/login', {
+            method: 'post',
             headers: {
-                "Content-Type": "application/json"
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                email: email, 
+                email: email,
                 password: password
             }),
             // mode: "cors",
-            credentials: "include"
+            credentials: 'include'
         })
 
-        let data = await req.json();
+        const data = await req.json()
 
-        return data;
+        return data
     },
-    async profile() {
-        let req = await fetch(basename + "/profile",{
-            method: "get",
-            mode: "cors",
-            credentials: "include"
+    async profile () {
+        const req = await fetch(basename + '/profile', {
+            method: 'get',
+            mode: 'cors',
+            credentials: 'include'
         })
 
-        let data = await req.json();
+        const data = await req.json()
 
-        return data;
+        return data
     }
 }

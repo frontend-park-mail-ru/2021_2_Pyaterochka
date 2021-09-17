@@ -29,10 +29,10 @@ class InputField extends Component {
         `
 
         element.addEventListener('input', e => {
-            this.validate();
+            this.validate()
         })
         this.input = element.querySelector('input')
-        this.element = element;
+        this.element = element
 
         return element
     }
@@ -41,8 +41,8 @@ class InputField extends Component {
         return this.input.value
     }
 
-    validate() {
-        const element = this.element;
+    validate () {
+        const element = this.element
         const inputField = element.querySelector('.input-field')
         const validation = element.querySelector('.input-validation')
         const value = element.querySelector('input').value
@@ -71,7 +71,7 @@ class InputField extends Component {
             inputField.classList.add('invalid')
         }
 
-        return errors;
+        return errors
     }
 }
 export default InputField

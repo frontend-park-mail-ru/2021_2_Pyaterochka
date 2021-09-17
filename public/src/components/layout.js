@@ -3,12 +3,12 @@ import Navbar from '../components/navbar.js'
 import user from '../storage/user.js'
 
 class Layout extends Component {
-    constructor(slot = null) {
+    constructor (slot = null) {
         super()
         this.slot = slot
     }
 
-    render() {
+    render () {
         const element = document.createElement('div')
         const navbar = new Navbar(
             {

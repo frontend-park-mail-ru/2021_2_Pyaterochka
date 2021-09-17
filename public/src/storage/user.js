@@ -1,9 +1,9 @@
-import api from "../api/index.js"
+import api from '../api/index.js'
 
 const user = {
     user: null,
-    async update() {
-        this.user = await api.profile();
+    async update () {
+        this.user = await api.profile()
     }
 }
 

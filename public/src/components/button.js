@@ -5,7 +5,7 @@ class Button extends Component {
         text = '',
         color = 'default',
         rounded = false,
-        onclick = ()=>{}
+        onclick = () => {}
     }) {
         super()
         this.attributes.text = text
@@ -20,7 +20,7 @@ class Button extends Component {
 
         element.className = `btn btn-${this.attributes.color} ${this.attributes.rounded ? 'btn-rounded' : ''}`
 
-        element.addEventListener("click", this.attributes.onclick)
+        element.addEventListener('click', this.attributes.onclick)
         return element
     }
 }
@@ -31,13 +31,16 @@ const styles = `
     display:block;
     width:100%;
     background:#fff;
-    border: 1px solid #DCDFE6;
+    border:none;
     box-shadow: 0px 1px 4px 0px #0000000D;
-    font-size:12px;
+    font-size:16px;
     padding: 8px;
     border-radius:5px;
     cursor:pointer;
     transition: background-color 0.1s;
+}
+.btn-default {
+    border: 1px solid #DCDFE6;
 }
 .btn-rounded {
     border-radius:40px;
