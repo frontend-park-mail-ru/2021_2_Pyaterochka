@@ -29,40 +29,49 @@ class InputField extends Component {
         `
 
         element.addEventListener('input', e => {
-            const inputField = element.querySelector('.input-field')
-            const validation = element.querySelector('.input-validation')
-            const value = element.querySelector('input').value
-
-            const errors = this.attributes.validation.map((rule) => {
-                return rule(value)
-            }).filter((err) => err !== null)
-
-            const elements = errors.map(error => {
-                const el = document.createElement('div')
-                el.innerText = error
-                el.className = 'input-validation__error'
-                return el
-            })
-
-            validation.innerHTML = ''
-            elements.forEach(element => {
-                validation.appendChild(element)
-            })
-
-            if (elements.length === 0) {
-                inputField.classList.add('valid')
-                inputField.classList.remove('invalid')
-            } else {
-                inputField.classList.remove('valid')
-                inputField.classList.add('invalid')
-            }
+            this.validate();
         })
         this.input = element.querySelector('input')
+        this.element = element;
+
         return element
     }
 
     getValue () {
         return this.input.value
+    }
+
+    validate() {
+        const element = this.element;
+        const inputField = element.querySelector('.input-field')
+        const validation = element.querySelector('.input-validation')
+        const value = element.querySelector('input').value
+
+        const errors = this.attributes.validation.map((rule) => {
+            return rule(value)
+        }).filter((err) => err !== null)
+
+        const elements = errors.map(error => {
+            const el = document.createElement('div')
+            el.innerText = error
+            el.className = 'input-validation__error'
+            return el
+        })
+
+        validation.innerHTML = ''
+        elements.forEach(element => {
+            validation.appendChild(element)
+        })
+
+        if (elements.length === 0) {
+            inputField.classList.add('valid')
+            inputField.classList.remove('invalid')
+        } else {
+            inputField.classList.remove('valid')
+            inputField.classList.add('invalid')
+        }
+
+        return errors;
     }
 }
 export default InputField

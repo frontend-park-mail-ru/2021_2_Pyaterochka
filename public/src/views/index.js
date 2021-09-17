@@ -1,9 +1,10 @@
 import Component from '../components/basecomponent.js'
 import Button from '../components/button.js'
 import InputField from '../components/input-field.js'
+import Navbar from '../components/navbar.js'
 
 class IndexView extends Component {
-    render () {
+    render() {
         const element = document.createElement('div')
         element.className = 'container'
         element.innerHTML = `
@@ -19,6 +20,8 @@ class IndexView extends Component {
         `
 
         const components = [
+            new Navbar(),
+            new Navbar({ user: { username: "Person", avatar: "https://thispersondoesnotexist.com/image" } }),
             new InputField({ placeholder: 'Placeholder', validation: [(v) => v === '' ? null : 'Поле не должно быть пустым'] }),
             ...['default', 'primary', 'success', 'grey', 'warning', 'accent'].map((color) => new Button({ text: 'Button ' + color, color: color })),
             ...['default', 'primary', 'success', 'grey', 'warning', 'accent'].map((color) => new Button({ text: 'Button ' + color, color: color, rounded: true }))

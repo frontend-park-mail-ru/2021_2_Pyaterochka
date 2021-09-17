@@ -1,5 +1,9 @@
+import api from '../api/index.js'
 import Component from '../components/basecomponent.js'
+import Button from '../components/button.js'
 import InputField from '../components/input-field.js'
+import { router } from '../index.js'
+import user from '../storage/user.js'
 
 class SigninView extends Component {
     render () {
@@ -52,6 +56,26 @@ class SigninView extends Component {
         form.forEach((field) => {
             element.querySelector('.auth-card').appendChild(field.render())
         })
+
+
+        const btn = new Button({
+            text: 'Войти',
+            color: 'primary',
+            rounded: true,
+            onclick: async () => { 
+                const errors = Math.max(...form.map((e)=>e.validate().length));
+                if (errors) return;
+                await api.login({
+                    email: form[0].getValue(),
+                    password: form[1].getValue(),
+                })
+
+                user.update();
+                router.go("/");
+
+             }
+        })
+        element.querySelector('.auth-card').appendChild(btn.render())
 
         return element
     }

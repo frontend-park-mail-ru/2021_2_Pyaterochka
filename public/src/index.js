@@ -5,10 +5,11 @@ import Layout from './components/layout.js'
 import SigninView from './views/signin.js'
 import SignupView from './views/signup.js'
 
+let router;
 document.addEventListener('DOMContentLoaded', () => {
     const root = document.getElementById('root')
 
-    const router = new Router(root, [
+    router = new Router(root, [
         new Route('/signin', new Layout(new SigninView()), 'Войти'),
         new Route('/signup', new Layout(new SignupView()), 'Регистрация'),
         new Route('/', new Layout(new IndexView()), 'Главная'),
@@ -17,3 +18,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
     router.start()
 })
+
+export {router}

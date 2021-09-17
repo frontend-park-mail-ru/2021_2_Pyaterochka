@@ -1,7 +1,7 @@
 import Component from './basecomponent.js'
 
 class Navbar extends Component {
-    constructor ({ user }) {
+    constructor ({ user = null } = {}) {
         super()
         this.attributes.user = user
     }
@@ -15,7 +15,7 @@ class Navbar extends Component {
         ? `
                     <a class="navbar-profile">
                         <img src="${this.attributes.user.avatar}"></img>
-                        <div class="navbar-profile__name"> ${this.attributes.user.name} </div>
+                        <div class="navbar-profile__name"> ${this.attributes.user.username} </div>
                     </a>
                     `
         : `

@@ -4,12 +4,14 @@ class Button extends Component {
     constructor ({
         text = '',
         color = 'default',
-        rounded = false
+        rounded = false,
+        onclick = ()=>{}
     }) {
         super()
         this.attributes.text = text
         this.attributes.color = color
         this.attributes.rounded = rounded
+        this.attributes.onclick = onclick
     }
 
     render () {
@@ -17,6 +19,8 @@ class Button extends Component {
         element.innerText = this.attributes.text
 
         element.className = `btn btn-${this.attributes.color} ${this.attributes.rounded ? 'btn-rounded' : ''}`
+
+        element.addEventListener("click", this.attributes.onclick)
         return element
     }
 }
