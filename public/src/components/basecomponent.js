@@ -1,6 +1,6 @@
 class Component {
     constructor () {
-        this.attributes = []
+        this.attributes = {}
         this.slot = null
     }
 

@@ -15,6 +15,25 @@ body {
 }
 :root {
     --color-primary: #FF424D;
+    --color-primary-light: #FF7B82;
+    --color-primary-dark: #E42F2F;
+    
+    --color-success:#3BBA2E;
+    --color-success-light:#76CF6D;
+    --color-success-dark:#159408;
+
+    --color-grey:#ACABAB;
+    --color-grey-light:#C5C4C4;
+    --color-grey-dark:#8B8A8A;
+
+    --color-warning:#FF9442;
+    --color-warning-light:#FFB47B;
+    --color-warning-dark:#EA7F2D;
+
+    --color-accent:#FF42B5;
+    --color-accent-light:#FF7BCB;
+    --color-accent-dark:#E12497;
+
     --color-navbar: #E42F2F;
 }
 

@@ -17,7 +17,6 @@ class SigninView extends Component {
                    text-align:center; 
                 }
                 .auth-card {
-                    border-radius:10px;
                     padding:20px;
                 }               
 
