@@ -1,5 +1,6 @@
 import Component from '../components/basecomponent.js'
 import Button from '../components/button.js'
+import CreatorCard from '../components/creator-card.js'
 import InputField from '../components/input-field.js'
 import LevelCard from '../components/level-card.js'
 import LockMessage from '../components/lock-message.js'
@@ -11,6 +12,10 @@ class IndexView extends Component {
         const element = document.createElement('div')
         element.className = 'container'
         element.innerHTML = `
+            <h1 class="text-center">Страницы</h1>
+            <div>
+                <a router-go="/creator"> Страница автора </a>
+            </div>
             <h1 class="text-center">Компоненты</h1>
             <style>
             .container {
@@ -25,6 +30,21 @@ class IndexView extends Component {
         const components = [
             new Navbar(),
             new Navbar({ user: { username: 'Person', avatar: 'https://thispersondoesnotexist.com/image' } }),
+            new CreatorCard(
+                {
+                    name: "IU7-memes",
+                    description: "создает мемы из закулисий цирка",
+                    avatar: "https://sun9-12.userapi.com/impf/c854228/v854228051/16558/K7rRvW0xelY.jpg?size=647x809&quality=96&sign=83e72450667c775a5831dac80fb2dea5&type=album"
+                }
+            ),
+            new CreatorCard(
+                {
+                    name: "IU7-memes",
+                    description: "создает мемы из закулисий цирка",
+                    shadow:true,
+                    avatar: "https://sun9-12.userapi.com/impf/c854228/v854228051/16558/K7rRvW0xelY.jpg?size=647x809&quality=96&sign=83e72450667c775a5831dac80fb2dea5&type=album"
+                }
+            ),
             new LockMessage(
                 {
                     text: 'Стань патроном, чтобы продолжить наслаждаться работами автора'

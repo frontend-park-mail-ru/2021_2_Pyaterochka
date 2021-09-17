@@ -4,6 +4,7 @@ import ErrorPage from './views/errorpage.js'
 import Layout from './components/layout.js'
 import SigninView from './views/signin.js'
 import SignupView from './views/signup.js'
+import CreatorView from './views/creator.js'
 
 let router
 document.addEventListener('DOMContentLoaded', () => {
@@ -13,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
         new Route('/signin', new Layout(new SigninView()), 'Войти'),
         new Route('/signup', new Layout(new SignupView()), 'Регистрация'),
         new Route('/', new Layout(new IndexView()), 'Главная'),
+        new Route('/creator', new Layout(new CreatorView()), 'Страница автора'),
         new Route('', new Layout(new ErrorPage()), '404')
     ])
 
