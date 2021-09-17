@@ -97,8 +97,8 @@ const styles = `
 .input-field span {
     color: #4C4C4C;
     position: absolute;
-    top:0;
-    left:20px;
+    top:-2px;
+    left:10px;
     font-size:10px;
     cursor: text;
     transition: all .3s;
@@ -107,7 +107,7 @@ const styles = `
     background: #fff;
     display:block;
     width:100%;
-    padding:12px 20px 8px;
+    padding:12px 10px 8px;
     border-radius:5px;
     border: 1px solid #DEDEDE;
     outline: 0;
