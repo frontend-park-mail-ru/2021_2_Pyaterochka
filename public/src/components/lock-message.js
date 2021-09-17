@@ -56,11 +56,15 @@ const styles = `
     height:56px;
     display:block;
     background-color: var(--color-primary);
+    margin: 12px; 
     mask-image: url(/imgs/icons/lock_outline_28.svg);
     mask-repeat: no-repeat;
     mask-position: center;
     mask-size: contain;
-    margin: 12px; 
+    -webkit-mask-image: url(/imgs/icons/lock_outline_28.svg);
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    -webkit-mask-size: contain;
 }
 .lock-message span {
     margin-bottom:10px;
