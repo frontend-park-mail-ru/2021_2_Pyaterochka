@@ -25,13 +25,23 @@ class IndexView extends Component {
             new Navbar(),
             new Navbar({ user: { username: 'Person', avatar: 'https://thispersondoesnotexist.com/image' } }),
             new PostCard({
-                title: "Новый выпуск игрового ролика о невероятных машинах нашего времени",
+                title: 'Новый выпуск игрового ролика о невероятных машинах нашего времени',
                 published: new Date(new Date() - 60 * 1000 * 5),
                 views: 10000,
                 likes: 5000,
-                description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam elementum efficitur velit, et aliquam ex condimentum vel. In pulvinar lorem augue, a bibendum justo sagittis ut. Sed semper suscipit arcu non sodales. Curabitur dapibus vulputate mauris, egestas ultricies elit consequat ut. Integer ut velit ut velit viverra viverra. Maecenas non porttitor nibh. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed lectus tortor, congue a dui nec, varius mattis neque. Fusce rutrum lacinia dapibus. Donec lacus ante, scelerisque vel interdum id, facilisis sit amet tortor. Duis vestibulum sollicitudin libero sed egestas. Fusce ante lorem, tincidunt non vestibulum ac, ullamcorper vitae velit. Curabitur nec consectetur metus, vel suscipit odio. Sed et libero eget sapien efficitur placerat",
-                level: "Профессионал",
-                image: "https://w-dog.ru/wallpapers/12/12/456213867326621/fraktaly-prelomlenie-sveta-cvetovaya-gamma-figury-geometrii-triptix.jpg"
+                description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam elementum efficitur velit, et aliquam ex condimentum vel. In pulvinar lorem augue, a bibendum justo sagittis ut. Sed semper suscipit arcu non sodales. Curabitur dapibus vulputate mauris, egestas ultricies elit consequat ut. Integer ut velit ut velit viverra viverra. Maecenas non porttitor nibh. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed lectus tortor, congue a dui nec, varius mattis neque. Fusce rutrum lacinia dapibus. Donec lacus ante, scelerisque vel interdum id, facilisis sit amet tortor. Duis vestibulum sollicitudin libero sed egestas. Fusce ante lorem, tincidunt non vestibulum ac, ullamcorper vitae velit. Curabitur nec consectetur metus, vel suscipit odio. Sed et libero eget sapien efficitur placerat',
+                level: 'Профессионал',
+                image: 'https://w-dog.ru/wallpapers/12/12/456213867326621/fraktaly-prelomlenie-sveta-cvetovaya-gamma-figury-geometrii-triptix.jpg'
+            }),
+            new PostCard({
+                title: 'Новый выпуск игрового ролика о невероятных машинах нашего времени',
+                published: new Date(new Date() - 60 * 1000 * 60 * 5),
+                views: 10000,
+                likes: 5000,
+                opened: false,
+                description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam elementum efficitur velit, et aliquam ex condimentum vel. In pulvinar lorem augue, a bibendum justo sagittis ut. Sed semper suscipit arcu non sodales. Curabitur dapibus vulputate mauris, egestas ultricies elit consequat ut. Integer ut velit ut velit viverra viverra. Maecenas non porttitor nibh. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed lectus tortor, congue a dui nec, varius mattis neque. Fusce rutrum lacinia dapibus. Donec lacus ante, scelerisque vel interdum id, facilisis sit amet tortor. Duis vestibulum sollicitudin libero sed egestas. Fusce ante lorem, tincidunt non vestibulum ac, ullamcorper vitae velit. Curabitur nec consectetur metus, vel suscipit odio. Sed et libero eget sapien efficitur placerat',
+                level: 'Профессионал',
+                image: 'https://w-dog.ru/wallpapers/12/12/456213867326621/fraktaly-prelomlenie-sveta-cvetovaya-gamma-figury-geometrii-triptix.jpg'
             }),
 
             new LevelCard({
@@ -63,7 +73,7 @@ class IndexView extends Component {
                     'Безлимитное мыло из Анапы',
                     'Безлимитное мыло из Анапы'
                 ],
-                price: '10 $',
+                price: '10 ₽',
                 color: 'success'
             }),
             new InputField({ placeholder: 'Placeholder', validation: [(v) => v === '' ? null : 'Поле не должно быть пустым'] }),

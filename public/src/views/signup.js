@@ -28,7 +28,7 @@ class SignupView extends Component {
             type: 'password',
             validation: [
                 (value) => {
-                    return value.length > 6 ? null : 'Пароль должен быть больше 6 символов'
+                    return value.length > 6 ? null : 'Введите минимум 6 символов'
                 },
                 (value) => {
                     return value.toLowerCase() !== value ? null : 'Пароль должен сдержать хоть одну заглавную букву'
