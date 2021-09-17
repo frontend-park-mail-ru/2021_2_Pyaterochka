@@ -14,10 +14,11 @@ class Layout extends Component {
                 user: null
             }
         )
-        element.innerHTML = `
-            ${navbar.render().outerHTML}
-            ${this.slot ? this.slot.render().outerHTML : ''}
-        `
+        element.innerHTML = ''
+        element.appendChild(navbar.render())
+        if (this.slot) {
+            element.appendChild(this.slot.render())
+        }
         return element
     }
 }

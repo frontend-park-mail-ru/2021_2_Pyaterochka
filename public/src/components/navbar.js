@@ -11,8 +11,7 @@ class Navbar extends Component {
         element.innerHTML = `
             <div class="navbar">
                 <a href="#" class="navbar-brand" router-go="/">Patreon</a>
-                ${
-    this.attributes.user
+                ${this.attributes.user
         ? `
                     <a class="navbar-profile">
                         <img src="${this.attributes.user.avatar}"></img>
@@ -41,7 +40,13 @@ class Navbar extends Component {
                 }
                 .navbar-brand, .navbar-link {
                     display:block;
-                    padding: 14px 5px;
+                    padding: 14px 10px;
+                    border-radius:10px;
+                    transition: background-color .3s ease-in;
+                }
+
+                .navbar-profile:hover, .navbar-link:hover {
+                    background: rgba(255,255,255, 0.3);
                 }
                 .navbar a {
                     color:#fff;
@@ -53,7 +58,6 @@ class Navbar extends Component {
                 }
                 .navbar-link {
                     float:right;
-                    margin: 0 10px;
                 }
                 .navbar-profile {
                     float:right;
@@ -64,9 +68,6 @@ class Navbar extends Component {
                     cursor:pointer;
                     align-items: center;
                     border-radius:10px;
-                }
-                .navbar-profile:hover {
-                    background: rgba(255,255,255, 0.3);
                 }
                 .navbar-profile ::after {
                     content: '';
@@ -88,7 +89,6 @@ class Navbar extends Component {
                 }
             </style>
         `
-
         return element
     }
 }
