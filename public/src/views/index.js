@@ -7,9 +7,10 @@ class IndexView extends Component {
         const element = document.createElement('div')
         element.className = 'container'
         element.innerHTML = `
+            <h1 class="text-center">Компоненты</h1>
             <style>
             .container {
-                width:1000px;
+                width:600px;
                 max-width:100%;
                 margin:auto;
                 margin-top:50px;
@@ -24,10 +25,15 @@ class IndexView extends Component {
         ]
 
         components.forEach((component) => {
-            const p = document.createElement('p')
-            p.innerText = component.constructor.name + ' ' + JSON.stringify(component.attributes)
-            element.appendChild(p)
+            const table = document.createElement('table')
+            table.innerHTML += `<tr><th>Component name</th><td>${component.constructor.name}</td></tr>`
+            Object.keys(component.attributes).forEach(key=>{
+                table.innerHTML += `<tr><td>${key}</td><td>${component.attributes[key]}</td></tr>`
+            })
+            element.appendChild(table)
             element.appendChild(component.render())
+            element.appendChild(document.createElement("p"))
+
         })
         return element
     }
