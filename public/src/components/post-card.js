@@ -5,7 +5,6 @@ import LockMessage from './lock-message.js'
 class PostCard extends Component {
     timeDiff (date) {
         const diff = (new Date()).getTime() - date
-        console.log(diff)
         if (diff <= 1000 * 60 * 5) {
             return 'менее 5 минут назад'
         }
