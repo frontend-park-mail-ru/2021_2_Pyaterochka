@@ -6,6 +6,7 @@ import LevelCard from '../components/level-card.js'
 import LockMessage from '../components/lock-message.js'
 import Navbar from '../components/navbar.js'
 import PostCard from '../components/post-card.js'
+import ProfileCard from '../components/profile-card.js'
 import Skeleton from '../components/skeleton.js'
 import Spinner from '../components/spinner.js'
 
@@ -32,9 +33,19 @@ class IndexView extends Component {
         const components = [
             new Navbar(),
             new Navbar({ user: { username: 'Person', avatar: 'https://thispersondoesnotexist.com/image' } }),
+            new ProfileCard({
+                username: 'HenSI.Pro2929',
+                supportCount: 15,
+                avatar: 'https://thispersondoesnotexist.com/image'
+            }),
+            new ProfileCard({
+                username: 'HenSI.Pro2929',
+                supportCount: 15,
+                avatar: 'https://thispersondoesnotexist.com/image'
+            }, new Button({ text: 'Редактировать профиль', color: 'primary' })),
             new Skeleton(),
-            new Skeleton({type:"text"}),
-            new Skeleton({type:"circle", height:100}),
+            new Skeleton({ type: 'text' }),
+            new Skeleton({ type: 'circle', height: 100 }),
             new Spinner(),
             new CreatorCard(
                 {

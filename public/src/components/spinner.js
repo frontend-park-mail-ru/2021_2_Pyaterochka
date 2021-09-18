@@ -3,7 +3,7 @@ import Component from './basecomponent.js'
 class Spinner extends Component {
     render () {
         const element = document.createElement('div')
-        element.className = "spinner"
+        element.className = 'spinner'
         return element
     }
 }

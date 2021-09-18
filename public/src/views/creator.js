@@ -25,21 +25,21 @@ class CreatorView extends Component {
             <div class="creator-card"></div>
             <div class="level-card-container"></div>
             `
-            const coverSkeleton = new Skeleton({height:256})
-            const avatarSkeleton = new Skeleton({type:"circle",height:200})
-            const textSkeleton = new Skeleton({type:"text", height:40})
-            const levelSkeleton = new Skeleton({height:260, width:260})
+            const coverSkeleton = new Skeleton({ height: 256 })
+            const avatarSkeleton = new Skeleton({ type: 'circle', height: 200 })
+            const textSkeleton = new Skeleton({ type: 'text', height: 40 })
+            const levelSkeleton = new Skeleton({ height: 260, width: 260 })
 
-            element.querySelector(".creator-cover").appendChild(coverSkeleton.render())
-            element.querySelector(".creator-card").appendChild(avatarSkeleton.render())
-            element.querySelector(".creator-card").appendChild(textSkeleton.render())
-            element.querySelector(".creator-card").lastChild.style.margin = "10px"
-            
+            element.querySelector('.creator-cover').appendChild(coverSkeleton.render())
+            element.querySelector('.creator-card').appendChild(avatarSkeleton.render())
+            element.querySelector('.creator-card').appendChild(textSkeleton.render())
+            element.querySelector('.creator-card').lastChild.style.margin = '10px'
+
             for (let i = 0; i < 3; ++i) {
-                element.querySelector(".level-card-container").appendChild(levelSkeleton.render())
+                element.querySelector('.level-card-container').appendChild(levelSkeleton.render())
             }
-            element.style.overflow = "hidden"
-            element.style.maxHeight = "calc(100vh - 52px)"
+            element.style.overflow = 'hidden'
+            element.style.maxHeight = 'calc(100vh - 52px)'
             return element
         }
 
@@ -82,10 +82,10 @@ class CreatorView extends Component {
 
     async created () {
         this.attributes.creator = null
-        
-        this.attributes.creator = await api.creatorInfo();
-        this.attributes.levels = await api.levelsInfo();
-        this.attributes.posts = await api.postsInfo();
+
+        this.attributes.creator = await api.creatorInfo()
+        this.attributes.levels = await api.levelsInfo()
+        this.attributes.posts = await api.postsInfo()
     }
 }
 
