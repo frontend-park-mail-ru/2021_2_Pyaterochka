@@ -32,17 +32,17 @@ class IndexView extends Component {
             new Navbar({ user: { username: 'Person', avatar: 'https://thispersondoesnotexist.com/image' } }),
             new CreatorCard(
                 {
-                    name: "IU7-memes",
-                    description: "создает мемы из закулисий цирка",
-                    avatar: "https://sun9-12.userapi.com/impf/c854228/v854228051/16558/K7rRvW0xelY.jpg?size=647x809&quality=96&sign=83e72450667c775a5831dac80fb2dea5&type=album"
+                    name: 'IU7-memes',
+                    description: 'создает мемы из закулисий цирка',
+                    avatar: 'https://sun9-12.userapi.com/impf/c854228/v854228051/16558/K7rRvW0xelY.jpg?size=647x809&quality=96&sign=83e72450667c775a5831dac80fb2dea5&type=album'
                 }
             ),
             new CreatorCard(
                 {
-                    name: "IU7-memes",
-                    description: "создает мемы из закулисий цирка",
-                    shadow:true,
-                    avatar: "https://sun9-12.userapi.com/impf/c854228/v854228051/16558/K7rRvW0xelY.jpg?size=647x809&quality=96&sign=83e72450667c775a5831dac80fb2dea5&type=album"
+                    name: 'IU7-memes',
+                    description: 'создает мемы из закулисий цирка',
+                    shadow: true,
+                    avatar: 'https://sun9-12.userapi.com/impf/c854228/v854228051/16558/K7rRvW0xelY.jpg?size=647x809&quality=96&sign=83e72450667c775a5831dac80fb2dea5&type=album'
                 }
             ),
             new LockMessage(
@@ -115,7 +115,7 @@ class IndexView extends Component {
                 table.innerHTML += `<tr><td>${key}</td><td>${component.attributes[key]}</td></tr>`
             })
             element.appendChild(table)
-            element.appendChild(component.render())
+            element.appendChild(component.renderReactive())
             element.appendChild(document.createElement('br'))
             element.appendChild(document.createElement('br'))
             element.appendChild(document.createElement('br'))

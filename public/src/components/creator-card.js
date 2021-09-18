@@ -3,9 +3,9 @@ import Component from './basecomponent.js'
 class CreatorCard extends Component {
     constructor ({
         id = null,
-        name = "",
-        avatar = "",
-        description = "",
+        name = '',
+        avatar = '',
+        description = '',
         shadow = false
     }) {
         super()
@@ -17,10 +17,10 @@ class CreatorCard extends Component {
 
     render () {
         const element = document.createElement('div')
-        element.className = `creator-card`
+        element.className = 'creator-card'
 
         element.innerHTML = `
-            <img class="${this.attributes.shadow ? "shadow": ""}" src="${this.attributes.avatar}"/>
+            <img class="${this.attributes.shadow ? 'shadow' : ''}" src="${this.attributes.avatar}"/>
             <div class="creator-card__header">
                 ${this.attributes.name}
             </div>

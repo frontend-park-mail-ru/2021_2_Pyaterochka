@@ -44,9 +44,8 @@ class Router {
 
     renderRoute (route) {
         document.title = route.title
-
         this.container.innerHTML = ''
-        this.container.appendChild(route.component.render())
+        this.container.appendChild(route.component.renderReactive())
     }
 
     setContainer (container) {
