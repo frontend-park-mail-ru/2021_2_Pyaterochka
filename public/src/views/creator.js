@@ -63,10 +63,8 @@ class CreatorView extends Component {
     }
 
     created () {
-        console.log('!!!!!!!!!!!!!!created')
         this.attributes.creator = null
         setTimeout(() => {
-            console.log('!!!!!!!!!!!!!!loaded')
             this.attributes.creator = {
                 id: 0,
                 name: 'IU7-memes',

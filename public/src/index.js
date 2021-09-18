@@ -21,6 +21,8 @@ document.addEventListener('DOMContentLoaded', () => {
     router.setLayout(new Layout())
 
     router.start()
+
+    console.log(router)
 })
 
 export { router }

@@ -10,12 +10,22 @@ setInterval(() => {
 
 class Component {
     constructor () {
-        this.attributes = new Proxy({}, {
-            set: (attrs, key, value) => {
-                attrs[key] = value
-                this.update()
-                return true
+        const getter = (attrs, key) => attrs[key]
+
+        const update = (attrs, key, value) => {
+            if (value instanceof Object && !(value instanceof Date)) {
+                value = new Proxy(value, {
+                    set: update,
+                    get: getter
+                })
             }
+            attrs[key] = value
+            this.update()
+            return true
+        }
+        this.attributes = new Proxy({}, {
+            set: update,
+            get: getter
         })
         this._slot = null
         this.dom = null
@@ -36,10 +46,8 @@ class Component {
     }
 
     updatePartly () {
-        console.log('updating', this)
         const newDom = this.render()
         this.dom = patchDom(this.dom, newDom)
-        console.log('updated', this, newDom)
     }
 
     updateForce () {
