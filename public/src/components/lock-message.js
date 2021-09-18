@@ -21,7 +21,7 @@ class LockMessage extends Component {
         `
 
         if (this.slot) {
-            element.appendChild(this.slot.render())
+            element.appendChild(this.slot.renderReactive())
         }
 
         return element

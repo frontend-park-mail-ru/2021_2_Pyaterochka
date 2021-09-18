@@ -66,7 +66,7 @@ class SignupView extends Component {
         ]
 
         form.forEach((field) => {
-            element.querySelector('.auth-card').appendChild(field.render())
+            element.querySelector('.auth-card').appendChild(field.renderReactive())
         })
 
         const btn = new Button({
@@ -79,7 +79,7 @@ class SignupView extends Component {
                 alert('Валидация прошла')
             }
         })
-        element.querySelector('.auth-card').appendChild(btn.render())
+        element.querySelector('.auth-card').appendChild(btn.renderReactive())
 
         return element
     }

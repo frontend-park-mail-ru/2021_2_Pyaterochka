@@ -64,6 +64,19 @@ app.get('/api/profile', (req, res) => {
     }
     res.json(req.session.user)
 })
+
+app.get('/api/logout', (req, res) => {
+    if (!req.session.user) {
+        res.status(401).json({
+            status: 'error'
+        })
+        return
+    }
+    req.session.user = null
+    res.json({
+        status: 'ok'
+    })
+})
 app.listen(port, () => {
     console.log(`App listening at http://localhost:${port}`)
 })

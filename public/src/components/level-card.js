@@ -73,7 +73,7 @@ class LevelCard extends Component {
             </div>
         `
         const btn = new Button({ text: 'Выбрать уровень', color: this.attributes.color })
-        element.querySelector('.level-card__action').appendChild(btn.render())
+        element.querySelector('.level-card__action').appendChild(btn.renderReactive())
         return element
     }
 }

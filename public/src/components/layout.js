@@ -16,9 +16,9 @@ class Layout extends Component {
             }
         )
         element.innerHTML = ''
-        element.appendChild(navbar.render())
+        element.appendChild(navbar.renderReactive())
         if (this.slot) {
-            element.appendChild(this.slot.render())
+            element.appendChild(this.slot.renderReactive())
         }
         return element
     }
