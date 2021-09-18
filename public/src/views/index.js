@@ -18,6 +18,7 @@ class IndexView extends Component {
             <h1 class="text-center">Страницы</h1>
             <div>
                 <a router-go="/creator"> Страница автора </a>
+                <a router-go="/profile"> Профиль </a>
             </div>
             <h1 class="text-center">Компоненты</h1>
             <style>

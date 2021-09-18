@@ -5,6 +5,7 @@ import Layout from './components/layout.js'
 import SigninView from './views/signin.js'
 import SignupView from './views/signup.js'
 import CreatorView from './views/creator.js'
+import ProfileView from './views/profile.js'
 
 let router
 document.addEventListener('DOMContentLoaded', () => {
@@ -15,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
         new Route('/signup', new SignupView(), 'Регистрация'),
         new Route('/', new IndexView(), 'Главная'),
         new Route('/creator', new CreatorView(), 'Страница автора'),
+        new Route('/profile', new ProfileView(), 'Профиль'),
         new Route('', new ErrorPage(), '404')
     ])
 
