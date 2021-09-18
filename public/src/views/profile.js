@@ -1,11 +1,10 @@
-import api from '../api/index.js'
 import Component from '../components/basecomponent.js'
 import Button from '../components/button.js'
 import CreatorCard from '../components/creator-card.js'
 import ProfileCard from '../components/profile-card.js'
 
 class ProfileView extends Component {
-    constructor() {
+    constructor () {
         super()
         this.attributes.user = {
             username: 'HenSI.Pro2929',
@@ -28,15 +27,14 @@ class ProfileView extends Component {
                 name: 'Че пловец, да? Красавчик!',
                 description: 'обучает всех желающих пловцов',
                 avatar: 'https://sun1-57.userapi.com/s/v1/ig2/uQqLid-BfLA-VAqWh94Szq4QnEiEAIo0FDyDcgQ5Xzv781soP12s9xOoUisEVJGKMT5QJ5BljosYahyZy_6J5O36.jpg?size=100x100&quality=95&crop=74,11,389,389&ava=1'
-            },
+            }
         ]
         this.attributes.creators.forEach(c => this.attributes.creators.push(c))
     }
 
-    render() {
+    render () {
         const element = document.createElement('div')
 
-        
         element.innerHTML = `
             <div class="profile-block shadow">
             </div>
@@ -49,13 +47,13 @@ class ProfileView extends Component {
             avatar: this.attributes.user.avatar,
             supportCount: this.attributes.creators.length
         }, new Button({
-            text: "Редактировать профиль",
-            color: "primary"
+            text: 'Редактировать профиль',
+            color: 'primary'
         }))
 
         element.querySelector('.profile-block').appendChild(profileCard.renderReactive())
-        
-        this.attributes.creators.forEach(creator=>{
+
+        this.attributes.creators.forEach(creator => {
             const creatorCard = new CreatorCard(creator)
             element.querySelector('.creators-container').appendChild(creatorCard.renderReactive())
         })
@@ -63,8 +61,8 @@ class ProfileView extends Component {
         return element
     }
 
-    async created() {
-        
+    async created () {
+
     }
 }
 

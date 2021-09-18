@@ -1,6 +1,7 @@
 import Component from '../components/basecomponent.js'
 import Button from '../components/button.js'
 import CreatorCard from '../components/creator-card.js'
+import Footer from '../components/footer.js'
 import InputField from '../components/input-field.js'
 import LevelCard from '../components/level-card.js'
 import LockMessage from '../components/lock-message.js'
@@ -34,6 +35,7 @@ class IndexView extends Component {
         const components = [
             new Navbar(),
             new Navbar({ user: { username: 'Person', avatar: 'https://thispersondoesnotexist.com/image' } }),
+            new Footer(),
             new ProfileCard({
                 username: 'HenSI.Pro2929',
                 supportCount: 15,

@@ -9,6 +9,7 @@
 html {
   font-family: "Roboto", sans-serif;
   font-weight: 400;
+  hyphens: auto;
 }
 body {
   margin: 0;
@@ -68,7 +69,7 @@ body {
   margin: auto;
   width: 400px;
   text-align: center;
-  min-height: calc(100vh - 160px);
+  min-height: calc(100vh - 100px);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -78,10 +79,8 @@ body {
   margin-bottom: 20px;
 }
 .auth-block h1 {
-
     font-weight: 300;
     font-size: 24px;
-
 }
 
 .auth-block .input-validation {
