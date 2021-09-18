@@ -1,4 +1,4 @@
-const basename = 'http://localhost:3000/api'
+const basename = '/api'
 
 export default {
     async login ({ email, password }) {
