@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Проект Patreon команды \"Пятерочка\"",
   "scripts": {
+    "start": "node ./server",
     "dev": "node ./server",
     "linter": "npx eslint public server --fix"
   },
