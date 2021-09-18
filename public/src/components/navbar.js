@@ -1,9 +1,11 @@
+import user from '../storage/user.js'
 import Component from './basecomponent.js'
 
 class Navbar extends Component {
     constructor ({ user = null } = {}) {
         super()
         this.attributes.user = user
+        this.attributes.isOpen = false
     }
 
     render () {
@@ -13,11 +15,14 @@ class Navbar extends Component {
                 <a href="#" class="navbar-brand" router-go="/">Patreon</a>
                 ${this.attributes.user
         ? `
-                    <a class="navbar-profile">
-                        <img src="${this.attributes.user.avatar}"></img>
+                    <div class="navbar-profile">
+                        <img src="${this.attributes.user.avatar}" />
                         <div class="navbar-profile__name"> ${this.attributes.user.username} </div>
-                    </a>
-                    `
+                        <div class="navbar-popup"> 
+                            <a class="logout">Выйти</a>
+                        </div>
+                    </div>
+                `
         : `
                     <div>
                         <a router-go="/signup" class="navbar-link">Регистрация</a>
@@ -28,6 +33,14 @@ class Navbar extends Component {
                 
             </div>
         `
+
+        const popupLogout = element.querySelector('.navbar-popup .logout')
+        if (popupLogout) {
+            popupLogout.addEventListener('click', () => {
+                user.logout()
+            })
+        }
+
         return element
     }
 }
@@ -74,7 +87,7 @@ const styles = `
     align-items: center;
     border-radius:10px;
 }
-.navbar-profile ::after {
+.navbar-profile::after {
     content: '';
     border: 10px solid transparent;
     border-top: 10px solid #fff;
@@ -92,6 +105,23 @@ const styles = `
 .navbar-profile__name {
     margin-left: 10px;
 }
+
+.navbar-popup {
+    position: absolute;
+    right: 0;
+    top: 52px;
+    background: var(--color-primary);
+    padding: 20px;
+    border-radius: 5px;
+    min-width:200px;
+    text-align:center;
+    display:none;
+}
+
+.navbar-profile:hover .navbar-popup {
+    display:block;
+}
+
 `
 
 const styleElement = document.createElement('style')

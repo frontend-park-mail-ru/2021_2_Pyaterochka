@@ -5,7 +5,6 @@ import LockMessage from './lock-message.js'
 class PostCard extends Component {
     timeDiff (date) {
         const diff = (new Date()).getTime() - date
-        console.log(diff)
         if (diff <= 1000 * 60 * 5) {
             return 'менее 5 минут назад'
         }
@@ -93,7 +92,7 @@ class PostCard extends Component {
         `
 
         const btn = new Button({ text: 'Открыть материал' })
-        element.querySelector('.post-card-body').appendChild(btn.render())
+        element.querySelector('.post-card-body').appendChild(btn.renderReactive())
         if (!this.attributes.opened) {
             const lockMessage = new LockMessage(
                 {
@@ -101,7 +100,7 @@ class PostCard extends Component {
                     dark: false
                 }
             )
-            element.querySelector('.post-card-image').appendChild(lockMessage.render())
+            element.querySelector('.post-card-image').appendChild(lockMessage.renderReactive())
         }
 
         return element

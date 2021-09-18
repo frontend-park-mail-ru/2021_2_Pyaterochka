@@ -41,7 +41,7 @@ class SigninView extends Component {
         ]
 
         form.forEach((field) => {
-            element.querySelector('.auth-card').appendChild(field.render())
+            element.querySelector('.auth-card').appendChild(field.renderReactive())
         })
 
         const btn = new Button({
@@ -60,7 +60,7 @@ class SigninView extends Component {
                 router.go('/')
             }
         })
-        element.querySelector('.auth-card').appendChild(btn.render())
+        element.querySelector('.auth-card').appendChild(btn.renderReactive())
 
         return element
     }
