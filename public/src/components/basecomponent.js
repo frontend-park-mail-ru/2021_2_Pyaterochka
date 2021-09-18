@@ -1,3 +1,13 @@
+import patchDom from './base/patchDom.js'
+
+const updateBlocks = new Set()
+setInterval(() => {
+    updateBlocks.forEach((block) => {
+        block.updatePartly()
+    })
+    updateBlocks.clear()
+}, 10)
+
 class Component {
     constructor () {
         this.attributes = new Proxy({}, {
@@ -20,8 +30,16 @@ class Component {
 
     update (force = false) {
         if (!this.dom) return
-        force = true
         if (force) return this.updateForce()
+
+        updateBlocks.add(this)
+    }
+
+    updatePartly () {
+        console.log('updating', this)
+        const newDom = this.render()
+        this.dom = patchDom(this.dom, newDom)
+        console.log('updated', this, newDom)
     }
 
     updateForce () {
@@ -32,7 +50,7 @@ class Component {
 
     set slot (component) {
         this._slot = component
-        this.update()
+        this.update(true)
     }
 
     get slot () {
@@ -40,8 +58,8 @@ class Component {
     }
 
     renderReactive () {
-        this.dom = this.render()
         this.created()
+        this.dom = this.render()
         return this.dom
     }
 }
