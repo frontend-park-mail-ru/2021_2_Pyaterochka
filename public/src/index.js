@@ -11,12 +11,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const root = document.getElementById('root')
 
     router = new Router(root, [
-        new Route('/signin', new Layout(new SigninView()), 'Войти'),
-        new Route('/signup', new Layout(new SignupView()), 'Регистрация'),
-        new Route('/', new Layout(new IndexView()), 'Главная'),
-        new Route('/creator', new Layout(new CreatorView()), 'Страница автора'),
-        new Route('', new Layout(new ErrorPage()), '404')
+        new Route('/signin', new SigninView(), 'Войти'),
+        new Route('/signup', new SignupView(), 'Регистрация'),
+        new Route('/', new IndexView(), 'Главная'),
+        new Route('/creator', new CreatorView(), 'Страница автора'),
+        new Route('', new ErrorPage(), '404')
     ])
+
+    router.setLayout(new Layout())
 
     router.start()
 })

@@ -44,12 +44,22 @@ class Router {
 
     renderRoute (route) {
         document.title = route.title
+        if (this.layout) {
+            this.layout.slot = route.component
+            return
+        }
         this.container.innerHTML = ''
         this.container.appendChild(route.component.renderReactive())
     }
 
     setContainer (container) {
         this.container = container
+    }
+
+    setLayout (layout) {
+        this.layout = layout
+        this.container.innerHTML = ''
+        this.container.appendChild(layout.renderReactive())
     }
 
     addRouterListeners () {
