@@ -6,6 +6,8 @@ import LevelCard from '../components/level-card.js'
 import LockMessage from '../components/lock-message.js'
 import Navbar from '../components/navbar.js'
 import PostCard from '../components/post-card.js'
+import Skeleton from '../components/skeleton.js'
+import Spinner from '../components/spinner.js'
 
 class IndexView extends Component {
     render () {
@@ -30,6 +32,10 @@ class IndexView extends Component {
         const components = [
             new Navbar(),
             new Navbar({ user: { username: 'Person', avatar: 'https://thispersondoesnotexist.com/image' } }),
+            new Skeleton(),
+            new Skeleton({type:"text"}),
+            new Skeleton({type:"circle", height:100}),
+            new Spinner(),
             new CreatorCard(
                 {
                     name: 'IU7-memes',

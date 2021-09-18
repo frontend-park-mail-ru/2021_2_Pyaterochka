@@ -3,13 +3,23 @@ import patchDom from './base/patchDom.js'
 const updateBlocks = new Set()
 setInterval(() => {
     updateBlocks.forEach((block) => {
-        block.updatePartly()
+        try {
+            block.updatePartly()
+        }
+        catch (err) {
+            console.error('Не удалось обновить компонент', block, err)
+            try {
+                block.updateForce();
+            } catch {
+
+            }
+        }
     })
     updateBlocks.clear()
 }, 10)
 
 class Component {
-    constructor () {
+    constructor() {
         const getter = (attrs, key) => attrs[key]
 
         const update = (attrs, key, value) => {
@@ -31,41 +41,41 @@ class Component {
         this.dom = null
     }
 
-    render () {
+    render() {
     }
 
-    created () {
+    created() {
 
     }
 
-    update (force = false) {
+    update(force = false) {
         if (!this.dom) return
         if (force) return this.updateForce()
 
         updateBlocks.add(this)
     }
 
-    updatePartly () {
+    updatePartly() {
         const newDom = this.render()
         this.dom = patchDom(this.dom, newDom)
     }
 
-    updateForce () {
+    updateForce() {
         const newDom = this.render()
         this.dom.replaceWith(newDom)
         this.dom = newDom
     }
 
-    set slot (component) {
+    set slot(component) {
         this._slot = component
         this.update(true)
     }
 
-    get slot () {
+    get slot() {
         return this._slot
     }
 
-    renderReactive () {
+    renderReactive() {
         this.created()
         this.dom = this.render()
         return this.dom

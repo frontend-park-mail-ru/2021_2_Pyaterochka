@@ -39,5 +39,39 @@ export default {
         const data = await req.json()
 
         return data
+    },
+    async creatorInfo (id) {
+        const req = await fetch(basename + '/creator', {
+            method: 'get',
+            mode: 'cors',
+            credentials: 'include'
+        })
+
+        const data = await req.json()
+
+        return data
+    },
+
+    async levelsInfo (id) {
+        const req = await fetch(basename + '/levels', {
+            method: 'get',
+            mode: 'cors',
+            credentials: 'include'
+        })
+
+        const data = await req.json()
+
+        return data
+    },
+    async postsInfo (id) {
+        const req = await fetch(basename + '/posts', {
+            method: 'get',
+            mode: 'cors',
+            credentials: 'include'
+        })
+
+        const data = await req.json()
+
+        return data
     }
 }
