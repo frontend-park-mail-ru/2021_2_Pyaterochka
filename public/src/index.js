@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
         new Route('/', new IndexView(), 'Главная'),
         new Route('/creator', new CreatorView(), 'Страница автора'),
         new Route('/profile', new ProfileView(), 'Профиль'),
-        new Route('', new ErrorPage(), '404')
+        new Route('', new ErrorPage(), 'Страница не найдена')
     ])
 
     router.setLayout(new Layout())

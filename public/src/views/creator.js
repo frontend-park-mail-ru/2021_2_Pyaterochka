@@ -95,17 +95,18 @@ const styles = `
 .creator-cover + .creator-card {
     margin-top:-120px;
 }
+.creator-card {
+    width: 400px;
+    max-width: 100%;
+    margin:auto;
+}
 .creator-cover {
     height:256px;
     background-color: var(--color-grey);
     background-size:cover;
     background-position:center;
-    position: sticky;
-    top: -50px;
-    z-index: -1;
 }
 .level-card-container {
-    background:#fff;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -116,7 +117,6 @@ const styles = `
 }
 
 .post-container {
-    background:#fff;
     display: flex;
     flex-direction: column;
     align-items:center;
@@ -129,20 +129,6 @@ const styles = `
 .lock-message {
     max-width: 500px;
     margin:auto;
-}
-.creator-card__header, .creator-card__description {
-    width:100%;
-    background:#fff;
-    // box-shadow: -10px 0 40px 5px #fff;
-}
-.creator-card__header {
-    border-radius:20px 20px 0 0;
-    padding-top:30px;
-    margin-top:-30px;
-    z-index:0;
-}
-.creator-card img {
-    z-index:1;
 }
 `
 const styleElement = document.createElement('style')
