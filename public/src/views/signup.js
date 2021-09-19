@@ -8,20 +8,10 @@ class SignupView extends Component {
         element.className = 'auth-block'
         element.innerHTML = `
             <h1> Регистрация </h1>
-            <div class="auth-card shadow">
-               
-            </div>
-            <style> 
-                .auth-block {
-                   margin:auto;
-                   width:400px;
-                   text-align:center; 
-                }
-                .auth-card {
-                    padding:20px;
-                }               
-
-            </style>
+            <div class="auth-card shadow"></div>
+            <span class="auth-card__tooltip">
+                Уже есть аккаунт? <a href="#" router-go='/signin'>Войти</a>
+            </span>
         `
         const passwordInput = new InputField({
             placeholder: 'Пароль',

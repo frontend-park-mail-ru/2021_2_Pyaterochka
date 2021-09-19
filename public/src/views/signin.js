@@ -11,20 +11,10 @@ class SigninView extends Component {
         element.className = 'auth-block'
         element.innerHTML = `
             <h1> Войти </h1>
-            <div class="auth-card shadow">
-               
-            </div>
-            <style> 
-                .auth-block {
-                   margin:auto;
-                   width:400px;
-                   text-align:center; 
-                }
-                .auth-card {
-                    padding:20px;
-                }               
-
-            </style>
+            <div class="auth-card shadow"></div>
+            <span class="auth-card__tooltip">
+                Впервые на Patreon? <a href="#" router-go='/signup'>Зарегистрируйтесь</a>
+            </span>
         `
         const form = [
             new InputField({
