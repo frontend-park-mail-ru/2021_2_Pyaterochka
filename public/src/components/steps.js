@@ -62,51 +62,49 @@ const styles = `
 }
 
 .step-content {
-    max-width: 786px;
     display: inline-block;
+    max-width: 786px;
 }
 
 .step-content__number {
+    display: flex;
+    align-items: center;
     margin-bottom: 16px;
 
     font-style: normal;
     font-weight: 500;
     font-size: 24px;
     line-height: 28px;
-    display: flex;
-    align-items: center;
 
-    color: #7C7C7C;
+    color: var(--color-step-text);
 }
 
 .step-content__name {
+    display: flex;
+    align-items: center;
     margin-bottom: 5px;
 
     font-style: normal;
     font-weight: normal;
     font-size: 36px;
     line-height: 42px;
-    display: flex;
-    align-items: center;
-
-    color: #000000;
 }
 
 .step-content__description {
+    display: flex;
+    align-items: center;
+
     font-style: normal;
     font-weight: 300;
     font-size: 18px;
     line-height: 28px;
 
-    display: flex;
-    align-items: center;
-
-    color: #7C7C7C;
+    color: var(--color-step-text);
 }
 
 .step-content__description_link {
     text-decoration: none;
-    color: #FF424D;
+    color: var(--color-primary);
 }
 `
 
