@@ -3,6 +3,23 @@ class Route {
         this.url = url
         this.component = component
         this.title = title
+        this.loadingView = null
+    }
+}
+
+class DynamicComponentLoader {
+    constructor (url, ...attrs) {
+        this.url = url
+        this.attrs = attrs
+        this.component = null
+    }
+
+    async load () {
+        if (this.component) return this.component
+        const module = await import(this.url)
+        const Component = module.default
+        this.component = new Component(...this.attrs)
+        return this.component
     }
 }
 
@@ -20,7 +37,6 @@ class Router {
     getRoute (url) {
         const route = this.routes.find((route) => {
             if (route.url === '') return true
-
             const res = (new RegExp(route.url, 'gi')).exec(url)
             if (!res) return false
             return res.join('') === url
@@ -42,14 +58,27 @@ class Router {
         this.renderRoute(route)
     }
 
-    renderRoute (route) {
+    async renderRoute (route) {
         document.title = route.title
+        let view = route.component
+
+        if (view instanceof DynamicComponentLoader) {
+            if (this.loadingView && !view.component) {
+                if (this.layout) {
+                    this.layout.slot = this.loadingView
+                } else {
+                    this.container.innerHTML = ''
+                    this.container.appendChild(this.loadingView.renderReactive())
+                }
+            }
+            view = await view.load()
+        }
         if (this.layout) {
-            this.layout.slot = route.component
+            this.layout.slot = view
             return
         }
         this.container.innerHTML = ''
-        this.container.appendChild(route.component.renderReactive())
+        this.container.appendChild(view.renderReactive())
     }
 
     setContainer (container) {
@@ -72,12 +101,16 @@ class Router {
             }
             e.preventDefault()
         })
-        window.addEventListener('popstate', (e) => {
-            this.renderRoute(this.getRoute(e.state))
-        })
+        // window.addEventListener('popstate', (e) => {
+        //     this.renderRoute(this.getRoute(e.state))
+        // })
+    }
+
+    setLoadingView (component) {
+        this.loadingView = component
     }
 }
 
 export default Router
 
-export { Route }
+export { Route, DynamicComponentLoader }

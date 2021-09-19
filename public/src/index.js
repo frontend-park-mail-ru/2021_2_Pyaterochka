@@ -1,27 +1,22 @@
-import Router, { Route } from './router/index.js'
-import IndexView from './views/index.js'
-import ErrorPage from './views/errorpage.js'
+import Router, { Route, DynamicComponentLoader } from './router/index.js'
 import Layout from './components/layout.js'
-import SigninView from './views/signin.js'
-import SignupView from './views/signup.js'
-import CreatorView from './views/creator.js'
-import ProfileView from './views/profile.js'
+import LoadingView from './views/loading-view.js'
 
 let router
 document.addEventListener('DOMContentLoaded', () => {
     const root = document.getElementById('root')
 
     router = new Router(root, [
-        new Route('/signin', new SigninView(), 'Войти'),
-        new Route('/signup', new SignupView(), 'Регистрация'),
-        new Route('/', new IndexView(), 'Главная'),
-        new Route('/creator', new CreatorView(), 'Страница автора'),
-        new Route('/profile', new ProfileView(), 'Профиль'),
-        new Route('', new ErrorPage(), 'Страница не найдена')
+        new Route('/signin', new DynamicComponentLoader('/src/views/signin.js'), 'Войти'),
+        new Route('/signup', new DynamicComponentLoader('/src/views/signup.js'), 'Регистрация'),
+        new Route('/', new DynamicComponentLoader('/src/views/index.js'), 'Главная'),
+        new Route('/creator', new DynamicComponentLoader('/src/views/creator.js'), 'Страница автора'),
+        new Route('/profile', new DynamicComponentLoader('/src/views/profile.js'), 'Профиль'),
+        new Route('', new DynamicComponentLoader('/src/views/errorpage.js'), 'Страница не найдена')
     ])
 
     router.setLayout(new Layout())
-
+    router.setLoadingView(new LoadingView())
     router.start()
 
     console.log(router)
