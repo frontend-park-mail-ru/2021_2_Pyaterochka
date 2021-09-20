@@ -263,7 +263,7 @@ class IndexView extends Component {
                 margin:auto;
                 margin-top:50px;
             }
-            .component-wrapper__variants, .components-map {
+            .component-wrapper__variants{
                 display:flex;
                 justify-content: left;
                 flex-wrap:wrap;
@@ -281,12 +281,17 @@ class IndexView extends Component {
                 border: solid 2px #000;
             }
             .components-map {
-            
                 background: #fff;
                 position: sticky;
                 top: 0;
-                z-index:1000;
-            
+                z-index: 1000;
+                overflow: auto;
+                display: block;
+                white-space: nowrap;
+                width: 100%;
+            }
+            .components-map > .btn {
+                display: inline;
             }
             </style>
         `
