@@ -28,14 +28,10 @@ class Step extends Component {
                 <div class="step-content__description">
                     <span>${this.attributes.description}</span></div>
             </div>
-            <div class="image">
-                <img src="../../imgs/steps/step${this.attributes.number}.png" alt="">
-            </div>
+            <img src="../../imgs/steps/step${this.attributes.number}.png" alt="">
             `
         : `
-            <div class="image">
-                <img src="../../imgs/steps/step${this.attributes.number}.png" alt="">
-            </div>
+            <img src="../../imgs/steps/step${this.attributes.number}.png" alt="">
             <div class="step-content">
                 <div class="step-content__number">ШАГ ${this.attributes.number}</div>
                 <div class="step-content__name">
