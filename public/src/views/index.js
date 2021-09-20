@@ -6,7 +6,8 @@ import LevelCard from '../components/level-card.js'
 import LockMessage from '../components/lock-message.js'
 import Navbar from '../components/navbar.js'
 import PostCard from '../components/post-card.js'
-import Step from '../components/steps.js'
+import Step from '../components/step.js'
+import Comment from '../components/comment.js'
 
 class IndexView extends Component {
     render () {
@@ -106,15 +107,21 @@ class IndexView extends Component {
             }),
 
             new Step({
-                number: '1',
+                number: 1,
                 name: 'Настройте свою страницу и уровни подписки',
-                description: '<a href="#" class="step-content__description_link">Зарегистрируйтесь</a> и настройте вашу страницу на Patreon. Продумайте уровни подписки, от самого дешевого до привилегированного. Каждый уровень предлагает особые условия и преимущества вашим фанатам. Подумайте, что вы реально сможете давать регулярно и чему будут рады ваши фанаты. Не усложняйте!'
+                description: '<a router-go="/signup" class="step-content__description_link">Зарегистрируйтесь</a> и настройте вашу страницу на Patreon. Продумайте уровни подписки, от самого дешевого до привилегированного. Каждый уровень предлагает особые условия и преимущества вашим фанатам. Подумайте, что вы реально сможете давать регулярно и чему будут рады ваши фанаты. Не усложняйте!'
             }),
 
             new Step({
-                number: '2',
+                number: 2,
                 name: 'Расскажите своим подписчикам, что вы теперь есть на Patreon',
                 description: 'Сделайте посты во всех ваших основных соц.сетях, чтобы оповестить всех ваших подписчиков. Patreon - это место, где рождаются особые отношения между вами и вашими самыми активными фанатами - теми, кто хочет чего-то большего, чем просто следить за вами в социальных сетях.'
+            }),
+
+            new Comment({
+                user: { username: 'Person', avatar: 'https://sun9-12.userapi.com/impf/c854228/v854228051/16558/K7rRvW0xelY.jpg?size=647x809&quality=96&sign=83e72450667c775a5831dac80fb2dea5&type=album' },
+                published: new Date(new Date() - 60 * 1000 * 5),
+                body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti quod iure necessitatibus doloribus magni assumenda quasi, a maiores repellendus et, quidem sit vitae totam fugiat ut voluptas libero dolor perspiciatis.'
             }),
 
             new InputField({ placeholder: 'Placeholder', validation: [(v) => v === '' ? null : 'Поле не должно быть пустым'] }),

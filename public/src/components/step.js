@@ -2,7 +2,7 @@ import Component from './basecomponent.js'
 
 class Step extends Component {
     constructor ({
-        number = '',
+        number = 0,
         name = '',
         description = ''
     }) {
@@ -105,6 +105,14 @@ const styles = `
 .step-content__description_link {
     text-decoration: none;
     color: var(--color-primary);
+}
+
+.step-content__description_link:hover {
+    color: var(--color-primary-light);
+}
+
+.step-content__description_link:active {
+    color: var(--color-primary-dark);
 }
 `
 
