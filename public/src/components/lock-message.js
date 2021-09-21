@@ -1,33 +1,33 @@
-import Component from './basecomponent.js'
+import Component from './basecomponent.js';
 
 class LockMessage extends Component {
     constructor ({
         text = 'Стань патроном, чтобы продолжить наслаждаться работами автора',
         dark = true
     }, slot = null) {
-        super()
-        this.attributes.text = text
-        this.attributes.dark = dark
-        this.slot = slot
+        super();
+        this.attributes.text = text;
+        this.attributes.dark = dark;
+        this.slot = slot;
     }
 
     render () {
-        const element = document.createElement('div')
-        element.className = `lock-message ${this.attributes.dark ? 'dark' : ''}`
+        const element = document.createElement('div');
+        element.className = `lock-message ${this.attributes.dark ? 'dark' : ''}`;
 
         element.innerHTML = `
             <div class='icon'></div>
             <span>${this.attributes.text}</span>
-        `
+        `;
 
         if (this.slot) {
-            element.appendChild(this.slot.renderReactive())
+            element.appendChild(this.slot.renderReactive());
         }
 
-        return element
+        return element;
     }
 }
-export default LockMessage
+export default LockMessage;
 
 const styles = `
 
@@ -78,7 +78,7 @@ const styles = `
 .lock-message.dark{
     color:#000;
 }
-`
-const styleElement = document.createElement('style')
-styleElement.innerHTML = styles
-document.body.appendChild(styleElement)
+`;
+const styleElement = document.createElement('style');
+styleElement.innerHTML = styles;
+document.body.appendChild(styleElement);

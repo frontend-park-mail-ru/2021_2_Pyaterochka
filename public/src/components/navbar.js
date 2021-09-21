@@ -1,15 +1,15 @@
-import user from '../storage/user.js'
-import Component from './basecomponent.js'
+import user from '../storage/user.js';
+import Component from './basecomponent.js';
 
 class Navbar extends Component {
     constructor ({ user = null } = {}) {
-        super()
-        this.attributes.user = user
-        this.attributes.isOpen = false
+        super();
+        this.attributes.user = user;
+        this.attributes.isOpen = false;
     }
 
     render () {
-        const element = document.createElement('div')
+        const element = document.createElement('div');
         element.innerHTML = `
             <div class="navbar">
                 <a href="#" class="navbar-brand" router-go="/">Patreon</a>
@@ -34,19 +34,19 @@ class Navbar extends Component {
 }
                 
             </div>
-        `
+        `;
 
-        const popupLogout = element.querySelector('.navbar-popup .logout')
+        const popupLogout = element.querySelector('.navbar-popup .logout');
         if (popupLogout) {
             popupLogout.addEventListener('click', () => {
-                user.logout()
-            })
+                user.logout();
+            });
         }
 
-        return element
+        return element;
     }
 }
-export default Navbar
+export default Navbar;
 
 const styles = `
 .navbar {
@@ -124,8 +124,8 @@ const styles = `
     display:block;
 }
 
-`
+`;
 
-const styleElement = document.createElement('style')
-styleElement.innerHTML = styles
-document.body.appendChild(styleElement)
+const styleElement = document.createElement('style');
+styleElement.innerHTML = styles;
+document.body.appendChild(styleElement);

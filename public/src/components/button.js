@@ -1,4 +1,4 @@
-import Component from './basecomponent.js'
+import Component from './basecomponent.js';
 
 class Button extends Component {
     constructor ({
@@ -7,24 +7,24 @@ class Button extends Component {
         rounded = false,
         onclick = () => {}
     }) {
-        super()
-        this.attributes.text = text
-        this.attributes.color = color
-        this.attributes.rounded = rounded
-        this.attributes.onclick = onclick
+        super();
+        this.attributes.text = text;
+        this.attributes.color = color;
+        this.attributes.rounded = rounded;
+        this.attributes.onclick = onclick;
     }
 
     render () {
-        const element = document.createElement('button')
-        element.innerText = this.attributes.text
+        const element = document.createElement('button');
+        element.innerText = this.attributes.text;
 
-        element.className = `btn btn-${this.attributes.color} ${this.attributes.rounded ? 'btn-rounded' : ''}`
+        element.className = `btn btn-${this.attributes.color} ${this.attributes.rounded ? 'btn-rounded' : ''}`;
 
-        element.addEventListener('click', this.attributes.onclick)
-        return element
+        element.addEventListener('click', this.attributes.onclick);
+        return element;
     }
 }
-export default Button
+export default Button;
 
 const styles = `
 .btn {
@@ -105,7 +105,7 @@ const styles = `
 
 
 
-`
-const styleElement = document.createElement('style')
-styleElement.innerHTML = styles
-document.body.appendChild(styleElement)
+`;
+const styleElement = document.createElement('style');
+styleElement.innerHTML = styles;
+document.body.appendChild(styleElement);

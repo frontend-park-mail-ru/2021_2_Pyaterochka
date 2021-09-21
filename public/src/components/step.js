@@ -1,4 +1,4 @@
-import Component from './basecomponent.js'
+import Component from './basecomponent.js';
 
 class Step extends Component {
     constructor ({
@@ -6,14 +6,14 @@ class Step extends Component {
         name = '',
         description = ''
     }) {
-        super()
-        this.attributes.number = number
-        this.attributes.name = name
-        this.attributes.description = description
+        super();
+        this.attributes.number = number;
+        this.attributes.name = name;
+        this.attributes.description = description;
     }
 
     render () {
-        const element = document.createElement('div')
+        const element = document.createElement('div');
         element.innerHTML = `
         <div class="step">
         
@@ -43,11 +43,11 @@ class Step extends Component {
             `
 }
         </div>
-        `
-        return element
+        `;
+        return element;
     }
 }
-export default Step
+export default Step;
 
 const styles = `
 .step {
@@ -110,8 +110,8 @@ const styles = `
 .step-content__description_link:active {
     color: var(--color-primary-dark);
 }
-`
+`;
 
-const styleElement = document.createElement('style')
-styleElement.innerHTML = styles
-document.body.appendChild(styleElement)
+const styleElement = document.createElement('style');
+styleElement.innerHTML = styles;
+document.body.appendChild(styleElement);

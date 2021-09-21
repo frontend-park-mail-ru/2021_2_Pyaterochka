@@ -1,38 +1,38 @@
-import Component from '../components/basecomponent.js'
-import Button from '../components/button.js'
-import { router } from '../index.js'
+import Component from '../components/basecomponent.js';
+import Button from '../components/button.js';
+import { router } from '../index.js';
 
 class ErrorPage extends Component {
     constructor (err = 404, desc = 'Страница не найдена') {
-        super()
-        this.attributes.error = err
-        this.attributes.message = desc
+        super();
+        this.attributes.error = err;
+        this.attributes.message = desc;
     }
 
     render () {
-        const element = document.createElement('div')
-        element.className = 'error-block'
+        const element = document.createElement('div');
+        element.className = 'error-block';
         element.innerHTML = `
             <h1>${this.attributes.message}</h1>
 
             <img src="/imgs/error_page.svg">
-        `
+        `;
 
         const goHome = new Button({
             text: 'Перейти на главную',
             rounded: true,
             color: 'primary',
             onclick: () => {
-                router.go('/')
+                router.go('/');
             }
-        })
+        });
 
-        element.appendChild(goHome.renderReactive())
-        return element
+        element.appendChild(goHome.renderReactive());
+        return element;
     }
 }
 
-export default ErrorPage
+export default ErrorPage;
 
 const styles = `
 .error-block {
@@ -64,7 +64,7 @@ const styles = `
     max-width: 100%;
 }
 
-`
-const styleElement = document.createElement('style')
-styleElement.innerHTML = styles
-document.body.appendChild(styleElement)
+`;
+const styleElement = document.createElement('style');
+styleElement.innerHTML = styles;
+document.body.appendChild(styleElement);

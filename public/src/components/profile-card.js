@@ -1,4 +1,4 @@
-import Component from './basecomponent.js'
+import Component from './basecomponent.js';
 
 class ProfileCard extends Component {
     constructor ({
@@ -6,16 +6,16 @@ class ProfileCard extends Component {
         avatar = null,
         supportCount = 0
     } = {}, slot = null) {
-        super()
-        this.attributes.username = username
-        this.attributes.avatar = avatar
-        this.attributes.supportCount = supportCount
-        this.slot = slot
+        super();
+        this.attributes.username = username;
+        this.attributes.avatar = avatar;
+        this.attributes.supportCount = supportCount;
+        this.slot = slot;
     }
 
     render () {
-        const element = document.createElement('div')
-        element.className = 'profile-card'
+        const element = document.createElement('div');
+        element.className = 'profile-card';
         element.innerHTML = `
             <img src="${this.attributes.avatar}" />
             <div class="profile-card-body">
@@ -26,17 +26,17 @@ class ProfileCard extends Component {
                     Поддерживает ${this.attributes.supportCount} авторов
                 </div>
             </div>
-        `
+        `;
         if (this.slot) {
-            const dom = this.slot.renderReactive()
-            dom.style.marginTop = '20px'
-            element.querySelector('.profile-card-body').appendChild(dom)
+            const dom = this.slot.renderReactive();
+            dom.style.marginTop = '20px';
+            element.querySelector('.profile-card-body').appendChild(dom);
         }
 
-        return element
+        return element;
     }
 }
-export default ProfileCard
+export default ProfileCard;
 
 const styles = `
 .profile-card {
@@ -71,7 +71,7 @@ const styles = `
     line-height: 23px;
     text-align: center;
 }
-`
-const styleElement = document.createElement('style')
-styleElement.innerHTML = styles
-document.body.appendChild(styleElement)
+`;
+const styleElement = document.createElement('style');
+styleElement.innerHTML = styles;
+document.body.appendChild(styleElement);

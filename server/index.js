@@ -1,25 +1,25 @@
-const express = require('express')
-const app = express()
-const port = process.env.PORT || 3000
+const express = require('express');
+const app = express();
+const port = process.env.PORT || 3000;
 
-const session = require('express-session')
+const session = require('express-session');
 
 app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Headers', '*')
-    res.setHeader('Access-Control-Allow-Methods', '*')
-    res.setHeader('Access-Control-Allow-Origin', 'localhost')
-    res.setHeader('Access-Control-Allow-Credentials', 'true')
+    res.setHeader('Access-Control-Allow-Headers', '*');
+    res.setHeader('Access-Control-Allow-Methods', '*');
+    res.setHeader('Access-Control-Allow-Origin', 'localhost');
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
 
-    next()
-})
+    next();
+});
 app.use(session({
     secret: 'keyboard cat',
     resave: false,
     saveUninitialized: true,
     cookie: {}
-}))
-app.use(express.json())
-app.use(express.static('public'))
+}));
+app.use(express.json());
+app.use(express.static('public'));
 
 const users = [
     {
@@ -36,48 +36,47 @@ const users = [
         email: 'test2@test.ru',
         avatar: 'https://www.korabli.eu/users/andrey/images/unnamed-gallery-1/full/091033jpg.jpg'
     }
-]
+];
 app.post('/api/login', (req, res) => {
     const user = users.find(
         (user) =>
             req.body.email === user.email &&
             req.body.password === user.password
-    )
+    );
     if (!user) {
         res.status(401).json({
             status: 'error'
-        })
-        return
+        });
+        return;
     }
-    req.session.user = user
+    req.session.user = user;
     res.json({
         status: 'success'
-    })
-})
+    });
+});
 
 app.get('/api/profile', (req, res) => {
     if (!req.session.user) {
         res.status(401).json({
             status: 'error'
-        })
-        return
+        });
+        return;
     }
-    res.json(req.session.user)
-})
+    res.json(req.session.user);
+});
 
 app.get('/api/logout', (req, res) => {
     if (!req.session.user) {
         res.status(401).json({
             status: 'error'
-        })
-        return
+        });
+        return;
     }
-    req.session.user = null
+    req.session.user = null;
     res.json({
         status: 'ok'
-    })
-})
-
+    });
+});
 
 app.get('/api/creator', (req, res) => {
     res.json({
@@ -86,8 +85,8 @@ app.get('/api/creator', (req, res) => {
         description: 'создает мемы из закулисий цирка',
         avatar: 'https://sun9-12.userapi.com/impf/c854228/v854228051/16558/K7rRvW0xelY.jpg?size=647x809&quality=96&sign=83e72450667c775a5831dac80fb2dea5&type=album',
         cover: 'https://sun9-32.userapi.com/impf/adHV39RxzhK4WR5F5jATKuoEAOJ1bJrbpl_mqg/cbYQA5UNtlg.jpg?size=795x200&quality=95&crop=0,0,1590,400&sign=2ffcff16ba49a336f42b603af92122d4&type=cover_group'
-    })
-})
+    });
+});
 
 app.get('/api/posts', (req, res) => {
     res.json([
@@ -111,8 +110,8 @@ app.get('/api/posts', (req, res) => {
             level: 'Профессионал',
             image: 'https://w-dog.ru/wallpapers/12/12/456213867326621/fraktaly-prelomlenie-sveta-cvetovaya-gamma-figury-geometrii-triptix.jpg'
         }
-    ])
-})
+    ]);
+});
 
 app.get('/api/levels', (req, res) => {
     res.json([
@@ -148,8 +147,8 @@ app.get('/api/levels', (req, res) => {
             price: '10 ₽',
             color: 'success'
         }
-    ])
-})
+    ]);
+});
 app.listen(port, () => {
-    console.log(`App listening at http://localhost:${port}`)
-})
+    console.log(`App listening at http://localhost:${port}`);
+});

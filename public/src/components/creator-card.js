@@ -1,4 +1,4 @@
-import Component from './basecomponent.js'
+import Component from './basecomponent.js';
 
 class CreatorCard extends Component {
     constructor ({
@@ -8,16 +8,16 @@ class CreatorCard extends Component {
         description = '',
         shadow = false
     }) {
-        super()
-        this.attributes.name = name
-        this.attributes.avatar = avatar
-        this.attributes.description = description
-        this.attributes.shadow = shadow
+        super();
+        this.attributes.name = name;
+        this.attributes.avatar = avatar;
+        this.attributes.description = description;
+        this.attributes.shadow = shadow;
     }
 
     render () {
-        const element = document.createElement('div')
-        element.className = 'creator-card'
+        const element = document.createElement('div');
+        element.className = 'creator-card';
 
         element.innerHTML = `
             <div class="creator-card__avatar ${this.attributes.shadow ? 'shadow' : ''}" style="background-image: url(${this.attributes.avatar})"></div>
@@ -27,12 +27,12 @@ class CreatorCard extends Component {
             <div class="creator-card__description">
                 ${this.attributes.description}
             </div>
-        `
-        return element
+        `;
+        return element;
     }
 }
 
-export default CreatorCard
+export default CreatorCard;
 
 const styles = `
 .creator-card {
@@ -74,7 +74,7 @@ const styles = `
     background-size:120%;
 }
 
-`
-const styleElement = document.createElement('style')
-styleElement.innerHTML = styles
-document.body.appendChild(styleElement)
+`;
+const styleElement = document.createElement('style');
+styleElement.innerHTML = styles;
+document.body.appendChild(styleElement);

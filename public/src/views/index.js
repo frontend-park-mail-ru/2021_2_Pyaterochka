@@ -1,21 +1,21 @@
-import Component from '../components/basecomponent.js'
-import Button from '../components/button.js'
-import CreatorCard from '../components/creator-card.js'
-import Footer from '../components/footer.js'
-import InputField from '../components/input-field.js'
-import LevelCard from '../components/level-card.js'
-import LockMessage from '../components/lock-message.js'
-import Navbar from '../components/navbar.js'
-import PostCard from '../components/post-card.js'
-import ProfileCard from '../components/profile-card.js'
-import Skeleton from '../components/skeleton.js'
-import Spinner from '../components/spinner.js'
-import Step from '../components/step.js'
-import Comment from '../components/comment.js'
+import Component from '../components/basecomponent.js';
+import Button from '../components/button.js';
+import CreatorCard from '../components/creator-card.js';
+import Footer from '../components/footer.js';
+import InputField from '../components/input-field.js';
+import LevelCard from '../components/level-card.js';
+import LockMessage from '../components/lock-message.js';
+import Navbar from '../components/navbar.js';
+import PostCard from '../components/post-card.js';
+import ProfileCard from '../components/profile-card.js';
+import Skeleton from '../components/skeleton.js';
+import Spinner from '../components/spinner.js';
+import Step from '../components/step.js';
+import Comment from '../components/comment.js';
 
 class IndexView extends Component {
     constructor () {
-        super()
+        super();
         this.attributes.cps = [
             {
                 name: 'Шапка',
@@ -287,14 +287,14 @@ class IndexView extends Component {
 
                 ]
             }
-        ]
+        ];
 
-        this.attributes.cps.forEach((c) => { c.active = 0 })
+        this.attributes.cps.forEach((c) => { c.active = 0; });
     }
 
     render () {
-        const element = document.createElement('div')
-        element.className = 'container'
+        const element = document.createElement('div');
+        element.className = 'container';
         element.innerHTML = `
             <h1 class="text-center">Страницы</h1>
             <div>
@@ -343,12 +343,12 @@ class IndexView extends Component {
                 display: inline;
             }
             </style>
-        `
+        `;
 
         this.attributes.cps.forEach((info, ii) => {
-            const component = info.data[info.active].component
-            const componentWrapper = document.createElement('div')
-            componentWrapper.className = 'component-wrapper'
+            const component = info.data[info.active].component;
+            const componentWrapper = document.createElement('div');
+            componentWrapper.className = 'component-wrapper';
             componentWrapper.innerHTML = `
                 <h2>${info.name}</h2>
                 ${info.data.length > 1 ? 'Варианты компонента:' : ''}
@@ -361,42 +361,42 @@ class IndexView extends Component {
                 <div class='component-wrapper__table'>
                 
                 </div>
-            `
+            `;
             if (info.data.length > 1) {
                 info.data.forEach((c, i) => {
                     componentWrapper.querySelector('.component-wrapper__variants').appendChild(new Button({
                         text: c.name,
                         onclick: () => {
-                            this.attributes.cps[ii].active = i
-                            this.attributes.cps = this.attributes.cps
+                            this.attributes.cps[ii].active = i;
+                            this.attributes.cps = this.attributes.cps;
                         },
                         color: info.active === i ? 'primary' : 'default'
-                    }).renderReactive())
-                })
+                    }).renderReactive());
+                });
             }
 
-            const table = document.createElement('table')
-            table.innerHTML += `<tr><th>Component name</th><td>${component.constructor.name}</td></tr>`
+            const table = document.createElement('table');
+            table.innerHTML += `<tr><th>Component name</th><td>${component.constructor.name}</td></tr>`;
             Object.keys(component.attributes).forEach(key => {
-                table.innerHTML += `<tr><td>${key}</td><td>${component.attributes[key]}</td></tr>`
-            })
-            table.innerHTML += `<tr><td>SLOT</td><td>${component.slot}</td></tr>`
+                table.innerHTML += `<tr><td>${key}</td><td>${component.attributes[key]}</td></tr>`;
+            });
+            table.innerHTML += `<tr><td>SLOT</td><td>${component.slot}</td></tr>`;
 
-            componentWrapper.querySelector('.component-wrapper__table').appendChild(table)
-            componentWrapper.querySelector('.component-wrapper__component').appendChild(component.renderReactive())
-            element.appendChild(componentWrapper)
+            componentWrapper.querySelector('.component-wrapper__table').appendChild(table);
+            componentWrapper.querySelector('.component-wrapper__component').appendChild(component.renderReactive());
+            element.appendChild(componentWrapper);
 
             element.querySelector('.components-map').appendChild(
                 new Button({
                     text: info.name,
                     onclick: () => {
-                        window.scrollTo(0, componentWrapper.offsetTop - 100)
+                        window.scrollTo(0, componentWrapper.offsetTop - 100);
                     }
                 }).renderReactive()
-            )
-        })
-        return element
+            );
+        });
+        return element;
     }
 }
 
-export default IndexView
+export default IndexView;
