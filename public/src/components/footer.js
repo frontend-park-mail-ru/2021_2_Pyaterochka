@@ -1,21 +1,21 @@
-import Component from './basecomponent.js'
+import Component from './basecomponent.js';
 
 class Footer extends Component {
     render () {
-        const element = document.createElement('div')
-        element.className = 'footer'
+        const element = document.createElement('div');
+        element.className = 'footer';
         element.innerHTML = `
             <div class="footer-body"> 
                 © Patreon by Pyaterochka team  from Technopark Mail.ru, 2021
                 <br>
                 Использованы материалы freepik - <a href="https://ru.freepik.com/">ru.freepik.com</a>
             </div>
-        `
+        `;
 
-        return element
+        return element;
     }
 }
-export default Footer
+export default Footer;
 
 const styles = `
 .footer {
@@ -37,7 +37,7 @@ const styles = `
     color: #fff;
 }
 
-`
-const styleElement = document.createElement('style')
-styleElement.innerHTML = styles
-document.body.appendChild(styleElement)
+`;
+const styleElement = document.createElement('style');
+styleElement.innerHTML = styles;
+document.body.appendChild(styleElement);

@@ -1,27 +1,27 @@
-import Component from './basecomponent.js'
+import Component from './basecomponent.js';
 
 class Comment extends Component {
     timeDiff (date) {
-        const diff = (new Date()).getTime() - date
+        const diff = (new Date()).getTime() - date;
         if (diff <= 1000 * 60 * 5) {
-            return 'менее 5 минут назад'
+            return 'менее 5 минут назад';
         }
         if (diff < 1000 * 60 * 60) {
-            return Math.round(diff / (1000 * 60)) + ' минут назад'
+            return Math.round(diff / (1000 * 60)) + ' минут назад';
         }
 
         if (diff < 1000 * 60 * 60 * 24) {
-            return Math.round(diff / (1000 * 60 * 60)) + ' часов назад'
+            return Math.round(diff / (1000 * 60 * 60)) + ' часов назад';
         }
 
         if (diff < 1000 * 60 * 60 * 24 * 30) {
-            return Math.round(diff / (1000 * 60 * 60 * 24)) + ' дней назад'
+            return Math.round(diff / (1000 * 60 * 60 * 24)) + ' дней назад';
         }
         if (date < 1000 * 60 * 60 * 24 * 30 * 12) {
-            return Math.round(diff / (1000 * 60 * 60 * 24 * 30)) + ' месяцев назад'
+            return Math.round(diff / (1000 * 60 * 60 * 24 * 30)) + ' месяцев назад';
         }
 
-        return Math.round(diff / (1000 * 60 * 60 * 24 * 30 * 12)) + ' месяцев назад'
+        return Math.round(diff / (1000 * 60 * 60 * 24 * 30 * 12)) + ' месяцев назад';
     }
 
     constructor ({
@@ -30,14 +30,14 @@ class Comment extends Component {
         body = ''
 
     }) {
-        super()
-        this.attributes.user = user
-        this.attributes.published = published
-        this.attributes.body = body
+        super();
+        this.attributes.user = user;
+        this.attributes.published = published;
+        this.attributes.body = body;
     }
 
     render () {
-        const element = document.createElement('div')
+        const element = document.createElement('div');
         element.innerHTML = `
         <div class="comment">
             <div class="comment__user-avatar">
@@ -51,11 +51,11 @@ class Comment extends Component {
     
             <div class="comment__body">${this.attributes.body}</div>
         </div>
-        `
-        return element
+        `;
+        return element;
     }
 }
-export default Comment
+export default Comment;
 
 const styles = `
 .comment {
@@ -116,8 +116,8 @@ const styles = `
     font-size: 18px;
     line-height: 21px;
 }
-`
+`;
 
-const styleElement = document.createElement('style')
-styleElement.innerHTML = styles
-document.body.appendChild(styleElement)
+const styleElement = document.createElement('style');
+styleElement.innerHTML = styles;
+document.body.appendChild(styleElement);

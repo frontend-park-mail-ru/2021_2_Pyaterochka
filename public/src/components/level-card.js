@@ -1,5 +1,5 @@
-import Component from './basecomponent.js'
-import Button from './button.js'
+import Component from './basecomponent.js';
+import Button from './button.js';
 
 class LevelCard extends Component {
     constructor ({
@@ -11,19 +11,19 @@ class LevelCard extends Component {
         price = '0 $',
         color = 'primary'
     }) {
-        super()
-        this.attributes.id = id
-        this.attributes.name = name
-        this.attributes.parentName = parentName
-        this.attributes.benefits = benefits
-        this.attributes.cover = cover
-        this.attributes.price = price
-        this.attributes.color = color
+        super();
+        this.attributes.id = id;
+        this.attributes.name = name;
+        this.attributes.parentName = parentName;
+        this.attributes.benefits = benefits;
+        this.attributes.cover = cover;
+        this.attributes.price = price;
+        this.attributes.color = color;
     }
 
     render () {
-        const element = document.createElement('div')
-        element.className = 'level-card'
+        const element = document.createElement('div');
+        element.className = 'level-card';
 
         element.innerHTML = `
             <div>
@@ -52,7 +52,7 @@ class LevelCard extends Component {
                     <div class="level-card__body__benefit">
                         ${b}
                     </div>
-                    `
+                    `;
     }).join('')
 }
                
@@ -71,13 +71,13 @@ class LevelCard extends Component {
 
 
             </div>
-        `
-        const btn = new Button({ text: 'Выбрать уровень', color: this.attributes.color })
-        element.querySelector('.level-card__action').appendChild(btn.renderReactive())
-        return element
+        `;
+        const btn = new Button({ text: 'Выбрать уровень', color: this.attributes.color });
+        element.querySelector('.level-card__action').appendChild(btn.renderReactive());
+        return element;
     }
 }
-export default LevelCard
+export default LevelCard;
 
 const styles = `
 .level-card {
@@ -159,7 +159,7 @@ const styles = `
     color:var(--color-primary);
     font-weight:900;
 }
-`
-const styleElement = document.createElement('style')
-styleElement.innerHTML = styles
-document.body.appendChild(styleElement)
+`;
+const styleElement = document.createElement('style');
+styleElement.innerHTML = styles;
+document.body.appendChild(styleElement);

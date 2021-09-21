@@ -1,4 +1,4 @@
-import Component from './basecomponent.js'
+import Component from './basecomponent.js';
 
 class InputField extends Component {
     constructor ({
@@ -7,15 +7,15 @@ class InputField extends Component {
         value = '',
         validation = []
     }) {
-        super()
-        this.attributes.placeholder = placeholder
-        this.attributes.type = type
-        this.attributes.value = value
-        this.attributes.validation = validation
+        super();
+        this.attributes.placeholder = placeholder;
+        this.attributes.type = type;
+        this.attributes.value = value;
+        this.attributes.validation = validation;
     }
 
     render () {
-        const element = document.createElement('div')
+        const element = document.createElement('div');
         element.innerHTML = `
         <label class="input-field">
             <input placeholder=" " type="${this.attributes.type}" value="${this.attributes.value}"/>
@@ -26,55 +26,55 @@ class InputField extends Component {
         <div class="input-validation">
 
         </div>
-        `
+        `;
 
         element.addEventListener('input', e => {
-            this.validate()
-        })
-        this.input = element.querySelector('input')
-        this.element = element
+            this.validate();
+        });
+        this.input = element.querySelector('input');
+        this.element = element;
 
-        return element
+        return element;
     }
 
     getValue () {
-        return this.input.value
+        return this.input.value;
     }
 
     validate () {
-        const element = this.element
-        const inputField = element.querySelector('.input-field')
-        const validation = element.querySelector('.input-validation')
-        const value = element.querySelector('input').value
+        const element = this.element;
+        const inputField = element.querySelector('.input-field');
+        const validation = element.querySelector('.input-validation');
+        const value = element.querySelector('input').value;
 
         const errors = this.attributes.validation.map((rule) => {
-            return rule(value)
-        }).filter((err) => err !== null)
+            return rule(value);
+        }).filter((err) => err !== null);
 
         const elements = errors.map(error => {
-            const el = document.createElement('div')
-            el.innerText = error
-            el.className = 'input-validation__error'
-            return el
-        })
+            const el = document.createElement('div');
+            el.innerText = error;
+            el.className = 'input-validation__error';
+            return el;
+        });
 
-        validation.innerHTML = ''
+        validation.innerHTML = '';
         elements.forEach(element => {
-            validation.appendChild(element)
-        })
+            validation.appendChild(element);
+        });
 
         if (elements.length === 0) {
-            inputField.classList.add('valid')
-            inputField.classList.remove('invalid')
+            inputField.classList.add('valid');
+            inputField.classList.remove('invalid');
         } else {
-            inputField.classList.remove('valid')
-            inputField.classList.add('invalid')
+            inputField.classList.remove('valid');
+            inputField.classList.add('invalid');
         }
 
-        return errors
+        return errors;
     }
 }
-export default InputField
+export default InputField;
 
 const styles = `
 .input-field {
@@ -147,7 +147,7 @@ const styles = `
     font-size:16px;
     top:-2px;
 }
-`
-const styleElement = document.createElement('style')
-styleElement.innerHTML = styles
-document.body.appendChild(styleElement)
+`;
+const styleElement = document.createElement('style');
+styleElement.innerHTML = styles;
+document.body.appendChild(styleElement);

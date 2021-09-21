@@ -1,36 +1,36 @@
-import Component from './basecomponent.js'
-import Button from './button.js'
-import LockMessage from './lock-message.js'
+import Component from './basecomponent.js';
+import Button from './button.js';
+import LockMessage from './lock-message.js';
 
 class PostCard extends Component {
     timeDiff (date) {
-        const diff = (new Date()).getTime() - date
+        const diff = (new Date()).getTime() - date;
         if (diff <= 1000 * 60 * 5) {
-            return 'менее 5 минут назад'
+            return 'менее 5 минут назад';
         }
         if (diff < 1000 * 60 * 60) {
-            return Math.round(diff / (1000 * 60)) + ' минут назад'
+            return Math.round(diff / (1000 * 60)) + ' минут назад';
         }
 
         if (diff < 1000 * 60 * 60 * 24) {
-            return Math.round(diff / (1000 * 60 * 60)) + ' часов назад'
+            return Math.round(diff / (1000 * 60 * 60)) + ' часов назад';
         }
 
         if (diff < 1000 * 60 * 60 * 24 * 30) {
-            return Math.round(diff / (1000 * 60 * 60 * 24)) + ' дней назад'
+            return Math.round(diff / (1000 * 60 * 60 * 24)) + ' дней назад';
         }
         if (date < 1000 * 60 * 60 * 24 * 30 * 12) {
-            return Math.round(diff / (1000 * 60 * 60 * 24 * 30)) + ' месяцев назад'
+            return Math.round(diff / (1000 * 60 * 60 * 24 * 30)) + ' месяцев назад';
         }
 
-        return Math.round(diff / (1000 * 60 * 60 * 24 * 30 * 12)) + ' месяцев назад'
+        return Math.round(diff / (1000 * 60 * 60 * 24 * 30 * 12)) + ' месяцев назад';
     }
 
     simplifyNum (num) {
-        if (num < 1e3) return num
-        if (num < 1e6) return Math.round(num / 1e3) + 'k'
-        if (num < 1e9) return Math.round(num / 1e6) + 'm'
-        return Math.round(num / 1e9) + 'b'
+        if (num < 1e3) return num;
+        if (num < 1e6) return Math.round(num / 1e3) + 'k';
+        if (num < 1e9) return Math.round(num / 1e6) + 'm';
+        return Math.round(num / 1e9) + 'b';
     }
 
     constructor ({
@@ -44,21 +44,21 @@ class PostCard extends Component {
         opened = true,
         image = ''
     }) {
-        super()
-        this.attributes.title = title
-        this.attributes.published = published
-        this.attributes.likes = likes
-        this.attributes.views = views
-        this.attributes.description = description
-        this.attributes.id = id
-        this.attributes.level = level
-        this.attributes.opened = opened
-        this.attributes.image = image
+        super();
+        this.attributes.title = title;
+        this.attributes.published = published;
+        this.attributes.likes = likes;
+        this.attributes.views = views;
+        this.attributes.description = description;
+        this.attributes.id = id;
+        this.attributes.level = level;
+        this.attributes.opened = opened;
+        this.attributes.image = image;
     }
 
     render () {
-        const element = document.createElement('div')
-        element.className = 'post-card'
+        const element = document.createElement('div');
+        element.className = 'post-card';
 
         element.innerHTML = `
             <div class="post-card-image">
@@ -89,25 +89,25 @@ class PostCard extends Component {
                     ${this.attributes.description}
                 </div>
             </div>
-        `
+        `;
 
-        const btn = new Button({ text: 'Открыть материал' })
-        element.querySelector('.post-card-body').appendChild(btn.renderReactive())
+        const btn = new Button({ text: 'Открыть материал' });
+        element.querySelector('.post-card-body').appendChild(btn.renderReactive());
         if (!this.attributes.opened) {
             const lockMessage = new LockMessage(
                 {
                     text: this.attributes.level,
                     dark: false
                 }
-            )
-            element.querySelector('.post-card-image').appendChild(lockMessage.renderReactive())
+            );
+            element.querySelector('.post-card-image').appendChild(lockMessage.renderReactive());
         }
 
-        return element
+        return element;
     }
 }
 
-export default PostCard
+export default PostCard;
 
 const styles = `
 .post-card {
@@ -235,7 +235,7 @@ height: 100%;
 font-size: 20px;
 font-weight: 500;
 }
-`
-const styleElement = document.createElement('style')
-styleElement.innerHTML = styles
-document.body.appendChild(styleElement)
+`;
+const styleElement = document.createElement('style');
+styleElement.innerHTML = styles;
+document.body.appendChild(styleElement);

@@ -1,39 +1,39 @@
-import Component from './basecomponent.js'
+import Component from './basecomponent.js';
 
 class Skeleton extends Component {
     constructor ({ type = 'rect', height = 200, width = null } = {}) {
-        super()
-        this.attributes.type = type
-        this.attributes.height = height
-        this.attributes.width = width
+        super();
+        this.attributes.type = type;
+        this.attributes.height = height;
+        this.attributes.width = width;
     }
 
     render () {
-        const element = document.createElement('div')
+        const element = document.createElement('div');
         if (this.attributes.type === 'text') {
-            const count = Math.floor(this.attributes.height / 20)
+            const count = Math.floor(this.attributes.height / 20);
             for (let i = 0; i < count; i++) {
-                const line = document.createElement('div')
-                line.className = 'skeleton-box skeleton-line'
-                element.appendChild(line)
+                const line = document.createElement('div');
+                line.className = 'skeleton-box skeleton-line';
+                element.appendChild(line);
             }
-            return element
+            return element;
         }
 
-        element.className = 'skeleton-box'
-        element.style.height = this.attributes.height + 'px'
+        element.className = 'skeleton-box';
+        element.style.height = this.attributes.height + 'px';
         if (this.attributes.type === 'circle') {
-            element.style.width = this.attributes.height + 'px'
-            element.className += ' skeleton-circle'
+            element.style.width = this.attributes.height + 'px';
+            element.className += ' skeleton-circle';
         }
         if (this.attributes.width) {
-            element.style.width = this.attributes.width + 'px'
+            element.style.width = this.attributes.width + 'px';
         }
 
-        return element
+        return element;
     }
 }
-export default Skeleton
+export default Skeleton;
 
 const styles = `
 .skeleton-box {
@@ -69,7 +69,7 @@ const styles = `
         transform: translateX(100%);
     }
 }
-`
-const styleElement = document.createElement('style')
-styleElement.innerHTML = styles
-document.body.appendChild(styleElement)
+`;
+const styleElement = document.createElement('style');
+styleElement.innerHTML = styles;
+document.body.appendChild(styleElement);
