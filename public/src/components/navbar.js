@@ -19,6 +19,8 @@ class Navbar extends Component {
                         <img src="${this.attributes.user.avatar}" />
                         <div class="navbar-profile__name"> ${this.attributes.user.username} </div>
                         <div class="navbar-popup"> 
+                            <a class="logout" router-go="/profile">Профиль</a>
+                            <br>
                             <a class="logout">Выйти</a>
                         </div>
                     </div>

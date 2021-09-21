@@ -3,7 +3,16 @@ import patchDom from './base/patchDom.js'
 const updateBlocks = new Set()
 setInterval(() => {
     updateBlocks.forEach((block) => {
-        block.updatePartly()
+        try {
+            block.updatePartly()
+        } catch (err) {
+            console.error('Не удалось обновить компонент', block, err)
+            try {
+                block.updateForce()
+            } catch {
+
+            }
+        }
     })
     updateBlocks.clear()
 }, 10)
