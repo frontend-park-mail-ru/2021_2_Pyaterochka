@@ -9,7 +9,10 @@
 html {
   font-family: "Roboto", sans-serif;
   font-weight: 400;
+<<<<<<< HEAD
   hyphens: auto;
+=======
+>>>>>>> origin/dev/template-kamila
 }
 body {
   margin: 0;
@@ -36,6 +39,11 @@ body {
   --color-accent-dark: #e12497;
 
   --color-navbar: #e42f2f;
+<<<<<<< HEAD
+=======
+
+  --color-step-text: #7c7c7c;
+>>>>>>> origin/dev/template-kamila
 }
 
 .spinner {
@@ -69,7 +77,11 @@ body {
   margin: auto;
   width: 400px;
   text-align: center;
+<<<<<<< HEAD
   min-height: calc(100vh - 100px);
+=======
+  min-height: calc(100vh - 160px);
+>>>>>>> origin/dev/template-kamila
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -79,8 +91,15 @@ body {
   margin-bottom: 20px;
 }
 .auth-block h1 {
+<<<<<<< HEAD
     font-weight: 300;
     font-size: 24px;
+=======
+
+    font-weight: 300;
+    font-size: 24px;
+
+>>>>>>> origin/dev/template-kamila
 }
 
 .auth-block .input-validation {
@@ -93,4 +112,8 @@ a {
 
 a:visited {
     color: var(--color-primary-dark)
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> origin/dev/template-kamila
