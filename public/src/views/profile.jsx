@@ -2,15 +2,12 @@ import Component from "../components/basecomponent.js";
 import Button from "../components/button.jsx";
 import CreatorCard from "../components/creator-card.jsx";
 import ProfileCard from "../components/profile-card.jsx";
+import { router } from "../index.js";
+import user from "../storage/user.js";
 
 class ProfileView extends Component {
   constructor() {
     super();
-    this.attributes.user = {
-      username: "HenSI.Pro2929",
-      supportCount: 15,
-      avatar: "https://thispersondoesnotexist.com/image",
-    };
     this.attributes.creators = [
       {
         name: "IU7-memes",
@@ -57,7 +54,11 @@ class ProfileView extends Component {
     );
   }
 
-  async created() {}
+  async created() {
+      if (!user.user) return router.go('/signin');
+
+      this.attributes.user = Object.assign(user.user)
+  }
 }
 
 export default ProfileView;
