@@ -58,7 +58,7 @@ class CreatorView extends Component {
 
             <div class="post-container">
               {this.attributes.posts.map(
-                (card) => new PostCard(card).renderReactive
+                (card) => (new PostCard(card)).renderReactive()
               )}
             </div>
             <LockMessage text="Стань патроном, чтобы продолжить наслаждаться работами автора">
