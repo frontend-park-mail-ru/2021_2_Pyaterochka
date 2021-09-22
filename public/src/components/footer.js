@@ -19,9 +19,12 @@ export default Footer;
 
 const styles = `
 .footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
     background-color: var(--color-primary);
     padding-top: 40px;
-    margin-top:50px;
+    margin-top: 50px;
 }
 .footer-body {
     background-color: var(--color-primary-dark);
