@@ -85,10 +85,7 @@ class SignupView extends Component {
                     />
                 </div>
                 <span className="auth-card__tooltip">
-                    Уже есть аккаунт?
-                    <a href="#" router-go="/signin">
-                        Войти
-                    </a>
+                    Уже есть аккаунт? <a href="#" router-go="/signin">Войти</a>
                 </span>
             </div>
         );

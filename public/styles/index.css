@@ -71,7 +71,7 @@ body {
   margin: auto;
   width: 400px;
   text-align: center;
-  min-height: calc(100vh - 100px);
+  min-height: calc(100vh - 52px);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -81,18 +81,18 @@ body {
   margin-bottom: 20px;
 }
 .auth-block h1 {
-    font-weight: 300;
-    font-size: 24px;
+  font-weight: 300;
+  font-size: 24px;
 }
 
 .auth-block .input-validation {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 a {
-    color: var(--color-primary)
+  color: var(--color-primary)
 }
 
 a:visited {
-    color: var(--color-primary-dark)
+  color: var(--color-primary-dark)
 }
