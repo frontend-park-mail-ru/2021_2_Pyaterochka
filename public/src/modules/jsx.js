@@ -60,8 +60,12 @@ function createElement (JsxElement, attributes, jsxChildren) {
     }
     const component = document.createElement(JsxElement);
     Object.keys(attributes).forEach(key => {
-        if (key === 'className' && Array.isArray(attributes[key])) {
-            component.setAttribute('class', attributes[key].join(' '));
+        if (key === 'className') {
+            if (Array.isArray(attributes[key])) {
+                component.setAttribute('class', attributes[key].join(' '));
+                return;
+            }
+            component.setAttribute('class', attributes[key]);
             return;
         }
         if (key.startsWith('on')) {
