@@ -336,55 +336,56 @@ class IndexView extends Component {
 
     render () {
         const element = (
-            <div className="container">
-                <h1 className="text-center">Страницы</h1>
-                <div>
-                    <a router-go="/creator"> Страница автора </a>
-                    <a router-go="/profile"> Профиль </a>
-                    <a router-go="/404"> Страница ошибки </a>
+            <div className="content">
+                <div className="container">
+                    <h1 className="text-center">Страницы</h1>
+                    <div>
+                        <a router-go="/creator"> Страница автора </a>
+                        <a router-go="/profile"> Профиль </a>
+                        <a router-go="/404"> Страница ошибки </a>
+                    </div>
+                    <h1 className="text-center">Компоненты</h1>
+                    <div className="components-map"> </div>
+                    <style>
+                        {`
+                .container {
+                    width:1000px;
+                    max-width:100%;
+                    margin:auto;
+                    margin-top:50px;
+                }
+                .component-wrapper__variants{
+                    display:flex;
+                    justify-content: left;
+                    flex-wrap:wrap;
+                }
+                .component-wrapper__variants > .btn, 
+                .components-map > .btn{
+                    width:auto;
+                    margin: 0 10px 0 0;
+                },
+                .component-wrapper {
+                    margin-bottom: 60px;
+                }
+                .component-wrapper__component {
+                    padding:20px;
+                    border: solid 2px #000;
+                }
+                .components-map {
+                    background: #fff;
+                    position: sticky;
+                    top: 0;
+                    z-index: 1000;
+                    overflow: auto;
+                    display: block;
+                    white-space: nowrap;
+                    width: 100%;
+                }
+                .components-map > .btn {
+                    display: inline;
+                }`}
+                    </style>
                 </div>
-                <h1 className="text-center">Компоненты</h1>
-                <div className="components-map"> </div>
-
-                <style>
-                    {`
-            .container {
-                width:1000px;
-                max-width:100%;
-                margin:auto;
-                margin-top:50px;
-            }
-            .component-wrapper__variants{
-                display:flex;
-                justify-content: left;
-                flex-wrap:wrap;
-            }
-            .component-wrapper__variants > .btn, 
-            .components-map > .btn{
-                width:auto;
-                margin: 0 10px 0 0;
-            },
-            .component-wrapper {
-                margin-bottom: 60px;
-            }
-            .component-wrapper__component {
-                padding:20px;
-                border: solid 2px #000;
-            }
-            .components-map {
-                background: #fff;
-                position: sticky;
-                top: 0;
-                z-index: 1000;
-                overflow: auto;
-                display: block;
-                white-space: nowrap;
-                width: 100%;
-            }
-            .components-map > .btn {
-                display: inline;
-            }`}
-                </style>
             </div>
         );
 

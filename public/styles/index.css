@@ -40,6 +40,10 @@ body {
   --color-step-text: #7c7c7c;
 }
 
+.content {
+  padding-bottom: 200px;
+}
+
 .spinner {
   width: 40px;
   height: 40px;
