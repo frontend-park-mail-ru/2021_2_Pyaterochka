@@ -1,7 +1,7 @@
 import Component from './basecomponent.js';
 
 class Comment extends Component {
-    timeDiff (date) {
+    timeDiff(date) {
         const diff = (new Date()).getTime() - date;
         if (diff <= 1000 * 60 * 5) {
             return 'менее 5 минут назад';
@@ -24,7 +24,7 @@ class Comment extends Component {
         return Math.round(diff / (1000 * 60 * 60 * 24 * 30 * 12)) + ' месяцев назад';
     }
 
-    constructor ({
+    constructor({
         user = null,
         published = new Date(),
         body = ''
@@ -36,23 +36,21 @@ class Comment extends Component {
         this.attributes.body = body;
     }
 
-    render () {
-        const element = document.createElement('div');
-        element.innerHTML = `
-        <div class="comment">
-            <div class="comment__user-avatar">
-                <img src="${this.attributes.user.avatar}" alt="Аватар комментатора">
+    render() {
+        return <div>
+            <div class="comment">
+                <div class="comment__user-avatar">
+                    <img src={this.attributes.user.avatar} alt="Аватар комментатора" />
+                </div>
+
+                <div class="comment__info">
+                    <span class="comment__info__username">{this.attributes.user.username}</span>
+                    <span class="comment__info__published">{this.timeDiff(this.attributes.published)}</span>
+                </div>
+
+                <div class="comment__body">{this.attributes.body}</div>
             </div>
-    
-            <div class="comment__info">
-                <span class="comment__info__username">${this.attributes.user.username}</span>
-                <span class="comment__info__published">${this.timeDiff(this.attributes.published)}</span>
-            </div>
-    
-            <div class="comment__body">${this.attributes.body}</div>
         </div>
-        `;
-        return element;
     }
 }
 export default Comment;

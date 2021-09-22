@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/frontend-park-mail-ru/2021_2_Pyaterochka#readme",
   "dependencies": {
+    "@babel/plugin-transform-react-jsx": "^7.14.9",
+    "babel-connect": "^6.0.2",
     "express": "^4.17.1",
     "express-session": "^1.17.2"
   },

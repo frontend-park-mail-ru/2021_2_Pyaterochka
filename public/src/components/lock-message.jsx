@@ -1,7 +1,7 @@
 import Component from './basecomponent.js';
 
 class LockMessage extends Component {
-    constructor ({
+    constructor({
         text = 'Стань патроном, чтобы продолжить наслаждаться работами автора',
         dark = true
     }, slot = null) {
@@ -11,20 +11,16 @@ class LockMessage extends Component {
         this.slot = slot;
     }
 
-    render () {
-        const element = document.createElement('div');
-        element.className = `lock-message ${this.attributes.dark ? 'dark' : ''}`;
-
-        element.innerHTML = `
+    render() {
+        return <div className={
+            ['lock-message', this.attributes.dark ? 'dark' : '']
+        }>
             <div class='icon'></div>
-            <span>${this.attributes.text}</span>
-        `;
-
-        if (this.slot) {
-            element.appendChild(this.slot.renderReactive());
-        }
-
-        return element;
+            <span>{this.attributes.text}</span>
+            {
+                this.slot ? this.slot : ''
+            }
+        </div>
     }
 }
 export default LockMessage;

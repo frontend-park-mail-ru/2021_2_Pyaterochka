@@ -1,18 +1,14 @@
 import Component from './basecomponent.js';
 
 class Footer extends Component {
-    render () {
-        const element = document.createElement('div');
-        element.className = 'footer';
-        element.innerHTML = `
-            <div class="footer-body"> 
+    render() {
+        return <div class="footer">
+            <div class="footer-body">
                 © Patreon by Pyaterochka team  from Technopark Mail.ru, 2021
-                <br>
+                <br />
                 Использованы материалы freepik - <a href="https://ru.freepik.com/">ru.freepik.com</a>
             </div>
-        `;
-
-        return element;
+        </div>
     }
 }
 export default Footer;

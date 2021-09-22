@@ -2,9 +2,7 @@ import Component from './basecomponent.js';
 
 class Spinner extends Component {
     render () {
-        const element = document.createElement('div');
-        element.className = 'spinner';
-        return element;
+        return <div class="spinner"></div>
     }
 }
 export default Spinner;

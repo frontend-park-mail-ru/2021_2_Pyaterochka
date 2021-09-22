@@ -1,17 +1,17 @@
 import Component from '../components/basecomponent.js';
-import Button from '../components/button.js';
-import CreatorCard from '../components/creator-card.js';
-import Footer from '../components/footer.js';
-import InputField from '../components/input-field.js';
-import LevelCard from '../components/level-card.js';
-import LockMessage from '../components/lock-message.js';
-import Navbar from '../components/navbar.js';
-import PostCard from '../components/post-card.js';
-import ProfileCard from '../components/profile-card.js';
+import Button from '../components/button.jsx';
+import CreatorCard from '../components/creator-card.jsx';
+import Footer from '../components/footer.jsx';
+import InputField from '../components/input-field.jsx';
+import LevelCard from '../components/level-card.jsx';
+import LockMessage from '../components/lock-message.jsx';
+import Navbar from '../components/navbar.jsx';
+import PostCard from '../components/post-card.jsx';
+import ProfileCard from '../components/profile-card.jsx';
 import Skeleton from '../components/skeleton.js';
-import Spinner from '../components/spinner.js';
-import Step from '../components/step.js';
-import Comment from '../components/comment.js';
+import Spinner from '../components/spinner.jsx';
+import Step from '../components/step.jsx';
+import Comment from '../components/comment.jsx';
 
 class IndexView extends Component {
     constructor () {
@@ -56,7 +56,7 @@ class IndexView extends Component {
                             username: 'HenSI.Pro2929',
                             supportCount: 15,
                             avatar: 'https://thispersondoesnotexist.com/image'
-                        }, new Button({ text: 'Редактировать профиль', color: 'primary' }))
+                        }, (new Button({ text: 'Редактировать профиль', color: 'primary' })).renderReactive())
                     }
                 ]
             },
@@ -130,7 +130,7 @@ class IndexView extends Component {
                             {
                                 text: 'Стань патроном, чтобы продолжить наслаждаться работами автора'
                             },
-                            new Button({ text: 'Стать патроном', color: 'primary' })
+                            (new Button({ text: 'Стать патроном', color: 'primary' }).renderReactive())
                         )
                     }
 
@@ -368,7 +368,7 @@ class IndexView extends Component {
                         text: c.name,
                         onclick: () => {
                             this.attributes.cps[ii].active = i;
-                            this.attributes.cps = this.attributes.cps;
+                            this.attributes.cps = Object.assign(this.attributes.cps);
                         },
                         color: info.active === i ? 'primary' : 'default'
                     }).renderReactive());

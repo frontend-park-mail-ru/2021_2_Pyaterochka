@@ -1,7 +1,7 @@
 import Component from './basecomponent.js';
 
 class ProfileCard extends Component {
-    constructor ({
+    constructor({
         username = '',
         avatar = null,
         supportCount = 0
@@ -13,27 +13,19 @@ class ProfileCard extends Component {
         this.slot = slot;
     }
 
-    render () {
-        const element = document.createElement('div');
-        element.className = 'profile-card';
-        element.innerHTML = `
-            <img src="${this.attributes.avatar}" />
+    render() {
+        return <div class="profile-card">
+            <img src={this.attributes.avatar} />
             <div class="profile-card-body">
                 <div class="profile-card__username">
-                    ${this.attributes.username}
+                    {this.attributes.username}
                 </div>
-                <div class="profile-card__support-count">
-                    Поддерживает ${this.attributes.supportCount} авторов
+                <div class="profile-card__support-count" style={this.slot ? "margin-bottom:20px" : ''}>
+                    Поддерживает {this.attributes.supportCount} авторов
                 </div>
+                {this.slot ? this.slot: ''}
             </div>
-        `;
-        if (this.slot) {
-            const dom = this.slot.renderReactive();
-            dom.style.marginTop = '20px';
-            element.querySelector('.profile-card-body').appendChild(dom);
-        }
-
-        return element;
+        </div>
     }
 }
 export default ProfileCard;

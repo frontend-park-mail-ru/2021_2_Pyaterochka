@@ -65,7 +65,7 @@ class Router {
         if (view instanceof DynamicComponentLoader) {
             if (this.loadingView && !view.component) {
                 if (this.layout) {
-                    this.layout.slot = this.loadingView;
+                    this.layout.slot = this.loadingView.renderReactive();
                 } else {
                     this.container.innerHTML = '';
                     this.container.appendChild(this.loadingView.renderReactive());
@@ -74,7 +74,7 @@ class Router {
             view = await view.load();
         }
         if (this.layout) {
-            this.layout.slot = view;
+            this.layout.slot = view.renderReactive();
             return;
         }
         this.container.innerHTML = '';
