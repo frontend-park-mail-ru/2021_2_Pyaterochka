@@ -1,8 +1,31 @@
 const express = require('express');
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 
 const session = require('express-session');
+
+const fs = require('fs');
+
+app.use(async (res, req, next) => {
+    if (!res.path.endsWith('.jsx')) {
+        return next();
+    }
+
+    fs.readFile('./public' + res.path, async (err, file) => {
+        if (err && err.code === 'ENOENT') return next();
+        if (err) return next(err);
+
+        const jsxCompiled = await require('@babel/core').transformAsync(file, {
+            plugins: [['@babel/plugin-transform-react-jsx', {
+                runtime: 'automatic',
+                importSource: '@'
+            }]]
+        });
+        req.header('Content-Type', 'application/javascript');
+        req.send(jsxCompiled.code.replace(/from "@\/jsx-runtime"/g, "from '/src/modules/jsx.js'"));
+        req.end();
+    });
+});
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Headers', '*');

@@ -1,10 +1,10 @@
 import Component from './basecomponent.js';
-import Button from './button.js';
-import LockMessage from './lock-message.js';
+import Button from './button.jsx';
+import LockMessage from './lock-message.jsx';
 
 class PostCard extends Component {
     timeDiff (date) {
-        const diff = (new Date()).getTime() - date;
+        const diff = new Date().getTime() - date;
         if (diff <= 1000 * 60 * 5) {
             return 'менее 5 минут назад';
         }
@@ -23,7 +23,9 @@ class PostCard extends Component {
             return Math.round(diff / (1000 * 60 * 60 * 24 * 30)) + ' месяцев назад';
         }
 
-        return Math.round(diff / (1000 * 60 * 60 * 24 * 30 * 12)) + ' месяцев назад';
+        return (
+            Math.round(diff / (1000 * 60 * 60 * 24 * 30 * 12)) + ' месяцев назад'
+        );
     }
 
     simplifyNum (num) {
@@ -57,51 +59,46 @@ class PostCard extends Component {
     }
 
     render () {
-        const element = document.createElement('div');
-        element.className = 'post-card';
-
-        element.innerHTML = `
-            <div class="post-card-image">
-                <div class="image ${this.attributes.opened ? '' : 'blur'}" style="background-image:url(${this.attributes.image})"></div>
-            </div>
-            <div class="post-card-body">
-                <div class="post-card-title">
-                    ${this.attributes.title}
+        const style = `background-image:url(${this.attributes.image})`;
+        const element = (
+            <div className="post-card">
+                <div className="post-card-image">
+                    <div
+                        className={['image', this.attributes.opened ? '' : 'blur']}
+                        style={style}
+                    ></div>
+                    {this.attributes.opened
+                        ? (
+                            ''
+                        )
+                        : (
+                            <LockMessage text={this.attributes.level} dark={false} />
+                        )}
                 </div>
-                <div class="post-card-meta">
-                    <div>
-                        <span class="date">
-                        ${this.timeDiff(this.attributes.published)}
-                        </span>
+                <div className="post-card-body">
+                    <div className="post-card-title">{this.attributes.title}</div>
+                    <div className="post-card-meta">
+                        <div>
+                            <span className="date">
+                                {this.timeDiff(this.attributes.published)}
+                            </span>
+                        </div>
+                        <div>
+                            <span className="visits">
+                                <img src="/imgs/icons/view_outline_28.svg" />
+                                {this.simplifyNum(this.attributes.views)}
+                            </span>
+                            <span className="likes">
+                                <img src="/imgs/icons/like_outline_28.svg" />
+                                {this.simplifyNum(this.attributes.likes)}
+                            </span>
+                        </div>
                     </div>
-                    <div>
-                        <span class="visits">
-                            <img src="/imgs/icons/view_outline_28.svg">
-                            ${this.simplifyNum(this.attributes.views)}
-                        </span>
-                        <span class="likes">
-                            <img src="/imgs/icons/like_outline_28.svg">
-                            ${this.simplifyNum(this.attributes.likes)}
-                        </span>
-                    </div>
-                </div>
-                <div class="post-card-desc">
-                    ${this.attributes.description}
+                    <div className="post-card-desc">{this.attributes.description}</div>
+                    <Button text="Открыть материал" />
                 </div>
             </div>
-        `;
-
-        const btn = new Button({ text: 'Открыть материал' });
-        element.querySelector('.post-card-body').appendChild(btn.renderReactive());
-        if (!this.attributes.opened) {
-            const lockMessage = new LockMessage(
-                {
-                    text: this.attributes.level,
-                    dark: false
-                }
-            );
-            element.querySelector('.post-card-image').appendChild(lockMessage.renderReactive());
-        }
+        );
 
         return element;
     }

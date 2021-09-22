@@ -5,7 +5,7 @@ class Button extends Component {
         text = '',
         color = 'default',
         rounded = false,
-        onclick = () => {}
+        onclick = () => { }
     }) {
         super();
         this.attributes.text = text;
@@ -15,15 +15,18 @@ class Button extends Component {
     }
 
     render () {
-        const element = document.createElement('button');
-        element.innerText = this.attributes.text;
-
-        element.className = `btn btn-${this.attributes.color} ${this.attributes.rounded ? 'btn-rounded' : ''}`;
+        const classList = `btn btn-${this.attributes.color} ${this.attributes.rounded ? 'btn-rounded' : ''}`;
+        const element = (
+            <button className={classList}>
+                {this.attributes.text}
+            </button>
+        );
 
         element.addEventListener('click', this.attributes.onclick);
         return element;
     }
 }
+
 export default Button;
 
 const styles = `

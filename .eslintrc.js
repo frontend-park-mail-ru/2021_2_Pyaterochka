@@ -5,14 +5,27 @@ module.exports = {
         node: true
     },
     extends: [
-        'standard'
+        'standard',
+        'plugin:react/recommended'
     ],
+    plugins: ['react'],
     parserOptions: {
         ecmaVersion: 12,
-        sourceType: 'module'
+        sourceType: 'module',
+        ecmaFeatures: {
+            jsx: true
+        }
     },
     rules: {
         indent: ['error', 4],
-        semi: [2, 'always']
-    }
+        semi: [2, 'always'],
+        'react/react-in-jsx-scope': 'off',
+        'react/prop-types': 'off',
+        'react/jsx-indent': ['error', 4]
+    },
+    overrides: [
+        {
+            files: ['*.jsx', '*.js']
+        }
+    ]
 };

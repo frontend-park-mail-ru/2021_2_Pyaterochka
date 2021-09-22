@@ -1,5 +1,5 @@
 import Component from '../components/basecomponent.js';
-import Button from '../components/button.js';
+import Button from '../components/button.jsx';
 import { router } from '../index.js';
 
 class ErrorPage extends Component {
@@ -10,25 +10,21 @@ class ErrorPage extends Component {
     }
 
     render () {
-        const element = document.createElement('div');
-        element.className = 'error-block';
-        element.innerHTML = `
-            <h1>${this.attributes.message}</h1>
+        return (
+            <div className="error-block">
+                <h1>{this.attributes.message}</h1>
 
-            <img src="/imgs/error_page.svg">
-        `;
-
-        const goHome = new Button({
-            text: 'Перейти на главную',
-            rounded: true,
-            color: 'primary',
-            onclick: () => {
-                router.go('/');
-            }
-        });
-
-        element.appendChild(goHome.renderReactive());
-        return element;
+                <img src="/imgs/error_page.svg" />
+                <Button
+                    text="Перейти на главную"
+                    color="primary"
+                    rounded={true}
+                    onclick={() => {
+                        router.go('/');
+                    }}
+                />
+            </div>
+        );
     }
 }
 
@@ -40,14 +36,14 @@ const styles = `
     flex-direction: column;
     align-items:center;
     background: radial-gradient(50% 50% at 50% 50%, #000000 0%, #363636 100%);
-    height: calc(100vh - 52px);
+    margin-bottom: -50px;
     color:#fff;
     font-family: "Montserrat", sans-serif;
     font-size: 20px;
     font-style: normal;
     font-weight: 700;
-    text-align: center;
-    padding-top: 80px;
+    text-align:center;
+    padding-bottom:50px;
 }
 .error-block h1{ 
     margin-bottom: 50px;

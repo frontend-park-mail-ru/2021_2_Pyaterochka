@@ -9,41 +9,44 @@ class Navbar extends Component {
     }
 
     render () {
-        const element = document.createElement('div');
-        element.innerHTML = `
-            <div class="navbar">
-                <a href="#" class="navbar-brand" router-go="/">Patreon</a>
-                ${this.attributes.user
-        ? `
-                    <div class="navbar-profile">
-                        <img src="${this.attributes.user.avatar}" />
-                        <div class="navbar-profile__name"> ${this.attributes.user.username} </div>
-                        <div class="navbar-popup"> 
-                            <a class="logout" router-go="/profile">Профиль</a>
-                            <br>
-                            <a class="logout">Выйти</a>
+        return (
+            <div className="navbar">
+                <a href="#" className="navbar-brand" router-go="/">
+                    Patreon
+                </a>
+                {this.attributes.user
+                    ? (
+                        <div className="navbar-profile">
+                            <img src={this.attributes.user.avatar} />
+                            <div className="navbar-profile__name">
+                                {this.attributes.user.username}
+                            </div>
+                            <div className="navbar-popup">
+                                <a router-go="/profile">Профиль</a>
+                                <br />
+                                <a
+                                    onClick={() => {
+                                        console.log('logout');
+                                        user.logout();
+                                    }}
+                                >
+                                    Выйти
+                                </a>
+                            </div>
                         </div>
-                    </div>
-                `
-        : `
-                    <div>
-                        <a router-go="/signup" class="navbar-link">Регистрация</a>
-                        <a router-go="/signin" class="navbar-link">Войти</a>
-                    </div>
-                    `
-}
-                
+                    )
+                    : (
+                        <div>
+                            <a router-go="/signup" className="navbar-link">
+                                Регистрация
+                            </a>
+                            <a router-go="/signin" className="navbar-link">
+                                Войти
+                            </a>
+                        </div>
+                    )}
             </div>
-        `;
-
-        const popupLogout = element.querySelector('.navbar-popup .logout');
-        if (popupLogout) {
-            popupLogout.addEventListener('click', () => {
-                user.logout();
-            });
-        }
-
-        return element;
+        );
     }
 }
 export default Navbar;

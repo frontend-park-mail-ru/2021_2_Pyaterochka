@@ -15,18 +15,17 @@ class InputField extends Component {
     }
 
     render () {
-        const element = document.createElement('div');
-        element.innerHTML = `
-        <label class="input-field">
-            <input placeholder=" " type="${this.attributes.type}" value="${this.attributes.value}"/>
-            <span 
-                onclick="this.parentElement.querySelector('input').focus();"
-                > ${this.attributes.placeholder} </span>
-        </label>
-        <div class="input-validation">
+        const element = <div>
+            <label className="input-field">
+                <input placeholder=" " type={this.attributes.type} value={this.attributes.value} />
+                <span
+                    onClick="this.parentElement.querySelector('input').focus();"
+                > {this.attributes.placeholder} </span>
+            </label>
+            <div className="input-validation">
 
-        </div>
-        `;
+            </div>
+        </div>;
 
         element.addEventListener('input', e => {
             this.validate();
@@ -52,10 +51,9 @@ class InputField extends Component {
         }).filter((err) => err !== null);
 
         const elements = errors.map(error => {
-            const el = document.createElement('div');
-            el.innerText = error;
-            el.className = 'input-validation__error';
-            return el;
+            return <div key={errors.id} className="input-validation__error">
+                {error}
+            </div>;
         });
 
         validation.innerHTML = '';

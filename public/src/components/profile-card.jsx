@@ -14,26 +14,18 @@ class ProfileCard extends Component {
     }
 
     render () {
-        const element = document.createElement('div');
-        element.className = 'profile-card';
-        element.innerHTML = `
-            <img src="${this.attributes.avatar}" />
-            <div class="profile-card-body">
-                <div class="profile-card__username">
-                    ${this.attributes.username}
+        return <div className="profile-card">
+            <img src={this.attributes.avatar} />
+            <div className="profile-card-body">
+                <div className="profile-card__username">
+                    {this.attributes.username}
                 </div>
-                <div class="profile-card__support-count">
-                    Поддерживает ${this.attributes.supportCount} авторов
+                <div className="profile-card__support-count" style={this.slot ? 'margin-bottom:20px' : ''}>
+                    Поддерживает {this.attributes.supportCount} авторов
                 </div>
+                {this.slot ? this.slot : ''}
             </div>
-        `;
-        if (this.slot) {
-            const dom = this.slot.renderReactive();
-            dom.style.marginTop = '20px';
-            element.querySelector('.profile-card-body').appendChild(dom);
-        }
-
-        return element;
+        </div>;
     }
 }
 export default ProfileCard;
