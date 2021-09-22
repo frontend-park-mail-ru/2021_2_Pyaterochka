@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     router = new Router(root, [
         new Route('/signin', new DynamicComponentLoader('/src/views/signin.jsx'), 'Войти'),
         new Route('/signup', new DynamicComponentLoader('/src/views/signup.jsx'), 'Регистрация'),
-        new Route('/', new DynamicComponentLoader('/src/views/index.js'), 'Главная'),
+        new Route('/', new DynamicComponentLoader('/src/views/index.jsx'), 'Главная'),
         new Route('/creator', new DynamicComponentLoader('/src/views/creator.jsx'), 'Страница автора'),
         new Route('/profile', new DynamicComponentLoader('/src/views/profile.jsx'), 'Профиль'),
         new Route('', new DynamicComponentLoader('/src/views/errorpage.jsx'), 'Страница не найдена')

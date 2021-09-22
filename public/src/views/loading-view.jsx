@@ -3,9 +3,9 @@ import Spinner from '../components/spinner.jsx';
 
 class LoadingView extends Component {
     render () {
-        return <div class="text-center" style="margin:50px;">
+        return <div className="text-center" style="margin:50px;">
             <Spinner/>
-        </div>
+        </div>;
     }
 }
 

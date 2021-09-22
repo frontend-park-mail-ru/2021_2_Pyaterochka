@@ -1,82 +1,84 @@
-import api from "../api/index.js";
-import Component from "../components/basecomponent.js";
-import Button from "../components/button.jsx";
-import CreatorCard from "../components/creator-card.jsx";
-import LevelCard from "../components/level-card.jsx";
-import LockMessage from "../components/lock-message.jsx";
-import PostCard from "../components/post-card.jsx";
-import Skeleton from "../components/skeleton.js";
+import api from '../api/index.js';
+import Component from '../components/basecomponent.js';
+import Button from '../components/button.jsx';
+import CreatorCard from '../components/creator-card.jsx';
+import LevelCard from '../components/level-card.jsx';
+import LockMessage from '../components/lock-message.jsx';
+import PostCard from '../components/post-card.jsx';
+import Skeleton from '../components/skeleton.js';
 
 class CreatorView extends Component {
-  constructor() {
-    super();
-    this.attributes.creator = null;
-    this.attributes.levels = [];
-    this.attributes.posts = [];
-  }
+    constructor () {
+        super();
+        this.attributes.creator = null;
+        this.attributes.levels = [];
+        this.attributes.posts = [];
+    }
 
-  render() {
-    return (
-      <div>
-        {!this.attributes.creator ? (
-          <>
-            <div class="creator-cover">
-              <Skeleton height={256} />
-            </div>
-            <div class="creator-card">
-              <Skeleton type="circule" height={200} />
-              <Skeleton type="text" height={40} />
-            </div>
-            <div class="level-card-container">
-              {[1, 2, 3].map(() => (
-                <Skeleton width={260} height={260} />
-              ))}
-            </div>
-          </>
-        ) : (
-          <>
-            <div
-              class="creator-cover"
-              style={`background-image:url(${this.attributes.creator.cover}`}
-            ></div>
+    render () {
+        return (
+            <div>
+                {!this.attributes.creator
+                    ? (
+                        <>
+                            <div className="creator-cover">
+                                <Skeleton height={256} />
+                            </div>
+                            <div className="creator-card">
+                                <Skeleton type="circule" height={200} />
+                                <Skeleton type="text" height={40} />
+                            </div>
+                            <div className="level-card-container">
+                                {[1, 2, 3].map(() => (
+                                    <Skeleton width={260} height={260} />
+                                ))}
+                            </div>
+                        </>
+                    )
+                    : (
+                        <>
+                            <div
+                                className="creator-cover"
+                                style={`background-image:url(${this.attributes.creator.cover}`}
+                            ></div>
 
-            <div class="creator-card">
-              <CreatorCard
-                id={this.attributes.creator.id}
-                name={this.attributes.creator.name}
-                avatar={this.attributes.creator.avatar}
-                description={this.attributes.creator.description}
-                shadow={true}
-              />
+                            <div className="creator-card">
+                                <CreatorCard
+                                    id={this.attributes.creator.id}
+                                    name={this.attributes.creator.name}
+                                    avatar={this.attributes.creator.avatar}
+                                    description={this.attributes.creator.description}
+                                    shadow={true}
+                                />
+                            </div>
+
+                            <div className="level-card-container">
+                                {this.attributes.levels.map((card) =>
+                                    new LevelCard(card).renderReactive()
+                                )}
+                            </div>
+
+                            <div className="post-container">
+                                {this.attributes.posts.map(
+                                    (card) => (new PostCard(card)).renderReactive()
+                                )}
+                            </div>
+                            <LockMessage text="Стань патроном, чтобы продолжить наслаждаться работами автора">
+                                <Button text="Стать патроном" color="primary" />
+                            </LockMessage>
+                        </>
+                    )}
             </div>
+        );
+    }
 
-            <div class="level-card-container">
-              {this.attributes.levels.map((card) =>
-                new LevelCard(card).renderReactive()
-              )}
-            </div>
+    async created () {
+        this.attributes.creator = null;
 
-            <div class="post-container">
-              {this.attributes.posts.map(
-                (card) => (new PostCard(card)).renderReactive()
-              )}
-            </div>
-            <LockMessage text="Стань патроном, чтобы продолжить наслаждаться работами автора">
-              <Button text="Стать патроном" color="primary" />
-            </LockMessage>
-          </>
-        )}
-      </div>
-    );
-  }
-
-  async created() {
-    this.attributes.creator = null;
-
-    this.attributes.creator = await api.creatorInfo();
-    this.attributes.levels = await api.levelsInfo();
-    this.attributes.posts = await api.postsInfo();
-  }
+        this.attributes.creator = await api.creatorInfo();
+        this.attributes.levels = await api.levelsInfo();
+        this.attributes.posts = await api.postsInfo();
+    }
 }
 
 export default CreatorView;
@@ -121,6 +123,6 @@ const styles = `
     margin:auto;
 }
 `;
-const styleElement = document.createElement("style");
+const styleElement = document.createElement('style');
 styleElement.innerHTML = styles;
 document.body.appendChild(styleElement);

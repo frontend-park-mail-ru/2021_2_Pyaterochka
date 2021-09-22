@@ -1,7 +1,7 @@
 import Component from './basecomponent.js';
 
 class InputField extends Component {
-    constructor({
+    constructor ({
         placeholder = '',
         type = 'text',
         value = '',
@@ -14,18 +14,18 @@ class InputField extends Component {
         this.attributes.validation = validation;
     }
 
-    render() {
+    render () {
         const element = <div>
-            <label class="input-field">
+            <label className="input-field">
                 <input placeholder=" " type={this.attributes.type} value={this.attributes.value} />
                 <span
-                    onclick="this.parentElement.querySelector('input').focus();"
+                    onClick="this.parentElement.querySelector('input').focus();"
                 > {this.attributes.placeholder} </span>
             </label>
-            <div class="input-validation">
+            <div className="input-validation">
 
             </div>
-        </div>
+        </div>;
 
         element.addEventListener('input', e => {
             this.validate();
@@ -36,11 +36,11 @@ class InputField extends Component {
         return element;
     }
 
-    getValue() {
+    getValue () {
         return this.input.value;
     }
 
-    validate() {
+    validate () {
         const element = this.element;
         const inputField = element.querySelector('.input-field');
         const validation = element.querySelector('.input-validation');
@@ -51,9 +51,9 @@ class InputField extends Component {
         }).filter((err) => err !== null);
 
         const elements = errors.map(error => {
-            return <div class="input-validation__error">
+            return <div className="input-validation__error">
                 {error}
-            </div>
+            </div>;
         });
 
         validation.innerHTML = '';

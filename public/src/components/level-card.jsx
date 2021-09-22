@@ -1,64 +1,66 @@
-import Component from "./basecomponent.js";
-import Button from "./button.jsx";
+import Component from './basecomponent.js';
+import Button from './button.jsx';
 
 class LevelCard extends Component {
-  constructor({
-    id = null,
-    name = "",
-    parentName = null,
-    benefits = [],
-    cover = "",
-    price = "0 $",
-    color = "primary",
-  }) {
-    super();
-    this.attributes.id = id;
-    this.attributes.name = name;
-    this.attributes.parentName = parentName;
-    this.attributes.benefits = benefits;
-    this.attributes.cover = cover;
-    this.attributes.price = price;
-    this.attributes.color = color;
-  }
+    constructor ({
+        id = null,
+        name = '',
+        parentName = null,
+        benefits = [],
+        cover = '',
+        price = '0 $',
+        color = 'primary'
+    }) {
+        super();
+        this.attributes.id = id;
+        this.attributes.name = name;
+        this.attributes.parentName = parentName;
+        this.attributes.benefits = benefits;
+        this.attributes.cover = cover;
+        this.attributes.price = price;
+        this.attributes.color = color;
+    }
 
-  render() {
-    const style = `
+    render () {
+        const style = `
             background-color:var(--color-${this.attributes.color});
             background-image:url(${this.attributes.cover})
         `;
-    const priceColor = `color:var(--color-${this.attributes.color})`;
-    return (
-      <div class="level-card">
-        <div class="level-card__header" style={style}>
-          <div class="level-card__header__name">{this.attributes.name}</div>
-          <div class="level-card__header__type">уровень</div>
-        </div>
-        <div class="level-card__body">
-          {this.attributes.parentName ? (
-            <div class="level-card__body__parent-level">
-              Все из уровня <b>{this.attributes.parentName}</b>, а также:
-            </div>
-          ) : (
-            ""
-          )}
+        const priceColor = `color:var(--color-${this.attributes.color})`;
+        return (
+            <div className="level-card">
+                <div className="level-card__header" style={style}>
+                    <div className="level-card__header__name">{this.attributes.name}</div>
+                    <div className="level-card__header__type">уровень</div>
+                </div>
+                <div className="level-card__body">
+                    {this.attributes.parentName
+                        ? (
+                            <div className="level-card__body__parent-level">
+                                Все из уровня <b>{this.attributes.parentName}</b>, а также:
+                            </div>
+                        )
+                        : (
+                            ''
+                        )}
 
-          {this.attributes.benefits
-            .map((b) => {
-              return <div class="level-card__body__benefit">{b}</div>;
-            })}
-        </div>
-        <div class="level-card__action">
-          <div class="level-card__action__price">
-            <div class="per_month">в месяц</div>
-            <div class="price" style={priceColor}>
-              {this.attributes.price}
+                    {this.attributes.benefits
+                        .map((b) => {
+                            return <div className="level-card__body__benefit">{b}</div>;
+                        })}
+                </div>
+                <div className="level-card__action">
+                    <div className="level-card__action__price">
+                        <div className="per_month">в месяц</div>
+                        <div className="price" style={priceColor}>
+                            {this.attributes.price}
+                        </div>
+                    </div>
+                </div>
+                <Button text="Выбрать уровень" color={this.attributes.color} />
             </div>
-          </div>
-        </div>
-        <Button text="Выбрать уровень" color={this.attributes.color} />
-      </div>
-    );
-  }
+        );
+    }
 }
 export default LevelCard;
 
@@ -138,6 +140,6 @@ const styles = `
             font-weight:900;
 }
             `;
-const styleElement = document.createElement("style");
+const styleElement = document.createElement('style');
 styleElement.innerHTML = styles;
 document.body.appendChild(styleElement);

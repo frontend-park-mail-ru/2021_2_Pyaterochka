@@ -1,31 +1,31 @@
-import Component from "../components/basecomponent.js";
-import Button from "../components/button.jsx";
-import { router } from "../index.js";
+import Component from '../components/basecomponent.js';
+import Button from '../components/button.jsx';
+import { router } from '../index.js';
 
 class ErrorPage extends Component {
-  constructor(err = 404, desc = "Страница не найдена") {
-    super();
-    this.attributes.error = err;
-    this.attributes.message = desc;
-  }
+    constructor (err = 404, desc = 'Страница не найдена') {
+        super();
+        this.attributes.error = err;
+        this.attributes.message = desc;
+    }
 
-  render() {
-    return (
-      <div class="error-block">
-        <h1>{this.attributes.message}</h1>
+    render () {
+        return (
+            <div className="error-block">
+                <h1>{this.attributes.message}</h1>
 
-        <img src="/imgs/error_page.svg" />
-        <Button
-          text="Перейти на главную"
-          color="primary"
-          rounded={true}
-          onclick={() => {
-            router.go("/");
-          }}
-        />
-      </div>
-    );
-  }
+                <img src="/imgs/error_page.svg" />
+                <Button
+                    text="Перейти на главную"
+                    color="primary"
+                    rounded={true}
+                    onclick={() => {
+                        router.go('/');
+                    }}
+                />
+            </div>
+        );
+    }
 }
 
 export default ErrorPage;
@@ -61,6 +61,6 @@ const styles = `
 }
 
 `;
-const styleElement = document.createElement("style");
+const styleElement = document.createElement('style');
 styleElement.innerHTML = styles;
 document.body.appendChild(styleElement);

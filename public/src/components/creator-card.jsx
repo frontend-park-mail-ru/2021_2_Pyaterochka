@@ -1,39 +1,39 @@
-import Component from "./basecomponent.js";
+import Component from './basecomponent.js';
 
 class CreatorCard extends Component {
-  constructor({
-    id = null,
-    name = "",
-    avatar = "",
-    description = "",
-    shadow = false,
-  }) {
-    super();
-    this.attributes.name = name;
-    this.attributes.avatar = avatar;
-    this.attributes.description = description;
-    this.attributes.shadow = shadow;
-  }
+    constructor ({
+        id = null,
+        name = '',
+        avatar = '',
+        description = '',
+        shadow = false
+    }) {
+        super();
+        this.attributes.name = name;
+        this.attributes.avatar = avatar;
+        this.attributes.description = description;
+        this.attributes.shadow = shadow;
+    }
 
-  render() {
-    const style = `background-image: url(${this.attributes.avatar})`;
+    render () {
+        const style = `background-image: url(${this.attributes.avatar})`;
 
-    return (
-      <div class="creator-card">
-        <div
-          className={[
-            "creator-card__avatar",
-            this.attributes.shadow ? "shadow" : "",
-          ]}
-          style={style}
-        ></div>
-        <div class="creator-card__header">{this.attributes.name}</div>
-        <div class="creator-card__description">
-          {this.attributes.description}
-        </div>
-      </div>
-    );
-  }
+        return (
+            <div className="creator-card">
+                <div
+                    className={[
+                        'creator-card__avatar',
+                        this.attributes.shadow ? 'shadow' : ''
+                    ]}
+                    style={style}
+                ></div>
+                <div className="creator-card__header">{this.attributes.name}</div>
+                <div className="creator-card__description">
+                    {this.attributes.description}
+                </div>
+            </div>
+        );
+    }
 }
 
 export default CreatorCard;
@@ -79,6 +79,6 @@ const styles = `
 }
 
 `;
-const styleElement = document.createElement("style");
+const styleElement = document.createElement('style');
 styleElement.innerHTML = styles;
 document.body.appendChild(styleElement);

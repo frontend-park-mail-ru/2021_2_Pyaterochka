@@ -1,14 +1,14 @@
 import Component from './basecomponent.js';
 
 class Footer extends Component {
-    render() {
-        return <div class="footer">
-            <div class="footer-body">
+    render () {
+        return <div className="footer">
+            <div className="footer-body">
                 © Patreon by Pyaterochka team  from Technopark Mail.ru, 2021
                 <br />
                 Использованы материалы freepik - <a href="https://ru.freepik.com/">ru.freepik.com</a>
             </div>
-        </div>
+        </div>;
     }
 }
 export default Footer;

@@ -1,7 +1,7 @@
 import Component from './basecomponent.js';
 
 class Button extends Component {
-    constructor({
+    constructor ({
         text = '',
         color = 'default',
         rounded = false,
@@ -14,16 +14,15 @@ class Button extends Component {
         this.attributes.onclick = onclick;
     }
 
-    render() {
-
-        const classList = `btn btn-${this.attributes.color} ${this.attributes.rounded ? "btn-rounded" : ""}`
+    render () {
+        const classList = `btn btn-${this.attributes.color} ${this.attributes.rounded ? 'btn-rounded' : ''}`;
         const element = (
-            <button class={classList}>
+            <button className={classList}>
                 {this.attributes.text}
             </button>
         );
 
-        element.addEventListener("click", this.attributes.onclick);
+        element.addEventListener('click', this.attributes.onclick);
         return element;
     }
 }

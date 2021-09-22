@@ -1,51 +1,53 @@
-import user from "../storage/user.js";
-import Component from "./basecomponent.js";
+import user from '../storage/user.js';
+import Component from './basecomponent.js';
 
 class Navbar extends Component {
-  constructor({ user = null } = {}) {
-    super();
-    this.attributes.user = user;
-    this.attributes.isOpen = false;
-  }
+    constructor ({ user = null } = {}) {
+        super();
+        this.attributes.user = user;
+        this.attributes.isOpen = false;
+    }
 
-  render() {
-    return (
-      <div class="navbar">
-        <a href="#" class="navbar-brand" router-go="/">
-          Patreon
-        </a>
-        {this.attributes.user ? (
-          <div class="navbar-profile">
-            <img src={this.attributes.user.avatar} />
-            <div class="navbar-profile__name">
-              {this.attributes.user.username}
+    render () {
+        return (
+            <div className="navbar">
+                <a href="#" className="navbar-brand" router-go="/">
+                    Patreon
+                </a>
+                {this.attributes.user
+                    ? (
+                        <div className="navbar-profile">
+                            <img src={this.attributes.user.avatar} />
+                            <div className="navbar-profile__name">
+                                {this.attributes.user.username}
+                            </div>
+                            <div className="navbar-popup">
+                                <a router-go="/profile">Профиль</a>
+                                <br />
+                                <a
+                                    onClick={() => {
+                                        console.log('logout');
+                                        user.logout();
+                                    }}
+                                >
+                                    Выйти
+                                </a>
+                            </div>
+                        </div>
+                    )
+                    : (
+                        <div>
+                            <a router-go="/signup" className="navbar-link">
+                                Регистрация
+                            </a>
+                            <a router-go="/signin" className="navbar-link">
+                                Войти
+                            </a>
+                        </div>
+                    )}
             </div>
-            <div class="navbar-popup">
-              <a router-go="/profile">Профиль</a>
-              <br />
-              <a
-                onclick={() => {
-                  console.log("logout");
-                  user.logout();
-                }}
-              >
-                Выйти
-              </a>
-            </div>
-          </div>
-        ) : (
-          <div>
-            <a router-go="/signup" class="navbar-link">
-              Регистрация
-            </a>
-            <a router-go="/signin" class="navbar-link">
-              Войти
-            </a>
-          </div>
-        )}
-      </div>
-    );
-  }
+        );
+    }
 }
 export default Navbar;
 
@@ -127,6 +129,6 @@ const styles = `
 
 `;
 
-const styleElement = document.createElement("style");
+const styleElement = document.createElement('style');
 styleElement.innerHTML = styles;
 document.body.appendChild(styleElement);

@@ -1,105 +1,107 @@
-import Component from "./basecomponent.js";
-import Button from "./button.jsx";
-import LockMessage from "./lock-message.jsx";
+import Component from './basecomponent.js';
+import Button from './button.jsx';
+import LockMessage from './lock-message.jsx';
 
 class PostCard extends Component {
-  timeDiff(date) {
-    const diff = new Date().getTime() - date;
-    if (diff <= 1000 * 60 * 5) {
-      return "менее 5 минут назад";
+    timeDiff (date) {
+        const diff = new Date().getTime() - date;
+        if (diff <= 1000 * 60 * 5) {
+            return 'менее 5 минут назад';
+        }
+        if (diff < 1000 * 60 * 60) {
+            return Math.round(diff / (1000 * 60)) + ' минут назад';
+        }
+
+        if (diff < 1000 * 60 * 60 * 24) {
+            return Math.round(diff / (1000 * 60 * 60)) + ' часов назад';
+        }
+
+        if (diff < 1000 * 60 * 60 * 24 * 30) {
+            return Math.round(diff / (1000 * 60 * 60 * 24)) + ' дней назад';
+        }
+        if (date < 1000 * 60 * 60 * 24 * 30 * 12) {
+            return Math.round(diff / (1000 * 60 * 60 * 24 * 30)) + ' месяцев назад';
+        }
+
+        return (
+            Math.round(diff / (1000 * 60 * 60 * 24 * 30 * 12)) + ' месяцев назад'
+        );
     }
-    if (diff < 1000 * 60 * 60) {
-      return Math.round(diff / (1000 * 60)) + " минут назад";
+
+    simplifyNum (num) {
+        if (num < 1e3) return num;
+        if (num < 1e6) return Math.round(num / 1e3) + 'k';
+        if (num < 1e9) return Math.round(num / 1e6) + 'm';
+        return Math.round(num / 1e9) + 'b';
     }
 
-    if (diff < 1000 * 60 * 60 * 24) {
-      return Math.round(diff / (1000 * 60 * 60)) + " часов назад";
+    constructor ({
+        title = '',
+        published = new Date(),
+        likes = 0,
+        views = 0,
+        description = '',
+        id = null,
+        level = '',
+        opened = true,
+        image = ''
+    }) {
+        super();
+        this.attributes.title = title;
+        this.attributes.published = published;
+        this.attributes.likes = likes;
+        this.attributes.views = views;
+        this.attributes.description = description;
+        this.attributes.id = id;
+        this.attributes.level = level;
+        this.attributes.opened = opened;
+        this.attributes.image = image;
     }
 
-    if (diff < 1000 * 60 * 60 * 24 * 30) {
-      return Math.round(diff / (1000 * 60 * 60 * 24)) + " дней назад";
-    }
-    if (date < 1000 * 60 * 60 * 24 * 30 * 12) {
-      return Math.round(diff / (1000 * 60 * 60 * 24 * 30)) + " месяцев назад";
-    }
-
-    return (
-      Math.round(diff / (1000 * 60 * 60 * 24 * 30 * 12)) + " месяцев назад"
-    );
-  }
-
-  simplifyNum(num) {
-    if (num < 1e3) return num;
-    if (num < 1e6) return Math.round(num / 1e3) + "k";
-    if (num < 1e9) return Math.round(num / 1e6) + "m";
-    return Math.round(num / 1e9) + "b";
-  }
-
-  constructor({
-    title = "",
-    published = new Date(),
-    likes = 0,
-    views = 0,
-    description = "",
-    id = null,
-    level = "",
-    opened = true,
-    image = "",
-  }) {
-    super();
-    this.attributes.title = title;
-    this.attributes.published = published;
-    this.attributes.likes = likes;
-    this.attributes.views = views;
-    this.attributes.description = description;
-    this.attributes.id = id;
-    this.attributes.level = level;
-    this.attributes.opened = opened;
-    this.attributes.image = image;
-  }
-
-  render() {
-    const style = `background-image:url(${this.attributes.image})`;
-    const element = (
-      <div class="post-card">
-        <div class="post-card-image">
-          <div
-            className={["image", this.attributes.opened ? "" : "blur"]}
-            style={style}
-          ></div>
-          {this.attributes.opened ? (
-            ""
-          ) : (
-            <LockMessage text={this.attributes.level} dark={false} />
-          )}
-        </div>
-        <div class="post-card-body">
-          <div class="post-card-title">{this.attributes.title}</div>
-          <div class="post-card-meta">
-            <div>
-              <span class="date">
-                {this.timeDiff(this.attributes.published)}
-              </span>
+    render () {
+        const style = `background-image:url(${this.attributes.image})`;
+        const element = (
+            <div className="post-card">
+                <div className="post-card-image">
+                    <div
+                        className={['image', this.attributes.opened ? '' : 'blur']}
+                        style={style}
+                    ></div>
+                    {this.attributes.opened
+                        ? (
+                            ''
+                        )
+                        : (
+                            <LockMessage text={this.attributes.level} dark={false} />
+                        )}
+                </div>
+                <div className="post-card-body">
+                    <div className="post-card-title">{this.attributes.title}</div>
+                    <div className="post-card-meta">
+                        <div>
+                            <span className="date">
+                                {this.timeDiff(this.attributes.published)}
+                            </span>
+                        </div>
+                        <div>
+                            <span className="visits">
+                                <img src="/imgs/icons/view_outline_28.svg" />
+                                {this.simplifyNum(this.attributes.views)}
+                            </span>
+                            <span className="likes">
+                                <img src="/imgs/icons/like_outline_28.svg" />
+                                {this.simplifyNum(this.attributes.likes)}
+                            </span>
+                        </div>
+                    </div>
+                    <div className="post-card-desc">{this.attributes.description}</div>
+                    <Button text="Открыть материал" />
+                </div>
             </div>
-            <div>
-              <span class="visits">
-                <img src="/imgs/icons/view_outline_28.svg" />
-                {this.simplifyNum(this.attributes.views)}
-              </span>
-              <span class="likes">
-                <img src="/imgs/icons/like_outline_28.svg" />
-                {this.simplifyNum(this.attributes.likes)}
-              </span>
-            </div>
-          </div>
-          <div class="post-card-desc">{this.attributes.description}</div>
-          <Button text="Открыть материал" />
-        </div>
-      </div>
-    );
+        );
 
-    return element;
-  }
+        return element;
+    }
 }
 
 export default PostCard;
@@ -231,6 +233,6 @@ font-size: 20px;
 font-weight: 500;
 }
 `;
-const styleElement = document.createElement("style");
+const styleElement = document.createElement('style');
 styleElement.innerHTML = styles;
 document.body.appendChild(styleElement);
