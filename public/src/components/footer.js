@@ -18,24 +18,27 @@ class Footer extends Component {
 export default Footer;
 
 const styles = `
+body {
+    position: relative;
+    min-height: 100%;
+    max-width: 100%; 
+    overflow-x: hidden;
+}
+
 .footer {
     position: absolute;
     bottom: 0;
     width: 100%;
-    background-color: var(--color-primary);
-    padding-top: 40px;
-    margin-top: 50px;
+    background-color: var(--color-primary-dark);
+    height: 120px;
 }
 .footer-body {
-    background-color: var(--color-primary-dark);
-    width: 900px;
-    max-width:100%;
     margin: auto;
-    padding:20px 40px;
-    border-radius:20px 20px 0 0;
+    margin-left: 100px;
+    padding-top: 40px;
     color: #fff;
-    box-shadow: 0 0 4px #fff1;
 }
+
 .footer-body a { 
     color: #fff;
 }
