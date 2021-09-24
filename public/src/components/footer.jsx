@@ -1,5 +1,8 @@
 import Component from './basecomponent.js';
 
+/**
+ * Компонент подвала
+ */
 class Footer extends Component {
     render () {
         return <div className="footer">

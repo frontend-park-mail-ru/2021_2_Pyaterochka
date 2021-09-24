@@ -1,6 +1,9 @@
 import Component from './basecomponent.js';
 import Button from './button.jsx';
 
+/**
+ * Компонент каточки уровня подписки
+ */
 class LevelCard extends Component {
     constructor ({
         id = null,
@@ -44,10 +47,13 @@ class LevelCard extends Component {
                             ''
                         )}
 
-                    {this.attributes.benefits
-                        .map((b) => {
-                            return <div className="level-card__body__benefit">{b}</div>;
-                        })}
+                    {this.attributes.benefits.map((b, i) => {
+                        return (
+                            <div key={i} className="level-card__body__benefit">
+                                {b}
+                            </div>
+                        );
+                    })}
                 </div>
                 <div className="level-card__action">
                     <div className="level-card__action__price">

@@ -1,7 +1,25 @@
+/** @module частичное обновление DOM дерева */
+
+/**
+ * Заменяет старый элемент DOM на актуальный
+ *
+ * @param {Element | Text} oldDom Элемент DOM, требующий замены
+ * @param {Element | Text} newDom Актуальный элемент DOM
+ * @returns {Element | Text}  Актуальный элемент DOM
+ */
 function replace (oldDom, newDom) {
     oldDom.replaceWith(newDom);
     return newDom;
 }
+
+/**
+ * Ищет разницу в новом и старом деревьях DOM и применяет изменения
+ * к старому дереву
+ *
+ * @param {Element | Text} oldDom Элемент DOM, требующий обновления
+ * @param {Element | Text} newDom Актуальный элемент DOM
+ * @returns {Element | Text} Измененный или замененный элемент DOM
+ */
 function patchDom (oldDom, newDom) {
     if (oldDom instanceof Element && newDom instanceof Element) {
         if (!oldDom.parentNode) {
@@ -15,18 +33,31 @@ function patchDom (oldDom, newDom) {
         return oldDom;
     }
     if (oldDom instanceof Text && newDom instanceof Text) {
-        oldDom.textContent = newDom.textContent;
+        if (oldDom.textContent !== newDom.textContent) {
+            oldDom.textContent = newDom.textContent;
+        }
         return oldDom;
     }
     return replace(oldDom, newDom);
 }
 
-function attributesPatch (oldDom = document.createElement(), newDom) {
+/**
+ * Ищет разницу в новых и старых атрибутах элементов DOM и применяет
+ * изменения к старому элемент
+ *
+ * @param {Element | Text} oldDom Элемент DOM, требующий обновления
+ * @param {Element | Text} newDom Актуальный элемент DOM
+ */
+function attributesPatch (oldDom, newDom) {
     const oldKeys = oldDom.getAttributeNames();
     const newKeys = newDom.getAttributeNames();
 
     newKeys.forEach(key => {
-        oldDom.setAttribute(key, newDom.getAttribute(key));
+        const newAttr = newDom.getAttribute(key);
+        const oldAttr = oldDom.getAttribute(key);
+        if (newAttr !== oldAttr) {
+            oldDom.setAttribute(key, newDom.getAttribute(key));
+        }
     });
 
     const removedKeys = oldKeys.filter(key => !newKeys.includes(key));
@@ -35,6 +66,14 @@ function attributesPatch (oldDom = document.createElement(), newDom) {
     });
 }
 
+/**
+ * Ищет изменения в дочерних узлах нового и старого элементов DOM и
+ * применяет изменения дочерних узлов нового элемента к дочерним
+ * узлам старого дерева
+ *
+ * @param {Element | Text} oldDom Элемент DOM, требующий обновления
+ * @param {Element | Text} newDom Актуальный элемент DOM
+ */
 function childrenPatch (oldDom, newDom) {
     const oldChildren = Array(...oldDom.childNodes);
     const newChildren = Array(...newDom.childNodes);

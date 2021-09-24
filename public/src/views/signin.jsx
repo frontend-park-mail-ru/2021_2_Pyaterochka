@@ -43,14 +43,18 @@ class SigninView extends Component {
         });
 
         user.update();
-        router.go('/');
     }
 
     render () {
         return (
             <div className="auth-block">
                 <h1> Войти </h1>
-                <div className="auth-card shadow">
+                <form
+                    className="auth-card shadow"
+                    onSubmit={() => {
+                        this.submit();
+                    }}
+                >
                     {this.form.map((c) => c.renderReactive())}
                     <Button
                         text="Войти"
@@ -60,7 +64,7 @@ class SigninView extends Component {
                             this.submit();
                         }}
                     />
-                </div>
+                </form>
                 <span className="auth-card__tooltip">
                     Впервые на Patreon?
                     <a href="#" router-go="/signup">
@@ -69,6 +73,10 @@ class SigninView extends Component {
                 </span>
             </div>
         );
+    }
+
+    created () {
+        if (user.user) return router.go('/');
     }
 }
 

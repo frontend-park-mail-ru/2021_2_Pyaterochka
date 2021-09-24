@@ -1,5 +1,7 @@
 import Component from './basecomponent.js';
-
+/**
+ * Компонент комментария
+ */
 class Comment extends Component {
     timeDiff (date) {
         const diff = (new Date()).getTime() - date;

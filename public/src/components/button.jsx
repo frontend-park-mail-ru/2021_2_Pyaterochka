@@ -1,5 +1,8 @@
 import Component from './basecomponent.js';
 
+/**
+ * Компонент кнопки
+ */
 class Button extends Component {
     constructor ({
         text = '',

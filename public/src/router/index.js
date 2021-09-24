@@ -1,3 +1,10 @@
+/**
+ * @module Роутер
+ */
+
+/**
+ * Путь роутера
+ */
 class Route {
     constructor (url, component, title = '') {
         this.url = url;
@@ -7,6 +14,9 @@ class Route {
     }
 }
 
+/**
+ * Загрузчик компонента по требованию
+ */
 class DynamicComponentLoader {
     constructor (url, ...attrs) {
         this.url = url;
@@ -14,6 +24,11 @@ class DynamicComponentLoader {
         this.component = null;
     }
 
+    /**
+     * Загрузить компонент
+     *
+     * @returns {Component} компонент
+     */
     async load () {
         if (this.component) return this.component;
         const module = await import(this.url);
@@ -23,6 +38,9 @@ class DynamicComponentLoader {
     }
 }
 
+/**
+ * Роутер
+ */
 class Router {
     constructor (container, routes = []) {
         this.routes = routes;
@@ -30,10 +48,20 @@ class Router {
         this.addRouterListeners();
     }
 
+    /**
+     * Добавить путь
+     * @param {Route} route путь
+     */
     addRoute (route) {
         this.routes.push(route);
     }
 
+    /**
+     * Найти подходящий путь
+     *
+     * @param {string} url
+     * @returns {Route} путь
+     */
     getRoute (url) {
         const route = this.routes.find((route) => {
             if (route.url === '') return true;
@@ -44,20 +72,33 @@ class Router {
         return route;
     }
 
+    /**
+     * Запуск роутера
+     */
     start () {
         let url = location.hash.substr(1);
         if (url === '') url = '/';
         this.go(url);
     }
 
+    /**
+     * Перейти по адресу
+     *
+     * @param {string} url адрес
+     */
     go (url = '') {
         history.pushState(url, location.href);
         location.hash = url;
 
         const route = this.getRoute(url);
         this.renderRoute(route);
+        window.scrollTo(0, 0);
     }
 
+    /**
+     * Отобразить путь
+     * @param {Route} route путь
+     */
     async renderRoute (route) {
         document.title = route.title;
         let view = route.component;
@@ -81,31 +122,59 @@ class Router {
         this.container.appendChild(view.renderReactive());
     }
 
+    /**
+     * Установить контейнер для роутера
+     * @param {Element} container контейнер
+     */
     setContainer (container) {
         this.container = container;
     }
 
+    /**
+     * Установить шаблон для роутера
+     * @param {Component} layout шаблон
+     */
     setLayout (layout) {
         this.layout = layout;
         this.container.innerHTML = '';
         this.container.appendChild(layout.renderReactive());
     }
 
+    /**
+     * Установка обработчиков
+     */
     addRouterListeners () {
         this.container.addEventListener('click', (e) => {
-            if (e.target instanceof Element) {
-                if (e.target.hasAttribute('router-go')) {
+            if (e.target) {
+                let url = null;
+                let node = e.target;
+
+                while (!url && node) {
+                    if (node.hasAttribute('router-go')) {
+                        url = node.getAttribute('router-go');
+                    }
+                    node = node.parentElement;
+                }
+                if (url) {
                     e.preventDefault();
-                    this.go(e.target.getAttribute('router-go'));
+                    this.go(url);
                 }
             }
             e.preventDefault();
         });
-        // window.addEventListener('popstate', (e) => {
-        //     this.renderRoute(this.getRoute(e.state))
-        // })
+        window.addEventListener('popstate', (e) => {
+            console.log(e);
+            this.renderRoute(this.getRoute(location.hash.substr(1)));
+        });
     }
 
+    /**
+     * Установка компонента загрузки
+     *
+     * Данный компонент будет отображаться во время динамической
+     * загрузки компонентов страниц
+     * @param {Component} component компонент загрузки
+     */
     setLoadingView (component) {
         this.loadingView = component;
     }

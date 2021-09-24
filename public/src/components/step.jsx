@@ -1,5 +1,8 @@
 import Component from './basecomponent.js';
 
+/**
+ * Компонент шага
+ */
 class Step extends Component {
     constructor ({ number = 0, name = '', description = '' }) {
         super();

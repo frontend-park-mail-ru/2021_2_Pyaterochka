@@ -1,5 +1,8 @@
 import Component from './basecomponent.js';
 
+/**
+ * Компонент карточки профиля
+ */
 class ProfileCard extends Component {
     constructor ({
         username = '',

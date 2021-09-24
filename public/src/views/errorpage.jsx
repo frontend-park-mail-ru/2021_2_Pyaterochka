@@ -23,6 +23,14 @@ class ErrorPage extends Component {
                         router.go('/');
                     }}
                 />
+
+                <style>
+                    {`
+                    body {
+                            background: radial-gradient(50% 50% at 50% 50%, #000000 0%, #363636 100%);
+                    }
+                    `}
+                </style>
             </div>
         );
     }
@@ -35,7 +43,6 @@ const styles = `
     display: flex;
     flex-direction: column;
     align-items:center;
-    background: radial-gradient(50% 50% at 50% 50%, #000000 0%, #363636 100%);
     margin-bottom: -50px;
     color:#fff;
     font-family: "Montserrat", sans-serif;

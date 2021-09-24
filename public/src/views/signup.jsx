@@ -1,6 +1,8 @@
 import Component from '../components/basecomponent.js';
 import Button from '../components/button.jsx';
 import InputField from '../components/input-field.jsx';
+import { router } from '../index.js';
+import user from '../storage/user.js';
 
 class SignupView extends Component {
     constructor () {
@@ -92,6 +94,10 @@ class SignupView extends Component {
                 </span>
             </div>
         );
+    }
+
+    created () {
+        if (user.user) return router.go('/');
     }
 }
 

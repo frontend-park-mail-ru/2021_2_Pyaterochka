@@ -1,25 +1,37 @@
 import Component from './basecomponent.js';
 
+/**
+ * Компонент карточки создателя
+ */
 class CreatorCard extends Component {
     constructor ({
         id = null,
         name = '',
         avatar = '',
         description = '',
-        shadow = false
+        shadow = false,
+        clickable = true
     }) {
         super();
+        this.attributes.id = id;
         this.attributes.name = name;
         this.attributes.avatar = avatar;
         this.attributes.description = description;
         this.attributes.shadow = shadow;
+        this.attributes.clickable = clickable;
     }
 
     render () {
         const style = `background-image: url(${this.attributes.avatar})`;
 
         return (
-            <div className="creator-card">
+            <div
+                className={[
+                    'creator-card',
+                    this.attributes.clickable ? 'clickable' : ''
+                ]}
+                router-go={this.attributes.clickable ? '/creator' : null}
+            >
                 <div
                     className={[
                         'creator-card__avatar',
@@ -70,7 +82,7 @@ const styles = `
     transition: background 0.1s ease-in;
 } 
 
-.creator-card:hover {
+.creator-card.clickable:hover {
     cursor: pointer;
     box-shadow: 0 0 5px #0002;
 }

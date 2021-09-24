@@ -29,8 +29,8 @@ class CreatorView extends Component {
                                 <Skeleton type="text" height={40} />
                             </div>
                             <div className="level-card-container">
-                                {[1, 2, 3].map(() => (
-                                    <Skeleton width={260} height={260} />
+                                {[1, 2, 3].map((v) => (
+                                    <Skeleton key={v} width={260} height={260} />
                                 ))}
                             </div>
                         </>
@@ -42,15 +42,14 @@ class CreatorView extends Component {
                                 style={`background-image:url(${this.attributes.creator.cover}`}
                             ></div>
 
-                            <div className="creator-card">
-                                <CreatorCard
-                                    id={this.attributes.creator.id}
-                                    name={this.attributes.creator.name}
-                                    avatar={this.attributes.creator.avatar}
-                                    description={this.attributes.creator.description}
-                                    shadow={true}
-                                />
-                            </div>
+                            <CreatorCard
+                                id={this.attributes.creator.id}
+                                name={this.attributes.creator.name}
+                                avatar={this.attributes.creator.avatar}
+                                description={this.attributes.creator.description}
+                                shadow={true}
+                                clickable={false}
+                            />
 
                             <div className="level-card-container">
                                 {this.attributes.levels.map((card) =>

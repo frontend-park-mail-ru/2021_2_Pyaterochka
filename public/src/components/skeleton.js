@@ -1,5 +1,10 @@
 import Component from './basecomponent.js';
 
+/**
+ * Компонент скелетона
+ *
+ * Элемент имитирующий элемент во время загрузки
+ */
 class Skeleton extends Component {
     constructor ({ type = 'rect', height = 200, width = null } = {}) {
         super();

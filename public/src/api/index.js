@@ -1,6 +1,11 @@
+/** @module API */
+
 const basename = '/api';
 
 export default {
+    /**
+     * Авторизация
+     */
     async login ({ email, password }) {
         const req = await fetch(basename + '/login', {
             method: 'post',
@@ -18,6 +23,10 @@ export default {
 
         return data;
     },
+
+    /**
+     * Профиль
+     */
     async profile () {
         const req = await fetch(basename + '/profile', {
             method: 'get',
@@ -29,6 +38,10 @@ export default {
 
         return data;
     },
+
+    /**
+     * Выход
+     */
     async logout () {
         const req = await fetch(basename + '/logout', {
             method: 'get',
@@ -40,6 +53,12 @@ export default {
 
         return data;
     },
+
+    /**
+     * Информация о создателе
+     * @param {*} id
+     * @returns
+     */
     async creatorInfo (id) {
         const req = await fetch(basename + '/creator', {
             method: 'get',
@@ -52,6 +71,10 @@ export default {
         return data;
     },
 
+    /**
+     * Получить уровни поддержки создателя
+     * @param {*} id
+     */
     async levelsInfo (id) {
         const req = await fetch(basename + '/levels', {
             method: 'get',
@@ -63,6 +86,11 @@ export default {
 
         return data;
     },
+
+    /**
+     * Получить записи создателя
+     * @param {*} id
+     */
     async postsInfo (id) {
         const req = await fetch(basename + '/posts', {
             method: 'get',
@@ -72,6 +100,9 @@ export default {
 
         const data = await req.json();
 
-        return data;
+        return data.map((v) => {
+            v.published = new Date(v.published);
+            return v;
+        });
     }
 };

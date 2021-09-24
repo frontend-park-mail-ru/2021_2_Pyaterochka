@@ -400,6 +400,7 @@ class IndexView extends Component {
                                 <div className="component-wrapper__variants">
                                     {info.data.map((c, i) => (
                                         <Button
+                                            key={i}
                                             text={c.name}
                                             onclick={() => {
                                                 this.attributes.cps[ii].active = i;
@@ -425,7 +426,7 @@ class IndexView extends Component {
                                 <td>{component.constructor.name}</td>
                             </tr>
                             {Object.keys(component.attributes).map((key) => (
-                                <tr>
+                                <tr key={key}>
                                     <td>{key}</td>
                                     <td>{component.attributes[key]}</td>
                                 </tr>

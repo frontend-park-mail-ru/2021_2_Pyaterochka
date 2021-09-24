@@ -1,5 +1,8 @@
 import Component from './basecomponent.js';
 
+/**
+ * Компонент поля ввода
+ */
 class InputField extends Component {
     constructor ({
         placeholder = '',
@@ -15,19 +18,24 @@ class InputField extends Component {
     }
 
     render () {
-        const element = <div>
-            <label className="input-field">
-                <input placeholder=" " type={this.attributes.type} value={this.attributes.value} />
-                <span
-                    onClick="this.parentElement.querySelector('input').focus();"
-                > {this.attributes.placeholder} </span>
-            </label>
-            <div className="input-validation">
-
+        const element = (
+            <div>
+                <label className="input-field">
+                    <input
+                        placeholder=" "
+                        type={this.attributes.type}
+                        value={this.attributes.value}
+                    />
+                    <span onClick="this.parentElement.querySelector('input').focus();">
+                        {' '}
+                        {this.attributes.placeholder}{' '}
+                    </span>
+                </label>
+                <div className="input-validation"></div>
             </div>
-        </div>;
+        );
 
-        element.addEventListener('input', e => {
+        element.addEventListener('input', (e) => {
             this.validate();
         });
         this.input = element.querySelector('input');
@@ -46,18 +54,25 @@ class InputField extends Component {
         const validation = element.querySelector('.input-validation');
         const value = element.querySelector('input').value;
 
-        const errors = this.attributes.validation.map((rule) => {
-            return rule(value);
-        }).filter((err) => err !== null);
+        const errors = this.attributes.validation
+            .map((rule, i) => {
+                return {
+                    key: i,
+                    error: rule(value)
+                };
+            })
+            .filter((err) => err.error !== null);
 
-        const elements = errors.map(error => {
-            return <div className="input-validation__error">
-                {error}
-            </div>;
+        const elements = errors.map((error) => {
+            return (
+                <div key={error.key} className="input-validation__error">
+                    {error.error}
+                </div>
+            );
         });
 
         validation.innerHTML = '';
-        elements.forEach(element => {
+        elements.forEach((element) => {
             validation.appendChild(element);
         });
 

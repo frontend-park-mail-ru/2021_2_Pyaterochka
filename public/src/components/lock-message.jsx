@@ -1,5 +1,8 @@
 import Component from './basecomponent.js';
 
+/**
+ * Компонент сообщения с замочком
+ */
 class LockMessage extends Component {
     constructor ({
         text = 'Стань патроном, чтобы продолжить наслаждаться работами автора',

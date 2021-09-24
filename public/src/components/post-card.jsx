@@ -2,6 +2,9 @@ import Component from './basecomponent.js';
 import Button from './button.jsx';
 import LockMessage from './lock-message.jsx';
 
+/**
+ * Компонент карточки записиы
+ */
 class PostCard extends Component {
     timeDiff (date) {
         const diff = new Date().getTime() - date;

@@ -1,6 +1,9 @@
 import user from '../storage/user.js';
 import Component from './basecomponent.js';
 
+/**
+ * Компонент шапки
+ */
 class Navbar extends Component {
     constructor ({ user = null } = {}) {
         super();
@@ -22,8 +25,7 @@ class Navbar extends Component {
                                 {this.attributes.user.username}
                             </div>
                             <div className="navbar-popup">
-                                <a router-go="/profile">Профиль</a>
-                                <br />
+                                <a router-go="/">Профиль</a>
                                 <a
                                     onClick={() => {
                                         console.log('logout');
@@ -116,15 +118,20 @@ const styles = `
     right: 0;
     top: 52px;
     background: var(--color-primary);
-    padding: 20px;
+    padding: 10px;
     border-radius: 5px;
     min-width:200px;
     text-align:center;
     display:none;
+    flex-direction:column;
+}
+.navbar-popup a { 
+    padding:10px;
 }
 
+
 .navbar-profile:hover .navbar-popup {
-    display:block;
+    display:flex;
 }
 
 `;

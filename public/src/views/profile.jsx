@@ -8,6 +8,7 @@ import user from '../storage/user.js';
 class ProfileView extends Component {
     constructor () {
         super();
+        this.attributes.user = {};
         this.attributes.creators = [
             {
                 name: 'IU7-memes',
