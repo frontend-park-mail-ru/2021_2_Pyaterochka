@@ -25,13 +25,22 @@ function walker (path) {
                 if (stats.isDirectory()) {
                     return walker(filename);
                 }
+                let code = null;
                 if (filename.endsWith('.jsx')) {
                     counterAll++;
-                    const code = await utils.transformFile(filename);
-                    fs.writeFile(filename, code, (err) => {
+                    code = await utils.transformFile(filename);
+                    code = utils.transformJS(code)
+                }
+                if (filename.endsWith('.js')) {
+                    counterAll++;
+                    code = await utils.transformFileJS(filename);
+                }
+
+                if (code) {
+                    fs.writeFile(filename.replace('.jsx', '.js'), code, (err) => {
                         if (err) throw err;
                         counterDone++;
-                        console.log(`Transformed ${counterDone}/${counterAll}`);
+                        console.log(`Transformed ${counterDone}/${counterAll} ${filename}`);
                     });
                 }
             });
