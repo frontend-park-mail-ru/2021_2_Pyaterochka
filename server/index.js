@@ -1,30 +1,24 @@
 const express = require('express');
 const app = express();
+const utils = require('./utils');
+
 const port = process.env.PORT || 3001;
 
 const session = require('express-session');
-
-const fs = require('fs');
 
 app.use(async (res, req, next) => {
     if (!res.path.endsWith('.jsx')) {
         return next();
     }
-
-    fs.readFile('./public' + res.path, async (err, file) => {
-        if (err && err.code === 'ENOENT') return next();
-        if (err) return next(err);
-
-        const jsxCompiled = await require('@babel/core').transformAsync(file, {
-            plugins: [['@babel/plugin-transform-react-jsx', {
-                runtime: 'automatic',
-                importSource: '@'
-            }]]
-        });
+    try {
+        const code = await utils.transformFile(`./public/${res.path}`);
         req.header('Content-Type', 'application/javascript');
-        req.send(jsxCompiled.code.replace(/from "@\/jsx-runtime"/g, "from '/src/modules/jsx.js'"));
+        req.send(code);
         req.end();
-    });
+    } catch (err) {
+        if (err.code === 'ENOENT') return next();
+        next(err);
+    }
 });
 
 app.use((req, res, next) => {

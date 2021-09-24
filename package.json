@@ -5,6 +5,7 @@
   "scripts": {
     "start": "node ./server",
     "dev": "node ./server",
+    "build": "node ./server/build",
     "linter": "npx eslint public server --fix"
   },
   "repository": {
@@ -22,7 +23,8 @@
     "@babel/plugin-transform-react-jsx": "^7.14.9",
     "babel-connect": "^6.0.2",
     "express": "^4.17.1",
-    "express-session": "^1.17.2"
+    "express-session": "^1.17.2",
+    "ncp": "^2.0.0"
   },
   "devDependencies": {
     "eslint": "^7.32.0",
