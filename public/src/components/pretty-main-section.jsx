@@ -20,8 +20,7 @@ class PrettySection extends Component {
                     <h1 className="main-page-section-container__slogan">{this.attributes.slogan}</h1>
                     <div className="main-page-section-container__text">{this.attributes.text}
                     </div>
-                    <Button className="main-page-section-container__button" text="Начать" rounded={true} color={'primary'}/>
-                    {/* <button className="main-page-section-container__button">Начать</button> */}
+                    <Button text="Начать" rounded={true} color={'primary'}/>
                 </div>
                 <img src="../../imgs/mainPage.png" alt="Картинка глвной страницы"/>
             </div>
@@ -63,10 +62,6 @@ const styles = `
     line-height: 42px;
     
     color: #fff;
-}
-
-.btn {
-    width: 108px;
 }
 `;
 const styleElement = document.createElement('style');
