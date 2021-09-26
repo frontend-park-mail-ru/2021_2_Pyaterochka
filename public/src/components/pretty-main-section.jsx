@@ -1,5 +1,6 @@
 import Component from './basecomponent.js';
 import Button from './button.jsx';
+import { router } from '../index.js';
 
 class PrettySection extends Component {
     constructor ({
@@ -11,6 +12,10 @@ class PrettySection extends Component {
         this.attributes.text = text;
     }
 
+    async submit () {
+        router.go('/signup');
+    }
+
     render () {
         return <div className={
             ['main-page-section']
@@ -20,7 +25,9 @@ class PrettySection extends Component {
                     <h1 className="main-page-section-container__slogan">{this.attributes.slogan}</h1>
                     <div className="main-page-section-container__text">{this.attributes.text}
                     </div>
-                    <Button text="Начать" rounded={true} color={'primary'}/>
+                    <Button text="Начать" rounded={true} color={'primary'} onclick={() => {
+                        this.submit();
+                    }}/>
                 </div>
                 <img src="../../imgs/mainPage.png" alt="Картинка глвной страницы"/>
             </div>
