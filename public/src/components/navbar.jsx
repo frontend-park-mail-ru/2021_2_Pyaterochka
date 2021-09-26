@@ -124,6 +124,7 @@ const styles = `
     text-align:center;
     display:none;
     flex-direction:column;
+    z-index: 100;
 }
 .navbar-popup a { 
     padding:10px;

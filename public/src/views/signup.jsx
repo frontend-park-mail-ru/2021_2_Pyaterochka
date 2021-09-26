@@ -1,3 +1,4 @@
+import api from '../api/index.js';
 import Component from '../components/basecomponent.js';
 import Button from '../components/button.jsx';
 import InputField from '../components/input-field.jsx';
@@ -68,7 +69,12 @@ class SignupView extends Component {
     async submit () {
         const errors = Math.max(...this.form.map((e) => e.validate().length));
         if (errors) return;
-        alert('Валидация прошла');
+
+        await api.register({
+            username: this.form[0].getValue(),
+            email: this.form[1].getValue(),
+            password: this.form[2].getValue()
+        });
     }
 
     render () {

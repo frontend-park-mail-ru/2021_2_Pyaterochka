@@ -1,6 +1,6 @@
 /** @module API */
 
-const basename = '/api';
+const basename = 'http://tp.volodyalarin.site:8080';
 
 export default {
     /**
@@ -13,9 +13,33 @@ export default {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                email: email,
+                login: email,
                 password: password
             }),
+            mode: 'cors',
+            credentials: 'include'
+        });
+
+        const data = await req.json();
+
+        return data;
+    },
+
+    /**
+     * Регистрация
+     */
+    async register ({ username, email, password }) {
+        const req = await fetch(basename + '/register', {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                login: email,
+                password: password,
+                nickname: username
+            }),
+            mode: 'cors',
             credentials: 'include'
         });
 
@@ -36,7 +60,12 @@ export default {
 
         const data = await req.json();
 
-        return data;
+        return {
+            email: data.login,
+            username: data.nickname,
+            id: data.id,
+            avatar: data.avatar || 'https://www.vtp-club.ru/img/user.png'
+        };
     },
 
     /**

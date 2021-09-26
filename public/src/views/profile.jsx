@@ -8,7 +8,7 @@ import user from '../storage/user.js';
 class ProfileView extends Component {
     constructor () {
         super();
-        this.attributes.user = {};
+        this.attributes.user = null;
         this.attributes.creators = [
             {
                 name: 'IU7-memes',
@@ -34,6 +34,7 @@ class ProfileView extends Component {
     }
 
     render () {
+        if (!this.attributes.user) return <></>;
         return (
             <div>
                 <div className="profile-block shadow">

@@ -25,7 +25,7 @@ class CreatorView extends Component {
                                 <Skeleton height={256} />
                             </div>
                             <div className="creator-card">
-                                <Skeleton type="circule" height={200} />
+                                <Skeleton type="circle" height={200} />
                                 <Skeleton type="text" height={40} />
                             </div>
                             <div className="level-card-container">
