@@ -23,14 +23,6 @@ class ErrorPage extends Component {
                         router.go('/');
                     }}
                 />
-
-                <style>
-                    {`
-                    body {
-                            background: radial-gradient(50% 50% at 50% 50%, #000000 0%, #363636 100%);
-                    }
-                    `}
-                </style>
             </div>
         );
     }
@@ -43,25 +35,24 @@ const styles = `
     display: flex;
     flex-direction: column;
     align-items:center;
-    margin-bottom: -50px;
+    background: radial-gradient(50% 50% at 50% 50%, #000000 0%, #363636 100%);
+    height: calc(100vh - 52px);
     color:#fff;
     font-family: "Montserrat", sans-serif;
     font-size: 20px;
     font-style: normal;
     font-weight: 700;
-    text-align:center;
-    padding-bottom:50px;
+    text-align: center;
+    padding-top: 80px;
 }
 .error-block h1{ 
     margin-bottom: 50px;
 }
-
 .error-block img{
     width:600px;
     max-width: 100%;
     margin-bottom: 30px;
 }
-
 .error-block .btn {
     width:400px;
     max-width: 100%;

@@ -25,8 +25,7 @@ module.exports = {
     },
     overrides: [
         {
-            files: ["*.jsx", "*.js"]
+            files: ['*.jsx', '*.js']
         }
-    ],
-
+    ]
 };

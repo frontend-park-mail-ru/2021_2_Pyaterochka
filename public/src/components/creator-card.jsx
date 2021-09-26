@@ -81,7 +81,6 @@ const styles = `
     z-index: 1;
     transition: background 0.1s ease-in;
 } 
-
 .creator-card.clickable:hover {
     cursor: pointer;
     box-shadow: 0 0 5px #0002;
@@ -89,7 +88,6 @@ const styles = `
 .creator-card:hover .creator-card__avatar {
     background-size:120%;
 }
-
 `;
 const styleElement = document.createElement('style');
 styleElement.innerHTML = styles;

@@ -66,10 +66,7 @@ class SigninView extends Component {
                     />
                 </form>
                 <span className="auth-card__tooltip">
-                    Впервые на Patreon?
-                    <a href="#" router-go="/signup">
-                        Зарегистрируйтесь
-                    </a>
+                    Впервые на Patreon? <a href="#" router-go="/signup">Зарегистрируйтесь</a>
                 </span>
             </div>
         );
