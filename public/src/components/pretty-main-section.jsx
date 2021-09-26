@@ -25,9 +25,11 @@ class PrettySection extends Component {
                     <h1 className="main-page-section-container__slogan">{this.attributes.slogan}</h1>
                     <div className="main-page-section-container__text">{this.attributes.text}
                     </div>
-                    <Button text="Начать" rounded={true} color={'primary'} onclick={() => {
-                        this.submit();
-                    }}/>
+                    <div className="main-page-section-container__button">
+                        <Button text="Начать" rounded={true} color={'primary'} onclick={() => {
+                            this.submit();
+                        }}/>
+                    </div>
                 </div>
                 <img src="../../imgs/mainPage.png" alt="Картинка глвной страницы"/>
             </div>
