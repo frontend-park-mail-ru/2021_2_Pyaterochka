@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         new Route('/signup', new DynamicComponentLoader('/src/views/signup.jsx'), 'Регистрация'),
         new Route('/components', new DynamicComponentLoader('/src/views/index.jsx'), 'Главная'),
         new Route('/creator', new DynamicComponentLoader('/src/views/creator.jsx'), 'Страница автора'),
+        new Route('/loading-view', new LoadingView(), ''),
         new Route('/', new DynamicComponentLoader('/src/views/profile.jsx'), 'Профиль'),
         new Route('', new DynamicComponentLoader('/src/views/errorpage.jsx'), 'Страница не найдена')
     ]);
