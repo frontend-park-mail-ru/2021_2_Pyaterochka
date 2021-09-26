@@ -12,6 +12,7 @@ import Skeleton from '../components/skeleton.js';
 import Spinner from '../components/spinner.jsx';
 import Step from '../components/step.jsx';
 import Comment from '../components/comment.jsx';
+import PrettySection from '../components/pretty-main-section.jsx';
 
 class IndexView extends Component {
     constructor () {
@@ -118,6 +119,14 @@ class IndexView extends Component {
                             avatar:
                                 'https://sun9-12.userapi.com/impf/c854228/v854228051/16558/K7rRvW0xelY.jpg?size=647x809&quality=96&sign=83e72450667c775a5831dac80fb2dea5&type=album'
                         })
+                    }
+                ]
+            },
+            {
+                name: 'Красивая секция на главной',
+                data: [
+                    {
+                        component: new PrettySection({})
                     }
                 ]
             },
