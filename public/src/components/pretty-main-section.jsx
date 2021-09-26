@@ -70,6 +70,10 @@ const styles = `
     
     color: #fff;
 }
+
+.main-page-section-container__button {
+    width: 108px;
+}
 `;
 const styleElement = document.createElement('style');
 styleElement.innerHTML = styles;
