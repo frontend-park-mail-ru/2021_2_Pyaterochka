@@ -24,8 +24,6 @@ body {
     overflow-x: hidden;
 }
 .footer {
-    position: absolute;
-    bottom: 0;
     width: 100%;
     background-color: var(--color-primary-dark);
     height: 120px;
