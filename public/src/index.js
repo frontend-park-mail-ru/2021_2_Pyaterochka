@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const root = document.getElementById('root');
 
     router = new Router(root, [
+        new Route('/main', new DynamicComponentLoader('/src/views/main-page.jsx'), 'Главная страница'),
         new Route('/signin', new DynamicComponentLoader('/src/views/signin.jsx'), 'Войти'),
         new Route('/signup', new DynamicComponentLoader('/src/views/signup.jsx'), 'Регистрация'),
         new Route('/components', new DynamicComponentLoader('/src/views/index.jsx'), 'Главная'),
