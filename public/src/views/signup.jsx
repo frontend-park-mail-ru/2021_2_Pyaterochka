@@ -8,30 +8,26 @@ import user from '../storage/user.js';
 class SignupView extends Component {
     constructor () {
         super();
+        this.attributes.error = null;
         const passwordInput = new InputField({
             placeholder: 'Пароль',
             type: 'password',
             validation: [
                 (value) => {
                     return value.length > 6 ? null : 'Введите минимум 6 символов';
-                },
-                (value) => {
-                    return value.toLowerCase() !== value
-                        ? null
-                        : 'Пароль должен сдержать хоть одну заглавную букву';
                 }
             ]
         });
 
         this.form = [
             new InputField({
-                placeholder: 'Имя',
+                placeholder: 'Никнейм',
                 validation: [
                     (value) => {
                         return value !== '' ? null : 'Поле не должно быть пустым';
                     },
                     (value) => {
-                        return length < 255 ? null : 'Имя слишком длинное';
+                        return length < 255 ? null : 'Никнейм слишком длинный';
                     }
                 ]
             }),
@@ -70,28 +66,61 @@ class SignupView extends Component {
         const errors = Math.max(...this.form.map((e) => e.validate().length));
         if (errors) return;
 
-        await api.register({
+        this.attributes.error = null;
+        this.attributes.loading = true;
+        const res = await api.register({
             username: this.form[0].getValue(),
             email: this.form[1].getValue(),
             password: this.form[2].getValue()
         });
+        this.attributes.loading = false;
+
+        if (res.error) {
+            if (res.data.error === 'user already exist') {
+                this.attributes.error = 'Пользователь с данной почтой уже существует.';
+                return;
+            }
+            this.attributes.error = res.data.error;
+            return;
+        }
+        await api.login({
+            email: this.form[1].getValue(),
+            password: this.form[2].getValue()
+        });
+
+        user.update();
+        this.attributes.loading = false;
     }
 
     render () {
         return (
             <div className="auth-block">
                 <h1> Регистрация </h1>
-                <div className="auth-card shadow">
+                <form
+                    className="auth-card shadow"
+                    onSubmit={() => {
+                        this.submit();
+                    }}
+                >
                     {this.form.map((c) => c.renderReactive())}
+                    {
+                        this.attributes.error
+                            ? <div className="error">
+                                {this.attributes.error}
+                            </div>
+                            : ''
+                    }
+
                     <Button
                         text="Зарегистрироваться"
                         color="primary"
                         rounded={true}
+                        loading={this.attributes.loading}
                         onclick={() => {
                             this.submit();
                         }}
                     />
-                </div>
+                </form>
                 <span className="auth-card__tooltip">
                     Уже есть аккаунт? <a href="#" router-go="/signin">Войти</a>
                 </span>

@@ -20,9 +20,13 @@ export default {
             credentials: 'include'
         });
 
+        const status = req.status;
         const data = await req.json();
 
-        return data;
+        return {
+            error: status !== 200,
+            data: data
+        };
     },
 
     /**
@@ -43,9 +47,13 @@ export default {
             credentials: 'include'
         });
 
+        const status = req.status;
         const data = await req.json();
 
-        return data;
+        return {
+            error: status !== 200,
+            data: data
+        };
     },
 
     /**

@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-async function transformFile(file) {
+async function transformFile (file) {
     const jsxCompiled = await require('@babel/core').transformFileAsync(file, {
         plugins: [['@babel/plugin-transform-react-jsx', {
             runtime: 'automatic',
@@ -13,7 +13,7 @@ async function transformFile(file) {
     );
 }
 
-async function transformFileJS(file) {
+async function transformFileJS (file) {
     return new Promise((resolve, reject) => {
         fs.readFile(file, (err, content) => {
             if (err) {
@@ -25,7 +25,7 @@ async function transformFileJS(file) {
     });
 }
 
-function transformJS(data) {
+function transformJS (data) {
     return String(data).replace(/.jsx'/g, '.js\'').replace(/.jsx"/g, '.js"');
 }
 

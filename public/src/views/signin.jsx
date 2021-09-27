@@ -8,41 +8,43 @@ import user from '../storage/user.js';
 class SigninView extends Component {
     constructor () {
         super();
+        this.attributes.loading = false;
+        this.attributes.error = false;
+
         this.form = [
             new InputField({
                 placeholder: 'Эл. почта',
                 type: 'email',
-                validation: [
-                    (email) => {
-                        const re =
-              /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-                        const isValid = re.test(String(email).toLowerCase());
-
-                        return isValid ? null : 'Email не валиден';
-                    }
-                ]
+                validation: []
             }),
             new InputField({
                 placeholder: 'Пароль',
                 type: 'password',
-                validation: [
-                    (value) => {
-                        return value.length ? null : 'Поле не должно быть пустым';
-                    }
-                ]
+                validation: []
             })
         ];
     }
 
     async submit () {
-        const errors = Math.max(...this.form.map((e) => e.validate().length));
-        if (errors) return;
-        await api.login({
+        console.log('hey', this.form);
+        const error = this.form.reduce(
+            (status, form) => status || form.getValue() === '',
+            false
+        );
+        if (error) return (this.attributes.error = 'Введите логин и пароль');
+        this.attributes.error = '';
+        this.attributes.loading = true;
+        const res = await api.login({
             email: this.form[0].getValue(),
             password: this.form[1].getValue()
         });
-
+        console.log(res);
+        if (res.error) {
+            this.attributes.loading = false;
+            this.attributes.error = 'Неправильный логин и/или пароль';
+        }
         user.update();
+        this.attributes.loading = false;
     }
 
     render () {
@@ -55,18 +57,30 @@ class SigninView extends Component {
                         this.submit();
                     }}
                 >
-                    {this.form.map((c) => c.renderReactive())}
+                    {this.form.map((c) => c.render())}
+                    {this.attributes.error
+                        ? (
+                            <div className="error">{this.attributes.error}</div>
+                        )
+                        : (
+                            ''
+                        )}
+
                     <Button
                         text="Войти"
                         color="primary"
                         rounded={true}
+                        loading={this.attributes.loading}
                         onclick={() => {
                             this.submit();
                         }}
                     />
                 </form>
                 <span className="auth-card__tooltip">
-                    Впервые на Patreon? <a href="#" router-go="/signup">Зарегистрируйтесь</a>
+                    Впервые на Patreon?{' '}
+                    <a href="#" router-go="/signup">
+                        Зарегистрируйтесь
+                    </a>
                 </span>
             </div>
         );
@@ -74,6 +88,19 @@ class SigninView extends Component {
 
     created () {
         if (user.user) return router.go('/');
+
+        this.form = [
+            new InputField({
+                placeholder: 'Эл. почта',
+                type: 'email',
+                validation: []
+            }),
+            new InputField({
+                placeholder: 'Пароль',
+                type: 'password',
+                validation: []
+            })
+        ];
     }
 }
 

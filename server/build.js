@@ -29,7 +29,7 @@ function walker (path) {
                 if (filename.endsWith('.jsx')) {
                     counterAll++;
                     code = await utils.transformFile(filename);
-                    code = utils.transformJS(code)
+                    code = utils.transformJS(code);
                 }
                 if (filename.endsWith('.js')) {
                     counterAll++;

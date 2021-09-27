@@ -1,4 +1,5 @@
 import Component from './basecomponent.js';
+import Spinner from './spinner.jsx';
 
 /**
  * Компонент кнопки
@@ -8,12 +9,14 @@ class Button extends Component {
         text = '',
         color = 'default',
         rounded = false,
+        loading = false,
         onclick = () => { }
     }) {
         super();
         this.attributes.text = text;
         this.attributes.color = color;
         this.attributes.rounded = rounded;
+        this.attributes.loading = loading;
         this.attributes.onclick = onclick;
     }
 
@@ -21,7 +24,10 @@ class Button extends Component {
         const classList = `btn btn-${this.attributes.color} ${this.attributes.rounded ? 'btn-rounded' : ''}`;
         const element = (
             <button className={classList}>
-                {this.attributes.text}
+                {this.attributes.loading
+                    ? <Spinner/>
+                    : this.attributes.text}
+
             </button>
         );
 

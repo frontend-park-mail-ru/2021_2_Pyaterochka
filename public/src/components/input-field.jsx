@@ -15,12 +15,15 @@ class InputField extends Component {
         this.attributes.type = type;
         this.attributes.value = value;
         this.attributes.validation = validation;
+        this._value = '';
+        this.attributes.valid = '';
+        this.attributes.errors = [];
     }
 
     render () {
         const element = (
             <div>
-                <label className="input-field">
+                <label className={['input-field', this.attributes.valid]}>
                     <input
                         placeholder=" "
                         type={this.attributes.type}
@@ -31,15 +34,28 @@ class InputField extends Component {
                         {this.attributes.placeholder}{' '}
                     </span>
                 </label>
-                <div className="input-validation"></div>
+                <div className="input-validation">
+                    {
+                        this.attributes.errors.map((error) => {
+                            return (
+                                <div key={error.key} className="input-validation__error">
+                                    {error.error}
+                                </div>
+                            );
+                        })
+                    }
+                </div>
             </div>
         );
 
         element.addEventListener('input', (e) => {
+            this.input = e.target;
+            this.dom = this.input.parentElement.parentElement;
             this.validate();
         });
-        this.input = element.querySelector('input');
-        this.element = element;
+        if (!this.input) {
+            this.input = element.querySelector('input');
+        }
 
         return element;
     }
@@ -49,12 +65,11 @@ class InputField extends Component {
     }
 
     validate () {
-        const element = this.element;
-        const inputField = element.querySelector('.input-field');
-        const validation = element.querySelector('.input-validation');
-        const value = element.querySelector('input').value;
+        console.log(this);
+        if (!this.attributes.validation.length) { return; }
+        const value = this.getValue();
 
-        const errors = this.attributes.validation
+        this.attributes.errors = this.attributes.validation
             .map((rule, i) => {
                 return {
                     key: i,
@@ -63,28 +78,13 @@ class InputField extends Component {
             })
             .filter((err) => err.error !== null);
 
-        const elements = errors.map((error) => {
-            return (
-                <div key={error.key} className="input-validation__error">
-                    {error.error}
-                </div>
-            );
-        });
-
-        validation.innerHTML = '';
-        elements.forEach((element) => {
-            validation.appendChild(element);
-        });
-
-        if (elements.length === 0) {
-            inputField.classList.add('valid');
-            inputField.classList.remove('invalid');
+        if (this.attributes.errors.length === 0) {
+            this.attributes.valid = 'valid';
         } else {
-            inputField.classList.remove('valid');
-            inputField.classList.add('invalid');
+            this.attributes.valid = 'invalid';
         }
 
-        return errors;
+        return this.attributes.errors;
     }
 }
 export default InputField;
@@ -98,7 +98,7 @@ const styles = `
     background: #F4F4F4;
 }
 .input-field input:placeholder-shown + span{
-    top:10px;
+    top:12px;
     font-size:18px;
 }
 
@@ -110,7 +110,7 @@ const styles = `
 .input-field span {
     color: #4C4C4C;
     position: absolute;
-    top:-2px;
+    top:0px;
     left:10px;
     font-size:10px;
     cursor: text;
@@ -125,6 +125,7 @@ const styles = `
     border: 1px solid #DEDEDE;
     outline: 0;
     transition: all .3s;
+    font-size:18px;
 }
 
 
