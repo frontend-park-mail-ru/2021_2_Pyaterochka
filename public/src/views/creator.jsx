@@ -74,9 +74,9 @@ class CreatorView extends Component {
     async created () {
         this.attributes.creator = null;
 
-        this.attributes.creator = await api.creatorInfo();
-        this.attributes.levels = await api.levelsInfo();
-        this.attributes.posts = await api.postsInfo();
+        this.attributes.creator = await api.creatorInfo(this.data);
+        this.attributes.levels = await api.levelsInfo(this.data);
+        this.attributes.posts = await api.postsInfo(this.data);
     }
 }
 

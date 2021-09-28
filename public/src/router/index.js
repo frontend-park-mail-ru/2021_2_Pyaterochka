@@ -64,6 +64,9 @@ class Router {
     getRoute (url) {
         const route = this.routes.find((route) => {
             if (route.url === '') return true;
+            if (route.url.endsWith('*')) {
+                return url.startsWith(route.url.replace('*', ''));
+            }
             const res = (new RegExp(route.url, 'gi')).exec(url);
             if (!res) return false;
             return res.join('') === url;
@@ -90,6 +93,9 @@ class Router {
         location.hash = url;
 
         const route = this.getRoute(url);
+        if (route.url.endsWith('*')) {
+            route.data = url.replace(route.url.replace('*', ''), '');
+        }
         this.renderRoute(route);
         window.scrollTo(0, 0);
     }
@@ -115,6 +121,8 @@ class Router {
             view = new Component();
         }
         if (this.layout) {
+            if (route.data) { view.data = route.data; }
+
             this.layout.slot = view.renderReactive();
             return;
         }

@@ -30,7 +30,7 @@ class CreatorCard extends Component {
                     'creator-card',
                     this.attributes.clickable ? 'clickable' : ''
                 ]}
-                router-go={this.attributes.clickable ? '/creator' : null}
+                router-go={this.attributes.clickable ? '/creator/' + this.attributes.id : null}
             >
                 <div
                     className={[

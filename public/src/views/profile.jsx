@@ -1,3 +1,4 @@
+import api from '../api/index.js';
 import Component from '../components/basecomponent.js';
 import Button from '../components/button.jsx';
 import CreatorCard from '../components/creator-card.jsx';
@@ -9,28 +10,7 @@ class ProfileView extends Component {
     constructor () {
         super();
         this.attributes.user = null;
-        this.attributes.creators = [
-            {
-                name: 'IU7-memes',
-                description: 'создает мемы из закулисий цирка',
-                avatar:
-          'https://sun9-12.userapi.com/impf/c854228/v854228051/16558/K7rRvW0xelY.jpg?size=647x809&quality=96&sign=83e72450667c775a5831dac80fb2dea5&type=album'
-            },
-            {
-                name: 'МГТУ',
-                description: 'выпускает инженеров без мозгов',
-                avatar:
-          'https://sun1-17.userapi.com/s/v1/ig2/X7179Lm-iwEnlM913tharnvCw19---S9eyuFwy-3ECPsTzLQ77zP4BgfWIbr2P8uZbBXt2HauM5CQyCKsdW8pMQo.jpg?size=100x100&quality=95&crop=0,0,1000,1000&ava=1'
-            },
-
-            {
-                name: 'Че пловец, да? Красавчик!',
-                description: 'обучает всех желающих пловцов',
-                avatar:
-          'https://sun1-57.userapi.com/s/v1/ig2/uQqLid-BfLA-VAqWh94Szq4QnEiEAIo0FDyDcgQ5Xzv781soP12s9xOoUisEVJGKMT5QJ5BljosYahyZy_6J5O36.jpg?size=100x100&quality=95&crop=74,11,389,389&ava=1'
-            }
-        ];
-        this.attributes.creators.forEach((c) => this.attributes.creators.push(c));
+        this.attributes.creators = [];
     }
 
     render () {
@@ -60,6 +40,8 @@ class ProfileView extends Component {
         if (!user.user) return router.go('/signin');
 
         this.attributes.user = Object.assign(user.user);
+
+        this.attributes.creators = await api.creators();
     }
 }
 

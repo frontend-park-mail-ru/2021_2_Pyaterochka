@@ -1,6 +1,16 @@
 /** @module API */
 
 const basename = 'http://tp.volodyalarin.site:8080';
+const basenameDev = '/api';
+const mapCreator = (data) => {
+    return {
+        id: data.id,
+        name: data.nickname,
+        avatar: data.avatar || 'https://www.vtp-club.ru/img/user.png',
+        cover: data.cover || 'https://tub.avatars.mds.yandex.net/i?id=6ba16db8f8a59eb8740ae862e5d080c9-5221613-images-thumbs&n=13&exp=1',
+        description: data.description
+    };
+};
 
 export default {
     /**
@@ -77,6 +87,21 @@ export default {
     },
 
     /**
+     * Список авторов
+     */
+    async creators () {
+        const req = await fetch(basename + '/creators', {
+            method: 'get',
+            mode: 'cors',
+            credentials: 'include'
+        });
+
+        const data = await req.json();
+
+        return data.map(mapCreator);
+    },
+
+    /**
      * Выход
      */
     async logout () {
@@ -96,8 +121,8 @@ export default {
      * @param {*} id
      * @returns
      */
-    async creatorInfo (id) {
-        const req = await fetch(basename + '/creator', {
+    async creatorInfo (id = 1) {
+        const req = await fetch(basename + '/creators/' + id, {
             method: 'get',
             mode: 'cors',
             credentials: 'include'
@@ -105,7 +130,7 @@ export default {
 
         const data = await req.json();
 
-        return data;
+        return mapCreator(data);
     },
 
     /**
@@ -113,7 +138,7 @@ export default {
      * @param {*} id
      */
     async levelsInfo (id) {
-        const req = await fetch(basename + '/levels', {
+        const req = await fetch(basenameDev + '/levels', {
             method: 'get',
             mode: 'cors',
             credentials: 'include'
@@ -129,7 +154,7 @@ export default {
      * @param {*} id
      */
     async postsInfo (id) {
-        const req = await fetch(basename + '/posts', {
+        const req = await fetch(basenameDev + '/posts', {
             method: 'get',
             mode: 'cors',
             credentials: 'include'
