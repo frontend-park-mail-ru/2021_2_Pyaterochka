@@ -14,7 +14,7 @@ class SignupView extends Component {
             type: 'password',
             validation: [
                 (value) => {
-                    return value.length > 6 ? null : 'Введите минимум 6 символов';
+                    return value.length >= 6 ? null : 'Введите минимум 6 символов';
                 }
             ]
         });
