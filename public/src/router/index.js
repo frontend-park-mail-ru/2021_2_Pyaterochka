@@ -21,7 +21,7 @@ class DynamicComponentLoader {
     constructor (url, ...attrs) {
         this.url = url;
         this.attrs = attrs;
-        this.component = null;
+        this.Component = null;
     }
 
     /**
@@ -30,11 +30,10 @@ class DynamicComponentLoader {
      * @returns {Component} компонент
      */
     async load () {
-        if (this.component) return this.component;
-        const module = await import(this.url);
-        const Component = module.default;
-        this.component = new Component(...this.attrs);
-        return this.component;
+        if (this.Component) return this.Component;
+        this.Component = (await import(this.url)).default;
+
+        return this.Component;
     }
 }
 
@@ -112,7 +111,8 @@ class Router {
                     this.container.appendChild(this.loadingView.renderReactive());
                 }
             }
-            view = await view.load();
+            const Component = await view.load();
+            view = new Component();
         }
         if (this.layout) {
             this.layout.slot = view.renderReactive();
