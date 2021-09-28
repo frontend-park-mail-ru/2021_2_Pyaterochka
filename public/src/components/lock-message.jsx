@@ -29,8 +29,7 @@ class LockMessage extends Component {
 export default LockMessage;
 
 const styles = `
-
-.lock-message{
+.lock-message {
     width: 100%;
     text-align: center;
     display: flex;
@@ -41,6 +40,7 @@ const styles = `
     font-weight: 500;
     color:#fff;
 }
+
 .lock-message .icon {
     width:80px;
     height: 80px;
@@ -49,7 +49,8 @@ const styles = `
     box-shadow: 0px 2px 10px 0px #FFFFFF66;
     background:#fff;
 }
-.lock-message .icon::after{
+
+.lock-message .icon::after {
     content: '';
     width:56px;
     height:56px;
@@ -65,19 +66,24 @@ const styles = `
     -webkit-mask-position: center;
     -webkit-mask-size: contain;
 }
+
 .lock-message span {
     margin-bottom:10px;
 }
+
 .lock-message .btn {
     width:200px;
 }
-.lock-message.dark .icon{
+
+.lock-message.dark .icon {
     box-shadow: 0px 2px 10px 0px #00000066;
 }
-.lock-message.dark{
+
+.lock-message.dark {
     color:#000;
 }
 `;
+
 const styleElement = document.createElement('style');
 styleElement.innerHTML = styles;
 document.body.appendChild(styleElement);

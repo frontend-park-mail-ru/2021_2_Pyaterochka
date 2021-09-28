@@ -11,10 +11,10 @@ html {
   font-weight: 400;
   hyphens: auto;
 }
+
 body {
   margin: 0;
 }
-
 
 html, body, #root, #root > div {
   min-height: 100vh;
@@ -88,10 +88,12 @@ html, body, #root, #root > div {
   flex-direction: column;
   justify-content: center;
 }
+
 .auth-card {
   padding: 20px;
   margin-bottom: 20px;
 }
+
 .auth-block h1 {
   font-weight: 300;
   font-size: 24px;

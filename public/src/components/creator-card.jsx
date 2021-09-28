@@ -59,6 +59,7 @@ const styles = `
     padding: 20px;
     transition: box-shadow .5s;
 }
+
 .creator-card__header {
     font-family: "Montserrat", sans-serif;
     font-size: 32px;
@@ -66,11 +67,13 @@ const styles = `
     line-height: 40px;
     text-align: center;
 }
+
 .creator-card__description {
     font-size: 20px;
     font-weight: 300;
     text-align: center;
 }
+
 .creator-card .creator-card__avatar {
     width:200px;
     height:200px;
@@ -81,14 +84,17 @@ const styles = `
     z-index: 1;
     transition: background 0.1s ease-in;
 } 
+
 .creator-card.clickable:hover {
     cursor: pointer;
     box-shadow: 0 0 5px #0002;
 }
+
 .creator-card:hover .creator-card__avatar {
     background-size:120%;
 }
 `;
+
 const styleElement = document.createElement('style');
 styleElement.innerHTML = styles;
 document.body.appendChild(styleElement);

@@ -58,18 +58,15 @@ const styles = `
     font-weight: 900;
     font-size: 60px;
     line-height: 73px;
-
     color: #FFFFFF;
 }
 
 .main-page-section-container__text {
     margin-bottom: 50px;
-
     font-style: normal;
     font-weight: 500;
     font-size: 36px;
     line-height: 42px;
-    
     color: #fff;
 }
 
@@ -77,6 +74,7 @@ const styles = `
     width: 108px;
 }
 `;
+
 const styleElement = document.createElement('style');
 styleElement.innerHTML = styles;
 document.body.appendChild(styleElement);

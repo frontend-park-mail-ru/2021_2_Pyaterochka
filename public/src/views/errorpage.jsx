@@ -46,20 +46,23 @@ const styles = `
     padding-top: 80px;
     padding-bottom: 40px;
 }
-.error-block h1{ 
+
+.error-block h1 { 
     margin-bottom: 50px;
 }
-.error-block img{
+
+.error-block img {
     width:600px;
     max-width: 100%;
     margin-bottom: 30px;
 }
+
 .error-block .btn {
     width:400px;
     max-width: 100%;
 }
-
 `;
+
 const styleElement = document.createElement('style');
 styleElement.innerHTML = styles;
 document.body.appendChild(styleElement);

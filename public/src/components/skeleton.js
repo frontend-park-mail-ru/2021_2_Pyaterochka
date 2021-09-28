@@ -50,9 +50,11 @@ const styles = `
     min-width: 100px;
     max-width: 100%;
 }
+
 .skeleton-line {
     margin-bottom:10px;
 }
+
 .skeleton-circle {
     border-radius: 100%;
 }
@@ -75,6 +77,7 @@ const styles = `
     }
 }
 `;
+
 const styleElement = document.createElement('style');
 styleElement.innerHTML = styles;
 document.body.appendChild(styleElement);

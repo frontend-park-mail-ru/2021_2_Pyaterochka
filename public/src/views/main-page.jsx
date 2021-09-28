@@ -100,6 +100,7 @@ const styles = `
     padding-top: 50px;
 }
 `;
+
 const styleElement = document.createElement('style');
 styleElement.innerHTML = styles;
 document.body.appendChild(styleElement);

@@ -94,15 +94,17 @@ const styles = `
     position:relative;
     display:block;
 }
+
 .input-field input:placeholder-shown {
     background: #F4F4F4;
 }
-.input-field input:placeholder-shown + span{
+
+.input-field input:placeholder-shown + span {
     top:12px;
     font-size:18px;
 }
 
-.input-field input:focus + span{
+.input-field input:focus + span {
     font-size:10px;
     top:0;
 }
@@ -116,6 +118,7 @@ const styles = `
     cursor: text;
     transition: all .3s;
 }
+
 .input-field input {
     background: #fff;
     display:block;
@@ -128,15 +131,15 @@ const styles = `
     font-size:18px;
 }
 
-
 .input-field input:focus {
     background: #fff;
 }
 
-.input-field.invalid input{
+.input-field.invalid input {
     border-color:#FF424D;
 }
-.input-field.valid input{
+
+.input-field.valid input {
     border-color:#3BBA2E;
 }
 
@@ -144,7 +147,7 @@ const styles = `
     margin: 10px 2px 15px;
 
 }
-.input-validation__error{
+.input-validation__error {
     text-align:left;
     color:#707070;
     font-size:14px;
@@ -152,7 +155,8 @@ const styles = `
     margin-left:20px;
     position:relative;
 }
-.input-validation__error::before{
+
+.input-validation__error::before {
     content: '!';
     position:absolute;
     left: -10px;
@@ -162,6 +166,7 @@ const styles = `
     top:-2px;
 }
 `;
+
 const styleElement = document.createElement('style');
 styleElement.innerHTML = styles;
 document.body.appendChild(styleElement);

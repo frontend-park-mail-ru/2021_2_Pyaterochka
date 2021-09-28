@@ -59,7 +59,6 @@ const styles = `
 .step {
     display: flex;
     justify-content: space-between;
-
     margin-bottom: 110px;
 }
 
@@ -72,12 +71,10 @@ const styles = `
     display: flex;
     align-items: center;
     margin-bottom: 16px;
-
     font-style: normal;
     font-weight: 500;
     font-size: 24px;
     line-height: 28px;
-
     color: var(--color-step-text);
 }
 
@@ -85,7 +82,6 @@ const styles = `
     display: flex;
     align-items: center;
     margin-bottom: 5px;
-
     font-style: normal;
     font-weight: normal;
     font-size: 36px;
@@ -95,12 +91,10 @@ const styles = `
 .step-content__description {
     display: flex;
     align-items: center;
-
     font-style: normal;
     font-weight: 300;
     font-size: 18px;
     line-height: 28px;
-
     color: var(--color-step-text);
 }
 

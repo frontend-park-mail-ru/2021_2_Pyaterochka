@@ -63,6 +63,7 @@ const styles = `
     display:flex;
     justify-content: space-between;
 }
+
 .navbar-brand, .navbar-link {
     display:block;
     padding: 7px 10px;
@@ -74,17 +75,21 @@ const styles = `
 .navbar-profile:hover, .navbar-link:hover {
     background: rgba(255,255,255, 0.3);
 }
+
 .navbar a {
     color:#fff;
     text-decoration: none;
 }
+
 .navbar-brand {
     font-family: "Montserrat", sans-serif;
     font-weight: 900;
 }
+
 .navbar-link {
     float:right;
 }
+
 .navbar-profile {
     float:right;
     display:flex;
@@ -95,6 +100,7 @@ const styles = `
     align-items: center;
     border-radius:10px;
 }
+
 .navbar-profile::after {
     content: '';
     border: 10px solid transparent;
@@ -103,6 +109,7 @@ const styles = `
     top: 22px;
     right:10px;
 }
+
 .navbar-profile img {
     margin-top:-5px;
     width: 34px;
@@ -110,6 +117,7 @@ const styles = `
     border-radius: 100%;
     background: #ccc;
 }
+
 .navbar-profile__name {
     margin-left: 10px;
 }
@@ -127,6 +135,7 @@ const styles = `
     flex-direction:column;
     z-index: 100;
 }
+
 .navbar-popup a { 
     padding:10px;
 }
@@ -134,7 +143,6 @@ const styles = `
 .navbar-profile:hover .navbar-popup {
     display:flex;
 }
-
 `;
 
 const styleElement = document.createElement('style');

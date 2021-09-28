@@ -86,20 +86,24 @@ const styles = `
 .creator-page {
     padding-bottom: 40px;
 }
+
 .creator-page .creator-cover + .creator-card {
     margin-top:-120px;
 }
+
 .creator-page .creator-card {
     width: 400px;
     max-width: 100%;
     margin:auto;
 }
+
 .creator-cover {
     height:256px;
     background-color: var(--color-grey);
     background-size:cover;
     background-position:center;
 }
+
 .level-card-container {
     display: flex;
     flex-wrap: wrap;
@@ -116,7 +120,8 @@ const styles = `
     align-items:center;
     margin-bottom: 20px;
 }
-.post-container > *{
+
+.post-container > * {
     margin:10px;
 }
 
@@ -125,6 +130,7 @@ const styles = `
     margin:auto;
 }
 `;
+
 const styleElement = document.createElement('style');
 styleElement.innerHTML = styles;
 document.body.appendChild(styleElement);

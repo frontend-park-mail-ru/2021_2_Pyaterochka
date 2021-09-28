@@ -72,80 +72,85 @@ export default LevelCard;
 
 const styles = `
 .level-card {
-            width: 260px;
-            height: 420px;
-            border-radius:5px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            box-shadow: 0px 2px 4px 0px #00000033;
-}
-            .level-card__header {
-                background-color:var(--color-primary);
-            height:120px;
-            background-size:cover;
-            color:#fff;
-            display:flex;
-            flex-direction: column;
-            justify-content: end;
-            padding:5px 10px;
-            position:relative;
-}
-            .level-card__header::after {
-                content: '';
-            position:absolute;
-            width:100%;
-            height:100%;
-            top:0;
-            left:0;
-            background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.64) 100%);
-            z-index: 0;
+    width: 260px;
+    height: 420px;
+    border-radius:5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0px 2px 4px 0px #00000033;
 }
 
-            .level-card__header__name {
-                font-size:24px;
-            font-weight:500;
-            z-index: 1;
-}
-            .level-card__header__type {
-                font-size:16px;
-            z-index: 1;
-}
-            .level-card__body {
-                padding:15px;
-            font-weight: 300;
-            font-size:18px;
-            line-height:28px;
-            max-height: 200px;
-            overflow-y: auto;
+.level-card__header {
+    background-color:var(--color-primary);
+    height:120px;
+    background-size:cover;
+    color:#fff;
+    display:flex;
+    flex-direction: column;
+    justify-content: end;
+    padding:5px 10px;
+    position:relative;
 }
 
-            .level-card__body__benefit::before {
-                content: '';
-            width: 12px;
-            height: 12px;
-            display:inline-block;
-            border-radius:100%;
-            background: var(--color-warning);
-            margin-right:5px;
-}
-            .level-card__action__price {
-                text-align:right;
-            padding-right:10px;
-            margin-bottom:10px;
+.level-card__header::after {
+    content: '';
+    position:absolute;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.64) 100%);
+    z-index: 0;
 }
 
-            .level-card__action__price .per_month {
-                font-size:14px;
-            color: #4C4C4C;
+.level-card__header__name {
+    font-size:24px;
+    font-weight:500;
+    z-index: 1;
 }
 
-            .level-card__action__price .price {
-                font-size:22px;
-            color:var(--color-primary);
-            font-weight:900;
+.level-card__header__type {
+    font-size:16px;
+    z-index: 1;
 }
-            `;
+
+.level-card__body {
+    padding:15px;
+    font-weight: 300;
+    font-size:18px;
+    line-height:28px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.level-card__body__benefit::before {
+    content: '';
+    width: 12px;
+    height: 12px;
+    display:inline-block;
+    border-radius:100%;
+    background: var(--color-warning);
+    margin-right:5px;
+}
+.level-card__action__price {
+    text-align:right;
+    padding-right:10px;
+    margin-bottom:10px;
+}
+
+.level-card__action__price .per_month {
+    font-size:14px;
+    color: #4C4C4C;
+}
+
+.level-card__action__price .price {
+    font-size:22px;
+    color:var(--color-primary);
+    font-weight:900;
+}
+`;
+
 const styleElement = document.createElement('style');
 styleElement.innerHTML = styles;
 document.body.appendChild(styleElement);

@@ -40,7 +40,8 @@ const styles = `
     justify-content:center;
     align-items: center;
 }
-.profile-card img{
+
+.profile-card img {
     width: 200px;
     height: 200px;
     box-shadow: 0px 4px 4px 0px #00000040;
@@ -51,6 +52,7 @@ const styles = `
     padding:10px 30px;
     max-width:400px
 }
+
 .profile-card__username {
     font-family: "Montserrat", sans-serif;
     font-size: 46px;
@@ -67,6 +69,7 @@ const styles = `
     text-align: center;
 }
 `;
+
 const styleElement = document.createElement('style');
 styleElement.innerHTML = styles;
 document.body.appendChild(styleElement);

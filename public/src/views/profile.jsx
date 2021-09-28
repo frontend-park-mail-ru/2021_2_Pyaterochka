@@ -48,7 +48,7 @@ class ProfileView extends Component {
 export default ProfileView;
 
 const styles = `
-.creators-container{
+.creators-container {
     display:flex;
     justify-content:center;
     flex-wrap:wrap;
@@ -63,8 +63,8 @@ const styles = `
     padding:20px;
     margin-bottom: 50px;
 }
-
 `;
+
 const styleElement = document.createElement('style');
 styleElement.innerHTML = styles;
 document.body.appendChild(styleElement);

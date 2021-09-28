@@ -21,6 +21,7 @@ const styles = `
     align-items: center;
 }
 `;
+
 const styleElement = document.createElement('style');
 styleElement.innerHTML = styles;
 document.body.appendChild(styleElement);

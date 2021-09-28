@@ -120,18 +120,19 @@ const styles = `
     align-items: stretch;
 }
 
-
 .post-card-title {
     font-size: 18px;
     font-weight: 500;
     line-height: 20px;
 }
+
 .post-card-image {
     min-width: 220px;
     position:relative;
     overflow:hidden;
     border-radius:5px;
 }
+
 .post-card-image .image {
     position:absolute;
     top:0;
@@ -141,6 +142,7 @@ const styles = `
     background-size:cover;
     background-position:center;
 }
+
 .post-card-image .image.blur{
     filter: blur(20px);
 }
@@ -148,12 +150,14 @@ const styles = `
 .post-card-body {
     padding-left: 10px;
 }
-.post-card-meta{
+
+.post-card-meta {
     display: flex;
     justify-content:space-between;
     padding-bottom:10px;
     position:relative;
 }
+
 .post-card-meta::after {
     content: "";
     position:absolute;
@@ -164,15 +168,17 @@ const styles = `
     background:#ACABAB;
 }
 
-.post-card-meta .date{
+.post-card-meta .date {
     font-size: 14px;
     font-weight: 300;
     color: #909090;
 }
+
 .post-card-meta .visits, .post-card-meta .likes {
     font-size: 14px;
     font-weight: 300;
 }
+
 .post-card-meta .visits img, .post-card-meta .likes img {
     width: 18px;
     height: 18px;
@@ -188,6 +194,7 @@ const styles = `
     font-size: 14px;
     font-weight:300;
 }
+
 .post-card-desc::after {
     content:'';
     position:absolute;
@@ -197,6 +204,7 @@ const styles = `
     height:100%;
     background: linear-gradient(0deg, rgb(255, 255, 255),rgba(255,255,255, 0) 50% );
 }
+
 .post-card-image .lock-message {
     position:absolute;
     width:100%;
@@ -221,21 +229,22 @@ const styles = `
 
 .look{
     width: 100%;
-text-align: center;
-color: #fff;
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
-position: absolute;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-font-size: 20px;
-font-weight: 500;
+    text-align: center;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    font-size: 20px;
+    font-weight: 500;
 }
 `;
+
 const styleElement = document.createElement('style');
 styleElement.innerHTML = styles;
 document.body.appendChild(styleElement);

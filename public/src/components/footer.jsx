@@ -23,21 +23,25 @@ body {
     max-width: 100%; 
     overflow-x: hidden;
 }
+
 .footer {
     width: 100%;
     background-color: var(--color-primary-dark);
     height: 120px;
 }
+
 .footer-body {
     margin: auto;
     margin-left: 100px;
     padding-top: 40px;
     color: #fff;
 }
+
 .footer-body a { 
     color: #fff;
 }
 `;
+
 const styleElement = document.createElement('style');
 styleElement.innerHTML = styles;
 document.body.appendChild(styleElement);
