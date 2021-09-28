@@ -14,7 +14,7 @@ class Navbar extends Component {
     render () {
         return (
             <div className="navbar">
-                <a href="#" className="navbar-brand" router-go="/">
+                <a href="#" className="navbar-brand" router-go="/main">
                     Patreon
                 </a>
                 {this.attributes.user

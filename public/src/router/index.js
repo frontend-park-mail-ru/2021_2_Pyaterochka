@@ -79,7 +79,7 @@ class Router {
      */
     start () {
         let url = location.hash.substr(1);
-        if (url === '') url = '/';
+        if (url === '') url = '/main';
         this.go(url);
     }
 
