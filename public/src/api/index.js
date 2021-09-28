@@ -1,6 +1,6 @@
 /** @module API */
 
-const basename = 'http://tp.volodyalarin.site:8080';
+const basename = 'https://tp.volodyalarin.site';
 
 export default {
     /**
