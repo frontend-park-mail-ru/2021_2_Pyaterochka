@@ -75,7 +75,13 @@ const styles = `
     line-height: 59px;
 }
 
+.main-page-description {
+    margin: 0 auto;
+    max-width: 980px;
+}
+
 .main-page-description__text {
+    padding-bottom: 10px;
     text-align: center;
     font-family: Roboto;
     font-style: normal;
@@ -91,7 +97,7 @@ const styles = `
 }
 
 .header-how-works {
-    padding-top: 70px;
+    padding-top: 50px;
 }
 `;
 const styleElement = document.createElement('style');
