@@ -20,7 +20,7 @@ class CreatorView extends Component {
             <div>
                 {!this.attributes.creator
                     ? (
-                        <>
+                        <div className="creator-page">
                             <div className="creator-cover">
                                 <Skeleton height={256} />
                             </div>
@@ -33,10 +33,10 @@ class CreatorView extends Component {
                                     <Skeleton key={v} width={260} height={260} />
                                 ))}
                             </div>
-                        </>
+                        </div>
                     )
                     : (
-                        <>
+                        <div className="creator-page">
                             <div
                                 className="creator-cover"
                                 style={`background-image:url(${this.attributes.creator.cover}`}
@@ -65,7 +65,7 @@ class CreatorView extends Component {
                             <LockMessage text="Стань патроном, чтобы продолжить наслаждаться работами автора">
                                 <Button text="Стать патроном" color="primary" />
                             </LockMessage>
-                        </>
+                        </div>
                     )}
             </div>
         );
@@ -83,10 +83,13 @@ class CreatorView extends Component {
 export default CreatorView;
 
 const styles = `
-.creator-cover + .creator-card {
+.creator-page {
+    padding-bottom: 40px;
+}
+.creator-page .creator-cover + .creator-card {
     margin-top:-120px;
 }
-.creator-card {
+.creator-page .creator-card {
     width: 400px;
     max-width: 100%;
     margin:auto;
