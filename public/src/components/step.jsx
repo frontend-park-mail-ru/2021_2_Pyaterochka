@@ -13,7 +13,7 @@ class Step extends Component {
 
     render () {
         return (
-            <div>
+            <div className="step">
                 {this.attributes.number % 2 === 0
                     ? (
                         <>

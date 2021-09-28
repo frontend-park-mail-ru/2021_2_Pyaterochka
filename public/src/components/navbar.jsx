@@ -65,7 +65,8 @@ const styles = `
 }
 .navbar-brand, .navbar-link {
     display:block;
-    padding: 14px 10px;
+    padding: 7px 10px;
+    margin: 7px 0;
     border-radius:10px;
     transition: background-color .3s ease-in;
 }
@@ -129,7 +130,6 @@ const styles = `
 .navbar-popup a { 
     padding:10px;
 }
-
 
 .navbar-profile:hover .navbar-popup {
     display:flex;

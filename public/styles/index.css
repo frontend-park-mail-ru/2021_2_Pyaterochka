@@ -52,10 +52,6 @@ html, body, #root, #root > div {
   --color-step-text: #7c7c7c;
 }
 
-.content {
-  padding-bottom: 200px;
-}
-
 .spinner {
   width: 40px;
   height: 40px;
@@ -87,7 +83,7 @@ html, body, #root, #root > div {
   margin: auto;
   width: 400px;
   text-align: center;
-  min-height: calc(100vh - 52px);
+  min-height: calc(100vh - 172px);
   display: flex;
   flex-direction: column;
   justify-content: center;
