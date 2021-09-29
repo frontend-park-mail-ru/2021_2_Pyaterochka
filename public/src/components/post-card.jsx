@@ -7,10 +7,11 @@ import LockMessage from './lock-message.jsx';
  */
 class PostCard extends Component {
     timeDiff (date) {
-        const diff = new Date().getTime() - date;
+        const diff = (new Date()).getTime() - date;
         if (diff <= 1000 * 60 * 5) {
             return 'менее 5 минут назад';
         }
+
         if (diff < 1000 * 60 * 60) {
             return Math.round(diff / (1000 * 60)) + ' минут назад';
         }
@@ -22,13 +23,19 @@ class PostCard extends Component {
         if (diff < 1000 * 60 * 60 * 24 * 30) {
             return Math.round(diff / (1000 * 60 * 60 * 24)) + ' дней назад';
         }
-        if (date < 1000 * 60 * 60 * 24 * 30 * 12) {
+
+        if (diff < 1000 * 60 * 60 * 24 * 30 * 12) {
             return Math.round(diff / (1000 * 60 * 60 * 24 * 30)) + ' месяцев назад';
         }
 
-        return (
-            Math.round(diff / (1000 * 60 * 60 * 24 * 30 * 12)) + ' месяцев назад'
-        );
+        const options = {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            timezone: 'UTC'
+        };
+
+        return new Date(date).toLocaleString('ru', options);
     }
 
     simplifyNum (num) {
