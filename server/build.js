@@ -39,7 +39,6 @@ function walker (path) {
                     fs.writeFile(filename.replace('.jsx', '.js'), code, (err) => {
                         if (err) throw err;
                         counterDone++;
-                        console.log(`Transformed ${counterDone}/${counterAll} ${filename}`);
                     });
                 }
             });

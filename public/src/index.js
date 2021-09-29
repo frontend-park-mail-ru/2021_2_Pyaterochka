@@ -26,8 +26,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     router.setLayout(new Layout());
     router.setLoadingView(new LoadingView());
     router.start();
-
-    console.log(router);
 });
 
 export { router };

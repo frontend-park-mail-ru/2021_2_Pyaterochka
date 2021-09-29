@@ -28,7 +28,6 @@ class Navbar extends Component {
                                 <a router-go="/">Профиль</a>
                                 <a
                                     onClick={() => {
-                                        console.log('logout');
                                         user.logout();
                                     }}
                                 >

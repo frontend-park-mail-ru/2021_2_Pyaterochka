@@ -65,7 +65,6 @@ class InputField extends Component {
     }
 
     validate () {
-        console.log(this);
         if (!this.attributes.validation.length) { return; }
         const value = this.getValue();
 

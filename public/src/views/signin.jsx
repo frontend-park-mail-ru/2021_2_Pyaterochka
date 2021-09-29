@@ -26,7 +26,6 @@ class SigninView extends Component {
     }
 
     async submit () {
-        console.log('hey', this.form);
         const error = this.form.reduce(
             (status, form) => status || form.getValue() === '',
             false
@@ -38,7 +37,6 @@ class SigninView extends Component {
             email: this.form[0].getValue(),
             password: this.form[1].getValue()
         });
-        console.log(res);
         if (res.error) {
             this.attributes.loading = false;
             this.attributes.error = 'Неправильный логин и/или пароль';

@@ -171,7 +171,6 @@ class Router {
             e.preventDefault();
         });
         window.addEventListener('popstate', (e) => {
-            console.log(e);
             this.renderRoute(this.getRoute(location.hash.substr(1)));
         });
     }
