@@ -2,6 +2,7 @@ import Router, { Route, DynamicComponentLoader } from './router/index.js';
 import Layout from './components/layout.jsx';
 import LoadingView from './views/loading-view.jsx';
 import user from './storage/user.js';
+import EditorComponent from './components/editor.jsx';
 
 let router;
 document.addEventListener('DOMContentLoaded', async () => {
@@ -19,6 +20,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         new Route('/components', new DynamicComponentLoader('/src/views/index.jsx'), 'Главная'),
         new Route('/creator/*', new DynamicComponentLoader('/src/views/creator.jsx'), 'Страница автора'),
         new Route('/loading-view', new LoadingView(), ''),
+        new Route('/editor', new EditorComponent(), ''),
         new Route('/', new DynamicComponentLoader('/src/views/profile.jsx'), 'Профиль'),
         new Route('', new DynamicComponentLoader('/src/views/errorpage.jsx'), 'Страница не найдена')
     ]);
