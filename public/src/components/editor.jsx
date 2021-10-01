@@ -19,7 +19,11 @@ class EditorComponent extends Component {
         ],
         activeLevel = 0,
         cover = null,
-        body = [],
+        body = [
+            {
+                text: ''
+            }
+        ],
         isDraft = true
     } = {}) {
         super();
@@ -45,12 +49,67 @@ class EditorComponent extends Component {
     }
 
     editBody (e, i) {
-        this.body[i].text = e.target.innerText;
+        this.body[i].text = e.target.firstChild?.textContent || '';
+        this.checkLast();
     }
 
-    keyPress (event) {
+    checkLast () {
+        if (this.body.length === 0 || this.body.at(-1).text !== '') {
+            this.appendBody();
+        }
+    }
+
+    appendBody () {
+        this.body.push({
+            text: ''
+        });
+        this.update();
+    }
+
+    keyPress (event, i = null) {
+        if (i !== null && (event.keyCode === 8 || event.keyCode === 46)) {
+            if (this.body[i].text === '') {
+                this.body.splice(i, 1);
+                this.checkLast();
+                event.preventDefault();
+                this.updatePartly();
+                if (event.keyCode === 8) {
+                    this.focusBodyElement(Math.max(0, i - 1), true);
+                }
+            } else {
+                this.update();
+            }
+            return;
+        }
+
         if (event.keyCode === 13) {
+            if (i != null) {
+                this.body.splice(i + 1, 0, {
+                    text: ''
+                });
+            }
+            this.updatePartly();
+
+            this.focusBodyElement(i + 1);
             event.preventDefault();
+            return;
+        }
+
+        if (event.keyCode !== 32) {
+            this.update();
+        }
+    }
+
+    focusBodyElement (i, atEnd = false) {
+        const element = this.dom.querySelectorAll('.editor__body-element')[i];
+        element.focus();
+        if (atEnd) {
+            const range = document.createRange();
+            range.selectNodeContents(element);
+            range.collapse(false);
+            const sel = window.getSelection();
+            sel.removeAllRanges();
+            sel.addRange(range);
         }
     }
 
@@ -120,16 +179,33 @@ class EditorComponent extends Component {
                         {this.description}
                     </div>
                 </div>
-
+                <div className="editor__save-panel">
+                    <div className="btn-container">
+                        <Button color="success" text="Опубликовать" />
+                    </div>{' '}
+                    Черновик был сохранен автоматически
+                </div>
                 {this.body.map((element, i) => {
                     return (
                         <>
-                            <div className="editor__helper editor__helper--body">
-                                <button>1</button>
-                                <button>2</button>
-                                <button>3</button>
-                                <button>4</button>
-                            </div>
+                            {element.text === ''
+                                ? (
+                                    <div className="editor__helper editor__helper--body">
+                                        <button className="add-icon-button" alt="Добавить музыку">
+                                            <icon style="--icon: url('/imgs/icons/music_outline_24.svg')" />
+                                        </button>
+                                        <button className="add-icon-button" alt="Добавить картинку">
+                                            <icon style="--icon: url('/imgs/icons/picture_outline_28.svg')" />
+                                        </button>
+                                        <button className="add-icon-button" alt="Добавить видео">
+                                            <icon style="--icon: url('/imgs/icons/video_outline_24.svg')" />
+                                        </button>
+                                    </div>
+                                )
+                                : (
+                                    ''
+                                )}
+
                             <div
                                 className="editor__body-element"
                                 contentEditable={true}
@@ -137,8 +213,8 @@ class EditorComponent extends Component {
                                 onInput={(e) => {
                                     this.editBody(e, i);
                                 }}
-                                onKeyPress={(e) => {
-                                    this.keyPress(e);
+                                onKeyDown={(e) => {
+                                    this.keyPress(e, i);
                                 }}
                             >
                                 {element.text}
@@ -146,16 +222,6 @@ class EditorComponent extends Component {
                         </>
                     );
                 })}
-
-                <Button
-                    text="+"
-                    onclick={() => {
-                        this.body.push({
-                            text: ''
-                        });
-                        this.update();
-                    }}
-                />
             </div>
         );
     }
@@ -164,6 +230,39 @@ class EditorComponent extends Component {
 export default EditorComponent;
 
 const styles = `
+.add-icon-button {
+    background: none;
+    border:none;
+    outline:none;
+    cursor: pointer;
+    padding: 0;
+    margin: 0 5px;
+}
+.add-icon-button icon{
+    width: 24px;
+    height: 24px;
+    mask-image: var(--icon);
+    mask-position: center;
+    mask-size: contain;
+    -webkit-mask-image: var(--icon);
+    -webkit-mask-position: center;
+    -webkit-mask-size: contain;
+    background-color: #7c7c7c;
+    display: block;
+    transition: background-color .2s ease;
+}
+.add-icon-button icon:hover{
+    background-color: #000;
+}
+.editor__save-panel {
+    padding: 15px 15px;
+    font-size:14px;
+}
+.editor__save-panel .btn-container {
+    width:200px;
+    margin-right:10px;
+    display:inline-block
+}
 .editor__header {
     padding: 5px 15px;
     border-left: 2px #878787 solid;
@@ -184,6 +283,7 @@ const styles = `
     left: -180px;
     font-size: 18px;
     width: 200px;
+    color:#7c7c7c;
 }
 .editor__helper--title {
     font-size: 28px;
@@ -193,7 +293,6 @@ const styles = `
     margin:auto;
     padding:40px;
     position:relative;
-    color:#7c7c7c;
 }
 .editor [contentEditable=true] {
     border:none;
@@ -240,7 +339,7 @@ color: #878787;
     font-weight: 300;
 }
 .editor__body-element {
-    padding: 10px 15px;
+    padding: 15px 15px;
 
 }
 .editor__helper--body {
@@ -249,7 +348,9 @@ color: #878787;
     margin-left:22px;
     border-right:2px solid #888
 }
-
+.editor__title, .editor__levels, .editor__description {
+    margin-bottom: 4px;
+}
 `;
 
 const styleElement = document.createElement('style');
