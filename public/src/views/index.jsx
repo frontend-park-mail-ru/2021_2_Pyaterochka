@@ -13,11 +13,23 @@ import Spinner from '../components/spinner.jsx';
 import Step from '../components/step.jsx';
 import Comment from '../components/comment.jsx';
 import PrettySection from '../components/pretty-main-section.jsx';
+import Like from '../components/like.jsx';
 
 class IndexView extends Component {
     constructor () {
         super();
         this.attributes.cps = [
+            {
+                name: 'Лайк',
+                data: [
+                    {
+                        name: 'Не авторизирован',
+                        component: new Like({
+                            count: 0
+                        })
+                    }
+                ]
+            },
             {
                 name: 'Шапка',
                 data: [
