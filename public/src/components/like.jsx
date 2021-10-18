@@ -17,30 +17,30 @@ class Like extends Component {
     }
 
     render () {
-        const element = (
+        return (
             <div className="like">
-                <button className={['like-link', this.attributes.liked ? 'has-like' : '']}/>
+                <button onClick={(e) => {
+                    this.hasLike(e);
+                }} className={['like-link', this.attributes.liked ? 'has-like' : '']}/>
                 <span className="likes-count">{this.attributes.count}</span>
             </div>
         );
+    }
 
-        element.addEventListener('click', (e) => {
-            e.preventDefault();
+    hasLike (e) {
+        e.preventDefault();
 
-            if (!this.attributes.liked) {
-                document.querySelector('.like-link').classList.add('has-like');
+        if (!this.attributes.liked) {
+            document.querySelector('.like-link').classList.add('has-like');
 
-                this.attributes.count++;
-                this.attributes.liked = true;
-            } else {
-                document.querySelector('.like-link').classList.remove('has-like');
+            this.attributes.count++;
+            this.attributes.liked = true;
+        } else {
+            document.querySelector('.like-link').classList.remove('has-like');
 
-                this.attributes.count--;
-                this.attributes.liked = false;
-            }
-        });
-
-        return element;
+            this.attributes.count--;
+            this.attributes.liked = false;
+        }
     }
 }
 
