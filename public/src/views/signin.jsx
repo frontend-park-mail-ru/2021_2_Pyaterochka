@@ -55,15 +55,9 @@ class SigninView extends Component {
                         this.submit();
                     }}
                 >
-                    {this.form.map((c) => c.render())}
-                    {this.attributes.error
-                        ? (
-                            <div className="error">{this.attributes.error}</div>
-                        )
-                        : (
-                            ''
-                        )}
-
+                    {this.form.map((c) => c.renderReactive())}
+                    <div className="error">{this.attributes.error}</div>
+                   
                     <Button
                         text="Войти"
                         color="primary"

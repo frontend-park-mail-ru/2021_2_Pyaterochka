@@ -218,6 +218,11 @@ class JsxDomElement {
         this.patchAttributes(newJsxDom);
         this.childrenPatch(newJsxDom);
 
+        if (this.parentComponent)
+        {
+            this.parentComponent.dom = this;
+        }
+
         return this;
     }
 
