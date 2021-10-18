@@ -19,7 +19,7 @@ class Like extends Component {
     render () {
         const element = (
             <div className="like">
-                <button className="like-link"></button>
+                <button className={['like-link', this.attributes.liked ? 'has-like' : '']}/>
                 <span className="likes-count">{this.attributes.count}</span>
             </div>
         );
