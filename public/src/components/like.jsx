@@ -19,22 +19,21 @@ class Like extends Component {
     render () {
         const element = (
             <div className="like">
-                <button className="like-link">
-                    <img className="like-image" src="../../imgs/not-liked.png" alt="like" />
-                </button>
+                <button className="like-link"></button>
                 <span className="likes-count">{this.attributes.count}</span>
             </div>
         );
 
         element.addEventListener('click', (e) => {
             e.preventDefault();
+
             if (!this.attributes.liked) {
-                document.querySelector('.like-image').setAttribute('src', '../../imgs/liked.png');
+                document.querySelector('.like-link').classList.add('has-like');
 
                 this.attributes.count++;
                 this.attributes.liked = true;
             } else {
-                document.querySelector('.like-image').setAttribute('src', '../../imgs/not-liked.png');
+                document.querySelector('.like-link').classList.remove('has-like');
 
                 this.attributes.count--;
                 this.attributes.liked = false;
@@ -55,6 +54,9 @@ const styles = `
 
 .like-link {
     display: flex;
+    background-image: url(../../imgs/not-liked.png);
+    width: 28px;
+    height: 28px;
     padding: 0;
     border: none;
     font: inherit;
@@ -63,9 +65,12 @@ const styles = `
     cursor: pointer;
 }
 
+.has-like {
+    background-image: url(../../imgs/liked.png);
+}
+
 .likes-count {
     margin-left: 10px;
-
     font-style: normal;
     font-weight: normal;
     font-size: 20px;
