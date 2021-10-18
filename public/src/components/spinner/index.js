@@ -1,4 +1,4 @@
-import Component from './basecomponent.js';
+import Component from '../basecomponent';
 
 /**
  * Компонент спинера - индикатор загрузки

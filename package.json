@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "Проект Patreon команды \"Пятерочка\"",
   "scripts": {
+    "build": "webpack",
     "start": "node ./server/production",
     "dev": "node ./server",
-    "build": "node ./server/build",
-    "linter": "npx eslint public server --fix"
+    "linter": "npx eslint public/src server --fix && npx stylelint \"public/src/**/*.css\" --fix"
   },
   "repository": {
     "type": "git",
@@ -22,16 +22,24 @@
     "@babel/core": "^7.15.5",
     "@babel/plugin-transform-react-jsx": "^7.14.9",
     "babel-connect": "^6.0.2",
+    "babel-loader": "^8.2.2",
     "express": "^4.17.1",
     "express-session": "^1.17.2",
     "ncp": "^2.0.0"
   },
   "devDependencies": {
+    "css-loader": "^6.4.0",
     "eslint": "^7.32.0",
     "eslint-config-standard": "^16.0.3",
     "eslint-plugin-import": "^2.24.2",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^5.1.0",
-    "eslint-plugin-react": "^7.26.0"
+    "eslint-plugin-react": "^7.26.0",
+    "style-loader": "^3.3.0",
+    "stylelint": "^13.13.1",
+    "stylelint-config-standard": "^22.0.0",
+    "webpack": "^5.58.2",
+    "webpack-cli": "^4.9.0",
+    "webpack-dev-server": "^4.3.1"
   }
 }

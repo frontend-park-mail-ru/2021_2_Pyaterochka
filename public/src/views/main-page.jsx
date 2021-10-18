@@ -1,6 +1,6 @@
-import Component from '../components/basecomponent.js';
-import Step from '../components/step.jsx';
-import PrettySection from '../components/pretty-main-section.jsx';
+import Component from '../components/basecomponent';
+import Step from '../components/step';
+import PrettySection from '../components/pretty-main-section';
 
 class MainPageView extends Component {
     constructor (

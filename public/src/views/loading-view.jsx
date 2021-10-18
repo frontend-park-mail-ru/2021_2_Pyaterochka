@@ -1,5 +1,5 @@
-import Component from '../components/basecomponent.js';
-import Spinner from '../components/spinner.jsx';
+import Component from '../components/basecomponent';
+import Spinner from '../components/spinner';
 
 class LoadingView extends Component {
     render () {

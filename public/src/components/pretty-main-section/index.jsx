@@ -1,6 +1,8 @@
-import Component from './basecomponent.js';
-import Button from './button.jsx';
-import { router } from '../index.js';
+import Component from '../basecomponent';
+import Button from '../button';
+import { router } from '../../index';
+
+import './style.css';
 
 class PrettySection extends Component {
     constructor ({
@@ -31,50 +33,9 @@ class PrettySection extends Component {
                         }}/>
                     </div>
                 </div>
-                <img src="../../imgs/mainPage.png" alt="Картинка глвной страницы"/>
+                <img src="/imgs/mainPage.png" alt="Картинка главной страницы"/>
             </div>
         </div>;
     }
 }
 export default PrettySection;
-
-const styles = `
-.main-page-section {
-    width: 100%;
-    background-color: #484745;
-    padding: 100px 0;
-}
-
-.main-page-section-container {
-    display: flex;
-    justify-content: space-between;
-    width: 1240px;
-    margin: auto;
-}
-
-.main-page-section-container__slogan {
-    font-family: Montserrat, sans-serif;
-    font-style: normal;
-    font-weight: 900;
-    font-size: 60px;
-    line-height: 73px;
-    color: #FFFFFF;
-}
-
-.main-page-section-container__text {
-    margin-bottom: 50px;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 36px;
-    line-height: 42px;
-    color: #fff;
-}
-
-.main-page-section-container__button {
-    width: 108px;
-}
-`;
-
-const styleElement = document.createElement('style');
-styleElement.innerHTML = styles;
-document.body.appendChild(styleElement);

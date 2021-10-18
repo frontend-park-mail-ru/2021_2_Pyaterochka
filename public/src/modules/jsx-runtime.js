@@ -1,6 +1,6 @@
 /** @module Поддержка JSX  */
 
-import Component from '../components/basecomponent.js';
+import Component from '../components/basecomponent';
 
 /**
  * Компонент экранированного текста

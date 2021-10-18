@@ -15,29 +15,6 @@ class Route {
 }
 
 /**
- * Загрузчик компонента по требованию
- */
-class DynamicComponentLoader {
-    constructor (url, ...attrs) {
-        this.url = url;
-        this.attrs = attrs;
-        this.Component = null;
-    }
-
-    /**
-     * Загрузить компонент
-     *
-     * @returns {Component} компонент
-     */
-    async load () {
-        if (this.Component) return this.Component;
-        this.Component = (await import(this.url)).default;
-
-        return this.Component;
-    }
-}
-
-/**
  * Роутер
  */
 class Router {
@@ -106,20 +83,18 @@ class Router {
      */
     async renderRoute (route) {
         document.title = route.title;
-        let view = route.component;
 
-        if (view instanceof DynamicComponentLoader) {
-            if (this.loadingView && !view.component) {
-                if (this.layout) {
-                    this.layout.slot = this.loadingView.renderReactive();
-                } else {
-                    this.container.innerHTML = '';
-                    this.container.appendChild(this.loadingView.renderReactive());
-                }
+        if (this.loadingView) {
+            if (this.layout) {
+                this.layout.slot = this.loadingView.renderReactive();
+            } else {
+                this.container.innerHTML = '';
+                this.container.appendChild(this.loadingView.renderReactive());
             }
-            const Component = await view.load();
-            view = new Component();
         }
+        const Component = (await route.component()).default;
+        const view = new Component();
+
         if (this.layout) {
             if (route.data) { view.data = route.data; }
 
@@ -189,4 +164,4 @@ class Router {
 
 export default Router;
 
-export { Route, DynamicComponentLoader };
+export { Route };

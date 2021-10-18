@@ -1,4 +1,4 @@
-import patchDom from './base/patchDom.js';
+import patchDom from './patchDom';
 
 /**
  * Аккумулятор запросов на обновление компонентов

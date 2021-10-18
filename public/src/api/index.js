@@ -1,6 +1,6 @@
 /** @module API */
 
-const basename = 'http://api.pyaterochka-team.site:8080';
+const basename = 'http://api2.pyaterochka-team.site:8080';
 const basenameDev = '/api';
 const mapCreator = (data) => {
     return {

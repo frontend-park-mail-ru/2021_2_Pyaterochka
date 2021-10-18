@@ -1,7 +1,7 @@
-import Component from './basecomponent.js';
-import Navbar from './navbar.jsx';
-import user from '../storage/user.js';
-import Footer from './footer.jsx';
+import Component from '../basecomponent';
+import Navbar from '../navbar';
+import user from '../../storage/user';
+import Footer from '../footer';
 
 /**
  * Компонент разметки страницы

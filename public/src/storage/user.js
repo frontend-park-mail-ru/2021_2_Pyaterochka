@@ -1,6 +1,6 @@
 /** @module Хранилище профиля пользователя */
-import api from '../api/index.js';
-import { router } from '../index.js';
+import api from '../api/index';
+import { router } from '../index';
 
 /**
  * Хранилище пользователя

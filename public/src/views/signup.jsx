@@ -1,9 +1,9 @@
-import api from '../api/index.js';
-import Component from '../components/basecomponent.js';
-import Button from '../components/button.jsx';
-import InputField from '../components/input-field.jsx';
-import { router } from '../index.js';
-import user from '../storage/user.js';
+import api from '../api/index';
+import Component from '../components/basecomponent';
+import Button from '../components/button';
+import InputField from '../components/input-field';
+import { router } from '../index';
+import user from '../storage/user';
 
 class SignupView extends Component {
     constructor () {

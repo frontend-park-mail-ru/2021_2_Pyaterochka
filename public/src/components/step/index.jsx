@@ -1,4 +1,5 @@
-import Component from './basecomponent.js';
+import Component from '../basecomponent';
+import './style.css';
 
 /**
  * Компонент шага
@@ -54,64 +55,3 @@ class Step extends Component {
     }
 }
 export default Step;
-
-const styles = `
-.step {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 110px;
-}
-
-.step-content {
-    display: inline-block;
-    max-width: 786px;
-}
-
-.step-content__number {
-    display: flex;
-    align-items: center;
-    margin-bottom: 16px;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 24px;
-    line-height: 28px;
-    color: var(--color-step-text);
-}
-
-.step-content__name {
-    display: flex;
-    align-items: center;
-    margin-bottom: 5px;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 36px;
-    line-height: 42px;
-}
-
-.step-content__description {
-    display: flex;
-    align-items: center;
-    font-style: normal;
-    font-weight: 300;
-    font-size: 18px;
-    line-height: 28px;
-    color: var(--color-step-text);
-}
-
-.step-content__description_link {
-    text-decoration: none;
-    color: var(--color-primary);
-}
-
-.step-content__description_link:hover {
-    color: var(--color-primary-light);
-}
-
-.step-content__description_link:active {
-    color: var(--color-primary-dark);
-}
-`;
-
-const styleElement = document.createElement('style');
-styleElement.innerHTML = styles;
-document.body.appendChild(styleElement);

@@ -1,6 +1,6 @@
-import Component from '../components/basecomponent.js';
-import Button from '../components/button.jsx';
-import { router } from '../index.js';
+import Component from '../components/basecomponent';
+import Button from '../components/button';
+import { router } from '../index';
 
 class ErrorPage extends Component {
     constructor (err = 404, desc = 'Страница не найдена') {

@@ -1,11 +1,11 @@
-import api from '../api/index.js';
-import Component from '../components/basecomponent.js';
-import Button from '../components/button.jsx';
-import CreatorCard from '../components/creator-card.jsx';
-import LevelCard from '../components/level-card.jsx';
-import LockMessage from '../components/lock-message.jsx';
-import PostCard from '../components/post-card.jsx';
-import Skeleton from '../components/skeleton.js';
+import api from '../api/index';
+import Component from '../components/basecomponent';
+import Button from '../components/button';
+import CreatorCard from '../components/creator-card';
+import LevelCard from '../components/level-card';
+import LockMessage from '../components/lock-message';
+import PostCard from '../components/post-card';
+import Skeleton from '../components/skeleton';
 
 class CreatorView extends Component {
     constructor () {

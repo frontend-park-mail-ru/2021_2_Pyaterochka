@@ -1,10 +1,10 @@
-import api from '../api/index.js';
-import Component from '../components/basecomponent.js';
-import Button from '../components/button.jsx';
-import CreatorCard from '../components/creator-card.jsx';
-import ProfileCard from '../components/profile-card.jsx';
-import { router } from '../index.js';
-import user from '../storage/user.js';
+import api from '../api/index';
+import Component from '../components/basecomponent';
+import Button from '../components/button';
+import CreatorCard from '../components/creator-card';
+import ProfileCard from '../components/profile-card';
+import { router } from '../index';
+import user from '../storage/user';
 
 class ProfileView extends Component {
     constructor () {

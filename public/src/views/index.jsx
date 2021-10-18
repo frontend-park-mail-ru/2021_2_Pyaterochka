@@ -1,18 +1,18 @@
-import Component from '../components/basecomponent.js';
-import Button from '../components/button.jsx';
-import CreatorCard from '../components/creator-card.jsx';
-import Footer from '../components/footer.jsx';
-import InputField from '../components/input-field.jsx';
-import LevelCard from '../components/level-card.jsx';
-import LockMessage from '../components/lock-message.jsx';
-import Navbar from '../components/navbar.jsx';
-import PostCard from '../components/post-card.jsx';
-import ProfileCard from '../components/profile-card.jsx';
-import Skeleton from '../components/skeleton.js';
-import Spinner from '../components/spinner.jsx';
-import Step from '../components/step.jsx';
-import Comment from '../components/comment.jsx';
-import PrettySection from '../components/pretty-main-section.jsx';
+import Component from '../components/basecomponent';
+import Button from '../components/button';
+import CreatorCard from '../components/creator-card';
+import Footer from '../components/footer';
+import InputField from '../components/input-field';
+import LevelCard from '../components/level-card';
+import LockMessage from '../components/lock-message';
+import Navbar from '../components/navbar';
+import PostCard from '../components/post-card';
+import ProfileCard from '../components/profile-card';
+import Skeleton from '../components/skeleton';
+import Spinner from '../components/spinner';
+import Step from '../components/step';
+import Comment from '../components/comment';
+import PrettySection from '../components/pretty-main-section';
 
 class IndexView extends Component {
     constructor () {
