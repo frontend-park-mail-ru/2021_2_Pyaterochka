@@ -1,0 +1,35 @@
+
+.main-page-section {
+  width: 100%;
+  background-color: #484745;
+  padding: 100px 0;
+}
+
+.main-page-section-container {
+  display: flex;
+  justify-content: space-between;
+  width: 1240px;
+  margin: auto;
+}
+
+.main-page-section-container__slogan {
+  font-family: Montserrat, sans-serif;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 60px;
+  line-height: 73px;
+  color: #fff;
+}
+
+.main-page-section-container__text {
+  margin-bottom: 50px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 36px;
+  line-height: 42px;
+  color: #fff;
+}
+
+.main-page-section-container__button {
+  width: 108px;
+}

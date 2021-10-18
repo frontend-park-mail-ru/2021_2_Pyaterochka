@@ -1,8 +1,9 @@
-import Router, { Route, DynamicComponentLoader } from './router/index.js';
-import Layout from './components/layout.jsx';
-import LoadingView from './views/loading-view.jsx';
-import user from './storage/user.js';
+import Router, { Route } from './router';
+import Layout from './components/layout';
+import LoadingView from './views/loading-view';
+import user from './storage/user';
 import EditorComponent from './components/editor.jsx';
+
 
 let router;
 document.addEventListener('DOMContentLoaded', async () => {
@@ -14,15 +15,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     const root = document.getElementById('root');
 
     router = new Router(root, [
-        new Route('/main', new DynamicComponentLoader('/src/views/main-page.jsx'), 'Главная страница'),
-        new Route('/signin', new DynamicComponentLoader('/src/views/signin.jsx'), 'Войти'),
-        new Route('/signup', new DynamicComponentLoader('/src/views/signup.jsx'), 'Регистрация'),
-        new Route('/components', new DynamicComponentLoader('/src/views/index.jsx'), 'Главная'),
-        new Route('/creator/*', new DynamicComponentLoader('/src/views/creator.jsx'), 'Страница автора'),
-        new Route('/loading-view', new LoadingView(), ''),
-        new Route('/editor', new EditorComponent(), ''),
-        new Route('/', new DynamicComponentLoader('/src/views/profile.jsx'), 'Профиль'),
-        new Route('', new DynamicComponentLoader('/src/views/errorpage.jsx'), 'Страница не найдена')
+        new Route('/main', async () => await import('views/main-page'), 'Главная страница'),
+        new Route('/signin', async () => await import('views/signin'), 'Войти'),
+        new Route('/signup', async () => await import('views/signup'), 'Регистрация'),
+        new Route('/components', async () => await import('views/component-gallery'), 'Главная'),
+        new Route('/creator/*', async () => await import('views/creator'), 'Страница автора'),
+        new Route('/loading-view', async () => { return { default: LoadingView }; }, ''),
+        new Route('/', async () => await import('views/profile'), 'Профиль'),
+        new Route('/editor', async () => { return { default: EditorComponent } }, ''),
+        new Route('', async () => await import('views/errorpage'), 'Страница не найдена')
     ]);
 
     router.setLayout(new Layout());

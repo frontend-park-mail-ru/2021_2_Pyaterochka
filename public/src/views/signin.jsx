@@ -1,9 +1,9 @@
-import api from '../api/index.js';
-import Component from '../components/basecomponent.js';
-import Button from '../components/button.jsx';
-import InputField from '../components/input-field.jsx';
-import { router } from '../index.js';
-import user from '../storage/user.js';
+import api from '../api/index';
+import Component from '../components/basecomponent';
+import Button from '../components/button';
+import InputField from '../components/input-field';
+import { router } from '../index';
+import user from '../storage/user';
 
 class SigninView extends Component {
     constructor () {
@@ -55,14 +55,8 @@ class SigninView extends Component {
                         this.submit();
                     }}
                 >
-                    {this.form.map((c) => c.render())}
-                    {this.attributes.error
-                        ? (
-                            <div className="error">{this.attributes.error}</div>
-                        )
-                        : (
-                            ''
-                        )}
+                    {this.form.map((c) => c.renderReactive())}
+                    <div className="error">{this.attributes.error}</div>
 
                     <Button
                         text="Войти"

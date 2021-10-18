@@ -1,5 +1,5 @@
-import Component from './basecomponent.js';
-import Button from './button.jsx';
+import Component from './basecomponent';
+import Button from './button';
 /**
  * Компонент карточки создателя
  */
