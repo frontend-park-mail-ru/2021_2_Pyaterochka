@@ -4,14 +4,14 @@ import Component from '../components/basecomponent';
  * Компонент объединения нескольких компонентов в группу
  */
 class Fragment extends Component {
-    constructor(a, ...c) {
+    constructor (a, ...c) {
         super();
         this.c = c;
     }
 
-    render() {
+    render () {
         return this.c;
     }
 }
 
-export default Fragment
+export default Fragment;

@@ -57,7 +57,7 @@ class SigninView extends Component {
                 >
                     {this.form.map((c) => c.renderReactive())}
                     <div className="error">{this.attributes.error}</div>
-                   
+
                     <Button
                         text="Войти"
                         color="primary"

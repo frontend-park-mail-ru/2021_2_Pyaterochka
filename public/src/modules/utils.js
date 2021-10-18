@@ -4,9 +4,8 @@
  * @param {any} a - исходный массив
  * @returns {any} результирующий массив
  */
-export function arrayOfArraysToArray(a) {
-    if (!Array.isArray(a))
-        return a;
+export function arrayOfArraysToArray (a) {
+    if (!Array.isArray(a)) { return a; }
 
     return a.reduce((acc, a) => {
         if (!Array.isArray(a)) {

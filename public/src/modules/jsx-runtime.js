@@ -3,10 +3,10 @@
 import { arrayOfArraysToArray } from './utils';
 import JsxDomElement from './JsxDomElement';
 import JsxDomText from './JsxDomText';
-import Fragment from './Fragment'
+import Fragment from './Fragment';
 
 class $$$$$$Deprecated$$$$JSXDomBrowser {
-    constructor(element) {
+    constructor (element) {
         console.warn('Using deprecated syntax. Please use JSX syntax.');
 
         this.children = [];
@@ -14,22 +14,22 @@ class $$$$$$Deprecated$$$$JSXDomBrowser {
         this.dom = element;
     }
 
-    createElement() {
+    createElement () {
         return this.dom;
     }
 
-    patch(newJsxDom) {
+    patch (newJsxDom) {
         return this.replace(newJsxDom);
     }
 
-    replace(newJsxDom) {
+    replace (newJsxDom) {
         const newDom = newJsxDom.createElement();
         this.dom.replaceWith(newDom);
 
         return newJsxDom;
     }
 
-    destroy() {
+    destroy () {
         this.dom?.remove();
     }
 }
@@ -43,7 +43,7 @@ class $$$$$$Deprecated$$$$JSXDomBrowser {
  * @param {Object} attributes атрибуты компонента
  * @returns {Component | Text} представление компонента
  */
-function jsx(Element, attributes) {
+function jsx (Element, attributes) {
     return createElement(Element, attributes,
         attributes.children ? [attributes.children] : []);
 }
@@ -57,7 +57,7 @@ function jsx(Element, attributes) {
  * @param {Object} attributes атрибуты компонента
  * @returns {Component | Text} представление компонента
  */
-function jsxs(Element, attributes) {
+function jsxs (Element, attributes) {
     return createElement(Element, attributes, attributes.children);
 }
 
@@ -70,7 +70,7 @@ function jsxs(Element, attributes) {
  * @param {Array} jsxChildren дети компонента
  * @returns {Component | Text} представление компонента
  */
-function createElement(JsxElement, attributes, jsxChildren) {
+function createElement (JsxElement, attributes, jsxChildren) {
     const children = arrayOfArraysToArray(jsxChildren).map((child) => {
         if (child instanceof Element || child instanceof Text) {
             return new $$$$$$Deprecated$$$$JSXDomBrowser(child);

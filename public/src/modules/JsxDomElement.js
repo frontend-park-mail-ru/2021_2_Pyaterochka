@@ -1,5 +1,5 @@
 class JsxDomElement {
-    constructor(tagName, attributes, jsxChildren) {
+    constructor (tagName, attributes, jsxChildren) {
         this.attributes = {};
         this.listeners = {};
         this.dom = null;
@@ -9,10 +9,8 @@ class JsxDomElement {
         this.children.forEach(child => { child.parent = this; });
 
         Object.keys(attributes).forEach(key => {
-            if (!attributes[key])
-                return;
-            if (key === 'children')
-                return;
+            if (!attributes[key]) { return; }
+            if (key === 'children') { return; }
             if (key === 'className') {
                 if (Array.isArray(attributes[key])) {
                     this.className = attributes[key].join(' ');
@@ -31,7 +29,7 @@ class JsxDomElement {
         });
     }
 
-    createElement() {
+    createElement () {
         const element = document.createElement(this.tagName);
         this.dom = element;
 
@@ -48,24 +46,24 @@ class JsxDomElement {
         return element;
     }
 
-    setListeners(element = this.dom) {
+    setListeners (element = this.dom) {
         // Object.entries(this.listeners).forEach(([attr, val]) => console.log("addListeners ", attr, val, element))
         Object.entries(this.listeners).forEach(([attr, val]) => element.addEventListener(attr, val));
     }
 
-    removeListeners(element = this.dom) {
+    removeListeners (element = this.dom) {
         // Object.entries(this.listeners).forEach(([attr, val]) => console.log("removeListener ", attr, val, element))
         Object.entries(this.listeners).forEach(([attr, val]) => element.removeEventListener(attr, val));
     }
 
-    destroy() {
+    destroy () {
         this.children.forEach(child => child.destroy());
         this.dom?.remove();
         this.removeListeners();
         this.dom = null;
     }
 
-    replace(newJsxDom) {
+    replace (newJsxDom) {
         const newDom = newJsxDom.createElement(true);
         this.dom.replaceWith(newDom);
 
@@ -78,7 +76,7 @@ class JsxDomElement {
         return newJsxDom;
     }
 
-    patch(newJsxDom) {
+    patch (newJsxDom) {
         if (newJsxDom.tagName !== this.tagName) {
             return this.replace(newJsxDom);
         }
@@ -96,7 +94,7 @@ class JsxDomElement {
         return this;
     }
 
-    patchAttributes(newJsxDom) {
+    patchAttributes (newJsxDom) {
         const oldKeys = Object.keys(this.attributes);
         const newKeys = Object.keys(newJsxDom.attributes);
 
@@ -115,7 +113,7 @@ class JsxDomElement {
         });
     }
 
-    childrenPatch(newJsxDom) {
+    childrenPatch (newJsxDom) {
         const newChildren = newJsxDom.children;
 
         // console.log(this.children, newChildren, this, newJsxDom);
@@ -140,4 +138,4 @@ class JsxDomElement {
     }
 }
 
-export default JsxDomElement
+export default JsxDomElement;

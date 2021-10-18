@@ -2,18 +2,18 @@
  * Компонент экранированного текста
  */
 class JsxDomText {
-    constructor(text) {
+    constructor (text) {
         this.children = [];
         this.text = text;
         this.dom = null;
     }
 
-    createElement() {
+    createElement () {
         this.dom = document.createTextNode(this.text);
         return this.dom;
     }
 
-    patch(newJsxDom) {
+    patch (newJsxDom) {
         if (newJsxDom instanceof JsxDomText) {
             if (this.text !== newJsxDom.text) {
                 this.text = newJsxDom.text;
@@ -25,16 +25,16 @@ class JsxDomText {
         return this.replace(newJsxDom);
     }
 
-    replace(newJsxDom) {
+    replace (newJsxDom) {
         const newDom = newJsxDom.createElement();
         this.dom.replaceWith(newDom);
 
         return newJsxDom;
     }
 
-    destroy() {
+    destroy () {
         this.dom?.remove();
     }
 }
 
-export default JsxDomText
+export default JsxDomText;
