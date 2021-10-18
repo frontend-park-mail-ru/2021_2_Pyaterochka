@@ -120,7 +120,8 @@ class Router {
     setLayout (layout) {
         this.layout = layout;
         this.container.innerHTML = '';
-        this.container.appendChild(layout.renderReactive());
+        this.container.appendChild(layout.renderReactive().createElement());
+        console.log(layout);
     }
 
     /**

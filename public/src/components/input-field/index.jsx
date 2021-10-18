@@ -29,10 +29,12 @@ class InputField extends Component {
                         placeholder=" "
                         type={this.attributes.type}
                         value={this.attributes.value}
+                        onInput={(e) => { this.onInput(e); }}
                     />
                     <span onClick="this.parentElement.querySelector('input').focus();">
                         {' '}
-                        {this.attributes.placeholder}{' '}
+                        {this.attributes.placeholder}
+                        {' '}
                     </span>
                 </label>
                 <div className="input-validation">
@@ -49,20 +51,17 @@ class InputField extends Component {
             </div>
         );
 
-        element.addEventListener('input', (e) => {
-            this.input = e.target;
-            this.dom = this.input.parentElement.parentElement;
-            this.validate();
-        });
-        if (!this.input) {
-            this.input = element.querySelector('input');
-        }
-
         return element;
     }
 
     getValue () {
-        return this.input.value;
+        return this.dom.dom.querySelector('input').value;
+    }
+
+    onInput (e) {
+        console.log('input');
+        this.input = e.target;
+        this.validate();
     }
 
     validate () {

@@ -1,5 +1,3 @@
-import patchDom from './patchDom';
-
 /**
  * Аккумулятор запросов на обновление компонентов
  */
@@ -86,7 +84,7 @@ class Component {
      */
     updatePartly () {
         const newDom = this.render();
-        this.dom = patchDom(this.dom, newDom);
+        this.dom = this.dom.patch(newDom);
     }
 
     /**
@@ -94,8 +92,7 @@ class Component {
      */
     updateForce () {
         const newDom = this.render();
-        this.dom.replaceWith(newDom);
-        this.dom = newDom;
+        this.dom = this.dom.replace(newDom);
     }
 
     set slot (component) {
@@ -119,6 +116,7 @@ class Component {
     renderReactive () {
         this.created();
         this.dom = this.render();
+        this.dom.parentComponent = this;
         return this.dom;
     }
 }

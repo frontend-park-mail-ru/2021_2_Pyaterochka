@@ -10,29 +10,30 @@ class Button extends Component {
         text = '',
         color = 'default',
         rounded = false,
-        loading = false,
-        onclick = () => { }
+        loading = false
     }) {
         super();
         this.attributes.text = text;
         this.attributes.color = color;
         this.attributes.rounded = rounded;
         this.attributes.loading = loading;
-        this.attributes.onclick = onclick;
+        this.attributes.onclick = arguments[0].onclick || arguments[0].onClick || (() => {});
     }
 
     render () {
         const classList = `btn btn-${this.attributes.color} ${this.attributes.rounded ? 'btn-rounded' : ''}`;
         const element = (
-            <button className={classList}>
+            <button
+                className={classList}
+                onClick={(e) => { this.attributes.onclick(e); }}
+            >
                 {this.attributes.loading
-                    ? <Spinner/>
+                    ? <Spinner />
                     : this.attributes.text}
 
             </button>
         );
 
-        element.addEventListener('click', this.attributes.onclick);
         return element;
     }
 }

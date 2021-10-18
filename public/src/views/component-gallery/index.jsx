@@ -1,18 +1,20 @@
-import Component from '../components/basecomponent';
-import Button from '../components/button';
-import CreatorCard from '../components/creator-card';
-import Footer from '../components/footer';
-import InputField from '../components/input-field';
-import LevelCard from '../components/level-card';
-import LockMessage from '../components/lock-message';
-import Navbar from '../components/navbar';
-import PostCard from '../components/post-card';
-import ProfileCard from '../components/profile-card';
-import Skeleton from '../components/skeleton';
-import Spinner from '../components/spinner';
-import Step from '../components/step';
-import Comment from '../components/comment';
-import PrettySection from '../components/pretty-main-section';
+import Component from '../../components/basecomponent';
+import Button from '../../components/button';
+import CreatorCard from '../../components/creator-card';
+import Footer from '../../components/footer';
+import InputField from '../../components/input-field';
+import LevelCard from '../../components/level-card';
+import LockMessage from '../../components/lock-message';
+import Navbar from '../../components/navbar';
+import PostCard from '../../components/post-card';
+import ProfileCard from '../../components/profile-card';
+import Skeleton from '../../components/skeleton';
+import Spinner from '../../components/spinner';
+import Step from '../../components/step';
+import Comment from '../../components/comment';
+import PrettySection from '../../components/pretty-main-section';
+
+import './style.css';
 
 class IndexView extends Component {
     constructor () {
@@ -344,59 +346,8 @@ class IndexView extends Component {
     }
 
     render () {
-        const element = (
-            <div className="content">
-                <div className="container">
-                    <h1 className="text-center">Страницы</h1>
-                    <div>
-                        <a router-go="/creator"> Страница автора </a>
-                        <a router-go="/profile"> Профиль </a>
-                        <a router-go="/404"> Страница ошибки </a>
-                    </div>
-                    <h1 className="text-center">Компоненты</h1>
-                    <div className="components-map"> </div>
-                    <style>
-                        {`
-                .container {
-                    width:1000px;
-                    max-width:100%;
-                    margin:auto;
-                    margin-top:50px;
-                }
-                .component-wrapper__variants{
-                    display:flex;
-                    justify-content: left;
-                    flex-wrap:wrap;
-                }
-                .component-wrapper__variants > .btn, 
-                .components-map > .btn{
-                    width:auto;
-                    margin: 0 10px 0 0;
-                },
-                .component-wrapper {
-                    margin-bottom: 60px;
-                }
-                .component-wrapper__component {
-                    padding:20px;
-                    border: solid 2px #000;
-                }
-                .components-map {
-                    background: #fff;
-                    position: sticky;
-                    top: 0;
-                    z-index: 1000;
-                    overflow: auto;
-                    display: block;
-                    white-space: nowrap;
-                    width: 100%;
-                }
-                .components-map > .btn {
-                    display: inline;
-                }`}
-                    </style>
-                </div>
-            </div>
-        );
+        const componentMenu = [];
+        const componentWrappers = [];
 
         this.attributes.cps.forEach((info, ii) => {
             const component = info.data[info.active].component;
@@ -412,7 +363,7 @@ class IndexView extends Component {
                                         <Button
                                             key={i}
                                             text={c.name}
-                                            onclick={() => {
+                                            onClick={() => {
                                                 this.attributes.cps[ii].active = i;
                                                 this.attributes.cps = Object.assign(this.attributes.cps);
                                             }}
@@ -438,29 +389,48 @@ class IndexView extends Component {
                             {Object.keys(component.attributes).map((key) => (
                                 <tr key={key}>
                                     <td>{key}</td>
-                                    <td>{component.attributes[key]}</td>
+                                    <td>{String(component.attributes[key])}</td>
                                 </tr>
                             ))}
                             <tr>
                                 <td>SLOT</td>
-                                <td>{component.slot ? component.slot.outerHTML : ''}</td>
+                                {/* <td>{component.slot ? component.slot. : ''}</td> */}
                             </tr>
                         </table>
                     </div>
                 </div>
             );
 
-            element.appendChild(componentWrapper);
-
-            element.querySelector('.components-map').appendChild(
+            componentWrappers.push(componentWrapper);
+            componentMenu.push(
                 new Button({
                     text: info.name,
-                    onclick: () => {
-                        window.scrollTo(0, componentWrapper.offsetTop - 100);
+                    onClick: () => {
+                        window.scrollTo(0, componentWrapper.dom.offsetTop - 100);
                     }
                 }).renderReactive()
             );
         });
+
+        const element = (
+            <div className="content">
+                <div className="container">
+                    <h1 className="text-center">Страницы</h1>
+                    <div>
+                        <a router-go="/creator"> Страница автора </a>
+                        <a router-go="/profile"> Профиль </a>
+                        <a router-go="/404"> Страница ошибки </a>
+                    </div>
+                    <h1 className="text-center">Компоненты</h1>
+                    <div className="components-map">
+                        {componentMenu}
+                    </div>
+                    {componentWrappers}
+                </div>
+
+            </div>
+        );
+
         return element;
     }
 }
