@@ -13,13 +13,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     const root = document.getElementById('root');
 
     router = new Router(root, [
-        new Route('/main', async () => await import('views/main-page'), 'Главная страница'),
+        new Route('/', async () => await import('views/main-page'), 'Главная страница'),
         new Route('/signin', async () => await import('views/signin'), 'Войти'),
         new Route('/signup', async () => await import('views/signup'), 'Регистрация'),
         new Route('/components', async () => await import('views/component-gallery'), 'Главная'),
         new Route('/creator/*', async () => await import('views/creator'), 'Страница автора'),
         new Route('/loading-view', async () => { return { default: LoadingView }; }, ''),
-        new Route('/', async () => await import('views/profile'), 'Профиль'),
+        new Route('/profile', async () => await import('views/profile'), 'Профиль'),
         new Route('', async () => await import('views/errorpage'), 'Страница не найдена')
     ]);
 

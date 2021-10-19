@@ -22,7 +22,7 @@
   background: rgba(255, 255, 255, 0.3);
 }
 
-.navbar a {
+.navbar a, .navbar a:visited {
   color: #fff;
   text-decoration: none;
 }
