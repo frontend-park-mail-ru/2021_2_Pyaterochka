@@ -55,9 +55,12 @@ class Router {
      * Запуск роутера
      */
     start () {
-        let url = location.hash.substr(1);
-        if (url === '') url = '/main';
-        this.go(url);
+        const url = location.pathname;
+        const route = this.getRoute(url);
+        if (route.url.endsWith('*')) {
+            route.data = url.replace(route.url.replace('*', ''), '');
+        }
+        this.renderRoute(route);
     }
 
     /**
@@ -66,8 +69,7 @@ class Router {
      * @param {string} url адрес
      */
     go (url = '') {
-        history.pushState(url, location.href);
-        location.hash = url;
+        history.pushState(url, url, url);
 
         const route = this.getRoute(url);
         if (route.url.endsWith('*')) {
@@ -147,7 +149,7 @@ class Router {
             e.preventDefault();
         });
         window.addEventListener('popstate', (e) => {
-            this.renderRoute(this.getRoute(location.hash.substr(1)));
+            this.renderRoute(this.getRoute(location.pathname));
         });
     }
 
