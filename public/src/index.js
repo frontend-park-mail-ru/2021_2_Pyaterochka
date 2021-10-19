@@ -15,18 +15,56 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     App.setup(<Layout>
         <Router routes={[
-            new Route('/', async () => await import('views/main-page'), 'Главная страница'),
-            new Route('/signin', async () => await import('views/signin'), 'Войти'),
-            new Route('/signup', async () => await import('views/signup'), 'Регистрация'),
-            new Route('/components', async () => await import('views/component-gallery'), 'Главная'),
-            new Route('/creator/*', async () => await import('views/creator'), 'Страница автора'),
-            new Route('/loading-view', async () => { return { default: LoadingView }; }, ''),
-            new Route('/profile', async () => await import('views/profile'), 'Профиль'),
-            new Route('', async () => await import('views/errorpage'), 'Страница не найдена')
+            new Route({
+                url: '/',
+                component: async () => await import('views/main-page'),
+                title: 'Главная страница',
+                name: 'main'
+            }),
+            new Route({
+                url: '/signin',
+                component: async () => await import('views/signin'),
+                title: 'Войти',
+                name: 'signin'
+            }),
+            new Route({
+                url: '/signup',
+                component: async () => await import('views/signup'),
+                title: 'Регистрация',
+                name: 'signup'
+            }),
+            new Route({
+                url: '/components',
+                component: async () => await import('views/component-gallery'),
+                title: 'Галерея компонентов',
+                name: 'component-gallery'
+            }),
+            new Route({
+                url: '/creator/*',
+                component: async () => await import('views/creator'),
+                title: 'Страница автора',
+                name: 'creator'
+            }),
+            new Route({
+                url: '/loading-view',
+                component: async () => { return { default: LoadingView }; }
+            }),
+            new Route({
+                url: '/profile',
+                component: async () => await import('views/profile'),
+                title: 'Профиль',
+                name: 'profile'
+            }),
+            new Route({
+                url: '',
+                component: async () => await import('views/errorpage'),
+                title: 'Страница не найдена'
+            })
         ]} loadingView={
             <LoadingView />
         } />
     </Layout>, document.getElementById('root'));
+
     console.log(App);
 });
 

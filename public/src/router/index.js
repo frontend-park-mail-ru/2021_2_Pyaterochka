@@ -119,6 +119,20 @@ class Router extends Component {
         document.addEventListener('click', (e) => { this.onClick(e); });
         window.addEventListener('popstate', (e) => { this.onPopState(e); });
     }
+
+    createUrl (name, param = null) {
+        const route = this.routes.find((r) => {
+            if (!r) return false;
+            return r.name === name;
+        });
+
+        if (!route) {
+            console.error('Route ' + name + ' not found');
+            return;
+        }
+
+        return route.url.replace('*', param || '');
+    }
 }
 
 export default Router;

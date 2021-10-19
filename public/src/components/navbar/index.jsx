@@ -1,3 +1,4 @@
+import app from '../../core/app';
 import user from '../../storage/user';
 import Component from '../basecomponent';
 import './style.css';
@@ -15,7 +16,7 @@ class Navbar extends Component {
     render () {
         return (
             <div className="navbar">
-                <a href="#" className="navbar-brand" router-go="/">
+                <a href="#" className="navbar-brand" router-go={app.$router.createUrl('main')}>
                     Patreon
                 </a>
                 {this.attributes.user
@@ -26,7 +27,7 @@ class Navbar extends Component {
                                 {this.attributes.user.username}
                             </div>
                             <div className="navbar-popup">
-                                <a router-go="/">Профиль</a>
+                                <a router-go={app.$router.createUrl('profile')}>Профиль</a>
                                 <a
                                     onClick={() => {
                                         user.logout();
@@ -39,10 +40,10 @@ class Navbar extends Component {
                     )
                     : (
                         <div>
-                            <a router-go="/signup" className="navbar-link">
+                            <a router-go={app.$router.createUrl('signup')} className="navbar-link">
                                 Регистрация
                             </a>
-                            <a router-go="/signin" className="navbar-link">
+                            <a router-go={app.$router.createUrl('signin')} className="navbar-link">
                                 Войти
                             </a>
                         </div>

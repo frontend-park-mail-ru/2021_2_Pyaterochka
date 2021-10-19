@@ -1,6 +1,6 @@
+import app from '../../core/app';
 import Component from '../basecomponent';
 import Button from '../button';
-import { router } from '../../index';
 
 import './style.css';
 
@@ -15,7 +15,7 @@ class PrettySection extends Component {
     }
 
     async submit () {
-        router.go('/signup');
+        app.$router.go(app.$router.createUrl('signup'));
     }
 
     render () {

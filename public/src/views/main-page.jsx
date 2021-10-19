@@ -1,6 +1,7 @@
 import Component from '../components/basecomponent';
 import Step from '../components/step';
 import PrettySection from '../components/pretty-main-section';
+import app from '../core/app';
 
 class MainPageView extends Component {
     constructor (
@@ -30,7 +31,7 @@ class MainPageView extends Component {
                             name="Настройте свою страницу и уровни подписки"
                             description={(
                                 <>
-                                    <a router-go="/signup" className="step-content__description_link">
+                                    <a router-go={app.$router.createUrl('signup')} className="step-content__description_link">
                                         Зарегистрируйтесь
                                     </a>{' '}
                                     и настройте вашу страницу на Patreon. Продумайте уровни

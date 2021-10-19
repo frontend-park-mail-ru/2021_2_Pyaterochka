@@ -2,6 +2,7 @@ import api from '../api/index';
 import Component from '../components/basecomponent';
 import Button from '../components/button';
 import InputField from '../components/input-field';
+import app from '../core/app';
 import { router } from '../index';
 import user from '../storage/user';
 
@@ -122,7 +123,7 @@ class SignupView extends Component {
                     />
                 </form>
                 <span className="auth-card__tooltip">
-                    Уже есть аккаунт? <a href="#" router-go="/signin">Войти</a>
+                    Уже есть аккаунт? <a href="#" router-go={app.$router.createUrl('signin')}>Войти</a>
                 </span>
             </div>
         );
