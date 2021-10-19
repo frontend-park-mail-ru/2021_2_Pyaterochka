@@ -1,8 +1,14 @@
 
 .step {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   margin-bottom: 110px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.step--left-text {
+  flex-direction: row-reverse;
 }
 
 .step-content {
