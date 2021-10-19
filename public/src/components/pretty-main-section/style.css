@@ -7,9 +7,15 @@
 
 .main-page-section-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   width: 1240px;
+  max-width: 100%;
   margin: auto;
+  flex-wrap: wrap-reverse;
+}
+
+.main-page-section-container__image {
+  max-width: 100%;
 }
 
 .main-page-section-container__slogan {
@@ -19,6 +25,11 @@
   font-size: 60px;
   line-height: 73px;
   color: #fff;
+}
+
+.main-page-section-info {
+  width: 790px;
+  max-width: 100%;
 }
 
 .main-page-section-container__text {
