@@ -61,7 +61,6 @@ class Router {
             route.data = url.replace(route.url.replace('*', ''), '');
         }
         this.renderRoute(route);
-        // this.go(url);
     }
 
     /**
@@ -71,7 +70,6 @@ class Router {
      */
     go (url = '') {
         history.pushState(url, url, url);
-        // location.hash = url;
 
         const route = this.getRoute(url);
         if (route.url.endsWith('*')) {
