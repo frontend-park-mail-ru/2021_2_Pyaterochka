@@ -2,8 +2,7 @@ import Router, { Route } from './router';
 import Layout from './components/layout';
 import LoadingView from './views/loading-view';
 import user from './storage/user';
-import EditorComponent from './components/editor.jsx';
-
+import EditorComponent from './components/editor';
 
 let router;
 document.addEventListener('DOMContentLoaded', async () => {
@@ -22,7 +21,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         new Route('/creator/*', async () => await import('views/creator'), 'Страница автора'),
         new Route('/loading-view', async () => { return { default: LoadingView }; }, ''),
         new Route('/', async () => await import('views/profile'), 'Профиль'),
-        new Route('/editor', async () => { return { default: EditorComponent } }, ''),
+        new Route('/editor', async () => { return { default: EditorComponent }; }, ''),
         new Route('', async () => await import('views/errorpage'), 'Страница не найдена')
     ]);
 

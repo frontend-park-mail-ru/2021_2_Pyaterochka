@@ -16,7 +16,7 @@ class JsxDomText {
     patch (newJsxDom) {
         if (newJsxDom instanceof JsxDomText) {
             if (this.text !== newJsxDom.text) {
-                this.text = newJsxDom.text;
+                this.text = newJsxDom?.dom?.textContent || newJsxDom?.text || '';
                 this.dom.textContent = this.text;
             }
             return this;

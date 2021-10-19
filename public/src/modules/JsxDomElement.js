@@ -114,6 +114,10 @@ class JsxDomElement {
     }
 
     childrenPatch (newJsxDom) {
+        if (newJsxDom.attributes.contentEditable && this.attributes.contentEditable) {
+            return;
+        }
+
         const newChildren = newJsxDom.children;
 
         // console.log(this.children, newChildren, this, newJsxDom);

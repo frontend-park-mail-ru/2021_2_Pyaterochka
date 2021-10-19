@@ -1,5 +1,7 @@
-import Component from './basecomponent';
-import Button from './button';
+import Component from '../basecomponent';
+import Button from '../button';
+import './style.css';
+
 /**
  * Компонент карточки создателя
  */
@@ -27,12 +29,12 @@ class EditorComponent extends Component {
         isDraft = true
     } = {}) {
         super();
-        this.title = title;
-        this.description = description;
+        this.attributes.title = title;
+        this.attributes.description = description;
         this.attributes.levels = levels;
         this.attributes.activeLevel = activeLevel;
         this.attributes.cover = cover;
-        this.body = body;
+        this.attributes.body = body;
         this.attributes.isDraft = isDraft;
     }
 
@@ -40,57 +42,86 @@ class EditorComponent extends Component {
         this.attributes.activeLevel = id;
     }
 
+    fixText (text) {
+        return text?.replace(/\n/g, '')?.replace(/\r/g, '');
+    }
+
     editTitle (e) {
-        this.title = e.target.innerText;
+        this.attributes.title = this.fixText(e.target.innerText);
     }
 
     editDescription (e) {
-        this.description = e.target.innerText;
+        this.attributes.description = this.fixText(e.target.innerText);
     }
 
     editBody (e, i) {
-        this.body[i].text = e.target.firstChild?.textContent || '';
+        this.attributes.body[i].text = this.fixText(e.target.textContent) || '';
         this.checkLast();
     }
 
     checkLast () {
-        if (this.body.length === 0 || this.body.at(-1).text !== '') {
+        if (this.attributes.body.length === 0 || this.attributes.body.at(-1).text !== '') {
             this.appendBody();
         }
     }
 
     appendBody () {
-        this.body.push({
+        this.attributes.body.push({
             text: ''
         });
-        this.update();
+    }
+
+    onPaste (e, setter) {
+        // const paste = e.clipboardData.getData('text');
+        setTimeout(() => {
+            // console.log(e)
+            const el = e.target;
+
+            const sel = window.getSelection();
+
+            const oldRange = sel.getRangeAt(el);
+            const start = oldRange.startOffset;
+            const end = oldRange.endOffset;
+
+            // console.log(start, end);
+
+            const text = el.innerText.replace(/\n/g, ' ');
+            setter(text);
+            el.innerText = text;
+
+            const range = document.createRange();
+            range.setStart(el.firstChild, start);
+            range.setEnd(el.firstChild, end);
+            range.collapse(true);
+            sel.removeAllRanges();
+            sel.addRange(range);
+        }, 0);
     }
 
     keyPress (event, i = null) {
         if (i !== null && (event.keyCode === 8 || event.keyCode === 46)) {
-            if (this.body[i].text === '') {
-                this.body.splice(i, 1);
+            if (this.attributes.body[i].text === '') {
+                this.attributes.body.splice(i, 1);
                 this.checkLast();
                 event.preventDefault();
                 this.updatePartly();
                 if (event.keyCode === 8) {
                     this.focusBodyElement(Math.max(0, i - 1), true);
                 }
-            } else {
-                this.update();
             }
             return;
         }
 
         if (event.keyCode === 13) {
             if (i != null) {
-                this.body.splice(i + 1, 0, {
+                this.attributes.body.splice(i + 1, 0, {
                     text: ''
                 });
-            }
-            this.updatePartly();
+                this.updatePartly();
 
-            this.focusBodyElement(i + 1);
+                this.focusBodyElement(i + 1);
+            }
+
             event.preventDefault();
             return;
         }
@@ -101,7 +132,7 @@ class EditorComponent extends Component {
     }
 
     focusBodyElement (i, atEnd = false) {
-        const element = this.dom.querySelectorAll('.editor__body-element')[i];
+        const element = this.dom.dom.querySelectorAll('.editor__body-element')[i];
         element.focus();
         if (atEnd) {
             const range = document.createRange();
@@ -120,16 +151,17 @@ class EditorComponent extends Component {
                     <div className="editor__helper editor__helper--title">Заголовок</div>
                     <div
                         placeholder="Введите заголовок"
-                        className="editor__title"
+                        className={['editor__title', this.attributes.title ? '' : 'editor--show-placeholder']}
                         onKeyPress={(e) => {
                             this.keyPress(e);
                         }}
+                        onPaste={(e) => this.onPaste(e, (a) => { this.attributes.title = a; })}
                         contentEditable={true}
                         onInput={(e) => {
                             this.editTitle(e);
                         }}
                     >
-                        {this.title}
+                        {this.attributes.title}
                     </div>
                     <div className="editor__helper">Уровень</div>
                     <div className="editor__levels">
@@ -167,7 +199,7 @@ class EditorComponent extends Component {
                     <div className="editor__helper">Описание</div>
                     <div
                         placeholder="Введите описание"
-                        className="editor__description"
+                        className={['editor__description', this.attributes.description ? '' : 'editor--show-placeholder']}
                         onKeyPress={(e) => {
                             this.keyPress(e);
                         }}
@@ -175,8 +207,9 @@ class EditorComponent extends Component {
                         onInput={(e) => {
                             this.editDescription(e);
                         }}
+                        onPaste={(e) => this.onPaste(e, (a) => { this.attributes.description = a; })}
                     >
-                        {this.description}
+                        {this.attributes.description}
                     </div>
                 </div>
                 <div className="editor__save-panel">
@@ -185,7 +218,7 @@ class EditorComponent extends Component {
                     </div>{' '}
                     Черновик был сохранен автоматически
                 </div>
-                {this.body.map((element, i) => {
+                {this.attributes.body.map((element, i) => {
                     return (
                         <>
                             {element.text === ''
@@ -207,7 +240,7 @@ class EditorComponent extends Component {
                                 )}
 
                             <div
-                                className="editor__body-element"
+                                className={['editor__body-element', element.text === '' ? 'editor__body-element--show-placeholder' : '']}
                                 contentEditable={true}
                                 placeholder="Пишите текст вашей статьи здесь или выберите  нужный элемент слева"
                                 onInput={(e) => {
@@ -216,6 +249,8 @@ class EditorComponent extends Component {
                                 onKeyDown={(e) => {
                                     this.keyPress(e, i);
                                 }}
+                                onPaste={(e) => this.onPaste(e, (a) => { element.text = a; })}
+
                             >
                                 {element.text}
                             </div>
@@ -228,131 +263,3 @@ class EditorComponent extends Component {
 }
 
 export default EditorComponent;
-
-const styles = `
-.add-icon-button {
-    background: none;
-    border:none;
-    outline:none;
-    cursor: pointer;
-    padding: 0;
-    margin: 0 5px;
-}
-.add-icon-button icon{
-    width: 24px;
-    height: 24px;
-    mask-image: var(--icon);
-    mask-position: center;
-    mask-size: contain;
-    -webkit-mask-image: var(--icon);
-    -webkit-mask-position: center;
-    -webkit-mask-size: contain;
-    background-color: #7c7c7c;
-    display: block;
-    transition: background-color .2s ease;
-}
-.add-icon-button icon:hover{
-    background-color: #000;
-}
-.editor__save-panel {
-    padding: 15px 15px;
-    font-size:14px;
-}
-.editor__save-panel .btn-container {
-    width:200px;
-    margin-right:10px;
-    display:inline-block
-}
-.editor__header {
-    padding: 5px 15px;
-    border-left: 2px #878787 solid;
-    transition: border-color .2s ease;
-}
-
-.editor__header:hover {
-    padding: 5px 15px;
-    border-color: #000;   
-}
-.editor__header:hover .editor__helper {
-    color: #000;   
-}
-.editor__helper {
-    transition: color .2s ease;
-    position: absolute;
-    text-align: right;
-    left: -180px;
-    font-size: 18px;
-    width: 200px;
-    color:#7c7c7c;
-}
-.editor__helper--title {
-    font-size: 28px;
-}
-.editor {
-    max-width:800px;
-    margin:auto;
-    padding:40px;
-    position:relative;
-}
-.editor [contentEditable=true] {
-    border:none;
-    outline:none;
-    cursor:text;
-    color:#000;
-}
-
-.editor textarea {
-    display:block;
-    width:100%;
-    border:none;
-    outline:none;
-    font-family: Roboto, sans-serif;
-}
-.editor [contentEditable=true]:empty:before{
-    content:attr(placeholder);
-    color: #7C7C7C;
-}
-.editor [contentEditable=true] br {
-    display:none;
-}
-
-.editor__title {
-    font-size: 28px;
-    font-weight: 300;
-}
-
-.editor__levels {
-font-size: 18px;
-font-weight: 400;
-color: #878787;
-}
-.editor__level.active {
-    color: #000;
-}
-.editor__level {
-    display:inline-block;
-    cursor:pointer;
-    transition: all ease .1s;
-}
-.editor__description {
-    font-size: 18px;
-    font-weight: 300;
-}
-.editor__body-element {
-    padding: 15px 15px;
-
-}
-.editor__helper--body {
-    margin: 10px 0;
-    padding-right:22px;
-    margin-left:22px;
-    border-right:2px solid #888
-}
-.editor__title, .editor__levels, .editor__description {
-    margin-bottom: 4px;
-}
-`;
-
-const styleElement = document.createElement('style');
-styleElement.innerHTML = styles;
-document.body.appendChild(styleElement);
