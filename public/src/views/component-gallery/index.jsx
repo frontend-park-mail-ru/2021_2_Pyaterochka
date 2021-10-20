@@ -15,6 +15,7 @@ import Comment from '../../components/comment';
 import PrettySection from '../../components/pretty-main-section';
 
 import './style.css';
+import app from '../../core/app';
 
 class IndexView extends Component {
     constructor () {
@@ -221,7 +222,7 @@ class IndexView extends Component {
                             name: 'Настройте свою страницу и уровни подписки',
                             description: (
                                 <>
-                                    <a router-go="/signup" className="step-content__description_link">
+                                    <a router-go={app.$router.createUrl('signup')} className="step-content__description_link">
                                         Зарегистрируйтесь
                                     </a>{' '}
                                     и настройте вашу страницу на Patreon. Продумайте уровни
@@ -417,8 +418,8 @@ class IndexView extends Component {
                 <div className="container">
                     <h1 className="text-center">Страницы</h1>
                     <div>
-                        <a router-go="/creator"> Страница автора </a>
-                        <a router-go="/profile"> Профиль </a>
+                        <a router-go={app.$router.createUrl('creator')}> Страница автора </a>
+                        <a router-go={app.$router.createUrl('profile')}> Профиль </a>
                         <a router-go="/404"> Страница ошибки </a>
                     </div>
                     <h1 className="text-center">Компоненты</h1>

@@ -1,3 +1,4 @@
+import app from '../../core/app';
 import Component from '../basecomponent';
 import './style.css';
 
@@ -31,7 +32,7 @@ class CreatorCard extends Component {
                     'creator-card',
                     this.attributes.clickable ? 'clickable' : ''
                 ]}
-                router-go={this.attributes.clickable ? '/creator/' + this.attributes.id : null}
+                router-go={this.attributes.clickable ? app.$router.createUrl('creator', this.attributes.id) : null}
             >
                 <div
                     className={[

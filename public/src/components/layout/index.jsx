@@ -7,7 +7,7 @@ import Footer from '../footer';
  * Компонент разметки страницы
  */
 class Layout extends Component {
-    constructor (slot = null) {
+    constructor (attr, slot = null) {
         super();
         this.slot = slot;
     }
@@ -17,7 +17,7 @@ class Layout extends Component {
             <div>
                 <div>
                     <Navbar user={user.user} />
-                    {this.slot ? this.slot : ''}
+                    {this.slot}
                 </div>
                 <Footer />
             </div>

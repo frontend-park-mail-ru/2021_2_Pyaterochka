@@ -1,6 +1,6 @@
+import app from '../../core/app';
 import Component from '../basecomponent';
 import Button from '../button';
-import { router } from '../../index';
 
 import './style.css';
 
@@ -15,7 +15,7 @@ class PrettySection extends Component {
     }
 
     async submit () {
-        router.go('/signup');
+        app.$router.go(app.$router.createUrl('signup'));
     }
 
     render () {
@@ -30,10 +30,14 @@ class PrettySection extends Component {
                     <div className="main-page-section-container__button">
                         <Button text="Начать" rounded={true} color={'primary'} onclick={() => {
                             this.submit();
-                        }}/>
+                        }} />
                     </div>
                 </div>
-                <img src="/imgs/mainPage.png" alt="Картинка главной страницы"/>
+                <img
+                    className="main-page-section-container__image"
+                    src="/imgs/mainPage.png"
+                    alt="Картинка главной страницы"
+                />
             </div>
         </div>;
     }

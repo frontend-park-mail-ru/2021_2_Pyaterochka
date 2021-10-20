@@ -2,6 +2,7 @@ import api from '../api/index';
 import Component from '../components/basecomponent';
 import Button from '../components/button';
 import InputField from '../components/input-field';
+import app from '../core/app';
 import { router } from '../index';
 import user from '../storage/user';
 
@@ -70,7 +71,7 @@ class SigninView extends Component {
                 </form>
                 <span className="auth-card__tooltip">
                     Впервые на Patreon?{' '}
-                    <a href="#" router-go="/signup">
+                    <a href="#" router-go={app.$router.createUrl('signup')}>
                         Зарегистрируйтесь
                     </a>
                 </span>
