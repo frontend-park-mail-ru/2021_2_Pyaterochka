@@ -17,6 +17,14 @@ class Like extends Component {
     }
 
     render () {
+        if (!this.attributes.user) {
+            return (
+                <div className="like">
+                    <button disabled className='like-link'/>
+                    <span className="likes-count">{this.attributes.count}</span>
+                </div>
+            );
+        }
         return (
             <div className="like">
                 <button onClick={(e) => {

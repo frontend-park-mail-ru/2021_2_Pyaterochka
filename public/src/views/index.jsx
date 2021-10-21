@@ -23,9 +23,19 @@ class IndexView extends Component {
                 name: 'Лайк',
                 data: [
                     {
+                        name: 'Авторизирован',
+                        component: new Like({
+                            user: {
+                                username: 'Person',
+                                avatar: 'https://thispersondoesnotexist.com/image'
+                            },
+                            count: 0
+                        })
+                    },
+                    {
                         name: 'Не авторизирован',
                         component: new Like({
-                            count: 0
+                            count: 230
                         })
                     }
                 ]
