@@ -13,7 +13,7 @@ import Spinner from '../../components/spinner';
 import Step from '../../components/step';
 import Comment from '../../components/comment';
 import PrettySection from '../../components/pretty-main-section';
-import Like from '../../components/like.jsx';
+import Like from '../../components/like/index';
 
 import './style.css';
 import app from '../../core/app';
