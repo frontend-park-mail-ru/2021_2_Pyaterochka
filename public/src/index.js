@@ -5,11 +5,12 @@ import LoadingView from './views/loading-view';
 import user from './storage/user';
 import EditorComponent from './components/editor';
 import App from './core/app';
+import RandomAnim from './components/random-anim';
 
 let router;
 document.addEventListener('DOMContentLoaded', async () => {
     try {
-        await user.update();
+        user.update();
     } catch {
 
     }
@@ -59,6 +60,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             new Route({
                 url: '/editor',
                 component: async () => { return { default: EditorComponent }; }
+            }),
+            new Route({
+                url: '/core/pathChildren',
+                component: async () => { return { default: RandomAnim }; }
             }),
             new Route({
                 url: '',

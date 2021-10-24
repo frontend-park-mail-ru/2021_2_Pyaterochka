@@ -9,6 +9,9 @@ class InputField extends Component {
         placeholder = '',
         type = 'text',
         value = '',
+        disabled = false,
+        onInput = () => { },
+        onChange = () => { },
         validation = []
     }) {
         super();
@@ -19,18 +22,43 @@ class InputField extends Component {
         this._value = '';
         this.attributes.valid = '';
         this.attributes.errors = [];
+        this.attributes.onInput = onInput;
+        this.attributes.onChange = onChange;
+        this.attributes.disabled = disabled;
+    }
+
+    onCheckBox (e) {
+        this.input = e.target;
+        this.attributes.value = !this.attributes.value;
+        this.attributes.onInput(e);
+        this.attributes.onChange(e);
+
+        this.updateForce();
     }
 
     render () {
         const element = (
             <div>
-                <label className={['input-field', this.attributes.valid]}>
-                    <input
-                        placeholder=" "
-                        type={this.attributes.type}
-                        value={this.attributes.value}
-                        onInput={(e) => { this.onInput(e); }}
-                    />
+                <label className={['input-field', this.attributes.valid, this.attributes.disabled ? 'input-field__disabled' : '']}>
+                    {this.attributes.type === 'checkbox'
+                        ? <input
+                            placeholder=" "
+                            type={this.attributes.type}
+                            checked={this.attributes.value ? 'checked' : ''}
+                            onClick={(e) => {
+                                this.onCheckBox(e);
+                            }}
+                            disabled={this.attributes.disabled}
+                        />
+                        : <input
+                            placeholder=" "
+                            type={this.attributes.type}
+                            value={this.attributes.value}
+                            onInput={(e) => { this.onInput(e); }}
+                            onChange={(e) => { this.attributes.onChange(e); }}
+                            disabled={this.attributes.disabled}
+                        />}
+
                     <span onClick="this.parentElement.querySelector('input').focus();">
                         {' '}
                         {this.attributes.placeholder}
@@ -59,7 +87,7 @@ class InputField extends Component {
     }
 
     onInput (e) {
-        console.log('input');
+        this.attributes.onInput(e);
         this.input = e.target;
         this.validate();
     }

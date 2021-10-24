@@ -40,3 +40,7 @@
 .components-map > .btn {
   display: inline;
 }
+
+.component-wrapper__table table {
+  width: 100%;
+}

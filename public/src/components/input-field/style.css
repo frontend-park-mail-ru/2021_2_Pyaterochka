@@ -4,6 +4,12 @@
   display: block;
 }
 
+.input-field__disabled,
+.input-field__disabled input,
+.input-field.input-field__disabled span {
+  cursor: not-allowed;
+}
+
 .input-field input:placeholder-shown {
   background: #f4f4f4;
 }

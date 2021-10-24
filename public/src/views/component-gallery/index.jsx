@@ -16,6 +16,8 @@ import PrettySection from '../../components/pretty-main-section';
 
 import './style.css';
 import app from '../../core/app';
+import EditorComponent from '../../components/editor';
+import { PropsView } from './PropsView';
 
 class IndexView extends Component {
     constructor () {
@@ -35,6 +37,26 @@ class IndexView extends Component {
                                 username: 'Person',
                                 avatar: 'https://thispersondoesnotexist.com/image'
                             }
+                        })
+                    }
+                ]
+            },
+            {
+                name: 'Редактор',
+                showAll: true,
+                data: [
+                    {
+                        name: 'Создание записи',
+                        component: new EditorComponent({
+                            comment: 'Черновик был сохранен автоматически'
+                        })
+                    },
+                    {
+                        name: 'Редактирование',
+                        component: new EditorComponent({
+                            title: 'Some title',
+                            description: 'Some description',
+                            isDraft: false
                         })
                     }
                 ]
@@ -352,55 +374,60 @@ class IndexView extends Component {
 
         this.attributes.cps.forEach((info, ii) => {
             const component = info.data[info.active].component;
-            const componentWrapper = (
-                <div className="component-wrapper">
-                    <h2>{info.name}</h2>
-                    {info.data.length > 1
-                        ? (
+            const componentWrapper = info.showAll
+                ? (
+                    <div className="component-wrapper">
+                        <h2>{info.name}</h2>
+
+                        {info.data.map((component, i) =>
                             <>
-                                Варианты компонента:
-                                <div className="component-wrapper__variants">
-                                    {info.data.map((c, i) => (
-                                        <Button
-                                            key={i}
-                                            text={c.name}
-                                            onClick={() => {
-                                                this.attributes.cps[ii].active = i;
-                                                this.attributes.cps = Object.assign(this.attributes.cps);
-                                            }}
-                                            color={info.active === i ? 'primary' : 'default'}
-                                        />
-                                    ))}
+                                Вариант компонента: {component.name}
+                                <div className="component-wrapper__component">
+                                    {component.component.renderReactive()}
+                                </div>
+                                Описание атрибутов:
+                                <div key={i}>
+                                    <PropsView component={component.component} />
                                 </div>
                             </>
-                        )
-                        : (
-                            ''
+
                         )}
-                    <div className="component-wrapper__component">
-                        {component.renderReactive()}
                     </div>
-                    Описание атрибутов:
-                    <div className="component-wrapper__table">
-                        <table>
-                            <tr>
-                                <th>Component name</th>
-                                <td>{component.constructor.name}</td>
-                            </tr>
-                            {Object.keys(component.attributes).map((key) => (
-                                <tr key={key}>
-                                    <td>{key}</td>
-                                    <td>{String(component.attributes[key])}</td>
-                                </tr>
-                            ))}
-                            <tr>
-                                <td>SLOT</td>
-                                {/* <td>{component.slot ? component.slot. : ''}</td> */}
-                            </tr>
-                        </table>
+                )
+                : (
+                    <div className="component-wrapper">
+                        <h2>{info.name}</h2>
+                        {info.data.length > 1
+                            ? (
+                                <>
+                                    Варианты компонента:
+                                    <div className="component-wrapper__variants">
+                                        {info.data.map((c, i) => (
+                                            <Button
+                                                key={i}
+                                                text={c.name}
+                                                onClick={() => {
+                                                    this.attributes.cps[ii].active = i;
+                                                    this.attributes.cps = Object.assign(this.attributes.cps);
+                                                }}
+                                                color={info.active === i ? 'primary' : 'default'}
+                                            />
+                                        ))}
+                                    </div>
+                                </>
+                            )
+                            : (
+                                ''
+                            )}
+                        <div className="component-wrapper__component">
+                            {component.renderReactive()}
+                        </div>
+                        Описание атрибутов:
+                        <div key={info.active}>
+                            <PropsView component={component} />
+                        </div>
                     </div>
-                </div>
-            );
+                );
 
             componentWrappers.push(componentWrapper);
             componentMenu.push(

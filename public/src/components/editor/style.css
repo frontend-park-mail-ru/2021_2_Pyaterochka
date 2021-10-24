@@ -7,7 +7,7 @@
   margin: 0 5px;
 }
 
-.add-icon-button icon {
+.add-icon-button .icon {
   width: 24px;
   height: 24px;
   mask-image: var(--icon);
@@ -21,7 +21,7 @@
   transition: background-color 0.2s ease;
 }
 
-.add-icon-button icon:hover {
+.add-icon-button .icon:hover {
   background-color: #000;
 }
 
@@ -139,4 +139,27 @@
 .editor__levels,
 .editor__description {
   margin-bottom: 4px;
+}
+
+@media (max-width: 1100px) {
+  .editor {
+    padding: 20px 10px;
+  }
+
+  .editor__helper {
+    display: none;
+  }
+
+  .editor__header {
+    border-left: none;
+  }
+
+  .editor__helper--body {
+    left: -70px;
+    display: block;
+  }
+
+  .editor__helper--body + .editor__body-element {
+    margin-left: 150px;
+  }
 }

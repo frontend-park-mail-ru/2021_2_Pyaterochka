@@ -43,9 +43,9 @@ class $$$$$$Deprecated$$$$JSXDomBrowser {
  * @param {Object} attributes атрибуты компонента
  * @returns {Component | Text} представление компонента
  */
-function jsx (Element, attributes) {
+function jsx (Element, attributes, key = null) {
     return createElement(Element, attributes,
-        attributes.children ? [attributes.children] : []);
+        attributes.children ? [attributes.children] : [], key);
 }
 
 /**
@@ -57,8 +57,8 @@ function jsx (Element, attributes) {
  * @param {Object} attributes атрибуты компонента
  * @returns {Component | Text} представление компонента
  */
-function jsxs (Element, attributes) {
-    return createElement(Element, attributes, attributes.children);
+function jsxs (Element, attributes, key = null) {
+    return createElement(Element, attributes, attributes.children, key);
 }
 
 /**
@@ -70,7 +70,7 @@ function jsxs (Element, attributes) {
  * @param {Array} jsxChildren дети компонента
  * @returns {Component | Text} представление компонента
  */
-function createElement (JsxElement, attributes, jsxChildren) {
+function createElement (JsxElement, attributes, jsxChildren, key) {
     const children = arrayOfArraysToArray(jsxChildren).map((child) => {
         if (child instanceof Element || child instanceof Text) {
             return new $$$$$$Deprecated$$$$JSXDomBrowser(child);
@@ -83,10 +83,15 @@ function createElement (JsxElement, attributes, jsxChildren) {
 
     if (JsxElement instanceof Function) {
         const component = new JsxElement(attributes, ...children);
-        return component.renderReactive();
+        const el = component.renderReactive();
+        el.key = key;
+        return el;
     }
 
-    return new JsxDomElement(JsxElement, attributes, children);
+    const el = new JsxDomElement(JsxElement, attributes, children);
+    el.key = key;
+    el.attributes.key = key;
+    return el;
 }
 
 export { jsx, jsxs, Fragment };

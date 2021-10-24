@@ -1,3 +1,4 @@
+import { nextTick } from '../../modules/utils';
 import Component from '../basecomponent';
 import Button from '../button';
 import './style.css';
@@ -7,8 +8,10 @@ import './style.css';
  */
 class EditorComponent extends Component {
     constructor ({
+        isDraft = true,
         title = '',
         description = '',
+        comment = '',
         levels = [
             {
                 title: 'Новичок',
@@ -21,12 +24,7 @@ class EditorComponent extends Component {
         ],
         activeLevel = 0,
         cover = null,
-        body = [
-            {
-                text: ''
-            }
-        ],
-        isDraft = true
+        body = []
     } = {}) {
         super();
         this.attributes.title = title;
@@ -34,8 +32,17 @@ class EditorComponent extends Component {
         this.attributes.levels = levels;
         this.attributes.activeLevel = activeLevel;
         this.attributes.cover = cover;
+        this.attributes.comment = comment;
         this.attributes.body = body;
         this.attributes.isDraft = isDraft;
+
+        this.attributes.body.forEach(b => {
+            if (!b.hash) {
+                b.hash = String((new Date()).getTime());
+            }
+        });
+
+        this.checkLast();
     }
 
     setLevel (id) {
@@ -54,8 +61,12 @@ class EditorComponent extends Component {
         this.attributes.description = this.fixText(e.target.innerText);
     }
 
-    editBody (e, i) {
-        this.attributes.body[i].text = this.fixText(e.target.textContent) || '';
+    findBody (hash) {
+        return this.attributes.body.findIndex(el => el.hash === hash);
+    }
+
+    editBody (e, hash) {
+        this.attributes.body[this.findBody(hash)].text = this.fixText(e.target.textContent) || '';
         this.checkLast();
     }
 
@@ -67,6 +78,7 @@ class EditorComponent extends Component {
 
     appendBody () {
         this.attributes.body.push({
+            hash: String((new Date()).getTime()),
             text: ''
         });
     }
@@ -74,7 +86,7 @@ class EditorComponent extends Component {
     onPaste (e, setter) {
         // const paste = e.clipboardData.getData('text');
         setTimeout(() => {
-            // console.log(e)
+            if (!e.heloelelelel) return;
             const el = e.target;
 
             const sel = window.getSelection();
@@ -82,8 +94,6 @@ class EditorComponent extends Component {
             const oldRange = sel.getRangeAt(el);
             const start = oldRange.startOffset;
             const end = oldRange.endOffset;
-
-            // console.log(start, end);
 
             const text = el.innerText.replace(/\n/g, ' ');
             setter(text);
@@ -98,8 +108,9 @@ class EditorComponent extends Component {
         }, 0);
     }
 
-    keyPress (event, i = null) {
-        if (i !== null && (event.keyCode === 8 || event.keyCode === 46)) {
+    keyPress (event, hash = null) {
+        if (hash !== null && (event.keyCode === 8 || event.keyCode === 46)) {
+            const i = this.findBody(hash);
             if (this.attributes.body[i].text === '') {
                 this.attributes.body.splice(i, 1);
                 this.checkLast();
@@ -113,8 +124,10 @@ class EditorComponent extends Component {
         }
 
         if (event.keyCode === 13) {
-            if (i != null) {
+            if (hash != null) {
+                const i = this.findBody(hash);
                 this.attributes.body.splice(i + 1, 0, {
+                    hash: String((new Date()).getTime()),
                     text: ''
                 });
                 this.updatePartly();
@@ -131,7 +144,8 @@ class EditorComponent extends Component {
         }
     }
 
-    focusBodyElement (i, atEnd = false) {
+    async focusBodyElement (i, atEnd = false) {
+        await nextTick();
         const element = this.dom.dom.querySelectorAll('.editor__body-element')[i];
         element.focus();
         if (atEnd) {
@@ -142,6 +156,10 @@ class EditorComponent extends Component {
             sel.removeAllRanges();
             sel.addRange(range);
         }
+    }
+
+    onBlur (e) {
+        e.target.innerText = this.fixText(e.target.innerText);
     }
 
     render () {
@@ -160,6 +178,7 @@ class EditorComponent extends Component {
                         onInput={(e) => {
                             this.editTitle(e);
                         }}
+                        onBlur={(e) => { this.onBlur(e); }}
                     >
                         {this.attributes.title}
                     </div>
@@ -208,30 +227,43 @@ class EditorComponent extends Component {
                             this.editDescription(e);
                         }}
                         onPaste={(e) => this.onPaste(e, (a) => { this.attributes.description = a; })}
+                        onBlur={(e) => { this.onBlur(e); }}
                     >
                         {this.attributes.description}
                     </div>
                 </div>
                 <div className="editor__save-panel">
-                    <div className="btn-container">
-                        <Button color="success" text="Опубликовать" />
-                    </div>{' '}
-                    Черновик был сохранен автоматически
+                    {this.attributes.isDraft
+                        ? <>
+                            <div className="btn-container">
+                                <Button color="success" text="Опубликовать" />
+                            </div>
+                        </>
+                        : <>
+                            <div className="btn-container">
+                                <Button color="success" text="Сохранить" />
+                            </div>
+                            <div className="btn-container">
+                                <Button color="primary" text="Удалить" />
+                            </div>
+
+                        </>}
+                    {this.attributes.comment}
                 </div>
-                {this.attributes.body.map((element, i) => {
+                {this.attributes.body.map((element) => {
                     return (
                         <>
                             {element.text === ''
                                 ? (
-                                    <div className="editor__helper editor__helper--body">
+                                    <div key={element.hash + '_helper'} className="editor__helper editor__helper--body">
                                         <button className="add-icon-button" alt="Добавить музыку">
-                                            <icon style="--icon: url('/imgs/icons/music_outline_24.svg')" />
+                                            <div className="icon" style="--icon: url('/imgs/icons/music_outline_24.svg')" />
                                         </button>
                                         <button className="add-icon-button" alt="Добавить картинку">
-                                            <icon style="--icon: url('/imgs/icons/picture_outline_28.svg')" />
+                                            <div className="icon" style="--icon: url('/imgs/icons/picture_outline_28.svg')" />
                                         </button>
                                         <button className="add-icon-button" alt="Добавить видео">
-                                            <icon style="--icon: url('/imgs/icons/video_outline_24.svg')" />
+                                            <div className="icon" style="--icon: url('/imgs/icons/video_outline_24.svg')" />
                                         </button>
                                     </div>
                                 )
@@ -240,17 +272,18 @@ class EditorComponent extends Component {
                                 )}
 
                             <div
+                                key={element.hash + '_element'}
                                 className={['editor__body-element', element.text === '' ? 'editor__body-element--show-placeholder' : '']}
                                 contentEditable={true}
                                 placeholder="Пишите текст вашей статьи здесь или выберите  нужный элемент слева"
                                 onInput={(e) => {
-                                    this.editBody(e, i);
+                                    this.editBody(e, element.hash);
                                 }}
                                 onKeyDown={(e) => {
-                                    this.keyPress(e, i);
+                                    this.keyPress(e, element.hash);
                                 }}
                                 onPaste={(e) => this.onPaste(e, (a) => { element.text = a; })}
-
+                                onBlur={(e) => { this.onBlur(e); }}
                             >
                                 {element.text}
                             </div>
