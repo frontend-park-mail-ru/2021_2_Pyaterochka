@@ -13,6 +13,7 @@ import Spinner from '../../components/spinner';
 import Step from '../../components/step';
 import Comment from '../../components/comment';
 import PrettySection from '../../components/pretty-main-section';
+import Like from '../../components/like.jsx';
 
 import './style.css';
 import app from '../../core/app';
@@ -25,6 +26,27 @@ class IndexView extends Component {
     constructor () {
         super();
         this.attributes.cps = [
+            {
+                name: 'Лайк',
+                data: [
+                    {
+                        name: 'Авторизирован',
+                        component: new Like({
+                            user: {
+                                username: 'Person',
+                                avatar: 'https://thispersondoesnotexist.com/image'
+                            },
+                            count: 0
+                        })
+                    },
+                    {
+                        name: 'Не авторизирован',
+                        component: new Like({
+                            count: 230
+                        })
+                    }
+                ]
+            },
             {
                 name: 'Шапка',
                 data: [
