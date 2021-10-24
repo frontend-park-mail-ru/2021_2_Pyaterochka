@@ -61,6 +61,13 @@ document.addEventListener('DOMContentLoaded', async () => {
                 title: 'Создание поста',
                 name: 'post.create'
             }),
+
+            new Route({
+                url: '/post',
+                component: async () => await import('views/post/view'),
+                title: 'Просмотр поста',
+                name: 'post.view'
+            }),
             new Route({
                 url: '/core/pathChildren',
                 component: async () => await import('components/random-anim')
