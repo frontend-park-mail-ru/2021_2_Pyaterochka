@@ -1,51 +1,14 @@
 import Component from '../basecomponent';
 import Button from '../button';
 import LockMessage from '../lock-message';
+import TimeAgoComponent from '../time-ago';
+import SimplifyNumComponent from '../simplify-num';
 import './style.css';
 
 /**
  * Компонент карточки записи
  */
 class PostCard extends Component {
-    timeDiff (date) {
-        const diff = (new Date()).getTime() - date;
-        if (diff <= 1000 * 60 * 5) {
-            return 'менее 5 минут назад';
-        }
-
-        if (diff < 1000 * 60 * 60) {
-            return Math.round(diff / (1000 * 60)) + ' минут назад';
-        }
-
-        if (diff < 1000 * 60 * 60 * 24) {
-            return Math.round(diff / (1000 * 60 * 60)) + ' часов назад';
-        }
-
-        if (diff < 1000 * 60 * 60 * 24 * 30) {
-            return Math.round(diff / (1000 * 60 * 60 * 24)) + ' дней назад';
-        }
-
-        if (diff < 1000 * 60 * 60 * 24 * 30 * 12) {
-            return Math.round(diff / (1000 * 60 * 60 * 24 * 30)) + ' месяцев назад';
-        }
-
-        const options = {
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric',
-            timezone: 'UTC'
-        };
-
-        return new Date(date).toLocaleString('ru', options);
-    }
-
-    simplifyNum (num) {
-        if (num < 1e3) return num;
-        if (num < 1e6) return Math.round(num / 1e3) + 'k';
-        if (num < 1e9) return Math.round(num / 1e6) + 'm';
-        return Math.round(num / 1e9) + 'b';
-    }
-
     constructor ({
         title = '',
         published = new Date(),
@@ -91,17 +54,17 @@ class PostCard extends Component {
                     <div className="post-card-meta">
                         <div>
                             <span className="date">
-                                {this.timeDiff(this.attributes.published)}
+                                <TimeAgoComponent date={this.attributes.published}/>
                             </span>
                         </div>
                         <div>
                             <span className="visits">
                                 <img src="/imgs/icons/view_outline_28.svg" />
-                                {this.simplifyNum(this.attributes.views)}
+                                <SimplifyNumComponent num={this.attributes.views}/>
                             </span>
                             <span className="likes">
                                 <img src="/imgs/icons/like_outline_28.svg" />
-                                {this.simplifyNum(this.attributes.likes)}
+                                <SimplifyNumComponent num={this.attributes.likes}/>
                             </span>
                         </div>
                     </div>

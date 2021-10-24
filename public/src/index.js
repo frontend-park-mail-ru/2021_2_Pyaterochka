@@ -3,9 +3,7 @@ import Route from './router/route';
 import Layout from './components/layout';
 import LoadingView from './views/loading-view';
 import user from './storage/user';
-import EditorComponent from './components/editor';
 import App from './core/app';
-import RandomAnim from './components/random-anim';
 
 let router;
 document.addEventListener('DOMContentLoaded', async () => {
@@ -58,12 +56,14 @@ document.addEventListener('DOMContentLoaded', async () => {
                 name: 'profile'
             }),
             new Route({
-                url: '/editor',
-                component: async () => { return { default: EditorComponent }; }
+                url: '/post/create',
+                component: async () => await import('views/post/create'),
+                title: 'Создание поста',
+                name: 'post.create'
             }),
             new Route({
                 url: '/core/pathChildren',
-                component: async () => { return { default: RandomAnim }; }
+                component: async () => await import('components/random-anim')
             }),
             new Route({
                 url: '',

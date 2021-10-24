@@ -1,42 +1,11 @@
 import Component from '../basecomponent';
+import TimeAgoComponent from '../time-ago';
 import './style.css';
 
 /**
  * Компонент комментария
  */
 class Comment extends Component {
-    timeDiff (date) {
-        const diff = (new Date()).getTime() - date;
-        if (diff <= 1000 * 60 * 5) {
-            return 'менее 5 минут назад';
-        }
-
-        if (diff < 1000 * 60 * 60) {
-            return Math.round(diff / (1000 * 60)) + ' минут назад';
-        }
-
-        if (diff < 1000 * 60 * 60 * 24) {
-            return Math.round(diff / (1000 * 60 * 60)) + ' часов назад';
-        }
-
-        if (diff < 1000 * 60 * 60 * 24 * 30) {
-            return Math.round(diff / (1000 * 60 * 60 * 24)) + ' дней назад';
-        }
-
-        if (diff < 1000 * 60 * 60 * 24 * 30 * 12) {
-            return Math.round(diff / (1000 * 60 * 60 * 24 * 30)) + ' месяцев назад';
-        }
-
-        const options = {
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric',
-            timezone: 'UTC'
-        };
-
-        return new Date(date).toLocaleString('ru', options);
-    }
-
     constructor ({
         user = null,
         published = new Date(),
@@ -58,7 +27,9 @@ class Comment extends Component {
 
                 <div className="comment__info">
                     <span className="comment__info__username">{this.attributes.user.username}</span>
-                    <span className="comment__info__published"> {this.timeDiff(this.attributes.published)}</span>
+                    <span className="comment__info__published">
+                        <TimeAgoComponent date={this.attributes.published} />
+                    </span>
                 </div>
 
                 <div className="comment__body">{this.attributes.body}</div>

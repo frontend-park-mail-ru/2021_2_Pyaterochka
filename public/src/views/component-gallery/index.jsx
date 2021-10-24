@@ -18,6 +18,8 @@ import './style.css';
 import app from '../../core/app';
 import EditorComponent from '../../components/editor';
 import { PropsView } from './PropsView';
+import TimeAgoComponent from '../../components/time-ago';
+import SimplifyNumComponent from '../../components/simplify-num';
 
 class IndexView extends Component {
     constructor () {
@@ -359,6 +361,26 @@ class IndexView extends Component {
                             })
                         })
                     )
+                ]
+            },
+            {
+                name: 'Форматированная дата',
+                data: [
+                    {
+                        component: new TimeAgoComponent({
+                            date: new Date()
+                        })
+                    }
+                ]
+            },
+            {
+                name: 'Упрощенное число',
+                data: [
+                    {
+                        component: new SimplifyNumComponent({
+                            num: 1001
+                        })
+                    }
                 ]
             }
         ];
