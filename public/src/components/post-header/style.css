@@ -1,0 +1,11 @@
+.post-header__sub {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  font-weight: 300;
+}
+
+.post-header__title {
+  font-weight: 500;
+  margin-bottom: 5px;
+}

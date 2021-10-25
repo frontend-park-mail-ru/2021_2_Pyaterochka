@@ -2,8 +2,8 @@ import Component from '../basecomponent';
 import Button from '../button';
 import LockMessage from '../lock-message';
 import TimeAgoComponent from '../time-ago';
-import SimplifyNumComponent from '../simplify-num';
 import './style.css';
+import CountersComponent from '../../counters';
 
 /**
  * Компонент карточки записи
@@ -57,16 +57,7 @@ class PostCard extends Component {
                                 <TimeAgoComponent date={this.attributes.published}/>
                             </span>
                         </div>
-                        <div>
-                            <span className="visits">
-                                <img src="/imgs/icons/view_outline_28.svg" />
-                                <SimplifyNumComponent num={this.attributes.views}/>
-                            </span>
-                            <span className="likes">
-                                <img src="/imgs/icons/like_outline_28.svg" />
-                                <SimplifyNumComponent num={this.attributes.likes}/>
-                            </span>
-                        </div>
+                        <CountersComponent likes={this.attributes.likes} views={this.attributes.views} />
                     </div>
                     <div className="post-card-desc">{this.attributes.description}</div>
                     <Button text="Открыть материал" />

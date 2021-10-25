@@ -1,10 +1,11 @@
 import Component from '../../components/basecomponent';
 import CreatorCard from '../../components/creator-card';
-import TimeAgoComponent from '../../components/time-ago';
 import Comment from '../../components/comment';
 import './view.css';
 import InputField from '../../components/input-field';
 import Button from '../../components/button';
+import Like from '../../components/like';
+import PostHeaderComponent from '../../components/post-header';
 
 class PostView extends Component {
     constructor () {
@@ -27,27 +28,29 @@ class PostView extends Component {
 
                         <div className="post">
                             <CreatorCard
+                                clickable={true}
                                 id={this.attributes.creator.id}
                                 name={this.attributes.creator.name}
                                 avatar={this.attributes.creator.avatar}
                                 description={this.attributes.creator.description}
                                 shadow={true}
-                                clickable={false}
                             />
 
                             <hr />
 
-                            <h1>
-                                {this.attributes.post.title}
-                            </h1>
-
-                            <div>
-                                <TimeAgoComponent date={this.attributes.post.published} />
-                            </div>
-
+                            <PostHeaderComponent
+                                title={this.attributes.post.title}
+                                published={this.attributes.post.published}
+                                views={this.attributes.post.views}
+                            />
                             {
                                 this.attributes.post.body.map((text, i) => <p key={i} className="post__text">{text}</p>)
                             }
+
+                            <div className="post__actions">
+                                <Like count={this.attributes.post.likes} user={true} />
+                                <Button text="Редактировать" color="grey" />
+                            </div>
 
                         </div>
 
@@ -56,7 +59,12 @@ class PostView extends Component {
                                 <div className="add-comment__title">
                                     Оставить комментарий
                                 </div>
-                                <InputField placeholder="Текст комментария" />
+                                <InputField
+                                    placeholder="Текст комментария"
+                                    validation={[
+                                        (v) => !v ? 'Поле не должно быть пустым' : null
+                                    ]}
+                                />
 
                                 <div className="add-comment__actions">
                                     <Button color="primary" text="Отправить" />
@@ -77,7 +85,22 @@ class PostView extends Component {
 
                     </div>
                     <div className="other-posts">
-
+                        <p className="other-posts__title">
+                            Также у автора
+                        </p>
+                        <hr />
+                        {
+                            this.attributes.otherPosts.map((post, i) =>
+                                <PostHeaderComponent
+                                    key={i}
+                                    size="20px"
+                                    title={post.title}
+                                    published={post.published}
+                                    views={post.views}
+                                    likes={post.likes}
+                                />
+                            )
+                        }
                     </div>
 
                 </div>

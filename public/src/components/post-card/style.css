@@ -63,21 +63,6 @@
   color: #909090;
 }
 
-.post-card-meta .visits,
-.post-card-meta .likes {
-  font-size: 14px;
-  font-weight: 300;
-}
-
-.post-card-meta .visits img,
-.post-card-meta .likes img {
-  width: 18px;
-  height: 18px;
-  margin-bottom: -3px;
-  margin-left: 5px;
-  margin-right: -3px;
-}
-
 .post-card-desc {
   max-height: 110px;
   overflow: hidden;

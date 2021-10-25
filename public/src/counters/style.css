@@ -1,0 +1,14 @@
+
+.counters__visits,
+.counters__likes {
+  font-size: 14px;
+  font-weight: 300;
+}
+
+.counters__visits img,
+.counters__likes img {
+  width: 18px;
+  height: 18px;
+  margin-bottom: -3px;
+  margin-left: 5px;
+}
