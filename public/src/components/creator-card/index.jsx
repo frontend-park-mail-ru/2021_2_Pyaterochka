@@ -12,7 +12,8 @@ class CreatorCard extends Component {
         avatar = '',
         description = '',
         shadow = false,
-        clickable = true
+        clickable = true,
+        noHoverShadow = false
     }) {
         super();
         this.attributes.id = id;
@@ -20,6 +21,7 @@ class CreatorCard extends Component {
         this.attributes.avatar = avatar;
         this.attributes.description = description;
         this.attributes.shadow = shadow;
+        this.attributes.noHoverShadow = noHoverShadow;
         this.attributes.clickable = clickable;
     }
 
@@ -30,7 +32,8 @@ class CreatorCard extends Component {
             <div
                 className={[
                     'creator-card',
-                    this.attributes.clickable ? 'clickable' : ''
+                    this.attributes.clickable ? 'clickable' : '',
+                    this.attributes.noHoverShadow ? 'creator-card--no-hover-shadow' : ''
                 ]}
                 router-go={this.attributes.clickable ? app.$router.createUrl('creator', this.attributes.id) : null}
             >

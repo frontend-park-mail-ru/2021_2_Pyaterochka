@@ -40,3 +40,7 @@
 .creator-card:hover .creator-card__avatar {
   background-size: 120%;
 }
+
+.creator-card.clickable.creator-card--no-hover-shadow:hover {
+  box-shadow: none;
+}

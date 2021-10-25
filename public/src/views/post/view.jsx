@@ -34,6 +34,7 @@ class PostView extends Component {
                                 avatar={this.attributes.creator.avatar}
                                 description={this.attributes.creator.description}
                                 shadow={true}
+                                noHoverShadow={true}
                             />
 
                             <hr />
@@ -62,7 +63,7 @@ class PostView extends Component {
                                 <InputField
                                     placeholder="Текст комментария"
                                     validation={[
-                                        (v) => !v ? 'Поле не должно быть пустым' : null
+                                        // (v) => !v ? 'Поле не должно быть пустым' : null
                                     ]}
                                 />
 
