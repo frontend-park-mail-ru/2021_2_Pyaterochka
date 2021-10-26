@@ -3,7 +3,7 @@ import Button from '../components/button';
 import { router } from '../index';
 
 class ErrorPage extends Component {
-    constructor (err = 404, desc = 'Страница не найдена') {
+    constructor ({ err = 404, desc = 'Страница не найдена' } = {}) {
         super();
         this.attributes.error = err;
         this.attributes.message = desc;

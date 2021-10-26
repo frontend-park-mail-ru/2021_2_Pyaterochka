@@ -4,6 +4,11 @@ import Layout from './components/layout';
 import LoadingView from './views/loading-view';
 import user from './storage/user';
 import App from './core/app';
+import ErrorPage from './views/errorpage';
+
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js');
+};
 
 let router;
 document.addEventListener('DOMContentLoaded', async () => {
@@ -14,6 +19,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     App.setup(<Layout>
+
         <Router routes={[
             new Route({
                 url: '/',
@@ -74,12 +80,15 @@ document.addEventListener('DOMContentLoaded', async () => {
             }),
             new Route({
                 url: '',
-                component: async () => await import('views/errorpage'),
+                component: async () => { return { default: ErrorPage }; },
                 title: 'Страница не найдена'
             })
         ]} loadingView={
-            <LoadingView />
+            !navigator.onLine
+                ? <ErrorPage err="-1" desc="Нет соединения с интернетом" />
+                : <LoadingView />
         } />
+
     </Layout>, document.getElementById('root'));
 
     console.log(App);
