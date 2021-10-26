@@ -46,6 +46,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                 name: 'component-gallery'
             }),
             new Route({
+                url: '/dino',
+                component: async () => await import('views/dino'),
+                title: 'dino',
+                name: 'dino'
+            }),
+            new Route({
                 url: '/creator/*',
                 component: async () => await import('views/creator'),
                 title: 'Страница автора',
