@@ -21,11 +21,23 @@ import EditorComponent from '../../components/editor';
 import { PropsView } from './PropsView';
 import TimeAgoComponent from '../../components/time-ago';
 import SimplifyNumComponent from '../../components/simplify-num';
+import SwitchComponent from '../../components/switch';
 
 class IndexView extends Component {
     constructor () {
         super();
         this.attributes.cps = [
+            {
+                name: 'Переключатель',
+                data: [
+                    {
+                        name: 'ON',
+                        component: new SwitchComponent({
+                            isOn: true
+                        })
+                    }
+                ]
+            },
             {
                 name: 'Лайк',
                 data: [
