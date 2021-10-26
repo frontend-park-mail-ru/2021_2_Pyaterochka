@@ -1,6 +1,6 @@
 import Component from '../components/basecomponent';
 import Button from '../components/button';
-import { router } from '../index';
+import app from '../core/app';
 
 class ErrorPage extends Component {
     constructor ({ err = 404, desc = 'Страница не найдена' } = {}) {
@@ -20,7 +20,7 @@ class ErrorPage extends Component {
                     color="primary"
                     rounded={true}
                     onclick={() => {
-                        router.go('/');
+                        app.$router.go('/');
                     }}
                 />
             </div>

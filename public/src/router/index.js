@@ -80,13 +80,19 @@ class Router extends Component {
         document.title = route.title;
 
         if (this.loadingView) {
-            this.view = this.loadingView;
+            this.slot = this.loadingView;
         }
-        const Component = (await route.component()).default;
-        const view = new Component();
+        try {
+            const Component = (await route.component()).default;
+            const view = new Component();
 
-        if (route.data) { view.data = route.data; }
-        this.slot = view.renderReactive();
+            if (route.data) {
+                view.data = route.data;
+            }
+            this.slot = view.renderReactive();
+        } catch {
+            console.error("Can't load page");
+        }
     }
 
     onClick (e) {

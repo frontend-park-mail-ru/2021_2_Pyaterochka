@@ -3,7 +3,7 @@ import Component from '../components/basecomponent';
 import Button from '../components/button';
 import CreatorCard from '../components/creator-card';
 import ProfileCard from '../components/profile-card';
-import { router } from '../index';
+import app from '../core/app';
 import user from '../storage/user';
 
 class ProfileView extends Component {
@@ -37,7 +37,7 @@ class ProfileView extends Component {
     }
 
     async created () {
-        if (!user.user) return router.go('/signin');
+        if (!user.user) return app.$router.go('/signin');
 
         this.attributes.user = Object.assign(user.user);
 

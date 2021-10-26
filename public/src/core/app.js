@@ -1,9 +1,13 @@
 class App {
     setup (component, container) {
-        this.component = component;
+        this.setComponent(component);
         this.container = container;
 
         this.forceUpdate();
+    }
+
+    setComponent (component) {
+        this.component = component;
     }
 
     forceUpdate () {

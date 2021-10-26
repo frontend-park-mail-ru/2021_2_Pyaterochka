@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "Проект Patreon команды \"Пятерочка\"",
   "scripts": {
-    "build": "npx webpack",
+    "build": "node ./server/createSW.js && npx webpack",
     "start": "node ./server/production",
     "dev": "node ./server",
-    "linter": "npx eslint public/sw.js public/src server --fix && npx stylelint \"public/src/**/*.css\" --fix"
+    "linter": "npx eslint public/src server --fix && npx stylelint \"public/src/**/*.css\" --fix"
   },
   "repository": {
     "type": "git",

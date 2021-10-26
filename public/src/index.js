@@ -5,12 +5,11 @@ import LoadingView from './views/loading-view';
 import user from './storage/user';
 import App from './core/app';
 import ErrorPage from './views/errorpage';
+import registerValidSW from './modules/service-worker';
+import MainPageView from './views/main-page';
 
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js');
-};
+registerValidSW('/sw.js');
 
-let router;
 document.addEventListener('DOMContentLoaded', async () => {
     try {
         user.update();
@@ -23,7 +22,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         <Router routes={[
             new Route({
                 url: '/',
-                component: async () => await import('views/main-page'),
+                component: async () => { return { default: MainPageView }; },
                 title: 'Главная страница',
                 name: 'main'
             }),
@@ -69,7 +68,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             }),
 
             new Route({
-                url: '/post',
+                url: '/post/*',
                 component: async () => await import('views/post/view'),
                 title: 'Просмотр поста',
                 name: 'post.view'
@@ -93,5 +92,3 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     console.log(App);
 });
-
-export { router };

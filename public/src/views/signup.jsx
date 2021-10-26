@@ -3,7 +3,6 @@ import Component from '../components/basecomponent';
 import Button from '../components/button';
 import InputField from '../components/input-field';
 import app from '../core/app';
-import { router } from '../index';
 import user from '../storage/user';
 
 class SignupView extends Component {
@@ -130,7 +129,7 @@ class SignupView extends Component {
     }
 
     created () {
-        if (user.user) return router.go('/');
+        if (user.user) return app.$router.go('/');
     }
 }
 
