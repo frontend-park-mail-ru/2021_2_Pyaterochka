@@ -99,7 +99,6 @@ class JsxDomElement {
             if (this.dom !== document.activeElement) {
                 this.childrenPatchContentEditable(newJsxDom);
             }
-            // this.patchListeners(newJsxDom);
             return this;
         }
 
@@ -163,21 +162,6 @@ class JsxDomElement {
         return children.map((child) => child.key);
     }
 
-    // getPositions(children) {
-    //     return children.map(element => {
-    //         if (!element.dom) {
-    //             console.log("NULL DOM", element);
-    //             return null;
-    //         }
-    //         if (!element.dom.getBoundingClientRect) {
-    //             return [0, 0];
-    //         }
-    //         const pos = element.dom.getBoundingClientRect();
-
-    //         return [pos.left, pos.top];
-    //     })
-    // }
-
     async childrenPatch (newJsxDom) {
         const newChildren = newJsxDom.children;
 
@@ -188,39 +172,12 @@ class JsxDomElement {
 
         const patchedChildren = [];
 
-        // replacements.filter(r=>r.to < 0).forEach(r => {
-        //     // Deleted element
-        //     const el = this.children[r.from];
-        //      if (!(el instanceof Text) && el.dom && el.dom.style) {
-        //         const bodyRect = document.body.getBoundingClientRect();
-        //         const pos = el.dom.getBoundingClientRect();
-        //         console.log("POS", pos);
-        //         el.dom.style.left = (pos.left - bodyRect.left) + "px"
-        //         el.dom.style.top = (pos.top - bodyRect.top) + "px"
-        //     }
-        // })
-
         replacements.forEach(r => {
             if (r.to < 0) {
                 // Deleted element
                 const el = this.children[r.from];
 
-                // if (el instanceof Text) {
                 el.destroy();
-                // }
-                // else if (el.dom && el.dom.style) {
-                //     await nextTick();
-                //     document.body.appendChild(el.dom);
-                //     el.dom.style.position = "fixed"
-                //     el.dom.style.margin = "unset"
-                //     el.dom.classList.add("fade-out")
-                //     el.dom.addEventListener("animationend", () => {
-                //         el.destroy();
-                //     })
-                // } else {
-                //     el.destroy();
-                // }
-
                 return;
             }
             if (r.from < 0) {
@@ -238,10 +195,6 @@ class JsxDomElement {
             patchedChildren[r.to] = oldElement.patch(newElement);
         });
 
-        // await nextTick()
-
-        // const oldPos = this.getPositions(patchedChildren)
-
         if (patchedChildren.length) {
             const reversedChildren = patchedChildren.reverse();
             if (this.dom.lastChild !== reversedChildren[0].dom) {
@@ -256,51 +209,6 @@ class JsxDomElement {
         }
 
         this.children = patchedChildren;
-
-        // const newPos = this.getPositions(patchedChildren);
-
-        // oldPos.forEach(async (oldP, i) => {
-        //     if (replacements[i].from < 0) {
-        //         const element = patchedChildren[i].dom;
-        //         if (element instanceof Text) {
-        //             return;
-        //         }
-
-        //         const oldD = element.style.visibility;
-        //         element.style.visibility = 'hidden'
-        //         await nextTick();
-        //         element.style.visibility = oldD
-
-        //         element.classList.add("fade-in");
-        //         element.addEventListener("animationend", () => {
-        //             element.classList.remove("fade-in")
-        //         }, {
-        //             once: true
-        //         })
-
-        //         return;
-        //     }
-
-        //     const newP = newPos[i];
-        //     if (!newP) return;
-
-        //     const dx = oldP[0] - newP[0];
-        //     const dy = oldP[1] - newP[1];
-
-        //     const element = patchedChildren[i].dom;
-
-        //     if (dx || dy) {
-        //         element.style.transform = `translate(${dx}px, ${dy}px)`;
-        //         await nextTick();
-        //         element.classList.add("move");
-        //         element.style.transform = ``;
-        //         element.addEventListener("transitionend", () => {
-        //             element.classList.remove("move");
-        //         }, {
-        //             once: true
-        //         })
-        //     }
-        // })
     }
 }
 
