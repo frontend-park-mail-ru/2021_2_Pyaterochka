@@ -28,18 +28,16 @@
     position: absolute;
     width: 124px;
     top: 28%;
-    left: 21%;
+    left: 22%;
     padding: 0;
-    border: none;
-    font: inherit;
-    color: #fff;
-    background-color: transparent;
     cursor: pointer;
+    color: #fff;
     font-style: normal;
     font-weight: 300;
     font-size: 18px;
     line-height: 21px;
     transition: 0.5s;
+    text-align: center;
 }
 
 .avatar-uploader__button:hover {

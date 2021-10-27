@@ -24,7 +24,7 @@ class AvatarUploader extends Component {
         return (
             <div className="avatar-uploader">
                 <img id="user-avatar" src={this.attributes.avatar} alt="Аватар пользователя"/>
-                <button className="avatar-uploader__button">
+                <div className="avatar-uploader__button">
                     <label className="avatar-uploader__text">
                         <input
                             id="avatar-uploader__file-upload"
@@ -35,7 +35,7 @@ class AvatarUploader extends Component {
                         <img src="../../../imgs/icons/download-picture.svg" alt=""/>
                         Заменить аватар
                     </label>
-                </button>
+                </div>
             </div>
         );
     }
