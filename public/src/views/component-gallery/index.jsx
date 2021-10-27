@@ -22,11 +22,23 @@ import { PropsView } from './PropsView';
 import TimeAgoComponent from '../../components/time-ago';
 import SimplifyNumComponent from '../../components/simplify-num';
 import SwitchComponent from '../../components/switch';
+import AvatarUploader from '../../components/avatar-uploader';
 
 class IndexView extends Component {
     constructor () {
         super();
         this.attributes.cps = [
+            {
+                name: 'Загрузка аватара',
+                data: [
+                    {
+                        component: new AvatarUploader({
+                            avatar:
+                                'https://sun9-12.userapi.com/impf/c854228/v854228051/16558/K7rRvW0xelY.jpg?size=647x809&quality=96&sign=83e72450667c775a5831dac80fb2dea5&type=album'
+                        })
+                    }
+                ]
+            },
             {
                 name: 'Переключатель',
                 data: [
