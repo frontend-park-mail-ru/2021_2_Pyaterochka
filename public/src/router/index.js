@@ -3,6 +3,7 @@
  */
 
 import Component from '../components/basecomponent';
+import Layout from '../components/layout';
 import app from '../core/app';
 
 class Router extends Component {
@@ -80,7 +81,9 @@ class Router extends Component {
         document.title = route.title;
 
         if (this.loadingView) {
-            this.slot = this.loadingView;
+            this.slot = <Layout>
+                {this.loadingView}
+            </Layout>;
         }
         try {
             const Component = (await route.component()).default;
@@ -89,7 +92,9 @@ class Router extends Component {
             if (route.data) {
                 view.data = route.data;
             }
-            this.slot = view.renderReactive();
+            this.slot = <Layout>
+                {view.renderReactive()}
+            </Layout>;
         } catch {
             console.error("Can't load page");
         }

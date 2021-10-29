@@ -1,6 +1,5 @@
 import Router from './router';
 import Route from './router/route';
-import Layout from './components/layout';
 import LoadingView from './views/loading-view';
 import user from './storage/user';
 import App from './core/app';
@@ -17,8 +16,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     }
 
-    App.setup(<Layout>
-
+    App.setup(
         <Router routes={[
             new Route({
                 url: '/',
@@ -87,8 +85,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 ? <ErrorPage err="-1" desc="Нет соединения с интернетом" />
                 : <LoadingView />
         } />
-
-    </Layout>, document.getElementById('root'));
+        , document.getElementById('root'));
 
     console.log(App);
 });
