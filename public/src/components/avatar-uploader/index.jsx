@@ -13,10 +13,9 @@ class AvatarUploader extends Component {
     }
 
     loadFile (e) {
-        const newAvatar = document.getElementById('user-avatar');
-        newAvatar.src = URL.createObjectURL(e.target.files[0]);
-        newAvatar.onload = function () {
-            URL.revokeObjectURL(newAvatar.src);
+        this.attributes.avatar = URL.createObjectURL(e.target.files[0]);
+        this.attributes.avatar.onload = function () {
+            URL.revokeObjectURL(this.attributes.avatar);
         };
     };
 

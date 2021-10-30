@@ -105,7 +105,7 @@ class Router extends Component {
                 this.go(url);
             }
         }
-        e.preventDefault();
+        // e.preventDefault();
     }
 
     onPopState () {
