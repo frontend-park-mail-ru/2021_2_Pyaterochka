@@ -31,7 +31,7 @@ class Component {
         const getter = (attrs, key) => attrs[key];
 
         const update = (attrs, key, value) => {
-            if (value instanceof Object && !(value instanceof Date)) {
+            if (value instanceof Object && !(value instanceof Date) && !(value instanceof Node)) {
                 value = new Proxy(value, {
                     set: update,
                     get: getter

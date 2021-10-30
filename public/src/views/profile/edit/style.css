@@ -1,0 +1,23 @@
+.profile-edit {
+  padding-top: 40px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.profile-edit__title {
+  font-family: Montserrat, sans-serif;
+  font-size: 32px;
+  font-weight: 400;
+}
+
+.profile-edit__subtitle {
+  color: #4d4d4d;
+  font-family: Montserrat, sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+}
+
+.profile-edit--little-width {
+  max-width: 500px;
+}

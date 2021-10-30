@@ -1,0 +1,17 @@
+.switch-container {
+  font-family: Roboto, sans-serif;
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 20px;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  border-radius: 5px;
+  margin: 0 -10px;
+}
+
+.switch-container:hover {
+  background: #eee;
+}

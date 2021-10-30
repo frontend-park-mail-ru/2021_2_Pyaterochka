@@ -10,7 +10,12 @@
   border-radius: 50%;
 }
 
+.avatar-uploader:hover::before {
+  opacity: 1;
+}
+
 .avatar-uploader::before {
+  opacity: 0;
   content: "";
   display: block;
   width: 100%;
@@ -20,7 +25,11 @@
   left: 0;
   border-radius: 50%;
   background: radial-gradient(50% 50% at 50% 50%, #000 0%, rgba(0, 0, 0, 0.5) 100%), transparent;
-  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.avatar-uploader:hover .avatar-uploader__button {
+  opacity: 1;
 }
 
 .avatar-uploader__button {
@@ -37,6 +46,7 @@
   line-height: 21px;
   transition: 0.5s;
   text-align: center;
+  opacity: 0;
 }
 
 .avatar-uploader__button:hover {

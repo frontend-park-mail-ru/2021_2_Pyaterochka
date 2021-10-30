@@ -19,6 +19,7 @@ class TabsContainer extends Component {
     }
 
     changeTab (e, tab) {
+        this.attributes.activeTab = null;
         this.attributes.activeTab = tab.key;
     }
 
@@ -31,14 +32,15 @@ class TabsContainer extends Component {
             />
 
             {
-                (tab => (
-                    tab?.component || this.attributes.noActive
-                ))(
-                    this.attributes.tabs
-                        .find(
-                            tab => tab.key === this.attributes.activeTab
-                        )
-                )
+
+                this.attributes.tabs
+                    .filter(
+                        tab => tab.key === this.attributes.activeTab
+                    ).map(tab =>
+                        <div className="tabs-container__wrapper" key={'wrapper_' + tab.key}>
+                            {tab.component}
+                        </div>)
+
             }
         </div>;
     }

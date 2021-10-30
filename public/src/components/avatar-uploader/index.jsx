@@ -31,7 +31,7 @@ class AvatarUploader extends Component {
                             accept="image/*"
                             onChange={(e) => { this.loadFile(e); }}
                         />
-                        <img src="../../../imgs/icons/download-picture.svg" alt=""/>
+                        <img src="/imgs/icons/download-picture.svg" alt=""/>
                         Заменить аватар
                     </label>
                 </div>

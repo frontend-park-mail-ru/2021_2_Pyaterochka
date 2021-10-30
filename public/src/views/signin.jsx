@@ -25,7 +25,9 @@ class SigninView extends Component {
         ];
     }
 
-    async submit () {
+    async submit (e) {
+        e.preventDefault();
+
         const error = this.form.reduce(
             (status, form) => status || form.getValue() === '',
             false
@@ -51,8 +53,8 @@ class SigninView extends Component {
                 <h1> Войти </h1>
                 <form
                     className="auth-card shadow"
-                    onSubmit={() => {
-                        this.submit();
+                    onSubmit={(e) => {
+                        this.submit(e);
                     }}
                 >
                     {this.form.map((c) => c.renderReactive())}
@@ -63,8 +65,8 @@ class SigninView extends Component {
                         color="primary"
                         rounded={true}
                         loading={this.attributes.loading}
-                        onclick={() => {
-                            this.submit();
+                        onClick={(e) => {
+                            this.submit(e);
                         }}
                     />
                 </form>
@@ -79,7 +81,7 @@ class SigninView extends Component {
     }
 
     created () {
-        if (user.user) return app.$router.go('/');
+        if (user.user) return app.$router.go(app.$router.createUrl('profile'));
 
         this.form = [
             new InputField({

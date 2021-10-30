@@ -59,6 +59,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                 name: 'profile'
             }),
             new Route({
+                url: '/profile/edit',
+                component: async () => await import('views/profile/edit'),
+                title: 'Настройки',
+                name: 'profile.edit'
+            }),
+            new Route({
                 url: '/post/create',
                 component: async () => await import('views/post/create'),
                 title: 'Создание поста',

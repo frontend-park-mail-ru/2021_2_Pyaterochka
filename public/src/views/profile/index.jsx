@@ -25,7 +25,11 @@ class ProfileView extends Component {
                         avatar={this.attributes.user.avatar}
                         supportCount={this.attributes.creators.length}
                     >
-                        <Button text="Редактировать профиль" color="primary" />
+                        <Button text="Редактировать профиль" color="primary" onClick={
+                            () => {
+                                app.$router.go(app.$router.createUrl('profile.edit'));
+                            }
+                        } />
                     </ProfileCard>
                 </div>
                 <h1 className="text-center">Подписки:</h1>
