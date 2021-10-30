@@ -1,7 +1,9 @@
-import Component from '../components/basecomponent';
-import Step from '../components/step';
-import PrettySection from '../components/pretty-main-section';
-import app from '../core/app';
+import Component from '../../components/basecomponent';
+import Step from '../../components/step';
+import PrettySection from '../../components/pretty-main-section';
+import app from '../../core/app';
+
+import './style.css';
 
 class MainPageView extends Component {
     constructor (
@@ -60,48 +62,3 @@ class MainPageView extends Component {
 }
 
 export default MainPageView;
-
-const styles = `
-.main-page-container {
-    max-width: 1240px;
-    margin: 0 auto;
-}
-
-.main-page-header {
-    text-align: center;
-    font-family: Montserrat;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 48px;
-    line-height: 59px;
-}
-
-.main-page-description {
-    margin: 0 auto;
-    max-width: 980px;
-}
-
-.main-page-description__text {
-    padding-bottom: 10px;
-    text-align: center;
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: 300;
-    font-size: 24px;
-    line-height: 42px;
-}
-
-.main-page-steps {
-    background: #FFFFFF;
-    box-shadow: inset 0px 0px 150px rgba(0, 0, 0, 0.07);
-    padding-bottom: 30px;
-}
-
-.header-how-works {
-    padding-top: 50px;
-}
-`;
-
-const styleElement = document.createElement('style');
-styleElement.innerHTML = styles;
-document.body.appendChild(styleElement);

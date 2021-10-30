@@ -1,11 +1,13 @@
-import api from '../api/index';
-import Component from '../components/basecomponent';
-import Button from '../components/button';
-import CreatorCard from '../components/creator-card';
-import LevelCard from '../components/level-card';
-import LockMessage from '../components/lock-message';
-import PostCard from '../components/post-card';
-import Skeleton from '../components/skeleton';
+import api from '../../api/index';
+import Component from '../../components/basecomponent';
+import Button from '../../components/button';
+import CreatorCard from '../../components/creator-card';
+import LevelCard from '../../components/level-card';
+import LockMessage from '../../components/lock-message';
+import PostCard from '../../components/post-card';
+import Skeleton from '../../components/skeleton';
+
+import './style.css';
 
 class CreatorView extends Component {
     constructor () {
@@ -81,56 +83,3 @@ class CreatorView extends Component {
 }
 
 export default CreatorView;
-
-const styles = `
-.creator-page {
-    padding-bottom: 40px;
-}
-
-.creator-page .creator-cover + .creator-card {
-    margin-top:-120px;
-}
-
-.creator-page .creator-card {
-    width: 400px;
-    max-width: 100%;
-    margin:auto;
-}
-
-.creator-cover {
-    height:256px;
-    background-color: var(--color-grey);
-    background-size:cover;
-    background-position:center;
-}
-
-.level-card-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.level-card-container > * {
-    margin:20px;
-}
-
-.post-container {
-    display: flex;
-    flex-direction: column;
-    align-items:center;
-    margin-bottom: 20px;
-}
-
-.post-container > * {
-    margin:10px;
-}
-
-.lock-message {
-    max-width: 500px;
-    margin:auto;
-}
-`;
-
-const styleElement = document.createElement('style');
-styleElement.innerHTML = styles;
-document.body.appendChild(styleElement);

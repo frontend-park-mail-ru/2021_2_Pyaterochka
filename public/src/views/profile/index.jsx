@@ -1,10 +1,12 @@
-import api from '../api/index';
-import Component from '../components/basecomponent';
-import Button from '../components/button';
-import CreatorCard from '../components/creator-card';
-import ProfileCard from '../components/profile-card';
-import app from '../core/app';
-import user from '../storage/user';
+import api from '../../api/index';
+import Component from '../../components/basecomponent';
+import Button from '../../components/button';
+import CreatorCard from '../../components/creator-card';
+import ProfileCard from '../../components/profile-card';
+import app from '../../core/app';
+import user from '../../storage/user';
+
+import './style.css';
 
 class ProfileView extends Component {
     constructor () {
@@ -46,25 +48,3 @@ class ProfileView extends Component {
 }
 
 export default ProfileView;
-
-const styles = `
-.creators-container {
-    display:flex;
-    justify-content:center;
-    flex-wrap:wrap;
-}
-
-.creators-container > * {
-    margin:20px;
-    max-width:325px;
-}
-
-.profile-block {
-    padding:20px;
-    margin-bottom: 50px;
-}
-`;
-
-const styleElement = document.createElement('style');
-styleElement.innerHTML = styles;
-document.body.appendChild(styleElement);
