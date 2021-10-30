@@ -1,6 +1,6 @@
 import Component from '../basecomponent';
 import Spinner from '../spinner';
-import './style.css';
+import './style.scss';
 
 /**
  * Компонент кнопки

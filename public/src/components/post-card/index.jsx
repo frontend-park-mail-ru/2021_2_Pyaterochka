@@ -2,7 +2,7 @@ import Component from '../basecomponent';
 import Button from '../button';
 import LockMessage from '../lock-message';
 import TimeAgoComponent from '../time-ago';
-import './style.css';
+import './style.scss';
 import CountersComponent from '../../counters';
 
 /**

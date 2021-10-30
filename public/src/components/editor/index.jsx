@@ -1,7 +1,7 @@
 import { nextTick } from '../../modules/utils';
 import Component from '../basecomponent';
 import Button from '../button';
-import './style.css';
+import './style.scss';
 
 /**
  * Компонент карточки создателя

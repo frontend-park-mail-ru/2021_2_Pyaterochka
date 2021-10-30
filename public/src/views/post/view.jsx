@@ -1,7 +1,7 @@
 import Component from '../../components/basecomponent';
 import CreatorCard from '../../components/creator-card';
 import Comment from '../../components/comment';
-import './view.css';
+import './view.scss';
 import InputField from '../../components/input-field';
 import Button from '../../components/button';
 import Like from '../../components/like';

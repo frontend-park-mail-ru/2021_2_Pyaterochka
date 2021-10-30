@@ -1,6 +1,6 @@
 import app from '../../core/app';
 import Component from '../basecomponent';
-import './style.css';
+import './style.scss';
 
 /**
  * Компонент подвала

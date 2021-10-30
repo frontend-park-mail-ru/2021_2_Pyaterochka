@@ -1,6 +1,6 @@
 import Component from '../basecomponent';
 import SimplifyNumComponent from '../simplify-num';
-import './style.css';
+import './style.scss';
 
 /**
  * Компонент лайка

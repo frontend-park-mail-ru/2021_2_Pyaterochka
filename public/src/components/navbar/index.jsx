@@ -1,7 +1,7 @@
 import app from '../../core/app';
 import user from '../../storage/user';
 import Component from '../basecomponent';
-import './style.css';
+import './style.scss';
 
 /**
  * Компонент шапки

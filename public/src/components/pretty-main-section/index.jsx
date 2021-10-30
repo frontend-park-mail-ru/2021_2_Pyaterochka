@@ -2,7 +2,7 @@ import app from '../../core/app';
 import Component from '../basecomponent';
 import Button from '../button';
 
-import './style.css';
+import './style.scss';
 
 class PrettySection extends Component {
     constructor ({
