@@ -1,0 +1,23 @@
+.tabs-panel {
+  display: flex;
+  white-space: nowrap;
+  overflow-x: auto;
+  margin-bottom: 20px;
+}
+
+.tabs-panel__tab {
+  cursor: pointer;
+  font-family: Montserrat, sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  margin-right: 90px;
+}
+
+.tabs-panel__tab:last-of-type {
+  margin-right: 0;
+}
+
+.tabs-panel__tab--active {
+  font-weight: 500;
+  border-bottom: 3px var(--color-primary) solid;
+}

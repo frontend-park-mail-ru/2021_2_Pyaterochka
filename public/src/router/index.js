@@ -95,8 +95,8 @@ class Router extends Component {
             this.slot = <Layout>
                 {view.renderReactive()}
             </Layout>;
-        } catch {
-            console.error("Can't load page");
+        } catch (e) {
+            console.error("Can't load page", e);
         }
     }
 

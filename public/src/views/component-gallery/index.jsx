@@ -22,12 +22,85 @@ import { PropsView } from './PropsView';
 import TimeAgoComponent from '../../components/time-ago';
 import SimplifyNumComponent from '../../components/simplify-num';
 import SwitchComponent from '../../components/switch';
+import TabsPanel from '../../components/tabs-panel';
+import TabsContainer from '../../components/tabs-container';
 
 class IndexView extends Component {
     constructor () {
         super();
         this.attributes.cps = [
             {
+                name: 'Вкладки',
+                data: [
+                    {
+                        name: 'ON',
+                        component: new TabsContainer({
+                            tabs: [
+                                {
+                                    key: 'common',
+                                    title: 'Основная информация',
+                                    component: <>
+                                        Тут будет оформление профиля, тек. имя и почта
+                                    </>
+                                },
+                                {
+                                    key: 'account',
+                                    title: 'Аккаунт',
+                                    component: <>
+                                        Тут будет смена пароля
+                                    </>
+                                },
+                                {
+                                    key: 'notifications',
+                                    title: 'Уведомления',
+                                    component: <>
+                                        Тут будут уведомления
+                                    </>
+                                },
+                                {
+                                    key: 'creator_settings',
+                                    title: 'Аккаунт креатора',
+                                    component: <>
+                                        Тут будут уровни подписки
+                                    </>
+                                }
+                            ],
+                            noActive: <>
+                                Нет активной вкладки :(
+                            </>
+                        })
+                    }
+                ]
+            },
+            {
+                name: 'Панель вкладок',
+                data: [
+                    {
+                        name: 'ON',
+                        component: new TabsPanel({
+                            tabs: [
+                                {
+                                    key: 'common',
+                                    title: 'Основная информация'
+                                },
+                                {
+                                    key: 'account',
+                                    title: 'Аккаунт'
+                                },
+                                {
+                                    key: 'notifications',
+                                    title: 'Уведомления'
+                                },
+                                {
+                                    key: 'creator_settings',
+                                    title: 'Аккаунт креатора'
+                                }
+                            ],
+                            activeTab: 'notifications'
+                        })
+                    }
+                ]
+            }, {
                 name: 'Переключатель',
                 data: [
                     {
