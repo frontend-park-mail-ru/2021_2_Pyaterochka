@@ -1,5 +1,6 @@
 import Component from '../../components/basecomponent';
 import InputField from '../../components/input-field';
+import SwitchComponent from '../../components/switch';
 
 export class PropsView extends Component {
     constructor ({
@@ -48,17 +49,16 @@ export class PropsView extends Component {
                             this.component.attributes[key] = Number(e.target.value) || 0;
                         }} />;
                 case 'boolean':
-                    return <InputField
-                        type="checkbox"
-                        key={key}
-                        placeholder={key}
-                        value={this.component.attributes[key]}
-                        onChange={(e) => {
-                            console.log(e);
-                            setTimeout(() => {
-                                this.component.attributes[key] = e.target.checked;
-                            }, 10);
-                        }} />;
+                    return <div>
+                        <SwitchComponent
+                            key={key}
+                            isOn={this.component.attributes[key]}
+                            onChange={(state) => {
+                                this.component.attributes[key] = state;
+                            }} />
+
+                        {key}
+                    </div>;
                 default:
                     return <InputField
                         key={key}
