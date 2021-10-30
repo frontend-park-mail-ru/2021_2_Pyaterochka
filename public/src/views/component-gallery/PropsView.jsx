@@ -1,6 +1,6 @@
 import Component from '../../components/basecomponent';
 import InputField from '../../components/input-field';
-import SwitchComponent from '../../components/switch';
+import SwitchContainer from '../../components/switch-container';
 
 export class PropsView extends Component {
     constructor ({
@@ -49,16 +49,13 @@ export class PropsView extends Component {
                             this.component.attributes[key] = Number(e.target.value) || 0;
                         }} />;
                 case 'boolean':
-                    return <div>
-                        <SwitchComponent
-                            key={key}
-                            isOn={this.component.attributes[key]}
-                            onChange={(state) => {
-                                this.component.attributes[key] = state;
-                            }} />
-
-                        {key}
-                    </div>;
+                    return <SwitchContainer
+                        title={key}
+                        key={key}
+                        isOn={this.component.attributes[key]}
+                        onChange={(state) => {
+                            this.component.attributes[key] = state;
+                        }} />;
                 default:
                     return <InputField
                         key={key}
