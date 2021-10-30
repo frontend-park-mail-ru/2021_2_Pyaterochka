@@ -8,7 +8,7 @@ const contentToCache = [
     '/imgs/favicons/Favicon-192.png',
     '/imgs/favicons/Favicon-512.png',
     '/scripts/index.compiled.js',
-    '/styles/index.css',
+    '/styles/index.scss',
     '/imgs/error_page.svg'
 ];
 

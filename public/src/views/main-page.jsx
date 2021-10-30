@@ -2,6 +2,7 @@ import Component from '../components/basecomponent';
 import Step from '../components/step';
 import PrettySection from '../components/pretty-main-section';
 import app from '../core/app';
+import '../../styles/index.scss';
 
 class MainPageView extends Component {
     constructor (

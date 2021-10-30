@@ -15,7 +15,7 @@ import Comment from '../../components/comment';
 import PrettySection from '../../components/pretty-main-section';
 import Like from '../../components/like/index';
 
-import './style.css';
+import './style.scss';
 import app from '../../core/app';
 import EditorComponent from '../../components/editor';
 import { PropsView } from './PropsView';
