@@ -43,6 +43,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                 name: 'component-gallery'
             }),
             new Route({
+                url: '/payment/*',
+                component: async () => await import('views/payment-page'),
+                title: 'Страница оформления подписки',
+                name: 'payment'
+            }),
+            new Route({
                 url: '/creator/*',
                 component: async () => await import('views/creator'),
                 title: 'Страница автора',
