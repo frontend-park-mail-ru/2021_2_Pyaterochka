@@ -15,7 +15,7 @@ import Comment from '../../components/comment';
 import PrettySection from '../../components/pretty-main-section';
 import Like from '../../components/like/index';
 
-import './style.css';
+import './style.scss';
 import app from '../../core/app';
 import EditorComponent from '../../components/editor';
 import { PropsView } from './PropsView';
@@ -364,7 +364,7 @@ class IndexView extends Component {
                             name: 'Настройте свою страницу и уровни подписки',
                             description: (
                                 <>
-                                    <a router-go={app.$router.createUrl('signup')} className="step-content__description_link">
+                                    <a router-go={app.$router.createUrl('signup')} className="step-content__description-link">
                                         Зарегистрируйтесь
                                     </a>{' '}
                                     и настройте вашу страницу на Patreon. Продумайте уровни

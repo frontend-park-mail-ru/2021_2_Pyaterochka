@@ -1,0 +1,37 @@
+.switch {
+  display: inline-block;
+  width: 46px;
+  height: 22px;
+  border-radius: 22px;
+  position: relative;
+  transition: background 0.3s ease;
+  cursor: pointer;
+
+  &::before {
+    content: '';
+    position: absolute;
+    display: inline-block;
+    background: #fff;
+    border-radius: 100%;
+    width: 18px;
+    height: 18px;
+    margin: 2px 3px;
+    transition: left 0.3s ease;
+  }
+
+  &_on {
+    background: #ff424d;
+
+    &::before {
+      left: calc(100% - 24px);
+    }
+  }
+
+  &_off {
+    background: #acabab;
+
+    &::before {
+      left: 0;
+    }
+  }
+}

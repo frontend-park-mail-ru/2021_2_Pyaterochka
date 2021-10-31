@@ -1,7 +1,7 @@
 import Component from '../../components/basecomponent';
 import CreatorCard from '../../components/creator-card';
 import Comment from '../../components/comment';
-import './view.css';
+import './view.scss';
 import InputField from '../../components/input-field';
 import Button from '../../components/button';
 import Like from '../../components/like';
@@ -21,10 +21,10 @@ class PostView extends Component {
                 <div
                     className="post-cover"
                     style={`background-image:url(${this.attributes.post.image}`}
-                ></div>
+                />
 
                 <div className="post-page__container">
-                    <div className="post-page__container__left">
+                    <div className="post-page__container_left">
 
                         <div className="post">
                             <CreatorCard
@@ -69,7 +69,7 @@ class PostView extends Component {
 
                                 <div className="add-comment__actions">
                                     <Button color="primary" text="Отправить" />
-                                    <span className="add-comment__actions__warn"> Пожалуйста,  уважайте участников сообщества</span>
+                                    <span className="add-comment__actions_warn"> Пожалуйста,  уважайте участников сообщества</span>
                                 </div>
                             </div>
 

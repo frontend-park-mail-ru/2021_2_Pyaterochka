@@ -1,6 +1,6 @@
 import Component from '../components/basecomponent';
 import SimplifyNumComponent from '../components/simplify-num';
-import './style.css';
+import './style.scss';
 
 class CountersComponent extends Component {
     constructor ({

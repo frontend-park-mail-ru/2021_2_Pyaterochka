@@ -1,6 +1,6 @@
 import Component from '../basecomponent';
 import Button from '../button';
-import './style.css';
+import './style.scss';
 
 /**
  * Компонент Рандом перемешки

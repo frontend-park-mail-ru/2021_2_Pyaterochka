@@ -1,5 +1,5 @@
-import Component from '../basecomponent';
-import './style.css';
+import Component from '../basecomponent'
+import './style.scss'
 
 /**
  * Компонент поля ввода
@@ -37,9 +37,10 @@ class InputField extends Component {
     }
 
     render () {
-        const element = (
+        return (
             <div>
-                <label className={['input-field', this.attributes.valid, this.attributes.disabled ? 'input-field__disabled' : '']}>
+                <label
+                    className={['input-field', this.attributes.valid, this.attributes.disabled ? 'input-field_disabled' : '']}>
                     {this.attributes.type === 'checkbox'
                         ? <input
                             placeholder=" "
@@ -54,8 +55,12 @@ class InputField extends Component {
                             placeholder=" "
                             type={this.attributes.type}
                             value={this.attributes.value}
-                            onInput={(e) => { this.onInput(e); }}
-                            onChange={(e) => { this.attributes.onChange(e); }}
+                            onInput={(e) => {
+                                this.onInput(e);
+                            }}
+                            onChange={(e) => {
+                                this.attributes.onChange(e);
+                            }}
                             disabled={this.attributes.disabled}
                         />}
 
@@ -69,7 +74,7 @@ class InputField extends Component {
                     {
                         this.attributes.errors.map((error) => {
                             return (
-                                <div key={error.key} className="input-validation__error">
+                                <div key={error.key} className="input-validation_error">
                                     {error.error}
                                 </div>
                             );
@@ -78,8 +83,6 @@ class InputField extends Component {
                 </div>
             </div>
         );
-
-        return element;
     }
 
     getValue () {

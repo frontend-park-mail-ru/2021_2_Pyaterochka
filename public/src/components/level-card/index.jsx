@@ -1,7 +1,7 @@
 import Component from '../basecomponent';
 import Button from '../button';
 
-import './style.css';
+import './style.scss';
 
 /**
  * Компонент каточки уровня подписки
@@ -35,13 +35,13 @@ class LevelCard extends Component {
         return (
             <div className="level-card">
                 <div className="level-card__header" style={style}>
-                    <div className="level-card__header__name">{this.attributes.name}</div>
-                    <div className="level-card__header__type">уровень</div>
+                    <div className="level-card__header-name">{this.attributes.name}</div>
+                    <div className="level-card__header-type">уровень</div>
                 </div>
                 <div className="level-card__body">
                     {this.attributes.parentName
                         ? (
-                            <div className="level-card__body__parent-level">
+                            <div className="level-card__body-parent-level">
                                 Все из уровня <b>{this.attributes.parentName}</b>, а также:
                             </div>
                         )
@@ -51,15 +51,15 @@ class LevelCard extends Component {
 
                     {this.attributes.benefits.map((b, i) => {
                         return (
-                            <div key={i} className="level-card__body__benefit">
+                            <div key={i} className="level-card__body-benefit">
                                 {b}
                             </div>
                         );
                     })}
                 </div>
                 <div className="level-card__action">
-                    <div className="level-card__action__price">
-                        <div className="per_month">в месяц</div>
+                    <div className="level-card__action-price">
+                        <div className="per-month">в месяц</div>
                         <div className="price" style={priceColor}>
                             {this.attributes.price}
                         </div>

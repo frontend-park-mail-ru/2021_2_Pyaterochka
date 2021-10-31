@@ -1,5 +1,5 @@
 import Component from '../basecomponent';
-import './style.css';
+import './style.scss';
 
 /**
  * Компонент шага
@@ -15,7 +15,7 @@ class Step extends Component {
     render () {
         const isLeftText = this.attributes.number % 2;
         return (
-            <div className={['step', isLeftText ? 'step--left-text' : '']}>
+            <div className={['step', isLeftText ? 'step_left-text' : '']}>
                 <img
                     src={`/imgs/steps/step${this.attributes.number}.png`}
                     alt=""

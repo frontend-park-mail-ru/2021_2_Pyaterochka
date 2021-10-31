@@ -1,6 +1,6 @@
 import Component from '../basecomponent';
 import SimplifyNumComponent from '../simplify-num';
-import './style.css';
+import './style.scss';
 
 /**
  * Компонент лайка
@@ -28,9 +28,9 @@ class Like extends Component {
                                 this.hasLike(e);
                             }
                             : null}
-                    className={['like-link', this.attributes.liked ? 'has-like' : '']}
+                    className={['like__link', this.attributes.liked ? 'like_has-like' : '']}
                 />
-                <span className="likes-count"><SimplifyNumComponent num={this.attributes.count}/></span>
+                <span className="like__count"><SimplifyNumComponent num={this.attributes.count}/></span>
             </div>
         );
     }

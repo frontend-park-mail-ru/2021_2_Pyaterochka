@@ -1,7 +1,7 @@
 import { nextTick } from '../../modules/utils';
 import Component from '../basecomponent';
 import Button from '../button';
-import './style.css';
+import './style.scss';
 
 /**
  * Компонент карточки создателя
@@ -166,10 +166,10 @@ class EditorComponent extends Component {
         return (
             <div className="editor">
                 <div className="editor__header">
-                    <div className="editor__helper editor__helper--title">Заголовок</div>
+                    <div className="editor__helper editor__helper-title">Заголовок</div>
                     <div
                         placeholder="Введите заголовок"
-                        className={['editor__title', this.attributes.title ? '' : 'editor--show-placeholder']}
+                        className={['editor__title', this.attributes.title ? '' : 'editor_show-placeholder']}
                         onKeyPress={(e) => {
                             this.keyPress(e);
                         }}
@@ -218,7 +218,7 @@ class EditorComponent extends Component {
                     <div className="editor__helper">Описание</div>
                     <div
                         placeholder="Введите описание"
-                        className={['editor__description', this.attributes.description ? '' : 'editor--show-placeholder']}
+                        className={['editor__description', this.attributes.description ? '' : 'editor_show-placeholder']}
                         onKeyPress={(e) => {
                             this.keyPress(e);
                         }}
@@ -255,7 +255,7 @@ class EditorComponent extends Component {
                         <>
                             {element.text === ''
                                 ? (
-                                    <div key={element.hash + '_helper'} className="editor__helper editor__helper--body">
+                                    <div key={element.hash + '_helper'} className="editor__helper editor__helper-body">
                                         <button className="add-icon-button" alt="Добавить музыку">
                                             <div className="icon" style="--icon: url('/imgs/icons/music_outline_24.svg')" />
                                         </button>
@@ -273,7 +273,7 @@ class EditorComponent extends Component {
 
                             <div
                                 key={element.hash + '_element'}
-                                className={['editor__body-element', element.text === '' ? 'editor__body-element--show-placeholder' : '']}
+                                className={['editor__body-element', element.text === '' ? 'editor__body-element_show-placeholder' : '']}
                                 contentEditable={true}
                                 placeholder="Пишите текст вашей статьи здесь или выберите  нужный элемент слева"
                                 onInput={(e) => {

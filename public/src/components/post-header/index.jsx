@@ -1,7 +1,7 @@
 import CountersComponent from '../../counters';
 import Component from '../basecomponent';
 import TimeAgoComponent from '../time-ago';
-import './style.css';
+import './style.scss';
 
 class PostHeaderComponent extends Component {
     constructor ({

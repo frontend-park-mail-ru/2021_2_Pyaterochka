@@ -1,6 +1,8 @@
 import Component from '../../components/basecomponent';
 import EditorComponent from '../../components/editor';
 
+import '../../../styles/index.scss';
+
 class CreatePostView extends Component {
     render () {
         return <div>
