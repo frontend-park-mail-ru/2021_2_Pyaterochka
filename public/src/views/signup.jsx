@@ -62,7 +62,9 @@ class SignupView extends Component {
         ];
     }
 
-    async submit () {
+    async submit (e) {
+        e.preventDefault();
+
         const errors = Math.max(...this.form.map((e) => e.validate().length));
         if (errors) return;
 
@@ -98,8 +100,8 @@ class SignupView extends Component {
                 <h1> Регистрация </h1>
                 <form
                     className="auth-card shadow"
-                    onSubmit={() => {
-                        this.submit();
+                    onSubmit={(e) => {
+                        this.submit(e);
                     }}
                 >
                     {this.form.map((c) => c.renderReactive())}
@@ -116,8 +118,8 @@ class SignupView extends Component {
                         color="primary"
                         rounded={true}
                         loading={this.attributes.loading}
-                        onclick={() => {
-                            this.submit();
+                        onclick={(e) => {
+                            this.submit(e);
                         }}
                     />
                 </form>

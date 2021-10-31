@@ -13,7 +13,7 @@ registerValidSW('/sw.js');
 
 document.addEventListener('DOMContentLoaded', async () => {
     try {
-        user.update();
+        await user.update();
     } catch {
 
     }

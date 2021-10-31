@@ -36,10 +36,12 @@ class TabsContainer extends Component {
                 this.attributes.tabs
                     .filter(
                         tab => tab.key === this.attributes.activeTab
-                    ).map(tab =>
-                        <div className="tabs-container__wrapper" key={'wrapper_' + tab.key}>
-                            {tab.component}
-                        </div>)
+                    ).map(tab => {
+                        const View = tab.component;
+                        return <div className="tabs-container__wrapper" key={'wrapper_' + tab.key}>
+                            {(new View()).renderReactive()}
+                        </div>;
+                    })
 
             }
         </div>;

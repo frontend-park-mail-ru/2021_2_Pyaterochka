@@ -2,6 +2,7 @@ import Component from '../../../components/basecomponent';
 import Spinner from '../../../components/spinner';
 import TabsContainer from '../../../components/tabs-container';
 import ProfileEditCommon from './Common';
+import ProfileEditCreator from './Creator';
 import ProfileEditNotification from './Notification';
 import ProfileEditSecure from './Secure';
 
@@ -19,24 +20,23 @@ class ProfileEditView extends Component {
                         {
                             key: 'common',
                             title: 'Основная информация',
-                            component: <ProfileEditCommon />
+                            component: ProfileEditCommon
                         },
                         {
                             key: 'secure',
                             title: 'Безопасность',
-                            component: <ProfileEditSecure/>
+                            component: ProfileEditSecure
                         },
                         {
                             key: 'notifications',
                             title: 'Уведомления',
-                            component: <ProfileEditNotification/>
+                            component: ProfileEditNotification
                         },
                         {
                             key: 'creator_settings',
                             title: 'Аккаунт креатора',
-                            component: <>
-                                Тут будут уровни подписки
-                            </>
+                            component: ProfileEditCreator
+
                         }
 
                     ]

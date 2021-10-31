@@ -77,7 +77,7 @@ class CreatorView extends Component {
         this.attributes.creator = null;
 
         this.attributes.creator = await api.creatorInfo(this.data);
-        this.attributes.levels = await api.levelsInfo(this.data);
+        // this.attributes.levels = await api.levelsInfo(this.data);
         this.attributes.posts = await api.postsInfo(this.data);
     }
 }

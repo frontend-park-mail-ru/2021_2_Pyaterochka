@@ -1,7 +1,8 @@
 /** @module API */
 
-const basename = 'http://api.pyaterochka-team.site:8080';
-const basenameDev = '/api';
+// const basename = 'https://secure-proxy.api.pyaterochka-team.site/api/v1';
+const basename = 'http://api.pyaterochka-team.site:8080/api/v1';
+
 const mapCreator = (data) => {
     return {
         id: data.id,
@@ -11,6 +12,18 @@ const mapCreator = (data) => {
         description: data.description
     };
 };
+
+async function getCsrfToken () {
+    const req = await fetch(basename + '/token', {
+        method: 'get',
+        mode: 'cors',
+        credentials: 'include'
+    });
+
+    const data = await req.json();
+
+    return data.token;
+}
 
 export default {
     /**
@@ -31,11 +44,9 @@ export default {
         });
 
         const status = req.status;
-        const data = await req.json();
 
         return {
-            error: status !== 200,
-            data: data
+            error: status !== 200
         };
     },
 
@@ -70,7 +81,7 @@ export default {
      * Профиль
      */
     async profile () {
-        const req = await fetch(basename + '/profile', {
+        const req = await fetch(basename + '/user', {
             method: 'get',
             mode: 'cors',
             credentials: 'include'
@@ -84,6 +95,30 @@ export default {
             id: data.id,
             avatar: data.avatar || 'https://www.vtp-club.ru/img/user.png'
         };
+    },
+
+    /**
+     * Создания автора
+     */
+    async creatorCreate ({
+        description,
+        category
+    }) {
+        const req = await fetch(basename + '/creators', {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json',
+                'x-csrf-token': await getCsrfToken()
+            },
+            body: JSON.stringify({
+                description,
+                category
+            }),
+            mode: 'cors',
+            credentials: 'include'
+        });
+
+        return req;
     },
 
     /**
@@ -106,14 +141,12 @@ export default {
      */
     async logout () {
         const req = await fetch(basename + '/logout', {
-            method: 'get',
+            method: 'post',
             mode: 'cors',
             credentials: 'include'
         });
 
-        const data = await req.json();
-
-        return data;
+        return req;
     },
 
     /**
@@ -128,6 +161,12 @@ export default {
             credentials: 'include'
         });
 
+        console.log(req.status);
+
+        if (req.status !== 200) {
+            return null;
+        }
+
         const data = await req.json();
 
         return mapCreator(data);
@@ -138,15 +177,17 @@ export default {
      * @param {*} id
      */
     async levelsInfo (id) {
-        const req = await fetch(basenameDev + '/levels', {
-            method: 'get',
-            mode: 'cors',
-            credentials: 'include'
-        });
+        // const req = await fetch(basenameDev + '/levels', {
+        //     method: 'get',
+        //     mode: 'cors',
+        //     credentials: 'include'
+        // });
 
-        const data = await req.json();
+        // const data = await req.json();
 
-        return data;
+        // return data;
+
+        return [];
     },
 
     /**
@@ -154,7 +195,7 @@ export default {
      * @param {*} id
      */
     async postsInfo (id) {
-        const req = await fetch(basenameDev + '/posts', {
+        const req = await fetch(`${basename}/creators/${id}/posts?page=0&offset=0&limit=1000000`, {
             method: 'get',
             mode: 'cors',
             credentials: 'include'
