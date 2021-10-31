@@ -25,11 +25,32 @@ import SwitchComponent from '../../components/switch';
 import TabsPanel from '../../components/tabs-panel';
 import TabsContainer from '../../components/tabs-container';
 import AvatarUploader from '../../components/avatar-uploader';
+import SelectComponent from '../../components/select';
 
 class IndexView extends Component {
     constructor () {
         super();
         this.attributes.cps = [
+            {
+                name: 'Выпадающее меню',
+                data: [
+                    {
+                        component: new SelectComponent({
+                            placeholder: 'Категория',
+                            inital: 'Выберите категорию',
+                            options: [
+                                'Подкасты',
+                                'Музыканты',
+                                'Художники',
+                                'Писатели и журналисты',
+                                'Видеоблогер',
+                                'Образование',
+                                'Программирование',
+                                'Другое'
+                            ]
+                        })
+                    }]
+            },
             {
                 name: 'Вкладки',
                 data: [

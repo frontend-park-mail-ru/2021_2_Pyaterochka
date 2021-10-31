@@ -2,6 +2,7 @@ import api from '../../../api';
 import Component from '../../../components/basecomponent';
 import Button from '../../../components/button';
 import InputField from '../../../components/input-field';
+import SelectComponent from '../../../components/select';
 import Spinner from '../../../components/spinner';
 import user from '../../../storage/user';
 
@@ -67,20 +68,14 @@ class ProfileEditCreator extends Component {
                                 <InputField placeholder="Описание креатора" onChange={(e) => {
                                     this.attributes.creatorDesc = e.target.value;
                                 }} />
-                                <div>
-                                    Категория автора:
-                                    <select onChange={(e) => {
-                                        this.attributes.creatorCategory = e.target.value;
-                                    }}>
-                                        <option disabled selected> Выберите категорию </option>
-                                        {
-                                            this.categories.map((category, i) => (
-                                                <option key={i}> {category} </option>
-                                            ))
-                                        }
-                                    </select>
-
-                                </div>
+                                <SelectComponent
+                                    placeholder="Категория"
+                                    inital='Выберите категорию'
+                                    onChange={value => {
+                                        this.attributes.creatorCategory = value;
+                                    }}
+                                    options={this.categories}
+                                />
                                 <br />
 
                                 {this.attributes.creatorError}
