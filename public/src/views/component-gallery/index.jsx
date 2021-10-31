@@ -292,7 +292,7 @@ class IndexView extends Component {
                             name: 'Настройте свою страницу и уровни подписки',
                             description: (
                                 <>
-                                    <a router-go={app.$router.createUrl('signup')} className="step-content__description_link">
+                                    <a router-go={app.$router.createUrl('signup')} className="step-content__description-link">
                                         Зарегистрируйтесь
                                     </a>{' '}
                                     и настройте вашу страницу на Patreon. Продумайте уровни

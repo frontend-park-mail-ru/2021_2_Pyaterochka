@@ -43,7 +43,7 @@ class CreatorCard extends Component {
                         this.attributes.shadow ? 'shadow' : ''
                     ]}
                     style={style}
-                ></div>
+                />
                 <div className="creator-card__header">{this.attributes.name}</div>
                 <div className="creator-card__description">
                     {this.attributes.description}

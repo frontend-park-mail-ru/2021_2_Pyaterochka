@@ -18,7 +18,9 @@ class SwitchComponent extends Component {
     }
 
     render () {
-        return <div className={['switch', this.attributes.isOn ? 'switch--on' : 'switch--off']} onClick={(e) => { this.onClick(e); }}></div>;
+        return <div className={['switch', this.attributes.isOn ? 'switch_on' : 'switch_off']} onClick={(e) => {
+            this.onClick(e);
+        }}/>;
     }
 }
 

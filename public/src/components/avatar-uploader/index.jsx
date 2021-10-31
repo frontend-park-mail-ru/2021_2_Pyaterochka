@@ -21,17 +21,17 @@ class AvatarUploader extends Component {
 
     render () {
         return (
-            <div className="avatar-uploader">
-                <img id="user-avatar" src={this.attributes.avatar} alt="Аватар пользователя"/>
-                <div className="avatar-uploader__button">
-                    <label className="avatar-uploader__text">
+            <div className="uploader">
+                <img className="user-avatar" src={this.attributes.avatar} alt="Аватар пользователя"/>
+                <div className="avatar-uploader">
+                    <label className="avatar-uploader__label">
                         <input
-                            id="avatar-uploader__file-upload"
+                            className="avatar-uploader__file-upload"
                             type="file"
                             accept="image/*"
                             onChange={(e) => { this.loadFile(e); }}
                         />
-                        <img src="../../../imgs/icons/download-picture.svg" alt=""/>
+                        <img src="/imgs/icons/download-picture.svg" alt="Иконка для загрузки аватарки"/>
                         Заменить аватар
                     </label>
                 </div>

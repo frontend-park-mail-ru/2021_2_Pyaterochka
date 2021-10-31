@@ -6,32 +6,32 @@
   position: relative;
   transition: background 0.3s ease;
   cursor: pointer;
-}
 
-.switch::before {
-  content: '';
-  position: absolute;
-  display: inline-block;
-  background: #fff;
-  border-radius: 100%;
-  width: 18px;
-  height: 18px;
-  margin: 2px 3px;
-  transition: left 0.3s ease;
-}
+  &::before {
+    content: '';
+    position: absolute;
+    display: inline-block;
+    background: #fff;
+    border-radius: 100%;
+    width: 18px;
+    height: 18px;
+    margin: 2px 3px;
+    transition: left 0.3s ease;
+  }
 
-.switch--on {
-  background: #ff424d;
-}
+  &_on {
+    background: #ff424d;
 
-.switch--off {
-  background: #acabab;
-}
+    &::before {
+      left: calc(100% - 24px);
+    }
+  }
 
-.switch--off::before {
-  left: 0;
-}
+  &_off {
+    background: #acabab;
 
-.switch--on::before {
-  left: calc(100% - 24px);
+    &::before {
+      left: 0;
+    }
+  }
 }

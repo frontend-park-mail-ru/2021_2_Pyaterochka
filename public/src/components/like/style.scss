@@ -1,29 +1,29 @@
 .like {
   display: flex;
   align-items: center;
-}
 
-.like-link {
-  display: flex;
-  background-image: url(../../imgs/not-liked.png);
-  width: 28px;
-  height: 28px;
-  padding: 0;
-  border: none;
-  font: inherit;
-  color: inherit;
-  background-color: transparent;
-  cursor: pointer;
-}
+  &__link {
+    display: flex;
+    background-image: url(/imgs/not-liked.png);
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border: none;
+    font: inherit;
+    color: inherit;
+    background-color: transparent;
+    cursor: pointer;
+  }
 
-.has-like {
-  background-image: url(/imgs/liked.png);
-}
+  &_has-like {
+    background-image: url(/imgs/liked.png);
+  }
 
-.likes-count {
-  margin-left: 10px;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 20px;
-  line-height: 23px;
+  &__count {
+    margin-left: 10px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 23px;
+  }
 }

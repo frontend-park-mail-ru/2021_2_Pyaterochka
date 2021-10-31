@@ -8,7 +8,7 @@ import ErrorPage from './views/errorpage';
 
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/sw.js');
-};
+}
 
 let router;
 document.addEventListener('DOMContentLoaded', async () => {

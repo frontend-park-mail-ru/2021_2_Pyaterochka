@@ -20,7 +20,7 @@ class ProfileCard extends Component {
     render () {
         return <div className="profile-card">
             <img src={this.attributes.avatar} />
-            <div className="profile-card-body">
+            <div className="profile-card__body">
                 <div className="profile-card__username">
                     {this.attributes.username}
                 </div>

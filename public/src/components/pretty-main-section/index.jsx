@@ -22,19 +22,19 @@ class PrettySection extends Component {
         return <div className={
             ['main-page-section']
         }>
-            <div className="main-page-section-container">
-                <div className="main-page-section-info">
-                    <h1 className="main-page-section-container__slogan">{this.attributes.slogan}</h1>
-                    <div className="main-page-section-container__text">{this.attributes.text}
+            <div className="main-page-section__container">
+                <div className="main-page-section__info">
+                    <h1 className="main-page-section__slogan">{this.attributes.slogan}</h1>
+                    <div className="main-page-section__text">{this.attributes.text}
                     </div>
-                    <div className="main-page-section-container__button">
+                    <div className="main-page-section__button">
                         <Button text="Начать" rounded={true} color={'primary'} onclick={() => {
                             this.submit();
                         }} />
                     </div>
                 </div>
                 <img
-                    className="main-page-section-container__image"
+                    className="main-page-section__image"
                     src="/imgs/mainPage.png"
                     alt="Картинка главной страницы"
                 />

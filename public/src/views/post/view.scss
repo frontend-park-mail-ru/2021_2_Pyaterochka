@@ -1,4 +1,3 @@
-
 .post-cover {
   height: 512px;
   background-color: var(--color-grey);
@@ -12,21 +11,36 @@
   align-items: flex-start;
   flex-wrap: wrap;
   padding-bottom: 50px;
-}
 
-.post-page__container__left {
-  width: 900px;
-  margin-top: -200px;
-  max-width: 100%;
+  &_left {
+    width: 900px;
+    margin-top: -200px;
+    max-width: 100%;
+  }
 }
 
 .post {
   padding: 20px 50px;
   border-radius: 5px;
-}
 
-.post .creator-card {
-  margin-top: -110px;
+  .creator-card {
+    margin-top: -110px;
+  }
+
+  &__text {
+    font-family: 'Roboto', sans-serif;
+    font-size: 24px;
+    font-weight: 300;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: space-between;
+
+    .btn {
+      width: auto;
+    }
+  }
 }
 
 .other-posts {
@@ -36,6 +50,13 @@
   width: 300px;
   min-width: 300px;
   padding: 20px;
+
+  &__title {
+    font-size: 20px;
+    text-align: center;
+    font-weight: 500;
+    margin-top: 10px;
+  }
 }
 
 .post,
@@ -44,12 +65,6 @@
   background: #fff;
   margin-left: 20px;
   margin-right: 20px;
-}
-
-.post__text {
-  font-family: 'Roboto', sans-serif;
-  font-size: 24px;
-  font-weight: 300;
 }
 
 .comments-container {
@@ -68,53 +83,39 @@
   top: 0;
   z-index: 2;
   max-width: 100%;
+
+  &__title {
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    margin-bottom: 10px;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: left;
+    flex-wrap: wrap;
+    align-items: center;
+
+    .btn {
+      width: 100px;
+    }
+
+    &_warn {
+      margin-left: 10px;
+    }
+  }
 }
 
-.add-comment__title {
-  font-family: 'Roboto', sans-serif;
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 400;
-  margin-bottom: 10px;
-}
-
-.add-comment__actions {
-  display: flex;
-  justify-content: left;
-  flex-wrap: wrap;
-  align-items: center;
-}
-
-.add-comment__actions .btn {
-  width: 100px;
-}
-
-.add-comment__actions__warn {
-  margin-left: 10px;
-}
-
-.post__actions {
-  display: flex;
-  justify-content: space-between;
-}
-
-.post__actions .btn {
-  width: auto;
-}
-
-.other-posts__title {
-  font-size: 20px;
-  text-align: center;
-  font-weight: 500;
-  margin-top: 10px;
-}
-
-.other-posts hr,
-.post hr {
-  display: block;
-  height: 1px;
-  border: 0;
-  border-top: 1px solid #acabab;
-  margin: 1em 0;
-  padding: 0;
+.other-posts,
+.post {
+  hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #acabab;
+    margin: 1em 0;
+    padding: 0;
+  }
 }

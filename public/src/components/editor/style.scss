@@ -5,50 +5,50 @@
   cursor: pointer;
   padding: 0;
   margin: 0 5px;
-}
 
-.add-icon-button .icon {
-  width: 24px;
-  height: 24px;
-  mask-image: var(--icon);
-  mask-position: center;
-  mask-size: contain;
-  -webkit-mask-image: var(--icon);
-  -webkit-mask-position: center;
-  -webkit-mask-size: contain;
-  background-color: #7c7c7c;
-  display: block;
-  transition: background-color 0.2s ease;
-}
+  .icon {
+    width: 24px;
+    height: 24px;
+    mask-image: var(--icon);
+    mask-position: center;
+    mask-size: contain;
+    -webkit-mask-image: var(--icon);
+    -webkit-mask-position: center;
+    -webkit-mask-size: contain;
+    background-color: #7c7c7c;
+    display: block;
+    transition: background-color 0.2s ease;
 
-.add-icon-button .icon:hover {
-  background-color: #000;
+    &:hover {
+      background-color: #000;
+    }
+  }
 }
 
 .editor__save-panel {
   padding: 15px 15px;
   font-size: 14px;
-}
 
-.editor__save-panel .btn-container {
-  width: 200px;
-  margin-right: 10px;
-  display: inline-block;
+  .btn-container {
+    width: 200px;
+    margin-right: 10px;
+    display: inline-block;
+  }
 }
 
 .editor__header {
   padding: 5px 15px;
   border-left: 2px #878787 solid;
   transition: border-color 0.2s ease;
-}
 
-.editor__header:hover {
-  padding: 5px 15px;
-  border-color: #000;
-}
+  &:hover {
+    padding: 5px 15px;
+    border-color: #000;
 
-.editor__header:hover .editor__helper {
-  color: #000;
+    .editor__helper {
+      color: #000;
+    }
+  }
 }
 
 .editor__helper {
@@ -59,10 +59,10 @@
   font-size: 18px;
   width: 200px;
   color: #7c7c7c;
-}
 
-.editor__helper--title {
-  font-size: 28px;
+  &-title {
+    font-size: 28px;
+  }
 }
 
 .editor {
@@ -70,96 +70,96 @@
   margin: auto;
   padding: 40px;
   position: relative;
-}
 
-.editor [contentEditable=true] {
-  border: none;
-  outline: none;
-  cursor: text;
-  color: #000;
-}
+  [contentEditable=true] {
+    border: none;
+    outline: none;
+    cursor: text;
+    color: #000;
 
-.editor textarea {
-  display: block;
-  width: 100%;
-  border: none;
-  outline: none;
-  font-family: Roboto, sans-serif;
-}
+    br {
+      display: block;
+    }
+  }
 
-.editor [contentEditable=true]:empty::after,
-.editor__body-element--show-placeholder::after,
-.editor--show-placeholder::after {
-  content: attr(placeholder);
-  color: #7c7c7c;
-}
+  textarea {
+    display: block;
+    width: 100%;
+    border: none;
+    outline: none;
+    font-family: Roboto, sans-serif;
+  }
 
-.editor [contentEditable=true] br {
-  display: block;
-}
+  &__title {
+    font-size: 28px;
+    font-weight: 300;
+  }
 
-.editor__title {
-  font-size: 28px;
-  font-weight: 300;
-}
+  &__levels {
+    font-size: 18px;
+    font-weight: 400;
+    color: #878787;
+  }
 
-.editor__levels {
-  font-size: 18px;
-  font-weight: 400;
-  color: #878787;
-}
+  &__level {
+    display: inline-block;
+    cursor: pointer;
+    transition: all ease 0.1s;
 
-.editor__level.active {
-  color: #000;
-}
+    &.active {
+      color: #000;
+    }
+  }
 
-.editor__level {
-  display: inline-block;
-  cursor: pointer;
-  transition: all ease 0.1s;
-}
+  &__description {
+    font-size: 18px;
+    font-weight: 300;
+  }
 
-.editor__description {
-  font-size: 18px;
-  font-weight: 300;
-}
+  &__body-element {
+    padding: 15px 15px;
+  }
 
-.editor__body-element {
-  padding: 15px 15px;
-}
+  &__helper--body {
+    margin: 10px 0;
+    padding-right: 22px;
+    margin-left: 22px;
+    border-right: 2px solid #888;
+  }
 
-.editor__helper--body {
-  margin: 10px 0;
-  padding-right: 22px;
-  margin-left: 22px;
-  border-right: 2px solid #888;
-}
+  &__title,
+  &__levels,
+  &__description {
+    margin-bottom: 4px;
+  }
 
-.editor__title,
-.editor__levels,
-.editor__description {
-  margin-bottom: 4px;
+  [contentEditable=true]:empty::after,
+  .editor__body-element--show-placeholder::after,
+  .editor_show-placeholder::after {
+    content: attr(placeholder);
+    color: #7c7c7c;
+  }
 }
 
 @media (max-width: 1100px) {
   .editor {
     padding: 20px 10px;
-  }
 
-  .editor__helper {
-    display: none;
-  }
+    &__helper {
+      display: none;
 
-  .editor__header {
-    border-left: none;
-  }
+      &-body {
+        left: -70px;
+        display: block;
 
-  .editor__helper--body {
-    left: -70px;
-    display: block;
-  }
+        + .editor__body-element {
+          margin-left: 150px;
+        }
+      }
+    }
 
-  .editor__helper--body + .editor__body-element {
-    margin-left: 150px;
+    &__header {
+      border-left: none;
+    }
   }
 }
