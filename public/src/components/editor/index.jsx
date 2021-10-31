@@ -12,19 +12,11 @@ class EditorComponent extends Component {
         title = '',
         description = '',
         comment = '',
-        levels = [
-            {
-                title: 'Новичок',
-                id: 1
-            },
-            {
-                title: 'Про',
-                id: 2
-            }
-        ],
+        levels = [],
         activeLevel = 0,
         cover = null,
-        body = []
+        body = [],
+        onSave = (post) => {}
     } = {}) {
         super();
         this.attributes.title = title;
@@ -35,6 +27,8 @@ class EditorComponent extends Component {
         this.attributes.comment = comment;
         this.attributes.body = body;
         this.attributes.isDraft = isDraft;
+
+        this.attributes.onSave = onSave;
 
         this.attributes.body.forEach(b => {
             if (!b.hash) {
@@ -162,6 +156,15 @@ class EditorComponent extends Component {
         e.target.innerText = this.fixText(e.target.innerText);
     }
 
+    save () {
+        this.attributes.onSave({
+            title: this.attributes.title,
+            description: this.attributes.description,
+            activeLevel: this.attributes.activeLevel,
+            body: Object.assign(this.attributes.body.filter(b => b.text))
+        });
+    }
+
     render () {
         return (
             <div className="editor">
@@ -236,7 +239,9 @@ class EditorComponent extends Component {
                     {this.attributes.isDraft
                         ? <>
                             <div className="btn-container">
-                                <Button color="success" text="Опубликовать" />
+                                <Button color="success" text="Опубликовать" onClick={
+                                    () => { this.save(); }
+                                } />
                             </div>
                         </>
                         : <>
