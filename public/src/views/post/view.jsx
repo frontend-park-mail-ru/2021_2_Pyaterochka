@@ -48,6 +48,8 @@ class PostView extends Component {
                             <hr />
 
                             <PostHeaderComponent
+                                id={this.attributes.post.id}
+                                creatorId={this.attributes.post.creatorId}
                                 title={this.attributes.post.title}
                                 published={this.attributes.post.published}
                                 views={this.attributes.post.views}
@@ -99,9 +101,11 @@ class PostView extends Component {
                         </p>
                         <hr />
                         {
-                            this.attributes.otherPosts.map((post, i) =>
+                            this.attributes.otherPosts.map((post) =>
                                 <PostHeaderComponent
-                                    key={i}
+                                    key={post.id}
+                                    id={post.id}
+                                    creatorId={post.creatorId}
                                     size="20px"
                                     title={post.title}
                                     published={post.published}
@@ -123,33 +127,18 @@ class PostView extends Component {
 
         this.attributes.loading = true;
 
-        this.attributes.creator = await api.creatorInfo(this.userId);
-        this.attributes.post = await api.postInfo(this.userId, this.postId);
+        [
+            this.attributes.creator,
+            this.attributes.post
+        ] =
+            await Promise.all([
+                api.creatorInfo(this.userId),
+                api.postInfo(this.userId, this.postId)
+            ]);
 
         this.attributes.loading = false;
 
-        this.attributes.otherPosts = [
-            {
-                title: 'Новый выпуск игрового ролика о невероятных машинах нашего времени',
-                published: new Date(new Date() - 60 * 1000 * 60 * 5),
-                views: 10000,
-                likes: 5000,
-                opened: true,
-                description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam elementum efficitur velit, et aliquam ex condimentum vel. In pulvinar lorem augue, a bibendum justo sagittis ut. Sed semper suscipit arcu non sodales. Curabitur dapibus vulputate mauris, egestas ultricies elit consequat ut. Integer ut velit ut velit viverra viverra. Maecenas non porttitor nibh. Class aptent taciti sociosqu ad litor',
-                level: 'Профессионал',
-                image: 'https://w-dog.ru/wallpapers/12/12/456213867326621/fraktaly-prelomlenie-sveta-cvetovaya-gamma-figury-geometrii-triptix.jpg'
-            },
-            {
-                title: 'Новый выпуск игрового ролика о невероятных машинах нашего времени',
-                published: new Date(new Date() - 60 * 1000 * 60 * 5),
-                views: 10000,
-                likes: 5000,
-                opened: false,
-                description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam elementum efficitur velit, et aliquam ex condimentum vel. In pulvinar lorem augue, a bibendum justo sagittis ut. Sed semper suscipit arcu non sodales. Curabitur dapibus vulputate mauris, egestas ultricies elit consequat ut. Integer ut velit ut velit viverra viverra. Maecenas non porttitor nibh. Class aptent taciti sociosqu ad litor',
-                level: 'Профессионал',
-                image: 'https://w-dog.ru/wallpapers/12/12/456213867326621/fraktaly-prelomlenie-sveta-cvetovaya-gamma-figury-geometrii-triptix.jpg'
-            }
-        ];
+        this.attributes.otherPosts = (await api.postsInfo(this.userId)).filter(p => p.id !== this.postId);
 
         this.attributes.comments = [];
 
