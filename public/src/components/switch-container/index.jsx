@@ -1,7 +1,7 @@
 import Component from '../basecomponent';
 import SwitchComponent from '../switch';
 
-import './style.css';
+import './style.scss';
 
 class SwitchContainer extends Component {
     constructor ({

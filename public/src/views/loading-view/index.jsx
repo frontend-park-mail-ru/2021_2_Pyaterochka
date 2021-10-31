@@ -1,7 +1,7 @@
 import Component from '../../components/basecomponent';
 import Spinner from '../../components/spinner';
 
-import './style.css';
+import './style.scss';
 
 class LoadingView extends Component {
     constructor (props, ...slot) {

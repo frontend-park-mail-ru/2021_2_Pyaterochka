@@ -4,7 +4,7 @@ import CreatorCard from '../../components/creator-card';
 import LevelCard from '../../components/level-card';
 import Spinner from '../../components/spinner';
 
-import './style.css';
+import './style.scss';
 
 class PaymentPage extends Component {
     render () {

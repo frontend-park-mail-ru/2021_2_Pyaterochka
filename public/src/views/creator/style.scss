@@ -1,15 +1,15 @@
 .creator-page {
   padding-bottom: 40px;
-}
 
-.creator-page .creator-cover + .creator-card {
-  margin-top: -120px;
-}
+  .creator-cover + .creator-card {
+    margin-top: -120px;
+  }
 
-.creator-page .creator-card {
-  width: 400px;
-  max-width: 100%;
-  margin: auto;
+  .creator-card {
+    width: 400px;
+    max-width: 100%;
+    margin: auto;
+  }
 }
 
 .creator-cover {
@@ -23,10 +23,10 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-}
 
-.level-card-container > * {
-  margin: 20px;
+  & > * {
+    margin: 20px;
+  }
 }
 
 .post-container {
@@ -34,10 +34,10 @@
   flex-direction: column;
   align-items: center;
   margin-bottom: 20px;
-}
 
-.post-container > * {
-  margin: 10px;
+  & > * {
+    margin: 10px;
+  }
 }
 
 .lock-message {

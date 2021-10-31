@@ -7,7 +7,7 @@ import LockMessage from '../../components/lock-message';
 import PostCard from '../../components/post-card';
 import Skeleton from '../../components/skeleton';
 
-import './style.css';
+import './style.scss';
 
 class CreatorView extends Component {
     constructor () {

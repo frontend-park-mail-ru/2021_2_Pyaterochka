@@ -6,7 +6,7 @@ import ProfileCard from '../../components/profile-card';
 import app from '../../core/app';
 import user from '../../storage/user';
 
-import './style.css';
+import './style.scss';
 
 class ProfileView extends Component {
     constructor () {

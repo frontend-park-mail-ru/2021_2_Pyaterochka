@@ -2,7 +2,7 @@ import Component from '../../components/basecomponent';
 import Button from '../../components/button';
 import app from '../../core/app';
 
-import './style.css';
+import './style.scss';
 
 class ErrorPage extends Component {
     constructor ({ err = 404, desc = 'Страница не найдена' } = {}) {

@@ -1,5 +1,5 @@
 import Component from '../basecomponent';
-import './style.css';
+import './style.scss';
 
 class TabsPanel extends Component {
     constructor ({
