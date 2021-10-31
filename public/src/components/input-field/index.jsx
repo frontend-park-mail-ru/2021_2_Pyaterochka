@@ -1,5 +1,5 @@
-import Component from '../basecomponent'
-import './style.scss'
+import Component from '../basecomponent';
+import './style.scss';
 
 /**
  * Компонент поля ввода

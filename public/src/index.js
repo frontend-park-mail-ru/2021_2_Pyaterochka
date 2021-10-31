@@ -7,6 +7,8 @@ import ErrorPage from './views/errorpage';
 import registerValidSW from './modules/service-worker';
 import MainPageView from './views/main-page';
 
+import '../styles/index.scss';
+
 registerValidSW('/sw.js');
 
 document.addEventListener('DOMContentLoaded', async () => {

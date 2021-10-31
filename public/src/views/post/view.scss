@@ -59,14 +59,6 @@
   }
 }
 
-.post,
-.other-posts {
-  box-shadow: 0 2px 10px 0 hsla(0, 0%, 0%, 0.2);
-  background: #fff;
-  margin-left: 20px;
-  margin-right: 20px;
-}
-
 .comments-container {
   display: flex;
   flex-direction: column;
@@ -110,6 +102,11 @@
 
 .other-posts,
 .post {
+  box-shadow: 0 2px 10px 0 hsla(0, 0%, 0%, 0.2);
+  background: #fff;
+  margin-left: 20px;
+  margin-right: 20px;
+
   hr {
     display: block;
     height: 1px;

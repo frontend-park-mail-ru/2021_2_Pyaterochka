@@ -26,7 +26,7 @@
       font-size: 18px;
       line-height: 21px;
 
-      &:after {
+      &::after {
         content: '\007C';
         padding-left: 7px;
         padding-right: 3px;
