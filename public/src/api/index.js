@@ -13,9 +13,10 @@ const mapCreator = (data) => {
     };
 };
 
-const mapPost = (data) => {
+const mapPost = (data, creatorId) => {
     return {
         id: data.posts_id,
+        creatorId: creatorId,
         title: data.title,
         published: new Date(data.date),
         views: data.views,
@@ -227,14 +228,12 @@ export default {
      * @param {*} id
      * @returns
      */
-    async creatorInfo (id = 1) {
+    async creatorInfo (id) {
         const req = await fetch(basename + '/creators/' + id, {
             method: 'get',
             mode: 'cors',
             credentials: 'include'
         });
-
-        console.log(req.status);
 
         if (req.status !== 200) {
             return null;
@@ -276,7 +275,7 @@ export default {
 
         const data = await req.json();
 
-        return data.map(mapPost);
+        return data.map(p => mapPost(p, id));
     },
 
     /**
@@ -290,10 +289,13 @@ export default {
             mode: 'cors',
             credentials: 'include'
         });
+        if (req.status !== 200) {
+            return null;
+        }
 
         const data = await req.json();
 
-        const post = mapPost(data.post);
+        const post = mapPost(data.post, userId);
         post.body = data.attach.map(attach => {
             return {
                 text: attach.data

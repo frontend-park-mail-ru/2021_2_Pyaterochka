@@ -4,6 +4,7 @@ import LockMessage from '../lock-message';
 import TimeAgoComponent from '../time-ago';
 import './style.scss';
 import CountersComponent from '../../counters';
+import app from '../../core/app';
 
 /**
  * Компонент карточки записи
@@ -16,6 +17,7 @@ class PostCard extends Component {
         views = 0,
         description = '',
         id = null,
+        creatorId = null,
         level = '',
         opened = true,
         image = ''
@@ -27,6 +29,7 @@ class PostCard extends Component {
         this.attributes.views = views;
         this.attributes.description = description;
         this.attributes.id = id;
+        this.attributes.creatorId = creatorId;
         this.attributes.level = level;
         this.attributes.opened = opened;
         this.attributes.image = image;
@@ -60,7 +63,11 @@ class PostCard extends Component {
                         <CountersComponent likes={this.attributes.likes} views={this.attributes.views}/>
                     </div>
                     <div className="post-card__desc">{this.attributes.description}</div>
-                    <Button text="Открыть материал"/>
+                    <Button text="Открыть материал" onClick={() => {
+                        app.$router.go(
+                            app.$router.createUrl('post.view', this.attributes.creatorId + '/' + this.attributes.id)
+                        );
+                    }}/>
                 </div>
             </div>
         );
