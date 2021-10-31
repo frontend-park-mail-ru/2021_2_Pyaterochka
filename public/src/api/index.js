@@ -1,7 +1,7 @@
 /** @module API */
 
-// const basename = 'https://secure-proxy.api.pyaterochka-team.site/api/v1';
-const basename = 'http://api.pyaterochka-team.site:8080/api/v1';
+const basename = 'https://secure-proxy.api.pyaterochka-team.site/api/v1';
+//const basename = 'http://api.pyaterochka-team.site:8080/api/v1';
 
 const mapCreator = (data) => {
     return {
