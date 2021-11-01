@@ -122,7 +122,7 @@ class Router extends Component {
     }
 
     onPopState () {
-        this.renderRoute(this.getRoute(location.pathname));
+        this.start();
     }
 
     /**
