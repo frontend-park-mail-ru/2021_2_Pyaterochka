@@ -1,6 +1,15 @@
 .profile-block {
   padding: 20px;
   margin-bottom: 50px;
+
+  &__no-creators {
+    text-align: center;
+
+    img {
+      max-width: 100%;
+      width: 800px;
+    }
+  }
 }
 
 .creators-container {

@@ -65,6 +65,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                 component: async () => await import('views/profile'),
                 title: 'Профиль',
                 name: 'profile'
+            }), new Route({
+                url: '/search',
+                component: async () => await import('views/creators-search'),
+                title: 'Поиск авторов',
+                name: 'creators.search'
             }),
             new Route({
                 url: '/profile/edit/*',

@@ -184,6 +184,20 @@ export default {
     },
 
     /**
+     * Список подписок
+     */
+    async subscriptions () {
+        const req = await sendJSON({
+            url: '/user/subscriptions',
+            method: 'get'
+        });
+
+        const data = await req.json();
+
+        return await Promise.all(data.creator_id.map(this.creatorInfo));
+    },
+
+    /**
      * Выход
      */
     async logout () {

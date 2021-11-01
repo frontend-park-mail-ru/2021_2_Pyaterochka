@@ -38,6 +38,13 @@ class ProfileView extends Component {
                         return (new CreatorCard(creator)).renderReactive();
                     })}
                 </div>
+                <div className="profile-block__no-creators">
+                    <img
+                        src="/imgs/find_creators_message.svg"
+                        router-go={app.$router.createUrl('creators.search')}
+                    />
+                </div>
+
             </div>
         );
     }
@@ -47,7 +54,7 @@ class ProfileView extends Component {
 
         this.attributes.user = Object.assign(user.user);
 
-        this.attributes.creators = await api.creators();
+        this.attributes.creators = await api.subscriptions();
     }
 }
 
