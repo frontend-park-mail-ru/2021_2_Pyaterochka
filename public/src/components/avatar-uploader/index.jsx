@@ -31,7 +31,7 @@ class AvatarUploader extends Component {
 
     render () {
         return (
-            <div className={['uploader', this.attributes.loading ? 'uploader--loading' : '', this.attributes.isCircle ? 'uploader-avatar' : 'uploader-cover']}>
+            <div className={['uploader', this.attributes.loading ? 'uploader-loading' : '', this.attributes.isCircle ? 'uploader-avatar' : 'uploader-cover']}>
                 <img className={this.attributes.isCircle ? 'user-avatar' : 'user-cover'} src={this.attributes.isCircle ? this.attributes.user.avatar : this.attributes.user.cover} alt="Аватар пользователя" />
                 {
                     !this.attributes.loading
