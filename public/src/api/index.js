@@ -1,63 +1,20 @@
 /** @module API */
 
-let basename = 'https://api.pyaterochka-team.site/api/v1';
-// const basename = 'http://api.pyaterochka-team.site:8080/api/v1';
-
-console.log((newname) => {
-    basename = newname;
-});
-
-const mapCreator = (data) => {
-    return {
-        id: data.id,
-        name: data.nickname,
-        avatar: data.avatar ? `${basename}/${data.avatar}` : 'https://www.vtp-club.ru/img/user.png',
-        cover: data.cover || 'https://tub.avatars.mds.yandex.net/i?id=6ba16db8f8a59eb8740ae862e5d080c9-5221613-images-thumbs&n=13&exp=1',
-        description: data.description
-    };
-};
-
-const mapPost = (data, creatorId) => {
-    return {
-        id: data.posts_id,
-        creatorId: creatorId,
-        title: data.title,
-        published: new Date(data.date),
-        views: data.views,
-        likes: data.likes,
-        description: data.description,
-        image: data.cover || 'https://tub.avatars.mds.yandex.net/i?id=6ba16db8f8a59eb8740ae862e5d080c9-5221613-images-thumbs&n=13&exp=1'
-    };
-};
-
-async function getCsrfToken () {
-    const req = await fetch(basename + '/token', {
-        method: 'get',
-        mode: 'cors',
-        credentials: 'include'
-    });
-
-    const data = await req.json();
-
-    return data.token;
-}
+import { sendJSON, uploadFile } from './hellpers';
+import { mapCreator, mapLevel, mapPost, mapPostFull, mapProfile } from './mappers';
 
 export default {
     /**
      * Авторизация
      */
     async login ({ email, password }) {
-        const req = await fetch(basename + '/login', {
+        const req = await sendJSON({
+            url: '/login',
             method: 'post',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
+            body: {
                 login: email,
                 password: password
-            }),
-            mode: 'cors',
-            credentials: 'include'
+            }
         });
 
         const status = req.status;
@@ -71,18 +28,14 @@ export default {
      * Смена пароля
      */
     async changePassword ({ oldPassword, newPassword }) {
-        const req = await fetch(basename + '/user/update/password', {
+        const req = await sendJSON({
+            url: '/user/update/password',
             method: 'put',
-            headers: {
-                'Content-Type': 'application/json',
-                'x-csrf-token': await getCsrfToken()
-            },
-            body: JSON.stringify({
+            body: {
                 old: oldPassword,
                 new: newPassword
-            }),
-            mode: 'cors',
-            credentials: 'include'
+            },
+            csrf: true
         });
 
         const status = req.status;
@@ -102,26 +55,20 @@ export default {
      * Регистрация
      */
     async register ({ username, email, password }) {
-        const req = await fetch(basename + '/register', {
+        const req = await sendJSON({
+            url: '/register',
             method: 'post',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
+            body: {
                 login: email,
                 password: password,
                 nickname: username
-            }),
-            mode: 'cors',
-            credentials: 'include'
+            }
         });
 
         const status = req.status;
-        const data = await req.json();
 
         return {
-            error: status !== 200,
-            data: data
+            error: status !== 200
         };
     },
 
@@ -129,20 +76,16 @@ export default {
      * Профиль
      */
     async profile () {
-        const req = await fetch(basename + '/user', {
-            method: 'get',
-            mode: 'cors',
-            credentials: 'include'
+        console.log('asd');
+        const req = await sendJSON({
+            url: '/user',
+            method: 'get'
         });
 
         const data = await req.json();
+        console.log(data);
 
-        return {
-            email: data.login,
-            username: data.nickname,
-            id: data.id,
-            avatar: data.avatar ? `${basename}/${data.avatar}` : 'https://www.vtp-club.ru/img/user.png'
-        };
+        return mapProfile(data);
     },
 
     /**
@@ -152,18 +95,37 @@ export default {
         description,
         category
     }) {
-        const req = await fetch(basename + '/creators', {
+        const req = await sendJSON({
+            url: '/creators',
             method: 'post',
-            headers: {
-                'Content-Type': 'application/json',
-                'x-csrf-token': await getCsrfToken()
-            },
-            body: JSON.stringify({
+            body: {
                 description,
                 category
-            }),
-            mode: 'cors',
-            credentials: 'include'
+            },
+            csrf: true
+        });
+
+        return req;
+    },
+
+    /**
+     * Создания уровня
+     */
+    async levelCreate ({
+        name,
+        benefits,
+        price,
+        creatorId
+    }) {
+        const req = await sendJSON({
+            url: `/creators/${creatorId}/awards`,
+            method: 'post',
+            body: {
+                description: benefits.join('\n'),
+                name,
+                price
+            },
+            csrf: true
         });
 
         return req;
@@ -177,45 +139,43 @@ export default {
         postId,
         like = true
     }) {
-        const req = await fetch(`${basename}/creators/${creatorId}/posts/${postId}/like`, {
+        const req = await sendJSON({
+            url: `/creators/${creatorId}/posts/${postId}/like`,
             method: like ? 'put' : 'delete',
-            headers: {
-                'x-csrf-token': await getCsrfToken()
-            },
-            mode: 'cors',
-            credentials: 'include'
+            csrf: true
         });
 
         return req;
     },
 
     /**
-     * Загрузка аватара
+     * Загрузка аватара пользователя
      */
     async uploadAvatar (avatar) {
-        const form = new FormData();
-        form.set('avatar', avatar);
-        const req = await fetch(basename + '/user/update/avatar', {
-            method: 'put',
-            headers: {
-                'x-csrf-token': await getCsrfToken()
-            },
-            body: form,
-            mode: 'cors',
-            credentials: 'include'
-        });
+        return uploadFile(avatar, 'avatar', '/user/update/avatar');
+    },
 
-        return req;
+    /**
+     * Загрузка аватара креатора
+     */
+    async uploadCreatorAvatar (avatar, creatorId) {
+        return uploadFile(avatar, 'avatar', `/creators/${creatorId}/update/avatar`);
+    },
+
+    /**
+     * Загрузка обложки креатора
+     */
+    async uploadCreatorCover (cover, creatorId) {
+        return uploadFile(cover, 'cover', `/creators/${creatorId}/update/cover`);
     },
 
     /**
      * Список авторов
      */
     async creators () {
-        const req = await fetch(basename + '/creators', {
-            method: 'get',
-            mode: 'cors',
-            credentials: 'include'
+        const req = await sendJSON({
+            url: '/creators',
+            method: 'get'
         });
 
         const data = await req.json();
@@ -227,10 +187,9 @@ export default {
      * Выход
      */
     async logout () {
-        const req = await fetch(basename + '/logout', {
-            method: 'post',
-            mode: 'cors',
-            credentials: 'include'
+        const req = await sendJSON({
+            url: '/logout',
+            method: 'post'
         });
 
         return req;
@@ -242,35 +201,28 @@ export default {
         description,
         body
     }) {
-        const req = await fetch(`${basename}/creators/${userId}/posts`, {
+        const req = await sendJSON({
+            url: `/creators/${userId}/posts`,
             method: 'post',
-            headers: {
-                'Content-Type': 'application/json',
-                'x-csrf-token': await getCsrfToken()
-            },
-            body: JSON.stringify({
+            body: {
                 description,
                 title
-            }),
-            mode: 'cors',
-            credentials: 'include'
+            },
+            csrf: true
         });
 
         const dataPost = await req.json();
 
         for (let i = 0; i < body.length; ++i) {
             const text = body[i].text;
-            await fetch(`${basename}/creators/${userId}/posts/${dataPost.id}/text`, {
+
+            await sendJSON({
+                url: `/creators/${userId}/posts/${dataPost.id}/text`,
                 method: 'post',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'x-csrf-token': await getCsrfToken()
-                },
-                body: JSON.stringify({
+                body: {
                     text
-                }),
-                mode: 'cors',
-                credentials: 'include'
+                },
+                csrf: true
             });
         }
 
@@ -289,42 +241,33 @@ export default {
         body
     }) {
         await Promise.all(oldBodyIds.map(async (id) => {
-            await fetch(`${basename}/creators/${userId}/posts/${postId}/${id}`, {
+            await sendJSON({
+                url: `/creators/${userId}/posts/${postId}/${id}`,
                 method: 'delete',
-                headers: {
-                    'x-csrf-token': await getCsrfToken()
-                },
-                mode: 'cors',
-                credentials: 'include'
+                csrf: true
             });
         }));
-        await fetch(`${basename}/creators/${userId}/posts/${postId}/update`, {
+
+        await sendJSON({
+            url: `/creators/${userId}/posts/${postId}/update`,
             method: 'put',
-            headers: {
-                'Content-Type': 'application/json',
-                'x-csrf-token': await getCsrfToken()
-            },
-            body: JSON.stringify({
+            body: {
                 description,
                 title
-            }),
-            mode: 'cors',
-            credentials: 'include'
+            },
+            csrf: true
         });
 
         for (let i = 0; i < body.length; ++i) {
             const text = body[i].text;
-            await fetch(`${basename}/creators/${userId}/posts/${postId}/text`, {
+
+            await sendJSON({
+                url: `/creators/${userId}/posts/${postId}/text`,
                 method: 'post',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'x-csrf-token': await getCsrfToken()
-                },
-                body: JSON.stringify({
+                body: {
                     text
-                }),
-                mode: 'cors',
-                credentials: 'include'
+                },
+                csrf: true
             });
         }
     },
@@ -335,10 +278,9 @@ export default {
      * @returns
      */
     async creatorInfo (id) {
-        const req = await fetch(basename + '/creators/' + id, {
-            method: 'get',
-            mode: 'cors',
-            credentials: 'include'
+        const req = await sendJSON({
+            url: '/creators/' + id,
+            method: 'get'
         });
 
         if (req.status !== 200) {
@@ -355,17 +297,14 @@ export default {
      * @param {*} id
      */
     async levelsInfo (id) {
-        // const req = await fetch(basenameDev + '/levels', {
-        //     method: 'get',
-        //     mode: 'cors',
-        //     credentials: 'include'
-        // });
+        const req = await sendJSON({
+            url: `/creators/${id}/awards`,
+            method: 'get'
+        });
 
-        // const data = await req.json();
+        const data = await req.json();
 
-        // return data;
-
-        return [];
+        return data.map(mapLevel);
     },
 
     /**
@@ -373,10 +312,9 @@ export default {
      * @param {*} id
      */
     async postsInfo (id) {
-        const req = await fetch(`${basename}/creators/${id}/posts?page=0&offset=0&limit=1000000`, {
-            method: 'get',
-            mode: 'cors',
-            credentials: 'include'
+        const req = await sendJSON({
+            url: `/creators/${id}/posts?page=0&offset=0&limit=1000000`,
+            method: 'get'
         });
 
         const data = await req.json();
@@ -390,25 +328,17 @@ export default {
      * @param {*} postId
      */
     async postInfo (userId, postId) {
-        const req = await fetch(`${basename}/creators/${userId}/posts/${postId}`, {
-            method: 'get',
-            mode: 'cors',
-            credentials: 'include'
+        const req = await sendJSON({
+            url: `/creators/${userId}/posts/${postId}`,
+            method: 'get'
         });
+
         if (req.status !== 200) {
             return null;
         }
 
         const data = await req.json();
 
-        const post = mapPost(data.post, userId);
-        post.liked = !!data.post.add_like;
-        post.body = data.attach.map(attach => {
-            return {
-                id: attach.attach_id,
-                text: attach.data
-            };
-        });
-        return post;
+        return mapPostFull(data);
     }
 };

@@ -42,7 +42,7 @@ class CreatorView extends Component {
                         <div className="creator-page">
                             <div
                                 className="creator-cover"
-                                style={`background-image:url(${this.attributes.creator.cover}`}
+                                style={`background-image:url('${this.attributes.creator.cover}'`}
                             ></div>
 
                             <CreatorCard
@@ -104,8 +104,8 @@ class CreatorView extends Component {
             this.attributes.notFound = true;
             return;
         }
-        // this.attributes.levels = await api.levelsInfo(this.data);
-        this.attributes.levels = [];
+        this.attributes.levels = await api.levelsInfo(this.data);
+
         this.attributes.posts = await api.postsInfo(this.data);
 
         if (!this.attributes.posts) {

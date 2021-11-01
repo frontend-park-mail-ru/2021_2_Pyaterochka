@@ -49,7 +49,7 @@ class PostView extends Component {
             <div className="post-page">
                 <div
                     className="post-cover"
-                    style={`background-image:url(${this.attributes.post.image}`}
+                    style={`background-image:url('${this.attributes.post.image}'`}
                 />
 
                 <div className="post-page__container">

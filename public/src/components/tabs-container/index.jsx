@@ -19,8 +19,11 @@ class TabsContainer extends Component {
     }
 
     changeTab (e, tab) {
+        if (this.attributes.activeTab === tab.key) return;
         this.attributes.activeTab = null;
         this.attributes.activeTab = tab.key;
+
+        this.attributes.onChange(tab);
     }
 
     render () {

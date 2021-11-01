@@ -5,12 +5,20 @@ import InputField from '../../../components/input-field';
 import SelectComponent from '../../../components/select';
 import Spinner from '../../../components/spinner';
 import user from '../../../storage/user';
+import ImageUploader from '../../../components/image-uploader';
+import LevelCard from '../../../components/level-card';
+import app from '../../../core/app';
+import Skeleton from '../../../components/skeleton';
 
 class ProfileEditCreator extends Component {
     constructor () {
         super();
         this.attributes.loading = false;
+        this.attributes.loadingAvatar = false;
+        this.attributes.loadingCover = false;
+
         this.attributes.creator = null;
+        this.attributes.levels = null;
 
         this.attributes.creatorDesc = '';
         this.attributes.creatorCategory = '';
@@ -51,48 +59,107 @@ class ProfileEditCreator extends Component {
         this.attributes.creator = await api.creatorInfo(user.user.id);
 
         this.attributes.loading = false;
+
+        this.attributes.levels = await api.levelsInfo(user.user.id);
+    }
+
+    async uploadAvatar (file) {
+        this.attributes.loadingAvatar = true;
+        await api.uploadCreatorAvatar(file, user.user.id);
+
+        await this.loadCreator();
+        this.attributes.loadingAvatar = false;
+    }
+
+    async uploadCover (file) {
+        this.attributes.loadingCover = true;
+        await api.uploadCreatorCover(file, user.user.id);
+
+        await this.loadCreator();
+        this.attributes.loadingCover = false;
     }
 
     render () {
+        if (this.attributes.loading) {
+            return <Spinner />;
+        }
+
+        if (!this.attributes.creator) {
+            return <div className="profile-edit--little-width">
+                <p className="profile-edit__subtitle">
+                    Создание учетной записи автора
+                </p>
+
+                <InputField placeholder="Описание креатора" onChange={(e) => {
+                    this.attributes.creatorDesc = e.target.value;
+                }} />
+                <SelectComponent
+                    placeholder="Категория"
+                    inital='Выберите категорию'
+                    onChange={value => {
+                        this.attributes.creatorCategory = value;
+                    }}
+                    options={this.categories}
+                />
+                <br />
+
+                {this.attributes.creatorError}
+
+                <Button text="Стать автором" color="primary" onClick={
+                    () => { this.createCreator(); }
+                } />
+            </div>;
+        }
         return (
             <div>
-                {
-                    this.attributes.loading
-                        ? <Spinner />
-                        : !this.attributes.creator
-                            ? <div className="profile-edit--little-width">
-                                <p className="profile-edit__subtitle">
-                                    Создание учетной записи автора
-                                </p>
+                <p className="profile-edit__subtitle">
+                    Оформление профиля
+                </p>
+                <div className="edit-creator__images">
+                    <ImageUploader
+                        image={this.attributes.creator.avatar}
+                        loading={this.attributes.loadingAvatar}
+                        imageName="аватар"
+                        onChange={(image) => { this.uploadAvatar(image); }}
+                    />
+                    <ImageUploader
+                        image={this.attributes.creator.cover}
+                        loading={this.attributes.loadingCover}
+                        isCircle={false}
+                        imageName="обложку"
+                        onChange={(image) => { this.uploadCover(image); }}
+                    />
+                </div>
 
-                                <InputField placeholder="Описание креатора" onChange={(e) => {
-                                    this.attributes.creatorDesc = e.target.value;
-                                }} />
-                                <SelectComponent
-                                    placeholder="Категория"
-                                    inital='Выберите категорию'
-                                    onChange={value => {
-                                        this.attributes.creatorCategory = value;
-                                    }}
-                                    options={this.categories}
+                <p className="profile-edit__subtitle">
+                    Уровни подписки
+                </p>
+
+                <div className="profile-edit__levels-container">
+                    {
+                        this.attributes.levels
+                            ? this.attributes.levels.map(level => (
+                                <LevelCard
+                                    key={level.id}
+                                    id={level.id}
+                                    name={level.name}
+                                    benefits={level.benefits}
+                                    cover={level.cover}
+                                    price={level.price}
+                                    color={level.color}
                                 />
-                                <br />
+                            ))
+                            : <Skeleton width={260} height={420} />
 
-                                {this.attributes.creatorError}
+                    }
 
-                                <Button text="Стать автором" color="primary" onClick={
-                                    () => { this.createCreator(); }
-                                } />
-                            </div>
-                            : <>
-                                Вы уже стали креатором!
+                    <img
+                        src="/imgs/addLevel.svg"
+                        height='420px'
+                        router-go={app.$router.createUrl('creator.level.create')}
+                    />
 
-                                <br />
-
-                                Скоро здесь будет больше настроек
-                            </>
-
-                }
+                </div>
             </div>
         );
     }

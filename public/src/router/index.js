@@ -67,10 +67,12 @@ class Router extends Component {
      *
      * @param {string} url адрес
      */
-    go (url = '') {
+    go (url = '', rerender = true) {
         history.pushState(url, url, url);
 
-        this.start();
+        if (rerender) {
+            this.start();
+        }
     }
 
     /**

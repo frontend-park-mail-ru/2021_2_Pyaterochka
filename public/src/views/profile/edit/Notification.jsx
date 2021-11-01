@@ -16,7 +16,9 @@ class ProfileEditNotification extends Component {
                 <SwitchContainer title="Новый комментарий" />
 
             </div>
-
+            <p className="profile-edit__subtitle">
+                <b> Данная страница в разработке</b>
+            </p>
         </div>;
     }
 }

@@ -36,7 +36,7 @@ class PostCard extends Component {
     }
 
     render () {
-        const style = `background-image:url(${this.attributes.image})`;
+        const style = `background-image:url('${this.attributes.image}')`;
         return (
             <div className="post-card">
                 <div className="post-card__image">

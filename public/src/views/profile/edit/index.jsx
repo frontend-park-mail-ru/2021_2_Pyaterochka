@@ -1,20 +1,19 @@
 import Component from '../../../components/basecomponent';
-import Spinner from '../../../components/spinner';
 import TabsContainer from '../../../components/tabs-container';
+import app from '../../../core/app';
 import ProfileEditCommon from './Common';
 import ProfileEditCreator from './Creator';
 import ProfileEditNotification from './Notification';
 import ProfileEditSecure from './Secure';
 
-import './style.css';
+import './style.scss';
 
 class ProfileEditView extends Component {
     render () {
         return <div className="profile-edit">
             <h1 className="profile-edit__title">Настройки</h1>
             <TabsContainer
-
-                activeTab="common"
+                activeTab={this.data || 'common'}
                 tabs={
                     [
                         {
@@ -34,15 +33,21 @@ class ProfileEditView extends Component {
                         },
                         {
                             key: 'creator_settings',
-                            title: 'Аккаунт креатора',
+                            title: 'Аккаунт автора',
                             component: ProfileEditCreator
 
                         }
 
                     ]
+
                 }
-                noActive={
-                    <Spinner />
+
+                onChange={
+                    (tab) => {
+                        app.$router.go(
+                            app.$router.createUrl('profile.edit', tab.key), false
+                        );
+                    }
                 }
             />
         </div>;

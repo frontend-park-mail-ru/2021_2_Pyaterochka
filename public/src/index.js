@@ -67,10 +67,16 @@ document.addEventListener('DOMContentLoaded', async () => {
                 name: 'profile'
             }),
             new Route({
-                url: '/profile/edit',
+                url: '/profile/edit/*',
                 component: async () => await import('views/profile/edit'),
                 title: 'Настройки',
                 name: 'profile.edit'
+            }),
+            new Route({
+                url: '/profile/creator/level/create',
+                component: async () => await import('views/profile/edit/addLevel'),
+                title: 'Создание уровня',
+                name: 'creator.level.create'
             }),
             new Route({
                 url: '/post/create',

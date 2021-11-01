@@ -26,7 +26,7 @@ class CreatorCard extends Component {
     }
 
     render () {
-        const style = `background-image: url(${this.attributes.avatar})`;
+        const style = `background-image: url('${this.attributes.avatar}')`;
 
         return (
             <div

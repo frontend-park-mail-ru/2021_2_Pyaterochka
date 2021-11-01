@@ -29,7 +29,7 @@ class LevelCard extends Component {
     render () {
         const style = `
             background-color:var(--color-${this.attributes.color});
-            background-image:url(${this.attributes.cover})
+            background-image:url('${this.attributes.cover}'')
         `;
         const priceColor = `color:var(--color-${this.attributes.color})`;
         return (

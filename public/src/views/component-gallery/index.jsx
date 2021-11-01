@@ -24,7 +24,7 @@ import SimplifyNumComponent from '../../components/simplify-num';
 import SwitchComponent from '../../components/switch';
 import TabsPanel from '../../components/tabs-panel';
 import TabsContainer from '../../components/tabs-container';
-import AvatarUploader from '../../components/avatar-uploader';
+import ImageUploader from '../../components/image-uploader';
 import SelectComponent from '../../components/select';
 
 class IndexView extends Component {
@@ -37,61 +37,38 @@ class IndexView extends Component {
                     {
                         name: 'Загружен аватар',
 
-                        component: new AvatarUploader({
+                        component: new ImageUploader({
                             isCircle: true,
                             imageName: 'аватар',
-                            user: {
-                                username: 'Person',
-                                cover:
-                                    'https://wallpaperscave.ru/images/original/18/01-10/abstract-colors-8119.jpg',
-                                avatar:
-                                    'https://sun9-12.userapi.com/impf/c854228/v854228051/16558/K7rRvW0xelY.jpg?size=647x809&quality=96&sign=83e72450667c775a5831dac80fb2dea5&type=album'
-                            }
+                            image: 'https://sun9-12.userapi.com/impf/c854228/v854228051/16558/K7rRvW0xelY.jpg?size=647x809&quality=96&sign=83e72450667c775a5831dac80fb2dea5&type=album'
                         })
                     },
                     {
                         name: 'Загружена обложка',
 
-                        component: new AvatarUploader({
+                        component: new ImageUploader({
                             isCircle: false,
                             imageName: 'обложку',
-                            user: {
-                                username: 'Person',
-                                cover:
-                                    'https://wallpaperscave.ru/images/original/18/01-10/abstract-colors-8119.jpg',
-                                avatar:
-                                    'https://sun9-12.userapi.com/impf/c854228/v854228051/16558/K7rRvW0xelY.jpg?size=647x809&quality=96&sign=83e72450667c775a5831dac80fb2dea5&type=album'
-                            }
+                            image: 'https://wallpaperscave.ru/images/original/18/01-10/abstract-colors-8119.jpg'
+
                         })
                     },
                     {
                         name: 'Спиннер на аватарке',
 
-                        component: new AvatarUploader({
+                        component: new ImageUploader({
                             loading: true,
                             isCircle: true,
-                            user: {
-                                username: 'Person',
-                                cover:
-                                    'https://wallpaperscave.ru/images/original/18/01-10/abstract-colors-8119.jpg',
-                                avatar:
-                                    'https://sun9-12.userapi.com/impf/c854228/v854228051/16558/K7rRvW0xelY.jpg?size=647x809&quality=96&sign=83e72450667c775a5831dac80fb2dea5&type=album'
-                            }
+                            image: 'https://sun9-12.userapi.com/impf/c854228/v854228051/16558/K7rRvW0xelY.jpg?size=647x809&quality=96&sign=83e72450667c775a5831dac80fb2dea5&type=album'
                         })
                     },
                     {
                         name: 'Спиннер на обложке',
 
-                        component: new AvatarUploader({
+                        component: new ImageUploader({
                             loading: true,
                             isCircle: false,
-                            user: {
-                                username: 'Person',
-                                cover:
-                                    'https://wallpaperscave.ru/images/original/18/01-10/abstract-colors-8119.jpg',
-                                avatar:
-                                    'https://sun9-12.userapi.com/impf/c854228/v854228051/16558/K7rRvW0xelY.jpg?size=647x809&quality=96&sign=83e72450667c775a5831dac80fb2dea5&type=album'
-                            }
+                            image: 'https://wallpaperscave.ru/images/original/18/01-10/abstract-colors-8119.jpg'
                         })
                     }
                 ]
