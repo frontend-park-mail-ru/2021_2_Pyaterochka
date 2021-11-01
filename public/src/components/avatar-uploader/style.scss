@@ -1,7 +1,43 @@
 .uploader {
   position: relative;
-  width: 217px;
-  height: 217px;
+
+  &-avatar {
+    width: 217px;
+    height: 217px;
+
+    &::before {
+      content: "";
+      display: block;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      border-radius: 50%;
+      background: radial-gradient(50% 50% at 50% 50%, #000 0%, rgba(0, 0, 0, 0.5) 100%), transparent;
+      opacity: 0;
+      transition: 0.3s;
+    }
+  }
+
+  &-cover {
+    width: 958px;
+    height: 233px;
+
+    &::before {
+      content: "";
+      display: block;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      //border-radius: 50%;
+      background: radial-gradient(50% 50% at 50% 50%, #000 0%, rgba(0, 0, 0, 0.5) 100%), transparent;
+      opacity: 0;
+      transition: 0.3s;
+    }
+  }
 
   &:hover {
     & .avatar-uploader {
@@ -11,20 +47,6 @@
     &::before {
       opacity: 1;
     }
-  }
-
-  &::before {
-    content: "";
-    display: block;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    border-radius: 50%;
-    background: radial-gradient(50% 50% at 50% 50%, #000 0%, rgba(0, 0, 0, 0.5) 100%), transparent;
-    opacity: 0;
-    transition: 0.3s;
   }
 
   &--loading::before {
@@ -49,11 +71,16 @@
   border-radius: 50%;
 }
 
-.avatar-uploader {
+.user-cover {
+  width: 100%;
+  height: 100%;
+}
+
+.image-uploader {
   position: absolute;
   width: 124px;
-  top: 28%;
-  left: 22%;
+  //top: 28%;
+  //left: 22%;
   padding: 0;
   cursor: pointer;
   color: #fff;
@@ -76,4 +103,14 @@
   &__file-upload {
     display: none;
   }
+}
+
+.avatar-uploader {
+  top: 28%;
+  left: 22%;
+}
+
+.cover-uploader {
+  top: 28%;
+  left: 22%;
 }
