@@ -30,8 +30,6 @@ class CreatePostView extends Component {
         description,
         body
     }) {
-        console.log(title, description, body);
-
         this.attributes.loading = true;
 
         const data = await api.createPost({

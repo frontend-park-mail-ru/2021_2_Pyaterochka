@@ -16,7 +16,8 @@ class EditorComponent extends Component {
         activeLevel = 0,
         cover = null,
         body = [],
-        onSave = (post) => {}
+        onSave = (post) => {},
+        onDelete = () => {}
     } = {}) {
         super();
         this.attributes.title = title;
@@ -29,10 +30,11 @@ class EditorComponent extends Component {
         this.attributes.isDraft = isDraft;
 
         this.attributes.onSave = onSave;
+        this.attributes.onDelete = onDelete;
 
         this.attributes.body.forEach(b => {
             if (!b.hash) {
-                b.hash = String((new Date()).getTime());
+                b.hash = String((new Date()).getTime()) + String(Math.random());
             }
         });
 
@@ -165,6 +167,10 @@ class EditorComponent extends Component {
         });
     }
 
+    delete () {
+        this.attributes.onDelete();
+    }
+
     render () {
         return (
             <div className="editor">
@@ -246,10 +252,14 @@ class EditorComponent extends Component {
                         </>
                         : <>
                             <div className="btn-container">
-                                <Button color="success" text="Сохранить" />
+                                <Button color="success" text="Сохранить" onClick={
+                                    () => { this.save(); }
+                                } />
                             </div>
                             <div className="btn-container">
-                                <Button color="primary" text="Удалить" />
+                                <Button color="primary" text="Удалить" onClick={
+                                    () => { this.delete(); }
+                                } />
                             </div>
 
                         </>}

@@ -78,6 +78,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                 title: 'Создание поста',
                 name: 'post.create'
             }),
+            new Route({
+                url: '/edit/post/*',
+                component: async () => await import('views/post/edit'),
+                title: 'Редактирование поста',
+                name: 'post.edit'
+            }),
 
             new Route({
                 url: '/post/*',

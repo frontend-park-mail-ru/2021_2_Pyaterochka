@@ -10,12 +10,16 @@ class Like extends Component {
     constructor ({
         user = null,
         liked = false,
-        count = 0
+        count = 0,
+        onClick = () => {
+
+        }
     }) {
         super();
         this.attributes.user = user;
         this.attributes.liked = liked;
         this.attributes.count = count;
+        this.attributes.onClick = onClick;
     }
 
     render () {
@@ -38,13 +42,7 @@ class Like extends Component {
     hasLike (e) {
         e.preventDefault();
 
-        if (!this.attributes.liked) {
-            this.attributes.count++;
-            this.attributes.liked = true;
-        } else {
-            this.attributes.count--;
-            this.attributes.liked = false;
-        }
+        this.attributes.onClick();
     }
 }
 

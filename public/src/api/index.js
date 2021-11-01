@@ -170,6 +170,26 @@ export default {
     },
 
     /**
+     * Лайк поста
+     */
+    async likePost ({
+        creatorId,
+        postId,
+        like = true
+    }) {
+        const req = await fetch(`${basename}/creators/${creatorId}/posts/${postId}/like`, {
+            method: like ? 'put' : 'delete',
+            headers: {
+                'x-csrf-token': await getCsrfToken()
+            },
+            mode: 'cors',
+            credentials: 'include'
+        });
+
+        return req;
+    },
+
+    /**
      * Загрузка аватара
      */
     async uploadAvatar (avatar) {
@@ -258,6 +278,58 @@ export default {
     },
 
     /**
+     * Обновление поста
+     */
+    async updatePost ({
+        postId,
+        oldBodyIds,
+        userId,
+        title,
+        description,
+        body
+    }) {
+        await Promise.all(oldBodyIds.map(async (id) => {
+            await fetch(`${basename}/creators/${userId}/posts/${postId}/${id}`, {
+                method: 'delete',
+                headers: {
+                    'x-csrf-token': await getCsrfToken()
+                },
+                mode: 'cors',
+                credentials: 'include'
+            });
+        }));
+        await fetch(`${basename}/creators/${userId}/posts/${postId}/update`, {
+            method: 'put',
+            headers: {
+                'Content-Type': 'application/json',
+                'x-csrf-token': await getCsrfToken()
+            },
+            body: JSON.stringify({
+                description,
+                title
+            }),
+            mode: 'cors',
+            credentials: 'include'
+        });
+
+        for (let i = 0; i < body.length; ++i) {
+            const text = body[i].text;
+            await fetch(`${basename}/creators/${userId}/posts/${postId}/text`, {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-csrf-token': await getCsrfToken()
+                },
+                body: JSON.stringify({
+                    text
+                }),
+                mode: 'cors',
+                credentials: 'include'
+            });
+        }
+    },
+
+    /**
      * Информация о создателе
      * @param {*} id
      * @returns
@@ -330,8 +402,10 @@ export default {
         const data = await req.json();
 
         const post = mapPost(data.post, userId);
+        post.liked = !!data.post.add_like;
         post.body = data.attach.map(attach => {
             return {
+                id: attach.attach_id,
                 text: attach.data
             };
         });

@@ -9,6 +9,8 @@ import PostHeaderComponent from '../../components/post-header';
 import api from '../../api';
 import ErrorPage from '../errorpage';
 import LoadingView from '../loading-view';
+import user from '../../storage/user';
+import app from '../../core/app';
 
 class PostView extends Component {
     constructor () {
@@ -16,8 +18,27 @@ class PostView extends Component {
         this.attributes.post = null;
         this.attributes.author = [];
         this.attributes.otherPosts = [];
+        this.attributes.comments = [];
 
         this.attributes.loading = true;
+    }
+
+    async like () {
+        await api.likePost(
+            {
+                postId: this.postId,
+                creatorId: this.userId,
+                like: !this.attributes.post.liked
+            }
+        );
+
+        if (this.attributes.post.liked) {
+            this.attributes.post.likes--;
+            this.attributes.post.liked = false;
+        } else {
+            this.attributes.post.likes++;
+            this.attributes.post.liked = true;
+        }
     }
 
     render () {
@@ -59,8 +80,19 @@ class PostView extends Component {
                             }
 
                             <div className="post__actions">
-                                <Like count={this.attributes.post.likes} user={true} />
-                                <Button text="Редактировать" color="grey" />
+                                <Like count={this.attributes.post.likes} user={true} liked={this.attributes.post.liked} onClick={() => {
+                                    this.like();
+                                }}/>
+
+                                {
+                                    String(this.userId) === String(user.user.id)
+                                        ? <Button text="Редактировать" color="grey" onClick={
+                                            () => {
+                                                app.$router.go(app.$router.createUrl('post.edit', this.postId));
+                                            }
+                                        } />
+                                        : <></>
+                                }
                             </div>
 
                         </div>
@@ -138,7 +170,7 @@ class PostView extends Component {
 
         this.attributes.loading = false;
 
-        this.attributes.otherPosts = (await api.postsInfo(this.userId)).filter(p => p.id !== this.postId);
+        this.attributes.otherPosts = (await api.postsInfo(this.userId)).filter(p => String(p.id) !== String(this.postId));
 
         this.attributes.comments = [];
 
