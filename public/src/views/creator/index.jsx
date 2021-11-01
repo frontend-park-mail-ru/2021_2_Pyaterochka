@@ -6,6 +6,7 @@ import LevelCard from '../../components/level-card';
 import LockMessage from '../../components/lock-message';
 import PostCard from '../../components/post-card';
 import Skeleton from '../../components/skeleton';
+import app from '../../core/app';
 import ErrorPage from '../errorpage';
 
 import './style.scss';
@@ -63,8 +64,24 @@ class CreatorView extends Component {
                             ))}
                         </div>
                         : <div className="level-card-container">
-                            {this.attributes.levels.map((card) =>
-                                new LevelCard(card).renderReactive()
+                            {this.attributes.levels.map((level) =>
+                                <LevelCard
+                                    key={level.id}
+                                    name={level.name}
+                                    benefits={level.benefits}
+                                    cover={level.cover}
+                                    price={level.price}
+                                    color={level.color}
+                                    onClick={
+                                        () => {
+                                            app.$router.go(
+                                                app.$router.createUrl(
+                                                    'payment', `${this.attributes.creator.id}/${level.id}`
+                                                )
+                                            );
+                                        }
+                                    }
+                                />
                             )}
                         </div>
 
@@ -82,7 +99,17 @@ class CreatorView extends Component {
                         : <>
                             <div className="post-container">
                                 {this.attributes.posts.map(
-                                    (card) => (new PostCard(card)).renderReactive()
+                                    (post) => <PostCard
+                                        key={post.id}
+                                        title={post.title}
+                                        published={post.published}
+                                        likes={post.likes}
+                                        views={post.views}
+                                        description={post.description}
+                                        image={post.image}
+                                        creatorId = {post.creatorId}
+                                        id={post.id}
+                                    />
                                 )}
                             </div>
                             <LockMessage text="Стань патроном, чтобы продолжить наслаждаться работами автора">

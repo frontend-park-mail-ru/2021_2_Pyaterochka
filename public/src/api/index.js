@@ -313,7 +313,7 @@ export default {
      */
     async postsInfo (id) {
         const req = await sendJSON({
-            url: `/creators/${id}/posts?page=0&offset=0&limit=1000000`,
+            url: `/creators/${id}/posts?offset=0&limit=100`,
             method: 'get'
         });
 

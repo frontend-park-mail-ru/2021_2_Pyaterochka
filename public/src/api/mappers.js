@@ -51,7 +51,7 @@ const mapLevel = (data) => {
     const description = data.description.split('\n');
 
     return {
-        id: data.id,
+        id: data.awards_id,
         name: data.name,
         cover: data.cover ? `${basename}/${data.cover}` : null,
         benefits: description,

@@ -1,19 +1,49 @@
+import api from '../../api';
 import Component from '../../components/basecomponent';
 import Button from '../../components/button';
 import CreatorCard from '../../components/creator-card';
 import LevelCard from '../../components/level-card';
-import Spinner from '../../components/spinner';
+import app from '../../core/app';
+import ErrorPage from '../errorpage';
+import LoadingView from '../loading-view';
 
 import './style.scss';
 
 class PaymentPage extends Component {
+    constructor () {
+        super();
+        this.attributes.loading = true;
+        this.attributes.paying = false;
+    }
+
+    async pay () {
+        this.attributes.paying = true;
+
+        setTimeout(() => {
+            app.$router.go(app.$router.createUrl('profile'));
+        }, 3000);
+    }
+
     render () {
-        if (!this.attributes.level || !this.attributes.creator) { return <Spinner />; }
+        if (this.attributes.loading) {
+            return <LoadingView>
+                Загрузка страницы оплаты
+            </LoadingView>;
+        }
+
+        if (this.attributes.paying) {
+            return <LoadingView>
+                Оплата
+            </LoadingView>;
+        }
+
+        if (!this.attributes.level || !this.attributes.creator) { return <ErrorPage />; }
 
         return <div className="payment-page">
             <div className="payment-page__topper">
                 <CreatorCard
                     noHoverShadow
+                    id={this.attributes.creator.id}
                     name={this.attributes.creator.name}
                     description={this.attributes.creator.description}
                     avatar={this.attributes.creator.avatar}
@@ -33,6 +63,9 @@ class PaymentPage extends Component {
                     <Button
                         color="primary"
                         text={<>Оформить подписку за <b>{this.attributes.level.price}</b> в месяц</>}
+                        onClick={() => {
+                            this.pay();
+                        }}
                     />
                     <div className="payment-page__disclaimer">
                         В любой момент Вы можете отказаться от подписки
@@ -40,78 +73,51 @@ class PaymentPage extends Component {
                 </div>
 
             </div>
+            {
+                this.attributes.otherLevels && this.attributes.otherLevels.length
+                    ? <>
+                        <div className="payment-page__other-levels-title">
+                            Вас могут заинтересовать другие уровни <b>{this.attributes.creator.name}</b>
 
-            <div className="payment-page__other-levels-title">
-                Вас могут заинтересовать другие уровни <b>{this.attributes.creator.name}</b>
-
-            </div>
-            <div className="payment-page__other-levels-container">
-                {this.attributes.otherLevels.map((level) => (
-                    <LevelCard
-                        key={level.id}
-                        id={level.id}
-                        name={level.name}
-                        parentName={level.parentName}
-                        benefits={level.benefits}
-                        cover={level.cover}
-                        price={level.price}
-                    />
-                ))}
-            </div>
+                        </div>
+                        <div className="payment-page__other-levels-container">
+                            {this.attributes.otherLevels.map((level) => (
+                                <LevelCard
+                                    key={level.id}
+                                    id={level.id}
+                                    name={level.name}
+                                    parentName={level.parentName}
+                                    benefits={level.benefits}
+                                    cover={level.cover}
+                                    price={level.price}
+                                />
+                            ))}
+                        </div>
+                    </>
+                    : ''
+            }
 
         </div>;
     }
 
-    created () {
-        this.attributes.level = {
-            name: 'Геймер',
-            parentName: 'Новичок',
-            cover:
-                'https://w-dog.ru/wallpapers/12/12/456213867326621/fraktaly-prelomlenie-sveta-cvetovaya-gamma-figury-geometrii-triptix.jpg',
-            benefits: [
-                'Доступ к реализации алгоритмов',
-                'Безлимитное мыло из Анапы',
+    async created () {
+        this.attributes.loading = true;
+        try {
+            [this.creatorId, this.levelId] = this.data.split('/').map(x => parseInt(x));
 
-                'Доступ к реализации алгоритмов',
-                'Безлимитное мыло из Анапы',
+            console.log(this.creatorId, this.levelId);
+            this.attributes.creator = await api.creatorInfo(this.creatorId);
 
-                'Доступ к реализации алгоритмов',
-                'Безлимитное мыло из Анапы'
-            ],
-            price: '10 $',
-            color: 'accent'
-        };
+            const levels = await api.levelsInfo(this.creatorId);
 
-        this.attributes.otherLevels = [
-            {
-                name: 'Новичок',
-                cover:
-                    'https://wallpaperscave.ru/images/original/18/01-10/abstract-colors-8119.jpg',
-                benefits: [
-                    'Доступ к реализации алгоритмов',
-                    'Безлимитное мыло из Анапы'
-                ],
-                price: '10 $'
-            },
-            {
-                name: 'Профессионал',
-                parentName: 'Геймер',
-                cover:
-                    'https://wallpaperscave.ru/images/original/18/01-10/abstract-colors-8119.jpg',
-                benefits: [
-                    'Доступ к реализации алгоритмов',
-                    'Безлимитное мыло из Анапы'
-                ],
-                price: '10 $'
-            }
-        ];
-
-        this.attributes.creator = {
-            name: 'IU7-memes',
-            description: 'создает мемы из закулисий цирка',
-            avatar:
-                'https://sun9-12.userapi.com/impf/c854228/v854228051/16558/K7rRvW0xelY.jpg?size=647x809&quality=96&sign=83e72450667c775a5831dac80fb2dea5&type=album'
-        };
+            this.attributes.level = levels.find(level => level.id === this.levelId);
+            this.attributes.otherLevels = levels.filter(level => level.id !== this.levelId);
+        } catch {
+            this.attributes.creator = null;
+            this.attributes.level = null;
+            this.attributes.otherLevels = null;
+        }
+        this.attributes.loading = false;
     }
 }
 

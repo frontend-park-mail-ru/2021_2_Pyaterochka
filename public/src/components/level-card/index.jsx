@@ -14,7 +14,9 @@ class LevelCard extends Component {
         benefits = [],
         cover = '',
         price = '0 $',
-        color = 'primary'
+        color = 'primary',
+        btnText = 'Выбрать уровень',
+        onClick = () => { }
     }) {
         super();
         this.attributes.id = id;
@@ -24,6 +26,9 @@ class LevelCard extends Component {
         this.attributes.cover = cover;
         this.attributes.price = price;
         this.attributes.color = color;
+
+        this.attributes.btnText = btnText;
+        this.attributes.onClick = onClick;
     }
 
     render () {
@@ -65,7 +70,11 @@ class LevelCard extends Component {
                         </div>
                     </div>
                 </div>
-                <Button text="Выбрать уровень" color={this.attributes.color} />
+                <Button
+                    text={this.attributes.btnText}
+                    color={this.attributes.color}
+                    onClick={() => { this.attributes.onClick(); }}
+                />
             </div>
         );
     }
