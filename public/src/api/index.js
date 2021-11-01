@@ -68,6 +68,37 @@ export default {
     },
 
     /**
+     * Смена пароля
+     */
+    async changePassword ({ oldPassword, newPassword }) {
+        const req = await fetch(basename + '/user/update/password', {
+            method: 'put',
+            headers: {
+                'Content-Type': 'application/json',
+                'x-csrf-token': await getCsrfToken()
+            },
+            body: JSON.stringify({
+                old: oldPassword,
+                new: newPassword
+            }),
+            mode: 'cors',
+            credentials: 'include'
+        });
+
+        const status = req.status;
+
+        if (status === 400) {
+            return {
+                error: (await req.json()).error
+            };
+        }
+
+        return {
+            error: status !== 200 ? 'Произошла ошибка' : null
+        };
+    },
+
+    /**
      * Регистрация
      */
     async register ({ username, email, password }) {
@@ -147,7 +178,6 @@ export default {
         const req = await fetch(basename + '/user/update/avatar', {
             method: 'put',
             headers: {
-                // 'Content-Type': 'multipart/form-data',
                 'x-csrf-token': await getCsrfToken()
             },
             body: form,
