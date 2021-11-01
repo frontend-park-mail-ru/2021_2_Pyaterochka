@@ -3,15 +3,15 @@
 let basename = 'https://secure-proxy.api.pyaterochka-team.site/api/v1';
 // const basename = 'http://api.pyaterochka-team.site:8080/api/v1';
 
-console.log((newname)=>{
-    basename = newname
-})
+console.log((newname) => {
+    basename = newname;
+});
 
 const mapCreator = (data) => {
     return {
         id: data.id,
         name: data.nickname,
-        avatar: data.avatar || 'https://www.vtp-club.ru/img/user.png',
+        avatar: data.avatar ? `${basename}/${data.avatar}` : 'https://www.vtp-club.ru/img/user.png',
         cover: data.cover || 'https://tub.avatars.mds.yandex.net/i?id=6ba16db8f8a59eb8740ae862e5d080c9-5221613-images-thumbs&n=13&exp=1',
         description: data.description
     };
@@ -110,7 +110,7 @@ export default {
             email: data.login,
             username: data.nickname,
             id: data.id,
-            avatar: data.avatar || 'https://www.vtp-club.ru/img/user.png'
+            avatar: data.avatar ? `${basename}/${data.avatar}` : 'https://www.vtp-club.ru/img/user.png'
         };
     },
 
@@ -147,7 +147,7 @@ export default {
         const req = await fetch(basename + '/user/update/avatar', {
             method: 'put',
             headers: {
-                'Content-Type': 'multipart/form-data',
+                // 'Content-Type': 'multipart/form-data',
                 'x-csrf-token': await getCsrfToken()
             },
             body: form,
