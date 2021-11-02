@@ -194,7 +194,7 @@ export default {
 
         const data = await req.json();
 
-        return data.creators.map(mapCreator);
+        return (data.creators || []).map(mapCreator);
     },
 
     /**
