@@ -3,6 +3,7 @@ import Component from '../../components/basecomponent';
 import Button from '../../components/button';
 import CreatorCard from '../../components/creator-card';
 import ProfileCard from '../../components/profile-card';
+import Skeleton from '../../components/skeleton';
 import app from '../../core/app';
 import user from '../../storage/user';
 
@@ -12,7 +13,7 @@ class ProfileView extends Component {
     constructor () {
         super();
         this.attributes.user = null;
-        this.attributes.creators = [];
+        this.attributes.creators = null;
     }
 
     render () {
@@ -23,7 +24,11 @@ class ProfileView extends Component {
                     <ProfileCard
                         username={this.attributes.user.username}
                         avatar={this.attributes.user.avatar}
-                        supportCount={this.attributes.creators.length}
+                        supportCount={
+                            this.attributes.creators
+                                ? this.attributes.creators.length
+                                : '?'
+                        }
                     >
                         <Button text="Редактировать профиль" color="primary" onClick={
                             () => {
@@ -33,18 +38,36 @@ class ProfileView extends Component {
                     </ProfileCard>
                 </div>
                 <h1 className="text-center">Подписки:</h1>
-                <div className="creators-container">
-                    {this.attributes.creators.map((creator) => {
-                        return (new CreatorCard(creator)).renderReactive();
-                    })}
-                </div>
-                <div className="profile-block__no-creators">
-                    <img
-                        src="/imgs/find_creators_message.svg"
-                        router-go={app.$router.createUrl('creators.search')}
-                    />
-                </div>
 
+                {
+                    this.attributes.creators
+                        ? <>
+
+                            <div className="creators-container">
+                                {this.attributes.creators.map((creator) => {
+                                    return (new CreatorCard(creator)).renderReactive();
+                                })}
+                            </div>
+                            {
+                                !this.attributes.creators.length
+                                    ? <div className="profile-block__no-creators">
+                                        <img
+                                            src="/imgs/find_creators_message.svg"
+                                            router-go={app.$router.createUrl('creators.search')}
+                                        />
+                                    </div>
+                                    : <></>
+                            }
+                        </>
+                        : <div className="creators-container">
+                            {[1, 2, 3].map((i) => (
+                                <div key={i}>
+                                    <Skeleton type="circle" />
+                                    <Skeleton type="text" height={45} width={200} />
+                                </div>
+                            ))}
+                        </div>
+                }
             </div>
         );
     }

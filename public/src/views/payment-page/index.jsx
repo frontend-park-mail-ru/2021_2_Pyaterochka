@@ -19,9 +19,9 @@ class PaymentPage extends Component {
     async pay () {
         this.attributes.paying = true;
 
-        setTimeout(() => {
-            app.$router.go(app.$router.createUrl('profile'));
-        }, 3000);
+        await api.levelSubscribe(this.creatorId, this.levelId);
+
+        app.$router.go(app.$router.createUrl('profile'));
     }
 
     render () {

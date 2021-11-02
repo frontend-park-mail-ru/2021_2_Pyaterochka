@@ -194,7 +194,7 @@ export default {
 
         const data = await req.json();
 
-        return await Promise.all(data.creator_id.map(this.creatorInfo));
+        return data.creators.map(mapCreator);
     },
 
     /**
@@ -354,5 +354,35 @@ export default {
         const data = await req.json();
 
         return mapPostFull(data);
+    },
+
+    /**
+     * Оформить подписку
+     * @param {*} creatorId
+     * @param {*} levelId
+     */
+    async levelSubscribe (creatorId, levelId) {
+        const req = await sendJSON({
+            url: `/creators/${creatorId}/awards/${levelId}/subscribe`,
+            method: 'post',
+            csrf: true
+        });
+
+        return req;
+    },
+
+    /**
+     * Отменить подписку
+     * @param {*} creatorId
+     * @param {*} levelId
+     */
+    async levelUnsubscribe (creatorId, levelId) {
+        const req = await sendJSON({
+            url: `/creators/${creatorId}/awards/${levelId}/subscribe`,
+            method: 'delete',
+            csrf: true
+        });
+
+        return req;
     }
 };
