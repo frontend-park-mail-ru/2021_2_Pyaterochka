@@ -22,6 +22,12 @@ class ProfileEditView extends Component {
                             component: ProfileEditCommon
                         },
                         {
+                            key: 'creator_settings',
+                            title: 'Аккаунт автора',
+                            component: ProfileEditCreator
+
+                        },
+                        {
                             key: 'secure',
                             title: 'Безопасность',
                             component: ProfileEditSecure
@@ -30,12 +36,6 @@ class ProfileEditView extends Component {
                             key: 'notifications',
                             title: 'Уведомления',
                             component: ProfileEditNotification
-                        },
-                        {
-                            key: 'creator_settings',
-                            title: 'Аккаунт автора',
-                            component: ProfileEditCreator
-
                         }
 
                     ]

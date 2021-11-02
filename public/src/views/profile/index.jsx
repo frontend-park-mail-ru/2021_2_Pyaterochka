@@ -56,7 +56,11 @@ class ProfileView extends Component {
                                             router-go={app.$router.createUrl('creators.search')}
                                         />
                                     </div>
-                                    : <></>
+                                    : <div className="profile-block__find_new">
+                                        <Button text="Найти новых авторов" onClick={() => {
+                                            app.$router.go(app.$router.createUrl('creators.search'));
+                                        }}/>
+                                    </div>
                             }
                         </>
                         : <div className="creators-container">
