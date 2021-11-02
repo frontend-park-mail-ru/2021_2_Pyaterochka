@@ -10,6 +10,8 @@ class JsxDomElement {
         this.children = jsxChildren;
         this.children.forEach(child => { child.parent = this; });
 
+        this.className = '';
+
         Object.keys(attributes).forEach(key => {
             if (!attributes[key]) { return; }
             if (key === 'children') { return; }
