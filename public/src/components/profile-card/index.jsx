@@ -9,7 +9,7 @@ class ProfileCard extends Component {
         username = '',
         avatar = null,
         supportCount = 0
-    } = {}, slot = null) {
+    } = {}, ...slot) {
         super();
         this.attributes.username = username;
         this.attributes.avatar = avatar;

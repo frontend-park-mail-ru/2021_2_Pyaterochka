@@ -78,6 +78,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                 name: 'profile.edit'
             }),
             new Route({
+                url: '/creator-panel',
+                component: async () => await import('views/creator-panel'),
+                title: 'Панель автора',
+                name: 'creator.panel'
+            }),
+            new Route({
                 url: '/profile/creator/level/create',
                 component: async () => await import('views/profile/edit/addLevel'),
                 title: 'Создание уровня',

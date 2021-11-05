@@ -44,7 +44,8 @@ const mapProfile = (data) => {
         email: data.login,
         username: data.nickname,
         id: data.id,
-        avatar: data.avatar ? `${basename}/${data.avatar}` : 'https://www.vtp-club.ru/img/user.png'
+        avatar: data.avatar ? `${basename}/${data.avatar}` : 'https://www.vtp-club.ru/img/user.png',
+        haveCreator: data.have_creator
     };
 };
 

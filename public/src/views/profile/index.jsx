@@ -30,11 +30,25 @@ class ProfileView extends Component {
                                 : '?'
                         }
                     >
-                        <Button text="Редактировать профиль" color="primary" onClick={
-                            () => {
-                                app.$router.go(app.$router.createUrl('profile.edit'));
+                        <>
+                            <Button text="Редактировать профиль" color="primary" onClick={
+                                () => {
+                                    app.$router.go(app.$router.createUrl('profile.edit'));
+                                }
+                            } />
+
+                            {user.user.haveCreator
+                                ? <div style="margin-top:10px;">
+
+                                    <Button text="Перейти в панель автора" color="primary" onClick={
+                                        () => {
+                                            app.$router.go(app.$router.createUrl('creator.panel'));
+                                        }
+                                    } />
+                                </div>
+                                : ''
                             }
-                        } />
+                        </>
                     </ProfileCard>
                 </div>
                 <h1 className="text-center">Подписки:</h1>
@@ -59,7 +73,7 @@ class ProfileView extends Component {
                                     : <div className="profile-block__find_new">
                                         <Button text="Найти новых авторов" onClick={() => {
                                             app.$router.go(app.$router.createUrl('creators.search'));
-                                        }}/>
+                                        }} />
                                     </div>
                             }
                         </>
