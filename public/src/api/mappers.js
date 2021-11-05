@@ -8,7 +8,8 @@ const mapCreator = (data) => {
         name: data.nickname,
         avatar: data.avatar ? `${basename}/${data.avatar}` : 'https://www.vtp-club.ru/img/user.png',
         cover: data.cover ? `${basename}/${data.cover}` : 'https://tub.avatars.mds.yandex.net/i?id=6ba16db8f8a59eb8740ae862e5d080c9-5221613-images-thumbs&n=13&exp=1',
-        description: data.description
+        description: data.description,
+        levelId: data.awards_id
     };
 };
 

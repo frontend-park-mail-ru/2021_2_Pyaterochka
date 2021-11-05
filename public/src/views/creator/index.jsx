@@ -7,6 +7,7 @@ import LockMessage from '../../components/lock-message';
 import PostCard from '../../components/post-card';
 import Skeleton from '../../components/skeleton';
 import app from '../../core/app';
+import user from '../../storage/user';
 import ErrorPage from '../errorpage';
 
 import './style.scss';
@@ -16,6 +17,7 @@ class CreatorView extends Component {
         super();
         this.attributes.creator = null;
         this.attributes.levels = null;
+        this.attributes.level = null;
         this.attributes.posts = null;
         this.attributes.notFound = false;
     }
@@ -56,35 +58,75 @@ class CreatorView extends Component {
                             />
                         </div>
                     )}
+
                 {
-                    !this.attributes.levels
-                        ? <div className="level-card-container">
-                            {[1, 2, 3].map((v) => (
-                                <Skeleton key={v} width={260} height={260} />
-                            ))}
-                        </div>
-                        : <div className="level-card-container">
-                            {this.attributes.levels.map((level) =>
-                                <LevelCard
-                                    key={level.id}
-                                    name={level.name}
-                                    benefits={level.benefits}
-                                    cover={level.cover}
-                                    price={level.price}
-                                    color={level.color}
-                                    onClick={
-                                        () => {
-                                            app.$router.go(
-                                                app.$router.createUrl(
-                                                    'payment', `${this.attributes.creator.id}/${level.id}`
-                                                )
-                                            );
-                                        }
-                                    }
-                                />
-                            )}
+                    user.user && this.attributes.creator && user.user.id === this.attributes.creator.id
+                        ? <div className="creator-page__creator-toolbox">
+                            <Button
+                                text="Добавить пост"
+                                color="primary"
+                                onClick={
+                                    () => { app.$router.go(app.$router.createUrl('post.create')); }
+                                }
+                            />
+                            <Button
+                                text="Перейти к настройкам автора"
+                                color="primary"
+                                onClick={
+                                    () => { app.$router.go(app.$router.createUrl('profile.edit', 'creator_settings')); }
+                                }
+                            />
                         </div>
 
+                        : !this.attributes.levels
+                            ? <div className="level-card-container">
+                                {[1, 2, 3].map((v) => (
+                                    <Skeleton key={v} width={260} height={260} />
+                                ))}
+                            </div>
+                            : !this.attributes.level
+                                ? <div className="level-card-container">
+                                    {this.attributes.levels.map((level) =>
+                                        <LevelCard
+                                            key={level.id}
+                                            name={level.name}
+                                            benefits={level.benefits}
+                                            cover={level.cover}
+                                            price={level.price}
+                                            color={level.color}
+                                            onClick={
+                                                () => {
+                                                    app.$router.go(
+                                                        app.$router.createUrl(
+                                                            'payment', `${this.attributes.creator.id}/${level.id}`
+                                                        )
+                                                    );
+                                                }
+                                            }
+                                        />
+                                    )}
+                                </div>
+                                : <div className="level-card-container">
+                                    <LevelCard
+                                        key={this.attributes.level.id}
+                                        name={this.attributes.level.name}
+                                        benefits={this.attributes.level.benefits}
+                                        cover={this.attributes.level.cover}
+                                        price={this.attributes.level.price}
+                                        color={this.attributes.level.color}
+                                        onClick={
+                                            () => {
+                                                app.$router.go(
+                                                    app.$router.createUrl(
+                                                        'payment', `${this.attributes.creator.id}/${this.attributes.level.id}/unsubscribe`
+                                                    )
+                                                );
+                                            }
+
+                                        }
+                                        btnText="Отписаться"
+                                    />
+                                </div>
                 }
 
                 {
@@ -107,7 +149,7 @@ class CreatorView extends Component {
                                         views={post.views}
                                         description={post.description}
                                         image={post.image}
-                                        creatorId = {post.creatorId}
+                                        creatorId={post.creatorId}
                                         id={post.id}
                                     />
                                 )}
@@ -132,6 +174,13 @@ class CreatorView extends Component {
             return;
         }
         this.attributes.levels = await api.levelsInfo(this.data);
+
+        const levelId = this.attributes.creator.levelId;
+        if (levelId) {
+            this.attributes.level =
+                this.attributes.levels
+                    .find(level => level.id === levelId);
+        }
 
         this.attributes.posts = await api.postsInfo(this.data);
 

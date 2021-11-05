@@ -286,7 +286,21 @@ export default {
             });
         }
     },
+    /**
+     * Удаление поста
+     */
+    async removePost ({
+        creatorId,
+        postId
+    }) {
+        const req = await sendJSON({
+            url: `/creators/${creatorId}/posts/${postId}`,
+            method: 'delete',
+            csrf: true
+        });
 
+        return req;
+    },
     /**
      * Информация о создателе
      * @param {*} id

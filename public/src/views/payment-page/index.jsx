@@ -12,14 +12,24 @@ import './style.scss';
 class PaymentPage extends Component {
     constructor () {
         super();
+
+        this.attributes.pay = true;
         this.attributes.loading = true;
-        this.attributes.paying = false;
+        this.attributes.loadingMessage = false;
     }
 
     async pay () {
-        this.attributes.paying = true;
+        this.attributes.loadingMessage = 'Оплата';
 
         await api.levelSubscribe(this.creatorId, this.levelId);
+
+        app.$router.go(app.$router.createUrl('profile'));
+    }
+
+    async unsubscribe () {
+        this.attributes.loadingMessage = 'Отмена подписки';
+
+        await api.levelUnsubscribe(this.creatorId, this.levelId);
 
         app.$router.go(app.$router.createUrl('profile'));
     }
@@ -27,13 +37,18 @@ class PaymentPage extends Component {
     render () {
         if (this.attributes.loading) {
             return <LoadingView>
-                Загрузка страницы оплаты
+                {
+                    this.attributes.pay
+                        ? 'Загрузка страницы оплаты'
+                        : 'Загрузка страницы отмены подписки'
+                }
+
             </LoadingView>;
         }
 
-        if (this.attributes.paying) {
+        if (this.attributes.loadingMessage) {
             return <LoadingView>
-                Оплата
+                {this.attributes.loadingMessage}
             </LoadingView>;
         }
 
@@ -51,10 +66,25 @@ class PaymentPage extends Component {
 
                 <div className="payment-page__topper__about">
                     <p className="payment-page__title">
-                        Оформление подписки на уровень <b>{this.attributes.level.name}</b>
+                        {
+                            this.attributes.pay
+                                ? <>
+                                    Оформление подписки на уровень <b>{this.attributes.level.name}</b>
+                                </>
+                                : <>
+                                    Отмена подписки на уровень <b>{this.attributes.level.name}</b>
+                                </>
+                        }
                     </p>
 
-                    <p> Вы получите следующие преимущества:</p>
+                    <p>
+                        {
+                            this.attributes.pay
+                                ? 'Вы получите следующие преимущества:'
+                                : 'Вы потеряете следующие преимущества:'
+                        }
+
+                    </p>
 
                     {this.attributes.level.benefits.map((benefit, i) => (
                         <p key={i} className="level-card__body__benefit">{benefit}</p>
@@ -62,14 +92,24 @@ class PaymentPage extends Component {
 
                     <Button
                         color="primary"
-                        text={<>Оформить подписку за <b>{this.attributes.level.price}</b> в месяц</>}
+                        text={
+                            this.attributes.pay
+                                ? <>Оформить подписку за <b>{this.attributes.level.price}</b> в месяц</>
+                                : 'Отмена подписки'
+                        }
                         onClick={() => {
-                            this.pay();
+                            this.attributes.pay
+                                ? this.pay()
+                                : this.unsubscribe();
                         }}
                     />
-                    <div className="payment-page__disclaimer">
-                        В любой момент Вы можете отказаться от подписки
-                    </div>
+                    {this.attributes.pay
+                        ? <div className="payment-page__disclaimer">
+                            В любой момент Вы можете отказаться от подписки
+                        </div>
+                        : ''
+                    }
+
                 </div>
 
             </div>
@@ -103,9 +143,12 @@ class PaymentPage extends Component {
     async created () {
         this.attributes.loading = true;
         try {
-            [this.creatorId, this.levelId] = this.data.split('/').map(x => parseInt(x));
+            const data = this.data.split('/');
 
-            console.log(this.creatorId, this.levelId);
+            [this.creatorId, this.levelId] = data.slice(0, 2).map(x => parseInt(x));
+
+            this.attributes.pay = !(data[2] && data[2] === 'unsubscribe');
+
             this.attributes.creator = await api.creatorInfo(this.creatorId);
 
             const levels = await api.levelsInfo(this.creatorId);

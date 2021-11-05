@@ -10,6 +10,19 @@
     max-width: 100%;
     margin: auto;
   }
+
+  &__creator-toolbox {
+    display: flex;
+    width: 500px;
+    max-width: 100%;
+    margin: auto;
+    margin-bottom: 60px;
+    margin-top: -30px;
+
+    & > * {
+      margin: 0 10px;
+    }
+  }
 }
 
 .creator-cover {
