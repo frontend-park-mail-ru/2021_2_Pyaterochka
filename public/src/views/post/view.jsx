@@ -85,8 +85,8 @@ class PostView extends Component {
                                 }}/>
 
                                 {
-                                    String(this.userId) === String(user.user.id)
-                                        ? <Button text="Редактировать" color="grey" onClick={
+                                    user.user && String(this.userId) === String(user.user.id)
+                                        ? <Button text="Редактировать" color="primary" onClick={
                                             () => {
                                                 app.$router.go(app.$router.createUrl('post.edit', this.postId));
                                             }
