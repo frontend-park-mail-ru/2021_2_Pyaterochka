@@ -1,0 +1,14 @@
+.delete-warning {
+  width: 600px;
+  max-width: 100%;
+  margin: auto;
+
+  &__button-box {
+    display: flex;
+    margin: -10px;
+
+    & > * {
+      margin: 10px;
+    }
+  }
+}

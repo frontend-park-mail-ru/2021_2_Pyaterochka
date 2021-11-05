@@ -4,32 +4,49 @@ import EditorComponent from '../../components/editor';
 import app from '../../core/app';
 import user from '../../storage/user';
 import LoadingView from '../loading-view';
+import Button from '../../components/button';
 
+import './edit.scss';
 class CreatePostView extends Component {
     constructor () {
         super();
         this.attributes.loading = 'Загрузка записи';
+        this.attributes.deleteWarning = false;
         this.attributes.post = null;
     }
 
     render () {
-        return <div>
-            {this.attributes.loading
-                ? <LoadingView>
-                    {this.attributes.loading}
-                </LoadingView>
-                : <>
-                    <h1 className="text-center">Редактирование записи</h1>
-                    <EditorComponent
-                        title={this.post.title}
-                        description={this.post.description}
-                        body={Object.assign(this.post.body)}
+        if (this.attributes.deleteWarning) {
+            return <div className="delete-warning">
+                <h1 className="delete-warning__title">Удаление записи</h1>
+                <p>Данное действие не возможно будет отменить</p>
+                <div className="delete-warning__button-box">
+                    <Button color="primary" text="Удалить" onClick={() => {
+                        this.deletePost();
+                    }}/>
+                    <Button color="success" text="Отмена" onClick={() => {
+                        this.attributes.deleteWarning = false;
+                    }}/>
+                </div>
+            </div>;
+        }
 
-                        isDraft={false}
-                        onSave={(post) => { this.savePost(post); }}
-                    />
-                </>
-            }
+        if (this.attributes.loading) {
+            return <LoadingView>
+                {this.attributes.loading}
+            </LoadingView>;
+        }
+        return <div>
+            <h1 className="text-center">Редактирование записи</h1>
+            <EditorComponent
+                title={this.post.title}
+                description={this.post.description}
+                body={Object.assign(this.post.body)}
+
+                isDraft={false}
+                onSave={(post) => { this.savePost(post); }}
+                onDelete={(post) => { this.deletePost(post); }}
+            />
         </div>;
     }
 
@@ -50,6 +67,25 @@ class CreatePostView extends Component {
         });
 
         app.$router.go(app.$router.createUrl('post.view', `${user.user.id}/${this.postId}`));
+    }
+
+    async deletePost (post) {
+        if (post) {
+            this.post = post;
+        }
+        if (!this.attributes.deleteWarning) {
+            this.attributes.deleteWarning = true;
+            return;
+        }
+
+        this.attributes.loading = 'Удаление записи';
+
+        await api.removePost({
+            postId: this.postId,
+            creatorId: user.user.id
+        });
+
+        app.$router.go(app.$router.createUrl('creator', `${user.user.id}`));
     }
 
     async created () {

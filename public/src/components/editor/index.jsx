@@ -168,7 +168,12 @@ class EditorComponent extends Component {
     }
 
     delete () {
-        this.attributes.onDelete();
+        this.attributes.onDelete({
+            title: this.attributes.title,
+            description: this.attributes.description,
+            activeLevel: this.attributes.activeLevel,
+            body: Object.assign(this.attributes.body.filter(b => b.text))
+        });
     }
 
     render () {
