@@ -82,9 +82,15 @@ class SignupView extends Component {
                 this.attributes.error = 'Пользователь с данной почтой уже существует.';
                 return;
             }
+            if (res.data.error === 'nickname already exist') {
+                this.attributes.error = 'Пользователь с данным никнеймом уже существует.';
+                return;
+            }
             this.attributes.error = res.data.error;
             return;
         }
+        this.attributes.loading = true;
+
         await api.login({
             email: this.form[1].getValue(),
             password: this.form[2].getValue()

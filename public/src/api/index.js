@@ -68,7 +68,8 @@ export default {
         const status = req.status;
 
         return {
-            error: status !== 200
+            error: status !== 201,
+            data: await req.json()
         };
     },
 
