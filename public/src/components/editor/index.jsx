@@ -275,7 +275,7 @@ class EditorComponent extends Component {
                         <>
                             {element.text === ''
                                 ? (
-                                    <div key={element.hash + '_helper'} className="editor__helper editor__helper-body">
+                                    <div key={element.hash + '_helper'} className="editor__helper editor__helper--body">
                                         <button className="add-icon-button" alt="Добавить музыку">
                                             <div className="icon" style="--icon: url('/imgs/icons/music_outline_24.svg')" />
                                         </button>
