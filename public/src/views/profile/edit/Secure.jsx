@@ -18,6 +18,9 @@ class ProfileEditSecure extends Component {
             validation: [
                 (value) => {
                     return value.length >= 6 ? null : 'Введите минимум 6 символов';
+                },
+                (value) => {
+                    return this.form[0].getValue() !== value ? null : 'Старый и новый пароль должны различаться';
                 }
             ]
         });
@@ -64,6 +67,9 @@ class ProfileEditSecure extends Component {
         });
 
         this.attributes.error = res.error;
+        if (res.status === 403) {
+            this.attributes.error = 'Не правильный старый пароль';
+        }
 
         this.attributes.loading = false;
         this.attributes.passwordChanged = !this.attributes.error;

@@ -47,6 +47,7 @@ export default {
         }
 
         return {
+            status,
             error: status !== 200 ? 'Произошла ошибка' : null
         };
     },
