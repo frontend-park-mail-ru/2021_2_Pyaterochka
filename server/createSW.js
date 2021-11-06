@@ -4,7 +4,6 @@ const crypto = require('crypto');
 const mustCache = [
     '',
     'imgs/',
-    'styles/',
     'scripts/index.compiled.js'
 ];
 
