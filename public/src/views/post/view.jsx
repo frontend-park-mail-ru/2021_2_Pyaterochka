@@ -165,7 +165,7 @@ class PostView extends Component {
         ] =
             await Promise.all([
                 api.creatorInfo(this.userId),
-                api.postInfo(this.userId, this.postId)
+                api.postInfo(this.userId, this.postId, true)
             ]);
 
         this.attributes.loading = false;

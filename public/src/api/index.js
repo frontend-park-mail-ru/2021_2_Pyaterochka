@@ -408,10 +408,11 @@ export default {
      * Получить запись создателя
      * @param {*} userId
      * @param {*} postId
+     * @param {*} addView
      */
-    async postInfo (userId, postId) {
+    async postInfo (userId, postId, addView = false) {
         const req = await sendJSON({
-            url: `/creators/${userId}/posts/${postId}`,
+            url: `/creators/${userId}/posts/${postId}?add-view=${addView ? 'yes' : 'no'}`,
             method: 'get'
         });
 
