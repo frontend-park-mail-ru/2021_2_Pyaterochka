@@ -11,7 +11,7 @@ import './style.scss';
 class CreatorAddLevel extends Component {
     constructor () {
         super();
-        this.attributes.level = null;
+        this.level = null;
         this.attributes.loading = false;
         this.attributes.deleteWarning = false;
     }
@@ -39,8 +39,8 @@ class CreatorAddLevel extends Component {
     async save ({
         name, price, benefits
     }, coverFile) {
-        this.attributes.loading = 'Создание уровня';
-        this.attributes.level = {
+        this.attributes.loading = this.levelId ? 'Редактирование уровня' : 'Создание уровня';
+        this.level = {
             name,
             price,
             benefits
@@ -87,7 +87,11 @@ class CreatorAddLevel extends Component {
         if (this.attributes.deleteWarning) {
             return <ConfirmComponent
                 title="Удаление уровня подписки"
-                description="Данное действие не возможно будет отменить. Вы потеряете поддержку своих подписчиков на данном уровне."
+                description={`
+                    Данное действие не возможно будет отменить.
+                    Вы потеряете поддержку своих подписчиков на данном уровне.
+                    Все посты данного уровня подписки станут доступными для всех.
+                    `}
                 dangerButton="Удалить"
                 positiveButton="Отмена"
                 onDanger={
@@ -111,7 +115,7 @@ class CreatorAddLevel extends Component {
 
         return <div className="profile-edit">
             <EditLevelComponent
-                level={this.attributes.level}
+                level={this.level}
                 title={this.levelId ? 'Редактирование уровня подписки' : 'Создание уровня подписки'}
                 onSave={
                     (level, coverFile) => { this.save(level, coverFile); }
@@ -135,11 +139,11 @@ class CreatorAddLevel extends Component {
         if (this.data) {
             this.attributes.loading = 'Загрузка уровня';
             this.levelId = parseInt(this.data);
-            this.attributes.level = (
+            this.level = (
                 await api.levelsInfo(user.user.id)
             ).find(level => level.id === this.levelId);
 
-            this.attributes.level.price = Number(this.attributes.level.price.split(' ')[0]);
+            this.level.price = Number(this.level.price.split(' ')[0]);
             this.attributes.loading = '';
         }
     }

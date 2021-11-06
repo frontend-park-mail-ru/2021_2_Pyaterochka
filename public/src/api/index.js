@@ -78,14 +78,12 @@ export default {
      * Профиль
      */
     async profile () {
-        console.log('asd');
         const req = await sendJSON({
             url: '/user',
             method: 'get'
         });
 
         const data = await req.json();
-        console.log(data);
 
         return mapProfile(data);
     },

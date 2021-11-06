@@ -62,6 +62,7 @@ class JsxDomElement {
         this.children.forEach(child => child.destroy());
         this.dom?.remove();
         this.removeListeners();
+        
         this.dom = null;
     }
 
@@ -111,6 +112,10 @@ class JsxDomElement {
 
         if (this.parentComponent) {
             this.parentComponent.dom = this;
+        }
+
+        if (newJsxDom.parentComponent) {
+            newJsxDom.parentComponent.dom = this;
         }
 
         return this;
