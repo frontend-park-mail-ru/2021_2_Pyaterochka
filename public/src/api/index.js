@@ -220,7 +220,7 @@ export default {
      * Загрузка обложки уровня подписки
      */
     async uploadLevelCover (cover, creatorId, levelId) {
-        return uploadFile(cover, 'cover', `/creators/${creatorId}/awards/${levelId}/cover`);
+        return uploadFile(cover, 'cover', `/creators/${creatorId}/awards/${levelId}/update/cover`);
     },
 
     /**
