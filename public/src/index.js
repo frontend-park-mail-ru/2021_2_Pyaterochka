@@ -90,6 +90,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                 name: 'creator.level.create'
             }),
             new Route({
+                url: '/profile/creator/level/edit/*',
+                component: async () => await import('views/profile/edit/addLevel'),
+                title: 'Редактирование уровня',
+                name: 'creator.level.edit'
+            }),
+            new Route({
                 url: '/post/create',
                 component: async () => await import('views/post/create'),
                 title: 'Создание поста',

@@ -130,7 +130,54 @@ export default {
             csrf: true
         });
 
-        return req;
+        return {
+            status: req.status,
+            data: await req.json()
+        };
+    },
+
+    /**
+     * Обновление уровня
+     */
+    async levelUpdate ({
+        levelId,
+        name,
+        benefits,
+        price,
+        creatorId
+    }) {
+        const req = await sendJSON({
+            url: `/creators/${creatorId}/awards/${levelId}/update`,
+            method: 'put',
+            body: {
+                description: benefits.join('\n'),
+                name,
+                price
+            },
+            csrf: true
+        });
+
+        return {
+            status: req.status
+        };
+    },
+
+    /**
+     * Удаление уровня
+     */
+    async levelDelete ({
+        levelId,
+        creatorId
+    }) {
+        const req = await sendJSON({
+            url: `/creators/${creatorId}/awards/${levelId}`,
+            method: 'delete',
+            csrf: true
+        });
+
+        return {
+            status: req.status
+        };
     },
 
     /**
@@ -169,6 +216,13 @@ export default {
      */
     async uploadCreatorCover (cover, creatorId) {
         return uploadFile(cover, 'cover', `/creators/${creatorId}/update/cover`);
+    },
+
+    /**
+     * Загрузка обложки уровня подписки
+     */
+    async uploadLevelCover (cover, creatorId, levelId) {
+        return uploadFile(cover, 'cover', `/creators/${creatorId}/awards/${levelId}/cover`);
     },
 
     /**

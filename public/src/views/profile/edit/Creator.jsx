@@ -147,6 +147,8 @@ class ProfileEditCreator extends Component {
                                     cover={level.cover}
                                     price={level.price}
                                     color={level.color}
+                                    btnText='Редактировать уровень'
+                                    onClick={() => { app.$router.go(app.$router.createUrl('creator.level.edit', level.id)); }}
                                 />
                             ))
                             : <Skeleton width={260} height={420} />

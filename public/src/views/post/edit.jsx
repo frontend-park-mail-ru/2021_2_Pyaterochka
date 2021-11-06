@@ -4,9 +4,8 @@ import EditorComponent from '../../components/editor';
 import app from '../../core/app';
 import user from '../../storage/user';
 import LoadingView from '../loading-view';
-import Button from '../../components/button';
+import ConfirmComponent from '../../components/confirm';
 
-import './edit.scss';
 class CreatePostView extends Component {
     constructor () {
         super();
@@ -17,18 +16,22 @@ class CreatePostView extends Component {
 
     render () {
         if (this.attributes.deleteWarning) {
-            return <div className="delete-warning">
-                <h1 className="delete-warning__title">Удаление записи</h1>
-                <p>Данное действие не возможно будет отменить</p>
-                <div className="delete-warning__button-box">
-                    <Button color="primary" text="Удалить" onClick={() => {
+            return <ConfirmComponent
+                title="Удаление записи"
+                description="Данное действие не возможно будет отменить"
+                dangerButton="Удалить"
+                positiveButton="Отмена"
+                onDanger={
+                    () => {
                         this.deletePost();
-                    }}/>
-                    <Button color="success" text="Отмена" onClick={() => {
+                    }
+                }
+                onPositive={
+                    () => {
                         this.attributes.deleteWarning = false;
-                    }}/>
-                </div>
-            </div>;
+                    }
+                }
+            />;
         }
 
         if (this.attributes.loading) {
