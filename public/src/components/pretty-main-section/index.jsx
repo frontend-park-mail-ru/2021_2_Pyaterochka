@@ -35,7 +35,7 @@ class PrettySection extends Component {
                 </div>
                 <img
                     className="main-page-section__image"
-                    src="/imgs/mainPage.png"
+                    src="/imgs/main-page.svg"
                     alt="Картинка главной страницы"
                 />
             </div>

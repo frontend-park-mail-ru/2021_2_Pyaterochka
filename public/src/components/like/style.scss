@@ -4,7 +4,7 @@
 
   &__link {
     display: flex;
-    background-image: url(/imgs/not-liked.png);
+    background-image: url(/imgs/not-liked.svg);
     width: 28px;
     height: 28px;
     padding: 0;
@@ -16,7 +16,7 @@
   }
 
   &_has-like {
-    background-image: url(/imgs/liked.png);
+    background-image: url(/imgs/liked.svg);
   }
 
   &__count {

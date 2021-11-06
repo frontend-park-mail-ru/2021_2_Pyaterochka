@@ -5,9 +5,10 @@ import './style.scss';
  * Компонент шага
  */
 class Step extends Component {
-    constructor ({ number = 0, name = '', description = '' }) {
+    constructor ({ number = 0, image = '', name = '', description = '' }) {
         super();
         this.attributes.number = number;
+        this.attributes.image = image;
         this.attributes.name = name;
         this.attributes.description = description;
     }
@@ -17,7 +18,7 @@ class Step extends Component {
         return (
             <div className={['step', isLeftText ? 'step_left-text' : '']}>
                 <img
-                    src={`/imgs/steps/step${this.attributes.number}.png`}
+                    src={this.attributes.image}
                     alt=""
                 />
                 <div className="step-content">
