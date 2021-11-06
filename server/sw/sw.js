@@ -1,5 +1,7 @@
 /* global cacheName, contentToCache */
 
+const hostUrl = location.protocol + '//' + location.host;
+
 const clearCache = async () => {
     const installed = await caches.keys();
 
@@ -20,12 +22,14 @@ self.addEventListener('install', (e) => {
 
 self.addEventListener('fetch', (e) => {
     e.respondWith((async () => {
+        const url = e.request.url;
+
         const r = await caches.match(e.request);
         if (r) {
             return r;
         }
 
-        if (e.request.mode === 'navigate' && !e.request.url.endsWith('.css') && !e.request.url.endsWith('.js')) {
+        if (e.request.mode === 'navigate' && !url.endsWith('.css') && !url.endsWith('.js')) {
             const r = await caches.match('/');
             if (r) {
                 return r;
@@ -34,9 +38,12 @@ self.addEventListener('fetch', (e) => {
 
         const response = await fetch(e.request);
 
-        // const cache = await caches.open(cacheName);
-        // console.log(`[Service Worker] Caching new resource: ${e.request.url}`);
-        // cache.put(e.request, response.clone());
+        if (url.endsWith('.js') && url.startsWith(hostUrl)) {
+            const cache = await caches.open(cacheName);
+            console.log(`[Service Worker] Caching new resource: ${e.request.url}`);
+            cache.put(e.request, response.clone());
+        }
+
         return response;
     })());
 });

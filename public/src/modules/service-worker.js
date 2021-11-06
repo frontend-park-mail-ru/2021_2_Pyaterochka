@@ -44,13 +44,17 @@ const registerValidSW = (swUrl) => {
         return;
     }
 
-    console.log('[Service Worker Setup] start import sw.js');
-
     navigator.serviceWorker
         .register(swUrl)
         .then(registration => {
-            console.log('[Service Worker Setup]', registration);
+            registration.addEventListener('updatefound', (e) => {
+                if (e.target.waiting) {
+                    console.log('[Service Worker Setup]', 'has updates');
+                    askUserToUpdate(e.target);
+                }
+            });
             if (registration.waiting) {
+                console.log('[Service Worker Setup]', 'has updates');
                 askUserToUpdate(registration);
             }
         });
