@@ -13,9 +13,14 @@ class Footer extends Component {
                 <br />
                 Использованы материалы freepik - <a href="https://ru.freepik.com/">ru.freepik.com</a>
                 <br />
-                <a href="#" router-go={app.$router.createUrl('component-gallery')}>
-                    Галерея компонентов
-                </a>
+                {
+                    app.$router
+                        ? <a href="#" router-go={app.$router.createUrl('component-gallery')}>
+                            Галерея компонентов
+                        </a>
+                        : ''
+                }
+
             </div>
         </div>;
     }

@@ -8,8 +8,7 @@ import registerValidSW from './modules/service-worker';
 import MainPageView from './views/main-page';
 
 import '../styles/index.scss';
-
-registerValidSW('/sw.js');
+import Layout from './components/layout';
 
 document.addEventListener('DOMContentLoaded', async () => {
     try {
@@ -18,6 +17,33 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     }
 
+    if (!navigator.onLine) {
+        App.setup(
+            <Layout>
+                <ErrorPage
+                    err="-1"
+                    desc="Нет соединения с интернетом"
+                    goHome={false}
+                />
+            </Layout>
+            , document.getElementById('root'));
+
+        window.addEventListener('online', () => {
+            setupApp();
+            console.log('Internet');
+        }, {
+            once: true
+        });
+    } else {
+        setupApp();
+    }
+
+    registerValidSW('/sw.js');
+
+    console.log(App);
+});
+
+function setupApp () {
     App.setup(
         <Router routes={[
             new Route({
@@ -124,11 +150,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 title: 'Страница не найдена'
             })
         ]} loadingView={
-            !navigator.onLine
-                ? <ErrorPage err="-1" desc="Нет соединения с интернетом" />
-                : <LoadingView />
+            <LoadingView />
         } />
         , document.getElementById('root'));
-
-    console.log(App);
-});
+}
