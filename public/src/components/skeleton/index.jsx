@@ -14,29 +14,36 @@ class Skeleton extends Component {
         this.attributes.width = width;
     }
 
+    range (count) {
+        const array = [];
+        for (let i = 0; i < count; i++) {
+            array.push(i);
+        }
+        return array;
+    }
+
     render () {
-        const element = document.createElement('div');
         if (this.attributes.type === 'text') {
             const count = Math.floor(this.attributes.height / 20);
-            for (let i = 0; i < count; i++) {
-                const line = document.createElement('div');
-                line.className = 'skeleton-box skeleton-line';
-                element.appendChild(line);
-            }
-            return element;
+            return <div>
+                {this.range(count).map(i => (
+                    <div key={i} className="skeleton-box skeleton-box--line" />
+                ))}
+            </div>;
         }
 
-        element.className = 'skeleton-box';
-        element.style.height = this.attributes.height + 'px';
+        const className = ['skeleton-box'];
+        let style = `height: ${Number(this.attributes.height)}px;`;
+
         if (this.attributes.type === 'circle') {
-            element.style.width = this.attributes.height + 'px';
-            element.className += ' skeleton-circle';
+            style += `width: ${this.attributes.height}px;`;
+            className.push('skeleton-box--circle');
         }
         if (this.attributes.width) {
-            element.style.width = this.attributes.width + 'px';
+            style += `width: ${this.attributes.width}px;`;
         }
 
-        return element;
+        return <div className={className} style={style} />;
     }
 }
 export default Skeleton;

@@ -18,14 +18,14 @@
     animation: shimmer 2s infinite;
     content: '';
   }
-}
 
-.skeleton-line {
-  margin-bottom: 10px;
-}
+  &--line {
+    margin-bottom: 10px;
+  }
 
-.skeleton-circle {
-  border-radius: 100%;
+  &--circle {
+    border-radius: 100%;
+  }
 }
 
 @keyframes shimmer {
