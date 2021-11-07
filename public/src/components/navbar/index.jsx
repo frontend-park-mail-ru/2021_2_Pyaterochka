@@ -1,5 +1,4 @@
 import app from '../../core/app';
-import user from '../../storage/user';
 import Component from '../basecomponent';
 import './style.scss';
 
@@ -31,9 +30,7 @@ class Navbar extends Component {
                                 <div className="navbar__popup">
                                     <a router-go={app.$router.createUrl('profile')}>Профиль</a>
                                     <a
-                                        onClick={() => {
-                                            user.logout();
-                                        }}
+                                        router-go={app.$router.createUrl('logout')}
                                     >
                                         Выйти
                                     </a>

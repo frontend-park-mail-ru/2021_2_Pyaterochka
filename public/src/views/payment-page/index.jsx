@@ -114,7 +114,7 @@ class PaymentPage extends Component {
 
             </div>
             {
-                this.attributes.otherLevels && this.attributes.otherLevels.length
+                this.attributes.pay && this.attributes.otherLevels && this.attributes.otherLevels.length
                     ? <>
                         <div className="payment-page__other-levels-title">
                             Вас могут заинтересовать другие уровни <b>{this.attributes.creator.name}</b>
@@ -130,6 +130,15 @@ class PaymentPage extends Component {
                                     benefits={level.benefits}
                                     cover={level.cover}
                                     price={level.price}
+                                    onClick={
+                                        () => {
+                                            app.$router.go(
+                                                app.$router.createUrl(
+                                                    'payment', `${this.attributes.creator.id}/${level.id}`
+                                                )
+                                            );
+                                        }
+                                    }
                                 />
                             ))}
                         </div>

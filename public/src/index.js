@@ -65,6 +65,12 @@ function setupApp () {
                 name: 'signup'
             }),
             new Route({
+                url: '/logout',
+                component: async () => await import('views/logout'),
+                title: 'Выход',
+                name: 'logout'
+            }),
+            new Route({
                 url: '/components',
                 component: async () => await import('views/component-gallery'),
                 title: 'Галерея компонентов',
