@@ -38,9 +38,10 @@ class IndexView extends Component {
                     {
                         component: new VideoPlayer({
                             src: [{
-                                url: 'http://distribution.bbb3d.renderfarming.net/video/mp4/bbb_sunflower_1080p_30fps_normal.mp4',
+                                url: 'http://media.w3.org/2010/05/bunny/movie.mp4',
                                 type: 'video/mp4'
-                            }]
+                            }],
+                            poster: 'http://media.w3.org/2010/05/bunny/poster.png'
                         })
                     }
                 ]
