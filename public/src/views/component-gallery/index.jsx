@@ -26,11 +26,25 @@ import TabsPanel from '../../components/tabs-panel';
 import TabsContainer from '../../components/tabs-container';
 import ImageUploader from '../../components/image-uploader';
 import SelectComponent from '../../components/select';
+import VideoPlayer from '../../components/video-player';
 
 class IndexView extends Component {
     constructor () {
         super();
         this.attributes.cps = [
+            {
+                name: 'Видео плеер',
+                data: [
+                    {
+                        component: new VideoPlayer({
+                            src: [{
+                                url: 'http://distribution.bbb3d.renderfarming.net/video/mp4/bbb_sunflower_1080p_30fps_normal.mp4',
+                                type: 'video/mp4'
+                            }]
+                        })
+                    }
+                ]
+            },
             {
                 name: 'Загрузка аватара',
                 data: [

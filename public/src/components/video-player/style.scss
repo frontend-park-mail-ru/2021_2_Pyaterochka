@@ -1,0 +1,13 @@
+.video-player {
+  &__video-tag {
+    width: 100%;
+  }
+
+  &__controls {
+    display: flex;
+
+    &__time-slider {
+      width: 100%;
+    }
+  }
+}
