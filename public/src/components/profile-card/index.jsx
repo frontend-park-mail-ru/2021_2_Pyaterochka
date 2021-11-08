@@ -19,7 +19,7 @@ class ProfileCard extends Component {
 
     render () {
         return <div className="profile-card">
-            <img src={this.attributes.avatar} />
+            <div className="profile-card__avatar" style={`background-image:url('${this.attributes.avatar}')`} />
             <div className="profile-card__body">
                 <div className="profile-card__username">
                     {this.attributes.username}
