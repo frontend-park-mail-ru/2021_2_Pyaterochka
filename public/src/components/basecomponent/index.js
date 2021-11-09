@@ -21,7 +21,7 @@ function applyUpdates () {
     });
     updateBlocks.clear();
 }
-setInterval(applyUpdates, 10);
+setInterval(applyUpdates, 100);
 
 /**
  * Базовый компонент, заложен интерфейс компонента и его обновление

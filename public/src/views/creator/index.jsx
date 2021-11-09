@@ -155,9 +155,24 @@ class CreatorView extends Component {
                                     />
                                 )}
                             </div>
-                            <LockMessage text="Стань патроном, чтобы продолжить наслаждаться работами автора">
-                                <Button text="Стать патроном" color="primary" />
-                            </LockMessage>
+                            {
+                                !this.attributes.level && this.attributes.levels.length &&
+                                !(user.user && this.attributes.creator && user.user.id === this.attributes.creator.id)
+                                    ? <LockMessage text="Стань патроном, чтобы продолжить наслаждаться работами автора">
+                                        <Button text="Стать патроном" color="primary" onClick={
+                                            () => {
+                                                const level = this.attributes.levels.at(-1);
+                                                app.$router.go(
+                                                    app.$router.createUrl(
+                                                        'payment', `${this.attributes.creator.id}/${level.id}`
+                                                    )
+                                                );
+                                            }
+                                        } />
+                                    </LockMessage>
+                                    : ''
+                            }
+
                         </>
                 }
 
