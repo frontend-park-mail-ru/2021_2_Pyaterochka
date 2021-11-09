@@ -1,5 +1,5 @@
-import Component from '../components/basecomponent';
-import SimplifyNumComponent from '../components/simplify-num';
+import Component from '../basecomponent';
+import SimplifyNumComponent from '../simplify-num';
 import './style.scss';
 
 class CountersComponent extends Component {

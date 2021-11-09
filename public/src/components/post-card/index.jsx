@@ -3,7 +3,7 @@ import Button from '../button';
 import LockMessage from '../lock-message';
 import TimeAgoComponent from '../time-ago';
 import './style.scss';
-import CountersComponent from '../../counters';
+import CountersComponent from '../counters';
 import app from '../../core/app';
 
 /**

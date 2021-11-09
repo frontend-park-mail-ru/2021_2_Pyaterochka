@@ -1,5 +1,5 @@
 import app from '../../core/app';
-import CountersComponent from '../../counters';
+import CountersComponent from '../counters';
 import Component from '../basecomponent';
 import TimeAgoComponent from '../time-ago';
 import './style.scss';
