@@ -137,7 +137,7 @@ class SignupView extends Component {
     }
 
     created () {
-        if (user.user) return app.$router.go('/');
+        if (user.user) return app.$router.go(app.$router.createUrl('profile'));
     }
 }
 
