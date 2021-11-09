@@ -11,11 +11,11 @@ function applyUpdates () {
         try {
             block.updatePartly();
         } catch (err) {
-            console.error('Не удалось обновить компонент', block, err);
+            // console.error('Не удалось обновить компонент', block, err);
             try {
                 block.updateForce();
             } catch {
-                console.error('Не удалось обновить компонент принудительно', block, err);
+                // console.error('Не удалось обновить компонент принудительно', block, err);
             }
         }
     });

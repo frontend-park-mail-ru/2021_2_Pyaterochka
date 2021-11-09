@@ -12,9 +12,6 @@ const user = {
      */
     async update () {
         const user = await api.profile();
-
-        console.log(user);
-
         if (user.status === 'error') return;
         this.user = user;
         if (this.onUpdate) this.onUpdate();

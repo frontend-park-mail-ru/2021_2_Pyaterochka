@@ -30,7 +30,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         window.addEventListener('online', () => {
             setupApp();
-            console.log('Internet');
         }, {
             once: true
         });
@@ -40,7 +39,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     registerValidSW('/sw.js');
 
-    console.log(App);
+    // console.log(App);
 });
 
 function setupApp () {

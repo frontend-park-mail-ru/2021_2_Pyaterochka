@@ -87,7 +87,7 @@ class JsxDomElement {
         }
 
         if (!this.dom) {
-            console.error("Can't find DOM element of", this);
+            // console.error("Can't find DOM element of", this);
             return;
         }
 

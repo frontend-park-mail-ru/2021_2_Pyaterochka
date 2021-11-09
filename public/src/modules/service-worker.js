@@ -49,12 +49,12 @@ const registerValidSW = (swUrl) => {
         .then(registration => {
             registration.addEventListener('updatefound', (e) => {
                 if (e.target.waiting) {
-                    console.log('[Service Worker Setup]', 'has updates');
+                    // console.log('[Service Worker Setup]', 'has updates');
                     askUserToUpdate(e.target);
                 }
             });
             if (registration.waiting) {
-                console.log('[Service Worker Setup]', 'has updates');
+                // console.log('[Service Worker Setup]', 'has updates');
                 askUserToUpdate(registration);
             }
         });

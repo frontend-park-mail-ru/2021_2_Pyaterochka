@@ -10,12 +10,12 @@ const clearCache = async () => {
     }));
 };
 self.addEventListener('install', (e) => {
-    console.log('[Service Worker] Install');
+    // console.log('[Service Worker] Install');
     e.waitUntil((async () => {
         await clearCache();
 
         const cache = await caches.open(cacheName);
-        console.log(`[Service Worker] Caching all: app shell and content to cache '${cacheName}'`);
+        // console.log(`[Service Worker] Caching all: app shell and content to cache '${cacheName}'`);
         await cache.addAll(contentToCache);
     })());
 });
@@ -40,7 +40,7 @@ self.addEventListener('fetch', (e) => {
 
         if (url.endsWith('.js') && url.startsWith(hostUrl)) {
             const cache = await caches.open(cacheName);
-            console.log(`[Service Worker] Caching new resource: ${e.request.url}`);
+            //console.log(`[Service Worker] Caching new resource: ${e.request.url}`);
             cache.put(e.request, response.clone());
         }
 
@@ -50,8 +50,8 @@ self.addEventListener('fetch', (e) => {
 
 self.addEventListener('message', async ev => {
     if (ev.data === 'skipWaiting') {
-        console.log('[Service Worker] skipWaiting');
+        // console.log('[Service Worker] skipWaiting');
         await self.skipWaiting();
-        console.log('[Service Worker] skipped');
+        // console.log('[Service Worker] skipped');
     }
 });

@@ -178,7 +178,6 @@ class PaymentPage extends Component {
             this.attributes.benefits = benefits;
             this.attributes.otherLevels = levels.filter(level => level.id !== this.levelId);
         } catch (e) {
-            console.log(e);
             this.attributes.creator = null;
             this.attributes.level = null;
             this.attributes.otherLevels = null;
