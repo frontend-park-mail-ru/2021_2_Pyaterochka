@@ -1,7 +1,7 @@
 /** @module API */
 
 import { sendJSON, uploadFile } from './hellpers';
-import { mapCreator, mapLevel, mapPost, mapPostFull, mapProfile } from './mappers';
+import { mapCreator, mapLevels, mapPost, mapPostFull, mapProfile } from './mappers';
 
 export default {
     /**
@@ -386,7 +386,7 @@ export default {
 
         const data = await req.json();
 
-        return data.map(mapLevel);
+        return mapLevels(data);
     },
 
     /**

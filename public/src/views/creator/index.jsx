@@ -94,6 +94,7 @@ class CreatorView extends Component {
                                             cover={level.cover}
                                             price={level.price}
                                             color={level.color}
+                                            parentName={level.parentName}
                                             onClick={
                                                 () => {
                                                     app.$router.go(
