@@ -1,41 +1,54 @@
 /** @module API */
 
-const basename = 'http://api2.pyaterochka-team.site:8080';
-const basenameDev = '/api';
-const mapCreator = (data) => {
-    return {
-        id: data.id,
-        name: data.nickname,
-        avatar: data.avatar || 'https://www.vtp-club.ru/img/user.png',
-        cover: data.cover || 'https://tub.avatars.mds.yandex.net/i?id=6ba16db8f8a59eb8740ae862e5d080c9-5221613-images-thumbs&n=13&exp=1',
-        description: data.description
-    };
-};
+import { sendJSON, uploadFile } from './hellpers';
+import { mapCreator, mapLevels, mapPost, mapPostFull, mapProfile } from './mappers';
 
 export default {
     /**
      * Авторизация
      */
     async login ({ email, password }) {
-        const req = await fetch(basename + '/login', {
+        const req = await sendJSON({
+            url: '/login',
             method: 'post',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
+            body: {
                 login: email,
                 password: password
-            }),
-            mode: 'cors',
-            credentials: 'include'
+            }
         });
 
         const status = req.status;
-        const data = await req.json();
 
         return {
-            error: status !== 200,
-            data: data
+            error: status !== 200
+        };
+    },
+
+    /**
+     * Смена пароля
+     */
+    async changePassword ({ oldPassword, newPassword }) {
+        const req = await sendJSON({
+            url: '/user/update/password',
+            method: 'put',
+            body: {
+                old: oldPassword,
+                new: newPassword
+            },
+            csrf: true
+        });
+
+        const status = req.status;
+
+        if (status === 400) {
+            return {
+                error: (await req.json()).error
+            };
+        }
+
+        return {
+            status,
+            error: status !== 200 ? 'Произошла ошибка' : null
         };
     },
 
@@ -43,26 +56,21 @@ export default {
      * Регистрация
      */
     async register ({ username, email, password }) {
-        const req = await fetch(basename + '/register', {
+        const req = await sendJSON({
+            url: '/register',
             method: 'post',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
+            body: {
                 login: email,
                 password: password,
                 nickname: username
-            }),
-            mode: 'cors',
-            credentials: 'include'
+            }
         });
 
         const status = req.status;
-        const data = await req.json();
 
         return {
-            error: status !== 200,
-            data: data
+            error: status !== 201,
+            data: await req.json()
         };
     },
 
@@ -70,30 +78,158 @@ export default {
      * Профиль
      */
     async profile () {
-        const req = await fetch(basename + '/profile', {
-            method: 'get',
-            mode: 'cors',
-            credentials: 'include'
+        const req = await sendJSON({
+            url: '/user',
+            method: 'get'
         });
 
         const data = await req.json();
 
+        return mapProfile(data);
+    },
+
+    /**
+     * Создания автора
+     */
+    async creatorCreate ({
+        description,
+        category
+    }) {
+        const req = await sendJSON({
+            url: '/creators',
+            method: 'post',
+            body: {
+                description,
+                category
+            },
+            csrf: true
+        });
+
+        return req;
+    },
+
+    /**
+     * Создания уровня
+     */
+    async levelCreate ({
+        name,
+        benefits,
+        price,
+        creatorId
+    }) {
+        const req = await sendJSON({
+            url: `/creators/${creatorId}/awards`,
+            method: 'post',
+            body: {
+                description: benefits.join('\n'),
+                name,
+                price
+            },
+            csrf: true
+        });
+
         return {
-            email: data.login,
-            username: data.nickname,
-            id: data.id,
-            avatar: data.avatar || 'https://www.vtp-club.ru/img/user.png'
+            status: req.status,
+            data: await req.json()
         };
+    },
+
+    /**
+     * Обновление уровня
+     */
+    async levelUpdate ({
+        levelId,
+        name,
+        benefits,
+        price,
+        creatorId
+    }) {
+        const req = await sendJSON({
+            url: `/creators/${creatorId}/awards/${levelId}/update`,
+            method: 'put',
+            body: {
+                description: benefits.join('\n'),
+                name,
+                price
+            },
+            csrf: true
+        });
+
+        return {
+            status: req.status
+        };
+    },
+
+    /**
+     * Удаление уровня
+     */
+    async levelDelete ({
+        levelId,
+        creatorId
+    }) {
+        const req = await sendJSON({
+            url: `/creators/${creatorId}/awards/${levelId}`,
+            method: 'delete',
+            csrf: true
+        });
+
+        return {
+            status: req.status
+        };
+    },
+
+    /**
+     * Лайк поста
+     */
+    async likePost ({
+        creatorId,
+        postId,
+        like = true
+    }) {
+        const req = await sendJSON({
+            url: `/creators/${creatorId}/posts/${postId}/like`,
+            method: like ? 'put' : 'delete',
+            csrf: true
+        });
+
+        return req;
+    },
+
+    /**
+     * Загрузка аватара пользователя
+     */
+    async uploadAvatar (avatar) {
+        return uploadFile(avatar, 'avatar', '/user/update/avatar');
+    },
+
+    /**
+     * Загрузка аватара креатора
+     */
+    async uploadCreatorAvatar (avatar, creatorId) {
+        return uploadFile(avatar, 'avatar', `/creators/${creatorId}/update/avatar`);
+    },
+
+    /**
+     * Загрузка обложки креатора
+     */
+    async uploadCreatorCover (cover, creatorId) {
+        return uploadFile(cover, 'cover', `/creators/${creatorId}/update/cover`);
+    },
+
+    /**
+     * Загрузка обложки уровня подписки
+     */
+    async uploadLevelCover (cover, creatorId, levelId) {
+        return uploadFile(cover, 'cover', `/creators/${creatorId}/awards/${levelId}/update/cover`);
     },
 
     /**
      * Список авторов
      */
     async creators () {
-        const req = await fetch(basename + '/creators', {
-            method: 'get',
-            mode: 'cors',
-            credentials: 'include'
+        const req = await sendJSON({
+            url: '/creators',
+            method: 'get'
         });
 
         const data = await req.json();
@@ -102,31 +238,136 @@ export default {
     },
 
     /**
-     * Выход
+     * Список подписок
      */
-    async logout () {
-        const req = await fetch(basename + '/logout', {
-            method: 'get',
-            mode: 'cors',
-            credentials: 'include'
+    async subscriptions () {
+        const req = await sendJSON({
+            url: '/user/subscriptions',
+            method: 'get'
         });
 
         const data = await req.json();
 
-        return data;
+        return (data.creators || []).map(mapCreator);
     },
 
+    /**
+     * Выход
+     */
+    async logout () {
+        const req = await sendJSON({
+            url: '/logout',
+            method: 'post'
+        });
+
+        return req;
+    },
+
+    async createPost ({
+        userId,
+        title,
+        description,
+        body
+    }) {
+        const req = await sendJSON({
+            url: `/creators/${userId}/posts`,
+            method: 'post',
+            body: {
+                description,
+                title
+            },
+            csrf: true
+        });
+
+        const dataPost = await req.json();
+
+        for (let i = 0; i < body.length; ++i) {
+            const text = body[i].text;
+
+            await sendJSON({
+                url: `/creators/${userId}/posts/${dataPost.id}/text`,
+                method: 'post',
+                body: {
+                    text
+                },
+                csrf: true
+            });
+        }
+
+        return dataPost;
+    },
+
+    /**
+     * Обновление поста
+     */
+    async updatePost ({
+        postId,
+        oldBodyIds,
+        userId,
+        title,
+        description,
+        body
+    }) {
+        await Promise.all(oldBodyIds.map(async (id) => {
+            await sendJSON({
+                url: `/creators/${userId}/posts/${postId}/${id}`,
+                method: 'delete',
+                csrf: true
+            });
+        }));
+
+        await sendJSON({
+            url: `/creators/${userId}/posts/${postId}/update`,
+            method: 'put',
+            body: {
+                description,
+                title
+            },
+            csrf: true
+        });
+
+        for (let i = 0; i < body.length; ++i) {
+            const text = body[i].text;
+
+            await sendJSON({
+                url: `/creators/${userId}/posts/${postId}/text`,
+                method: 'post',
+                body: {
+                    text
+                },
+                csrf: true
+            });
+        }
+    },
+    /**
+     * Удаление поста
+     */
+    async removePost ({
+        creatorId,
+        postId
+    }) {
+        const req = await sendJSON({
+            url: `/creators/${creatorId}/posts/${postId}`,
+            method: 'delete',
+            csrf: true
+        });
+
+        return req;
+    },
     /**
      * Информация о создателе
      * @param {*} id
      * @returns
      */
-    async creatorInfo (id = 1) {
-        const req = await fetch(basename + '/creators/' + id, {
-            method: 'get',
-            mode: 'cors',
-            credentials: 'include'
+    async creatorInfo (id) {
+        const req = await sendJSON({
+            url: '/creators/' + id,
+            method: 'get'
         });
+
+        if (req.status !== 200) {
+            return null;
+        }
 
         const data = await req.json();
 
@@ -138,15 +379,14 @@ export default {
      * @param {*} id
      */
     async levelsInfo (id) {
-        const req = await fetch(basenameDev + '/levels', {
-            method: 'get',
-            mode: 'cors',
-            credentials: 'include'
+        const req = await sendJSON({
+            url: `/creators/${id}/awards`,
+            method: 'get'
         });
 
         const data = await req.json();
 
-        return data;
+        return mapLevels(data);
     },
 
     /**
@@ -154,17 +394,64 @@ export default {
      * @param {*} id
      */
     async postsInfo (id) {
-        const req = await fetch(basenameDev + '/posts', {
-            method: 'get',
-            mode: 'cors',
-            credentials: 'include'
+        const req = await sendJSON({
+            url: `/creators/${id}/posts?offset=0&limit=100`,
+            method: 'get'
         });
 
         const data = await req.json();
 
-        return data.map((v) => {
-            v.published = new Date(v.published);
-            return v;
+        return data.map(p => mapPost(p, id));
+    },
+
+    /**
+     * Получить запись создателя
+     * @param {*} userId
+     * @param {*} postId
+     * @param {*} addView
+     */
+    async postInfo (userId, postId, addView = false) {
+        const req = await sendJSON({
+            url: `/creators/${userId}/posts/${postId}?add-view=${addView ? 'yes' : 'no'}`,
+            method: 'get'
         });
+
+        if (req.status !== 200) {
+            return null;
+        }
+
+        const data = await req.json();
+
+        return mapPostFull(data);
+    },
+
+    /**
+     * Оформить подписку
+     * @param {*} creatorId
+     * @param {*} levelId
+     */
+    async levelSubscribe (creatorId, levelId) {
+        const req = await sendJSON({
+            url: `/creators/${creatorId}/awards/${levelId}/subscribe`,
+            method: 'post',
+            csrf: true
+        });
+
+        return req;
+    },
+
+    /**
+     * Отменить подписку
+     * @param {*} creatorId
+     * @param {*} levelId
+     */
+    async levelUnsubscribe (creatorId, levelId) {
+        const req = await sendJSON({
+            url: `/creators/${creatorId}/awards/${levelId}/subscribe`,
+            method: 'delete',
+            csrf: true
+        });
+
+        return req;
     }
 };

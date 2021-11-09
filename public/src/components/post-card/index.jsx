@@ -2,8 +2,9 @@ import Component from '../basecomponent';
 import Button from '../button';
 import LockMessage from '../lock-message';
 import TimeAgoComponent from '../time-ago';
-import './style.css';
-import CountersComponent from '../../counters';
+import './style.scss';
+import CountersComponent from '../counters';
+import app from '../../core/app';
 
 /**
  * Компонент карточки записи
@@ -16,6 +17,7 @@ class PostCard extends Component {
         views = 0,
         description = '',
         id = null,
+        creatorId = null,
         level = '',
         opened = true,
         image = ''
@@ -27,45 +29,48 @@ class PostCard extends Component {
         this.attributes.views = views;
         this.attributes.description = description;
         this.attributes.id = id;
+        this.attributes.creatorId = creatorId;
         this.attributes.level = level;
         this.attributes.opened = opened;
         this.attributes.image = image;
     }
 
     render () {
-        const style = `background-image:url(${this.attributes.image})`;
-        const element = (
+        const style = `background-image:url('${this.attributes.image}')`;
+        return (
             <div className="post-card">
-                <div className="post-card-image">
+                <div className="post-card__image">
                     <div
                         className={['image', this.attributes.opened ? '' : 'blur']}
                         style={style}
-                    ></div>
+                    />
                     {this.attributes.opened
                         ? (
                             ''
                         )
                         : (
-                            <LockMessage text={this.attributes.level} dark={false} />
+                            <LockMessage text={this.attributes.level} dark={false}/>
                         )}
                 </div>
-                <div className="post-card-body">
-                    <div className="post-card-title">{this.attributes.title}</div>
-                    <div className="post-card-meta">
+                <div className="post-card__body">
+                    <div className="post-card__title">{this.attributes.title}</div>
+                    <div className="post-card__meta">
                         <div>
-                            <span className="date">
+                            <span className="post-card__published">
                                 <TimeAgoComponent date={this.attributes.published}/>
                             </span>
                         </div>
-                        <CountersComponent likes={this.attributes.likes} views={this.attributes.views} />
+                        <CountersComponent likes={this.attributes.likes} views={this.attributes.views}/>
                     </div>
-                    <div className="post-card-desc">{this.attributes.description}</div>
-                    <Button text="Открыть материал" />
+                    <div className="post-card__desc">{this.attributes.description}</div>
+                    <Button text="Открыть материал" onClick={() => {
+                        app.$router.go(
+                            app.$router.createUrl('post.view', this.attributes.creatorId + '/' + this.attributes.id)
+                        );
+                    }}/>
                 </div>
             </div>
         );
-
-        return element;
     }
 }
 

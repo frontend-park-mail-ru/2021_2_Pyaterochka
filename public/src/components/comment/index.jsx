@@ -1,6 +1,6 @@
 import Component from '../basecomponent';
 import TimeAgoComponent from '../time-ago';
-import './style.css';
+import './style.scss';
 
 /**
  * Компонент комментария
@@ -26,8 +26,8 @@ class Comment extends Component {
                 </div>
 
                 <div className="comment__info">
-                    <span className="comment__info__username">{this.attributes.user.username}</span>
-                    <span className="comment__info__published">
+                    <span className="comment__info-username">{this.attributes.user.username}</span>
+                    <span className="comment__info-published">
                         <TimeAgoComponent date={this.attributes.published} />
                     </span>
                 </div>

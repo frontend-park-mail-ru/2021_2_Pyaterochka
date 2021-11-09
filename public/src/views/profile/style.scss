@@ -1,0 +1,33 @@
+.profile-block {
+  padding: 20px;
+  margin-bottom: 50px;
+
+  &__no-creators {
+    text-align: center;
+
+    img {
+      max-width: 100%;
+      width: 800px;
+    }
+  }
+
+  &__find_new {
+    text-align: center;
+
+    .btn {
+      display: inline-block;
+      width: auto;
+    }
+  }
+}
+
+.creators-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  & > * {
+    margin: 20px;
+    max-width: 325px;
+  }
+}

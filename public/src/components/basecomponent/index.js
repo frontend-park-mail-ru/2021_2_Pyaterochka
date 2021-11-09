@@ -11,17 +11,17 @@ function applyUpdates () {
         try {
             block.updatePartly();
         } catch (err) {
-            console.error('Не удалось обновить компонент', block, err);
+            // console.error('Не удалось обновить компонент', block, err);
             try {
                 block.updateForce();
             } catch {
-                console.error('Не удалось обновить компонент принудительно', block, err);
+                // console.error('Не удалось обновить компонент принудительно', block, err);
             }
         }
     });
     updateBlocks.clear();
 }
-setInterval(applyUpdates, 10);
+setInterval(applyUpdates, 100);
 
 /**
  * Базовый компонент, заложен интерфейс компонента и его обновление
@@ -31,7 +31,7 @@ class Component {
         const getter = (attrs, key) => attrs[key];
 
         const update = (attrs, key, value) => {
-            if (value instanceof Object && !(value instanceof Date)) {
+            if (value instanceof Object && !(value instanceof Date) && !(value instanceof Node)) {
                 value = new Proxy(value, {
                     set: update,
                     get: getter

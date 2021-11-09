@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "Проект Patreon команды \"Пятерочка\"",
   "scripts": {
-    "build": "npx webpack",
+    "build": "node ./server/createSW.js && npx webpack",
     "start": "node ./server/production",
     "dev": "node ./server",
-    "linter": "npx eslint public/sw.js public/src server --fix && npx stylelint \"public/src/**/*.css\" --fix"
+    "linter": "npx eslint public/src server --fix && npx stylelint \"public/src/**/*.[s]css\" --fix"
   },
   "repository": {
     "type": "git",
@@ -35,10 +35,13 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^5.1.0",
     "eslint-plugin-react": "^7.26.0",
+    "node-sass": "^6.0.1",
+    "sass": "^1.43.4",
+    "sass-loader": "^12.3.0",
     "style-loader": "^3.3.0",
     "stylelint": "^13.13.1",
     "stylelint-config-standard": "^22.0.0",
-    "webpack": "^5.58.2",
+    "webpack": "^5.61.0",
     "webpack-cli": "^4.9.1",
     "webpack-dev-server": "^4.3.1"
   }

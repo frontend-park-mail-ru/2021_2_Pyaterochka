@@ -3,7 +3,6 @@ import Component from '../components/basecomponent';
 import Button from '../components/button';
 import InputField from '../components/input-field';
 import app from '../core/app';
-import { router } from '../index';
 import user from '../storage/user';
 
 class SignupView extends Component {
@@ -63,7 +62,9 @@ class SignupView extends Component {
         ];
     }
 
-    async submit () {
+    async submit (e) {
+        e.preventDefault();
+
         const errors = Math.max(...this.form.map((e) => e.validate().length));
         if (errors) return;
 
@@ -81,9 +82,15 @@ class SignupView extends Component {
                 this.attributes.error = 'Пользователь с данной почтой уже существует.';
                 return;
             }
+            if (res.data.error === 'nickname already exist') {
+                this.attributes.error = 'Пользователь с данным никнеймом уже существует.';
+                return;
+            }
             this.attributes.error = res.data.error;
             return;
         }
+        this.attributes.loading = true;
+
         await api.login({
             email: this.form[1].getValue(),
             password: this.form[2].getValue()
@@ -99,8 +106,8 @@ class SignupView extends Component {
                 <h1> Регистрация </h1>
                 <form
                     className="auth-card shadow"
-                    onSubmit={() => {
-                        this.submit();
+                    onSubmit={(e) => {
+                        this.submit(e);
                     }}
                 >
                     {this.form.map((c) => c.renderReactive())}
@@ -117,8 +124,8 @@ class SignupView extends Component {
                         color="primary"
                         rounded={true}
                         loading={this.attributes.loading}
-                        onclick={() => {
-                            this.submit();
+                        onclick={(e) => {
+                            this.submit(e);
                         }}
                     />
                 </form>
@@ -130,7 +137,7 @@ class SignupView extends Component {
     }
 
     created () {
-        if (user.user) return router.go('/');
+        if (user.user) return app.$router.go(app.$router.createUrl('profile'));
     }
 }
 

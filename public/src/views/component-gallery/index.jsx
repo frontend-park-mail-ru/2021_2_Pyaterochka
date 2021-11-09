@@ -15,19 +15,155 @@ import Comment from '../../components/comment';
 import PrettySection from '../../components/pretty-main-section';
 import Like from '../../components/like/index';
 
-import './style.css';
+import './style.scss';
 import app from '../../core/app';
 import EditorComponent from '../../components/editor';
 import { PropsView } from './PropsView';
 import TimeAgoComponent from '../../components/time-ago';
 import SimplifyNumComponent from '../../components/simplify-num';
 import SwitchComponent from '../../components/switch';
+import TabsPanel from '../../components/tabs-panel';
+import TabsContainer from '../../components/tabs-container';
+import ImageUploader from '../../components/image-uploader';
+import SelectComponent from '../../components/select';
 
 class IndexView extends Component {
     constructor () {
         super();
         this.attributes.cps = [
             {
+                name: 'Загрузка аватара',
+                data: [
+                    {
+                        name: 'Загружен аватар',
+
+                        component: new ImageUploader({
+                            isCircle: true,
+                            imageName: 'аватар',
+                            image: 'https://sun9-12.userapi.com/impf/c854228/v854228051/16558/K7rRvW0xelY.jpg?size=647x809&quality=96&sign=83e72450667c775a5831dac80fb2dea5&type=album'
+                        })
+                    },
+                    {
+                        name: 'Загружена обложка',
+
+                        component: new ImageUploader({
+                            isCircle: false,
+                            imageName: 'обложку',
+                            image: 'https://wallpaperscave.ru/images/original/18/01-10/abstract-colors-8119.jpg'
+
+                        })
+                    },
+                    {
+                        name: 'Спиннер на аватарке',
+
+                        component: new ImageUploader({
+                            loading: true,
+                            isCircle: true,
+                            image: 'https://sun9-12.userapi.com/impf/c854228/v854228051/16558/K7rRvW0xelY.jpg?size=647x809&quality=96&sign=83e72450667c775a5831dac80fb2dea5&type=album'
+                        })
+                    },
+                    {
+                        name: 'Спиннер на обложке',
+
+                        component: new ImageUploader({
+                            loading: true,
+                            isCircle: false,
+                            image: 'https://wallpaperscave.ru/images/original/18/01-10/abstract-colors-8119.jpg'
+                        })
+                    }
+                ]
+            },
+            {
+                name: 'Выпадающее меню',
+                data: [
+                    {
+                        component: new SelectComponent({
+                            placeholder: 'Категория',
+                            inital: 'Выберите категорию',
+                            options: [
+                                'Подкасты',
+                                'Музыканты',
+                                'Художники',
+                                'Писатели и журналисты',
+                                'Видеоблогер',
+                                'Образование',
+                                'Программирование',
+                                'Другое'
+                            ]
+                        })
+                    }]
+            },
+            {
+                name: 'Вкладки',
+                data: [
+                    {
+                        name: 'ON',
+                        component: new TabsContainer({
+                            tabs: [
+                                {
+                                    key: 'common',
+                                    title: 'Основная информация',
+                                    component: <>
+                                        Тут будет оформление профиля, тек. имя и почта
+                                    </>
+                                },
+                                {
+                                    key: 'account',
+                                    title: 'Аккаунт',
+                                    component: <>
+                                        Тут будет смена пароля
+                                    </>
+                                },
+                                {
+                                    key: 'notifications',
+                                    title: 'Уведомления',
+                                    component: <>
+                                        Тут будут уведомления
+                                    </>
+                                },
+                                {
+                                    key: 'creator_settings',
+                                    title: 'Аккаунт креатора',
+                                    component: <>
+                                        Тут будут уровни подписки
+                                    </>
+                                }
+                            ],
+                            noActive: <>
+                                Нет активной вкладки :(
+                            </>
+                        })
+                    }]
+            },
+            {
+                name: 'Панель вкладок',
+                data: [
+                    {
+                        name: 'ON',
+                        component: new TabsPanel({
+                            tabs: [
+                                {
+                                    key: 'common',
+                                    title: 'Основная информация'
+                                },
+                                {
+                                    key: 'account',
+                                    title: 'Аккаунт'
+                                },
+                                {
+                                    key: 'notifications',
+                                    title: 'Уведомления'
+                                },
+                                {
+                                    key: 'creator_settings',
+                                    title: 'Аккаунт креатора'
+                                }
+                            ],
+                            activeTab: 'notifications'
+                        })
+                    }
+                ]
+            }, {
                 name: 'Переключатель',
                 data: [
                     {
@@ -280,7 +416,7 @@ class IndexView extends Component {
                             name: 'Настройте свою страницу и уровни подписки',
                             description: (
                                 <>
-                                    <a router-go={app.$router.createUrl('signup')} className="step-content__description_link">
+                                    <a router-go={app.$router.createUrl('signup')} className="step-content__description-link">
                                         Зарегистрируйтесь
                                     </a>{' '}
                                     и настройте вашу страницу на Patreon. Продумайте уровни

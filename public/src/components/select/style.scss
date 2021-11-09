@@ -1,0 +1,29 @@
+.select-component {
+  position: relative;
+
+  &--not-selected .select-component__select {
+    background: #f4f4f4;
+  }
+
+  &__select {
+    width: 100%;
+    font-family: Roboto, sans-serif;
+    font-size: 18px;
+    padding: 14px 15px 6px 5px;
+    border-radius: 5px;
+    background: #fff;
+    cursor: pointer;
+    border: 1px solid #dedede;
+    outline: none;
+  }
+
+  &__placeholder {
+    position: absolute;
+    font-family: Roboto, sans-serif;
+    color: #4c4c4c;
+    top: 0;
+    left: 10px;
+    font-size: 10px;
+    cursor: pointer;
+  }
+}

@@ -1,6 +1,6 @@
 import app from '../../core/app';
 import Component from '../basecomponent';
-import './style.css';
+import './style.scss';
 
 /**
  * Компонент карточки создателя
@@ -26,7 +26,7 @@ class CreatorCard extends Component {
     }
 
     render () {
-        const style = `background-image: url(${this.attributes.avatar})`;
+        const style = `background-image: url('${this.attributes.avatar}')`;
 
         return (
             <div
@@ -42,8 +42,12 @@ class CreatorCard extends Component {
                         'creator-card__avatar',
                         this.attributes.shadow ? 'shadow' : ''
                     ]}
-                    style={style}
-                ></div>
+                >
+                    <div
+                        className="creator-card__avatar__image"
+                        style={style}
+                    />
+                </div>
                 <div className="creator-card__header">{this.attributes.name}</div>
                 <div className="creator-card__description">
                     {this.attributes.description}

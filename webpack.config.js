@@ -1,18 +1,18 @@
 const path = require('path');
 
 module.exports = {
-    mode: 'development',
+    mode: process.env.PRODUCTION ? 'production' : 'development',
     entry: {
-        index: './public/src/index.js',
+        index: './public/src/index.js'
     },
     output: {
         path: path.resolve(__dirname, 'public/scripts'),
-        filename: '[name].compiled.js',
+        filename: '[name].compiled.js'
     },
 
     resolve: {
         modules: [path.resolve(__dirname, 'public/src'), 'node_modules'],
-        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+        extensions: ['.js', '.jsx', '.ts', '.tsx']
     },
 
     module: {
@@ -23,19 +23,19 @@ module.exports = {
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        "presets": [
-                            
+                        presets: [
+
                         ],
-                        "plugins": [
-                            "@babel/plugin-syntax-jsx",
+                        plugins: [
+                            '@babel/plugin-syntax-jsx',
                             [
-                                "@babel/plugin-transform-react-jsx",
+                                '@babel/plugin-transform-react-jsx',
                                 {
-                                    "throwIfNamespace": false,
-                                    "runtime": "automatic",
-                                    "importSource": "modules"
+                                    throwIfNamespace: false,
+                                    runtime: 'automatic',
+                                    importSource: 'modules'
                                 }
-                            ],
+                            ]
                         ]
                     }
                 }
@@ -45,16 +45,34 @@ module.exports = {
                 use: [
                     {
                         loader: 'style-loader',
-                        options: { injectType: 'singletonStyleTag' },
+                        options: { injectType: 'singletonStyleTag' }
                     },
                     {
-                        loader: "css-loader",
-                        options: {url: false}
+                        loader: 'css-loader',
+                        options: { url: false }
                     }
                 ]
             },
-
+            {
+                test: /\.s[ac]ss$/i,
+                use: [
+                    {
+                        loader: 'style-loader',
+                        options: { injectType: 'singletonStyleTag' }
+                    },
+                    {
+                        loader: 'css-loader',
+                        options: { url: false }
+                    },
+                    {
+                        loader: 'sass-loader',
+                        options: {
+                            implementation: require('sass')
+                        }
+                    }
+                ]
+            }
         ]
-    },
+    }
 
-}
+};

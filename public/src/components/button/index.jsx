@@ -1,6 +1,6 @@
 import Component from '../basecomponent';
 import Spinner from '../spinner';
-import './style.css';
+import './style.scss';
 
 /**
  * Компонент кнопки
@@ -21,20 +21,20 @@ class Button extends Component {
     }
 
     render () {
-        const classList = `btn btn-${this.attributes.color} ${this.attributes.rounded ? 'btn-rounded' : ''}`;
-        const element = (
+        const classList = `btn btn_${this.attributes.color} ${this.attributes.rounded ? 'btn_rounded' : ''}`;
+        return (
             <button
                 className={classList}
-                onClick={(e) => { this.attributes.onclick(e); }}
+                onClick={(e) => {
+                    this.attributes.onclick(e);
+                }}
             >
                 {this.attributes.loading
-                    ? <Spinner />
+                    ? <Spinner/>
                     : this.attributes.text}
 
             </button>
         );
-
-        return element;
     }
 }
 

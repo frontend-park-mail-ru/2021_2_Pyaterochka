@@ -10,6 +10,8 @@ class JsxDomElement {
         this.children = jsxChildren;
         this.children.forEach(child => { child.parent = this; });
 
+        this.className = '';
+
         Object.keys(attributes).forEach(key => {
             if (!attributes[key]) { return; }
             if (key === 'children') { return; }
@@ -60,6 +62,7 @@ class JsxDomElement {
         this.children.forEach(child => child.destroy());
         this.dom?.remove();
         this.removeListeners();
+
         this.dom = null;
     }
 
@@ -84,7 +87,7 @@ class JsxDomElement {
         }
 
         if (!this.dom) {
-            console.error("Can't find DOM element of", this);
+            // console.error("Can't find DOM element of", this);
             return;
         }
 
@@ -108,6 +111,10 @@ class JsxDomElement {
 
         if (this.parentComponent) {
             this.parentComponent.dom = this;
+        }
+
+        if (newJsxDom.parentComponent) {
+            newJsxDom.parentComponent.dom = this;
         }
 
         return this;

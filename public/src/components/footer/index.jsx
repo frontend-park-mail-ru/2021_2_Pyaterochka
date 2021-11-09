@@ -1,6 +1,6 @@
 import app from '../../core/app';
 import Component from '../basecomponent';
-import './style.css';
+import './style.scss';
 
 /**
  * Компонент подвала
@@ -8,14 +8,19 @@ import './style.css';
 class Footer extends Component {
     render () {
         return <div className="footer">
-            <div className="footer-body">
+            <div className="footer__body">
                 © Patreon by Pyaterochka team  from Technopark VK, 2021
                 <br />
                 Использованы материалы freepik - <a href="https://ru.freepik.com/">ru.freepik.com</a>
                 <br />
-                <a href="#" router-go={app.$router.createUrl('component-gallery')}>
-                    Галерея компонентов
-                </a>
+                {
+                    app.$router
+                        ? <a href="#" router-go={app.$router.createUrl('component-gallery')}>
+                            Галерея компонентов
+                        </a>
+                        : ''
+                }
+
             </div>
         </div>;
     }

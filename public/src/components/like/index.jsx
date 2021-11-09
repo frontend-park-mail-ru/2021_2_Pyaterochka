@@ -1,6 +1,6 @@
 import Component from '../basecomponent';
 import SimplifyNumComponent from '../simplify-num';
-import './style.css';
+import './style.scss';
 
 /**
  * Компонент лайка
@@ -10,12 +10,16 @@ class Like extends Component {
     constructor ({
         user = null,
         liked = false,
-        count = 0
+        count = 0,
+        onClick = () => {
+
+        }
     }) {
         super();
         this.attributes.user = user;
         this.attributes.liked = liked;
         this.attributes.count = count;
+        this.attributes.onClick = onClick;
     }
 
     render () {
@@ -28,9 +32,9 @@ class Like extends Component {
                                 this.hasLike(e);
                             }
                             : null}
-                    className={['like-link', this.attributes.liked ? 'has-like' : '']}
+                    className={['like__link', this.attributes.liked ? 'like_has-like' : '']}
                 />
-                <span className="likes-count"><SimplifyNumComponent num={this.attributes.count}/></span>
+                <span className="like__count"><SimplifyNumComponent num={this.attributes.count}/></span>
             </div>
         );
     }
@@ -38,13 +42,7 @@ class Like extends Component {
     hasLike (e) {
         e.preventDefault();
 
-        if (!this.attributes.liked) {
-            this.attributes.count++;
-            this.attributes.liked = true;
-        } else {
-            this.attributes.count--;
-            this.attributes.liked = false;
-        }
+        this.attributes.onClick();
     }
 }
 

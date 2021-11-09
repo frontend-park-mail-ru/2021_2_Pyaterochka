@@ -1,29 +1,53 @@
 import Router from './router';
 import Route from './router/route';
-import Layout from './components/layout';
 import LoadingView from './views/loading-view';
 import user from './storage/user';
 import App from './core/app';
 import ErrorPage from './views/errorpage';
+import registerValidSW from './modules/service-worker';
+import MainPageView from './views/main-page';
 
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js');
-};
+import '../styles/index.scss';
+import Layout from './components/layout';
 
-let router;
 document.addEventListener('DOMContentLoaded', async () => {
     try {
-        user.update();
+        await user.update();
     } catch {
 
     }
 
-    App.setup(<Layout>
+    if (!navigator.onLine) {
+        App.setup(
+            <Layout>
+                <ErrorPage
+                    err="-1"
+                    desc="Нет соединения с интернетом"
+                    goHome={false}
+                />
+            </Layout>
+            , document.getElementById('root'));
 
+        window.addEventListener('online', () => {
+            setupApp();
+        }, {
+            once: true
+        });
+    } else {
+        setupApp();
+    }
+
+    registerValidSW('/sw.js');
+
+    // console.log(App);
+});
+
+function setupApp () {
+    App.setup(
         <Router routes={[
             new Route({
                 url: '/',
-                component: async () => await import('views/main-page'),
+                component: async () => { return { default: MainPageView }; },
                 title: 'Главная страница',
                 name: 'main'
             }),
@@ -40,10 +64,22 @@ document.addEventListener('DOMContentLoaded', async () => {
                 name: 'signup'
             }),
             new Route({
+                url: '/logout',
+                component: async () => await import('views/logout'),
+                title: 'Выход',
+                name: 'logout'
+            }),
+            new Route({
                 url: '/components',
                 component: async () => await import('views/component-gallery'),
                 title: 'Галерея компонентов',
                 name: 'component-gallery'
+            }),
+            new Route({
+                url: '/payment/*',
+                component: async () => await import('views/payment-page'),
+                title: 'Страница оформления подписки',
+                name: 'payment'
             }),
             new Route({
                 url: '/creator/*',
@@ -60,6 +96,35 @@ document.addEventListener('DOMContentLoaded', async () => {
                 component: async () => await import('views/profile'),
                 title: 'Профиль',
                 name: 'profile'
+            }), new Route({
+                url: '/search',
+                component: async () => await import('views/creators-search'),
+                title: 'Поиск авторов',
+                name: 'creators.search'
+            }),
+            new Route({
+                url: '/profile/edit/*',
+                component: async () => await import('views/profile/edit'),
+                title: 'Настройки',
+                name: 'profile.edit'
+            }),
+            new Route({
+                url: '/creator-panel',
+                component: async () => await import('views/creator-panel'),
+                title: 'Панель автора',
+                name: 'creator.panel'
+            }),
+            new Route({
+                url: '/profile/creator/level/create',
+                component: async () => await import('views/profile/edit/addLevel'),
+                title: 'Создание уровня',
+                name: 'creator.level.create'
+            }),
+            new Route({
+                url: '/profile/creator/level/edit/*',
+                component: async () => await import('views/profile/edit/addLevel'),
+                title: 'Редактирование уровня',
+                name: 'creator.level.edit'
             }),
             new Route({
                 url: '/post/create',
@@ -67,9 +132,15 @@ document.addEventListener('DOMContentLoaded', async () => {
                 title: 'Создание поста',
                 name: 'post.create'
             }),
+            new Route({
+                url: '/edit/post/*',
+                component: async () => await import('views/post/edit'),
+                title: 'Редактирование поста',
+                name: 'post.edit'
+            }),
 
             new Route({
-                url: '/post',
+                url: '/post/*',
                 component: async () => await import('views/post/view'),
                 title: 'Просмотр поста',
                 name: 'post.view'
@@ -84,14 +155,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 title: 'Страница не найдена'
             })
         ]} loadingView={
-            !navigator.onLine
-                ? <ErrorPage err="-1" desc="Нет соединения с интернетом" />
-                : <LoadingView />
+            <LoadingView />
         } />
-
-    </Layout>, document.getElementById('root'));
-
-    console.log(App);
-});
-
-export { router };
+        , document.getElementById('root'));
+}

@@ -3,6 +3,7 @@
  */
 
 import Component from '../components/basecomponent';
+import Layout from '../components/layout';
 import app from '../core/app';
 
 class Router extends Component {
@@ -66,10 +67,12 @@ class Router extends Component {
      *
      * @param {string} url адрес
      */
-    go (url = '') {
+    go (url = '', rerender = true) {
         history.pushState(url, url, url);
 
-        this.start();
+        if (rerender) {
+            this.start();
+        }
     }
 
     /**
@@ -80,13 +83,23 @@ class Router extends Component {
         document.title = route.title;
 
         if (this.loadingView) {
-            this.view = this.loadingView;
+            this.slot = <Layout>
+                {this.loadingView}
+            </Layout>;
         }
-        const Component = (await route.component()).default;
-        const view = new Component();
+        try {
+            const Component = (await route.component()).default;
+            const view = new Component();
 
-        if (route.data) { view.data = route.data; }
-        this.slot = view.renderReactive();
+            if (route.data) {
+                view.data = route.data;
+            }
+            this.slot = <Layout>
+                {view.renderReactive()}
+            </Layout>;
+        } catch (e) {
+            // console.error("Can't load page", e);
+        }
     }
 
     onClick (e) {
@@ -105,11 +118,11 @@ class Router extends Component {
                 this.go(url);
             }
         }
-        e.preventDefault();
+        // e.preventDefault();
     }
 
     onPopState () {
-        this.renderRoute(this.getRoute(location.pathname));
+        this.start();
     }
 
     /**

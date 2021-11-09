@@ -1,7 +1,7 @@
 import { nextTick } from '../../modules/utils';
 import Component from '../basecomponent';
 import Button from '../button';
-import './style.css';
+import './style.scss';
 
 /**
  * Компонент карточки создателя
@@ -12,19 +12,12 @@ class EditorComponent extends Component {
         title = '',
         description = '',
         comment = '',
-        levels = [
-            {
-                title: 'Новичок',
-                id: 1
-            },
-            {
-                title: 'Про',
-                id: 2
-            }
-        ],
+        levels = [],
         activeLevel = 0,
         cover = null,
-        body = []
+        body = [],
+        onSave = (post) => {},
+        onDelete = () => {}
     } = {}) {
         super();
         this.attributes.title = title;
@@ -36,9 +29,12 @@ class EditorComponent extends Component {
         this.attributes.body = body;
         this.attributes.isDraft = isDraft;
 
+        this.attributes.onSave = onSave;
+        this.attributes.onDelete = onDelete;
+
         this.attributes.body.forEach(b => {
             if (!b.hash) {
-                b.hash = String((new Date()).getTime());
+                b.hash = String((new Date()).getTime()) + String(Math.random());
             }
         });
 
@@ -162,14 +158,32 @@ class EditorComponent extends Component {
         e.target.innerText = this.fixText(e.target.innerText);
     }
 
+    save () {
+        this.attributes.onSave({
+            title: this.attributes.title,
+            description: this.attributes.description,
+            activeLevel: this.attributes.activeLevel,
+            body: Object.assign(this.attributes.body.filter(b => b.text))
+        });
+    }
+
+    delete () {
+        this.attributes.onDelete({
+            title: this.attributes.title,
+            description: this.attributes.description,
+            activeLevel: this.attributes.activeLevel,
+            body: Object.assign(this.attributes.body.filter(b => b.text))
+        });
+    }
+
     render () {
         return (
             <div className="editor">
                 <div className="editor__header">
-                    <div className="editor__helper editor__helper--title">Заголовок</div>
+                    <div className="editor__helper editor__helper-title">Заголовок</div>
                     <div
                         placeholder="Введите заголовок"
-                        className={['editor__title', this.attributes.title ? '' : 'editor--show-placeholder']}
+                        className={['editor__title', this.attributes.title ? '' : 'editor_show-placeholder']}
                         onKeyPress={(e) => {
                             this.keyPress(e);
                         }}
@@ -218,7 +232,7 @@ class EditorComponent extends Component {
                     <div className="editor__helper">Описание</div>
                     <div
                         placeholder="Введите описание"
-                        className={['editor__description', this.attributes.description ? '' : 'editor--show-placeholder']}
+                        className={['editor__description', this.attributes.description ? '' : 'editor_show-placeholder']}
                         onKeyPress={(e) => {
                             this.keyPress(e);
                         }}
@@ -236,15 +250,21 @@ class EditorComponent extends Component {
                     {this.attributes.isDraft
                         ? <>
                             <div className="btn-container">
-                                <Button color="success" text="Опубликовать" />
+                                <Button color="success" text="Опубликовать" onClick={
+                                    () => { this.save(); }
+                                } />
                             </div>
                         </>
                         : <>
                             <div className="btn-container">
-                                <Button color="success" text="Сохранить" />
+                                <Button color="success" text="Сохранить" onClick={
+                                    () => { this.save(); }
+                                } />
                             </div>
                             <div className="btn-container">
-                                <Button color="primary" text="Удалить" />
+                                <Button color="primary" text="Удалить" onClick={
+                                    () => { this.delete(); }
+                                } />
                             </div>
 
                         </>}
@@ -273,7 +293,7 @@ class EditorComponent extends Component {
 
                             <div
                                 key={element.hash + '_element'}
-                                className={['editor__body-element', element.text === '' ? 'editor__body-element--show-placeholder' : '']}
+                                className={['editor__body-element', element.text === '' ? 'editor__body-element_show-placeholder' : '']}
                                 contentEditable={true}
                                 placeholder="Пишите текст вашей статьи здесь или выберите  нужный элемент слева"
                                 onInput={(e) => {
