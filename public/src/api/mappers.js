@@ -58,8 +58,36 @@ const mapLevel = (data) => {
         cover: data.cover ? `${basename}/${data.cover}` : null,
         benefits: description,
         price: data.price + ' ₽',
-        color: 'primary'
+        color: 'primary',
+        parentId: data.child_award
     };
+};
+
+const mapLevels = (data) => {
+    const levels = data
+        .sort((a, b) => (a.price - b.price))
+        .map(mapLevel);
+
+    const result = levels.map(level => {
+        if (!level.parentId) {
+            return level;
+        }
+
+        const levelParent = levels.find(l => l.id === level.parentId);
+
+        if (!levelParent) {
+            return level;
+        }
+
+        const levelCopy = Object.assign(level);
+
+        levelCopy.parent = Object.assign(levelParent);
+        levelCopy.parentName = level.parent.name;
+
+        return levelCopy;
+    });
+
+    return result;
 };
 
 export {
@@ -67,5 +95,6 @@ export {
     mapPost,
     mapPostFull,
     mapProfile,
-    mapLevel
+    mapLevel,
+    mapLevels
 };

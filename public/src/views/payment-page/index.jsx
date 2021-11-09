@@ -86,7 +86,7 @@ class PaymentPage extends Component {
 
                     </p>
 
-                    {this.attributes.level.benefits.map((benefit, i) => (
+                    {this.attributes.benefits.map((benefit, i) => (
                         <p key={i} className="level-card__body__benefit">{benefit}</p>
                     ))}
 
@@ -162,9 +162,23 @@ class PaymentPage extends Component {
 
             const levels = await api.levelsInfo(this.creatorId);
 
-            this.attributes.level = levels.find(level => level.id === this.levelId);
+            const level = levels.find(level => level.id === this.levelId);
+
+            this.attributes.level = level;
+
+            let benefits = [...level.benefits];
+
+            let parentId = level.parentId;
+            while (parentId) {
+                const level = levels.find(level => level.id === parentId);
+                parentId = level.parentId;
+                benefits = [...level.benefits, ...benefits];
+            }
+
+            this.attributes.benefits = benefits;
             this.attributes.otherLevels = levels.filter(level => level.id !== this.levelId);
-        } catch {
+        } catch (e) {
+            console.log(e);
             this.attributes.creator = null;
             this.attributes.level = null;
             this.attributes.otherLevels = null;
