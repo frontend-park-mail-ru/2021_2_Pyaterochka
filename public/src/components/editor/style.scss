@@ -1,0 +1,165 @@
+.add-icon-button {
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 0;
+  margin: 0 5px;
+
+  .icon {
+    width: 24px;
+    height: 24px;
+    mask-image: var(--icon);
+    mask-position: center;
+    mask-size: contain;
+    -webkit-mask-image: var(--icon);
+    -webkit-mask-position: center;
+    -webkit-mask-size: contain;
+    background-color: #7c7c7c;
+    display: block;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: #000;
+    }
+  }
+}
+
+.editor__save-panel {
+  padding: 15px 15px;
+  font-size: 14px;
+
+  .btn-container {
+    width: 200px;
+    margin-right: 10px;
+    display: inline-block;
+  }
+}
+
+.editor__header {
+  padding: 5px 15px;
+  border-left: 2px #878787 solid;
+  transition: border-color 0.2s ease;
+
+  &:hover {
+    padding: 5px 15px;
+    border-color: #000;
+
+    .editor__helper {
+      color: #000;
+    }
+  }
+}
+
+.editor__helper {
+  transition: color 0.2s ease;
+  position: absolute;
+  text-align: right;
+  left: -180px;
+  font-size: 18px;
+  width: 200px;
+  color: #7c7c7c;
+
+  &-title {
+    font-size: 28px;
+  }
+}
+
+.editor {
+  max-width: 800px;
+  margin: auto;
+  padding: 40px;
+  position: relative;
+
+  [contentEditable=true] {
+    border: none;
+    outline: none;
+    cursor: text;
+    color: #000;
+
+    br {
+      display: block;
+    }
+  }
+
+  textarea {
+    display: block;
+    width: 100%;
+    border: none;
+    outline: none;
+    font-family: Roboto, sans-serif;
+  }
+
+  &__title {
+    font-size: 28px;
+    font-weight: 300;
+  }
+
+  &__levels {
+    font-size: 18px;
+    font-weight: 400;
+    color: #878787;
+  }
+
+  &__level {
+    display: inline-block;
+    cursor: pointer;
+    transition: all ease 0.1s;
+
+    &.active {
+      color: #000;
+    }
+  }
+
+  &__description {
+    font-size: 18px;
+    font-weight: 300;
+  }
+
+  &__body-element {
+    padding: 15px 15px;
+  }
+
+  &__helper--body {
+    margin: 10px 0;
+    padding-right: 22px;
+    margin-left: 22px;
+    border-right: 2px solid #888;
+  }
+
+  &__title,
+  &__levels,
+  &__description {
+    margin-bottom: 4px;
+  }
+
+  [contentEditable=true]:empty::after,
+  .editor__body-element--show-placeholder::after,
+  .editor_show-placeholder::after {
+    content: attr(placeholder);
+    color: #7c7c7c;
+  }
+}
+
+@media (max-width: 1100px) {
+  .editor {
+    padding: 20px 10px;
+
+    &__helper {
+      display: none;
+
+      &--body {
+        left: -70px;
+        display: block;
+
+        + .editor__body-element {
+          margin-left: 150px;
+        }
+      }
+    }
+
+    &__header {
+      border-left: none;
+    }
+  }
+}

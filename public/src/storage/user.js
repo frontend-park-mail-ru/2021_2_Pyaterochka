@@ -1,6 +1,6 @@
 /** @module Хранилище профиля пользователя */
-import api from '../api/index.js';
-import { router } from '../index.js';
+import api from '../api/index';
+import app from '../core/app';
 
 /**
  * Хранилище пользователя
@@ -28,7 +28,7 @@ const user = {
      * Хук при обновлении профиля
      */
     onUpdate () {
-        router.start();
+        app.$router?.start();
     }
 };
 

@@ -2,57 +2,33 @@
  * @module Роутер
  */
 
-/**
- * Путь роутера
- */
-class Route {
-    constructor (url, component, title = '') {
-        this.url = url;
-        this.component = component;
-        this.title = title;
-        this.loadingView = null;
-    }
-}
+import Component from '../components/basecomponent';
+import Layout from '../components/layout';
+import app from '../core/app';
 
-/**
- * Загрузчик компонента по требованию
- */
-class DynamicComponentLoader {
-    constructor (url, ...attrs) {
-        this.url = url;
-        this.attrs = attrs;
-        this.Component = null;
-    }
+class Router extends Component {
+    constructor ({ routes = [], loadingView = null }) {
+        super();
 
-    /**
-     * Загрузить компонент
-     *
-     * @returns {Component} компонент
-     */
-    async load () {
-        if (this.Component) return this.Component;
-        this.Component = (await import(this.url)).default;
-
-        return this.Component;
-    }
-}
-
-/**
- * Роутер
- */
-class Router {
-    constructor (container, routes = []) {
         this.routes = routes;
-        this.container = container;
+        this.loadingView = loadingView;
+        if (this.loadingView) {
+            this.slot = this.loadingView;
+        } else {
+            this.slot = <></>;
+        }
+
         this.addRouterListeners();
+
+        app.$router = this;
     }
 
-    /**
-     * Добавить путь
-     * @param {Route} route путь
-     */
-    addRoute (route) {
-        this.routes.push(route);
+    render () {
+        return this.slot;
+    }
+
+    created () {
+        this.start();
     }
 
     /**
@@ -78,9 +54,12 @@ class Router {
      * Запуск роутера
      */
     start () {
-        let url = location.hash.substr(1);
-        if (url === '') url = '/main';
-        this.go(url);
+        const url = location.pathname;
+        const route = this.getRoute(url);
+        if (route.url.endsWith('*')) {
+            route.data = url.replace(route.url.replace('*', ''), '');
+        }
+        this.renderRoute(route);
     }
 
     /**
@@ -88,16 +67,12 @@ class Router {
      *
      * @param {string} url адрес
      */
-    go (url = '') {
-        history.pushState(url, location.href);
-        location.hash = url;
+    go (url = '', rerender = true) {
+        history.pushState(url, url, url);
 
-        const route = this.getRoute(url);
-        if (route.url.endsWith('*')) {
-            route.data = url.replace(route.url.replace('*', ''), '');
+        if (rerender) {
+            this.start();
         }
-        this.renderRoute(route);
-        window.scrollTo(0, 0);
     }
 
     /**
@@ -106,87 +81,71 @@ class Router {
      */
     async renderRoute (route) {
         document.title = route.title;
-        let view = route.component;
 
-        if (view instanceof DynamicComponentLoader) {
-            if (this.loadingView && !view.component) {
-                if (this.layout) {
-                    this.layout.slot = this.loadingView.renderReactive();
-                } else {
-                    this.container.innerHTML = '';
-                    this.container.appendChild(this.loadingView.renderReactive());
-                }
+        if (this.loadingView) {
+            this.slot = <Layout>
+                {this.loadingView}
+            </Layout>;
+        }
+        try {
+            const Component = (await route.component()).default;
+            const view = new Component();
+
+            if (route.data) {
+                view.data = route.data;
             }
-            const Component = await view.load();
-            view = new Component();
+            this.slot = <Layout>
+                {view.renderReactive()}
+            </Layout>;
+        } catch (e) {
+            // console.error("Can't load page", e);
         }
-        if (this.layout) {
-            if (route.data) { view.data = route.data; }
-
-            this.layout.slot = view.renderReactive();
-            return;
-        }
-        this.container.innerHTML = '';
-        this.container.appendChild(view.renderReactive());
     }
 
-    /**
-     * Установить контейнер для роутера
-     * @param {Element} container контейнер
-     */
-    setContainer (container) {
-        this.container = container;
+    onClick (e) {
+        if (e.target) {
+            let url = null;
+            let node = e.target;
+
+            while (!url && node) {
+                if (node.hasAttribute('router-go')) {
+                    url = node.getAttribute('router-go');
+                }
+                node = node.parentElement;
+            }
+            if (url) {
+                e.preventDefault();
+                this.go(url);
+            }
+        }
+        // e.preventDefault();
     }
 
-    /**
-     * Установить шаблон для роутера
-     * @param {Component} layout шаблон
-     */
-    setLayout (layout) {
-        this.layout = layout;
-        this.container.innerHTML = '';
-        this.container.appendChild(layout.renderReactive());
+    onPopState () {
+        this.start();
     }
 
     /**
      * Установка обработчиков
      */
     addRouterListeners () {
-        this.container.addEventListener('click', (e) => {
-            if (e.target) {
-                let url = null;
-                let node = e.target;
-
-                while (!url && node) {
-                    if (node.hasAttribute('router-go')) {
-                        url = node.getAttribute('router-go');
-                    }
-                    node = node.parentElement;
-                }
-                if (url) {
-                    e.preventDefault();
-                    this.go(url);
-                }
-            }
-            e.preventDefault();
-        });
-        window.addEventListener('popstate', (e) => {
-            this.renderRoute(this.getRoute(location.hash.substr(1)));
-        });
+        document.addEventListener('click', (e) => { this.onClick(e); });
+        window.addEventListener('popstate', (e) => { this.onPopState(e); });
     }
 
-    /**
-     * Установка компонента загрузки
-     *
-     * Данный компонент будет отображаться во время динамической
-     * загрузки компонентов страниц
-     * @param {Component} component компонент загрузки
-     */
-    setLoadingView (component) {
-        this.loadingView = component;
+    createUrl (name, param = null) {
+        const route = this.routes.find((r) => {
+            if (!r) return false;
+            return r.name === name;
+        });
+
+        if (!route) {
+            console.error('Route ' + name + ' not found');
+            return;
+        }
+
+        return route.url.replace('*', param || '');
     }
 }
 
 export default Router;
-
-export { Route, DynamicComponentLoader };

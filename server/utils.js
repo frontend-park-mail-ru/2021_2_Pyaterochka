@@ -9,7 +9,7 @@ async function transformFile (file) {
     });
 
     return jsxCompiled.code.replace(
-        /from "@\/jsx-runtime"/g, "from '/src/modules/jsx.js'"
+        /from "@\/jsx-runtime"/g, "from '/src/modules/jsx'"
     );
 }
 

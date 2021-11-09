@@ -12,8 +12,6 @@ require('ncp').ncp(inFolder, outFolder, () => {
     walker(outFolder);
 });
 
-let counterAll = 0;
-let counterDone = 0;
 function walker (path) {
     fs.readdir(path, (err, files) => {
         if (err) throw err;
@@ -26,19 +24,16 @@ function walker (path) {
                 }
                 let code = null;
                 if (filename.endsWith('.jsx')) {
-                    counterAll++;
                     code = await utils.transformFile(filename);
                     code = utils.transformJS(code);
                 }
                 if (filename.endsWith('.js')) {
-                    counterAll++;
                     code = await utils.transformFileJS(filename);
                 }
 
                 if (code) {
                     fs.writeFile(filename.replace('.jsx', '.js'), code, (err) => {
                         if (err) throw err;
-                        counterDone++;
                     });
                 }
             });

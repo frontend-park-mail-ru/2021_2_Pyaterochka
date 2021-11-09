@@ -1,0 +1,23 @@
+body {
+  position: relative;
+  min-height: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.footer {
+  width: 100%;
+  background-color: var(--color-primary-dark);
+  height: 120px;
+
+  &__body {
+    margin: auto;
+    margin-left: 100px;
+    padding-top: 40px;
+    color: #fff;
+
+    a {
+      color: #fff;
+    }
+  }
+}

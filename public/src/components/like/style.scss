@@ -1,0 +1,29 @@
+.like {
+  display: flex;
+  align-items: center;
+
+  &__link {
+    display: flex;
+    background-image: url(/imgs/not-liked.svg);
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border: none;
+    font: inherit;
+    color: inherit;
+    background-color: transparent;
+    cursor: pointer;
+  }
+
+  &_has-like {
+    background-image: url(/imgs/liked.svg);
+  }
+
+  &__count {
+    margin-left: 10px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 23px;
+  }
+}

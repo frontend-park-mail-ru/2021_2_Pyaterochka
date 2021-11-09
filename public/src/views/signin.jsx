@@ -1,9 +1,9 @@
-import api from '../api/index.js';
-import Component from '../components/basecomponent.js';
-import Button from '../components/button.jsx';
-import InputField from '../components/input-field.jsx';
-import { router } from '../index.js';
-import user from '../storage/user.js';
+import api from '../api/index';
+import Component from '../components/basecomponent';
+import Button from '../components/button';
+import InputField from '../components/input-field';
+import app from '../core/app';
+import user from '../storage/user';
 
 class SigninView extends Component {
     constructor () {
@@ -25,7 +25,9 @@ class SigninView extends Component {
         ];
     }
 
-    async submit () {
+    async submit (e) {
+        e.preventDefault();
+
         const error = this.form.reduce(
             (status, form) => status || form.getValue() === '',
             false
@@ -51,32 +53,26 @@ class SigninView extends Component {
                 <h1> Войти </h1>
                 <form
                     className="auth-card shadow"
-                    onSubmit={() => {
-                        this.submit();
+                    onSubmit={(e) => {
+                        this.submit(e);
                     }}
                 >
-                    {this.form.map((c) => c.render())}
-                    {this.attributes.error
-                        ? (
-                            <div className="error">{this.attributes.error}</div>
-                        )
-                        : (
-                            ''
-                        )}
+                    {this.form.map((c) => c.renderReactive())}
+                    <div className="error">{this.attributes.error}</div>
 
                     <Button
                         text="Войти"
                         color="primary"
                         rounded={true}
                         loading={this.attributes.loading}
-                        onclick={() => {
-                            this.submit();
+                        onClick={(e) => {
+                            this.submit(e);
                         }}
                     />
                 </form>
                 <span className="auth-card__tooltip">
                     Впервые на Patreon?{' '}
-                    <a href="#" router-go="/signup">
+                    <a href="#" router-go={app.$router.createUrl('signup')}>
                         Зарегистрируйтесь
                     </a>
                 </span>
@@ -85,7 +81,7 @@ class SigninView extends Component {
     }
 
     created () {
-        if (user.user) return router.go('/');
+        if (user.user) return app.$router.go(app.$router.createUrl('profile'));
 
         this.form = [
             new InputField({

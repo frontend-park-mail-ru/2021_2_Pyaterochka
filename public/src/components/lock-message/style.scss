@@ -1,0 +1,53 @@
+.lock-message {
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  font-weight: 500;
+  color: #fff;
+
+  .icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 100%;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 10px 0 #fff6;
+    background: #fff;
+
+    &::after {
+      content: '';
+      width: 56px;
+      height: 56px;
+      display: block;
+      background-color: var(--color-primary);
+      margin: 12px;
+      mask-image: url(/imgs/icons/lock_outline_28.svg);
+      mask-repeat: no-repeat;
+      mask-position: center;
+      mask-size: contain;
+      -webkit-mask-image: url(/imgs/icons/lock_outline_28.svg);
+      -webkit-mask-repeat: no-repeat;
+      -webkit-mask-position: center;
+      -webkit-mask-size: contain;
+    }
+  }
+
+  span {
+    margin-bottom: 10px;
+  }
+
+  .btn {
+    width: 200px;
+  }
+
+  &.dark {
+    color: #000;
+
+    .icon {
+      box-shadow: 0 2px 10px 0 #0006;
+    }
+  }
+}
