@@ -17,6 +17,7 @@ class PostCard extends Component {
         views = 0,
         description = '',
         id = null,
+        levelId = null,
         creatorId = null,
         level = '',
         opened = true,
@@ -33,6 +34,7 @@ class PostCard extends Component {
         this.attributes.level = level;
         this.attributes.opened = opened;
         this.attributes.image = image;
+        this.attributes.levelId = levelId;
     }
 
     render () {
@@ -65,7 +67,10 @@ class PostCard extends Component {
                     <div className="post-card__desc">{this.attributes.description}</div>
                     <Button text="Открыть материал" onClick={() => {
                         app.$router.go(
-                            app.$router.createUrl('post.view', this.attributes.creatorId + '/' + this.attributes.id)
+                            this.attributes.opened
+                                ? app.$router.createUrl('post.view', this.attributes.creatorId + '/' + this.attributes.id)
+                                : app.$router.createUrl('payment', this.attributes.creatorId + '/' + this.attributes.levelId)
+
                         );
                     }}/>
                 </div>

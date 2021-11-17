@@ -263,8 +263,16 @@ export default {
         return req;
     },
 
+    /**
+     * Загрузка обложки записи
+    */
+    async uploadPostCover (cover, creatorId, postId) {
+        return uploadFile(cover, 'cover', `/creators/${creatorId}/posts/${postId}/cover`);
+    },
+
     async createPost ({
         userId,
+        levelId,
         title,
         description,
         body
@@ -274,7 +282,8 @@ export default {
             method: 'post',
             body: {
                 description,
-                title
+                title,
+                awards_id: levelId || null
             },
             csrf: true
         });
@@ -305,6 +314,7 @@ export default {
         oldBodyIds,
         userId,
         title,
+        levelId,
         description,
         body
     }) {
@@ -321,7 +331,8 @@ export default {
             method: 'put',
             body: {
                 description,
-                title
+                title,
+                awards_id: levelId || null
             },
             csrf: true
         });

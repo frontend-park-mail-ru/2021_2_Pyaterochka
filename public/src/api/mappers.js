@@ -17,6 +17,7 @@ const mapPost = (data, creatorId) => {
     return {
         id: data.posts_id,
         creatorId: creatorId,
+        levelId: data.type_awards || 0,
         title: data.title,
         published: new Date(data.date),
         views: data.views,

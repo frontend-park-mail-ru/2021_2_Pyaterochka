@@ -20,6 +20,8 @@ class CreatorView extends Component {
         this.attributes.level = null;
         this.attributes.posts = null;
         this.attributes.notFound = false;
+
+        this.attributes.canUseLevels = [];
     }
 
     render () {
@@ -152,12 +154,15 @@ class CreatorView extends Component {
                                         image={post.image}
                                         creatorId={post.creatorId}
                                         id={post.id}
+                                        opened={!post.levelId || this.attributes.canUseLevels.includes(post.levelId)}
+                                        level={post.levelId ? this.levelsNameMap.get(post.levelId) : ''}
+                                        levelId={post.levelId}
                                     />
                                 )}
                             </div>
                             {
                                 !this.attributes.level && this.attributes.levels.length &&
-                                !(user.user && this.attributes.creator && user.user.id === this.attributes.creator.id)
+                                    !(user.user && this.attributes.creator && user.user.id === this.attributes.creator.id)
                                     ? <LockMessage text="Стань патроном, чтобы продолжить наслаждаться работами автора">
                                         <Button text="Стать патроном" color="primary" onClick={
                                             () => {
@@ -189,16 +194,31 @@ class CreatorView extends Component {
             this.attributes.notFound = true;
             return;
         }
-        this.attributes.levels = await api.levelsInfo(this.data);
+        const levels = await api.levelsInfo(this.data);
 
         const levelId = this.attributes.creator.levelId;
+
+        this.levelsNameMap =
+                levels.reduce(
+                    (map, { id, name }) => map.set(id, name), new Map()
+                );
+
         if (levelId) {
-            this.attributes.level =
-                this.attributes.levels
-                    .find(level => level.id === levelId);
+            const levelI = levels
+                .findIndex(level => level.id === levelId);
+
+            this.attributes.level = levels[levelI];
+
+            this.attributes.canUseLevels =
+                levels
+                    .slice(0, levelI + 1)
+                    .map(({ id }) => id);
         }
 
+        this.attributes.levels = levels;
+        console.log('dkdkkd');
         this.attributes.posts = await api.postsInfo(this.data);
+        console.log('dkdkkd', this);
 
         if (!this.attributes.posts) {
             this.attributes.notFound = true;

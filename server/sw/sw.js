@@ -40,7 +40,7 @@ self.addEventListener('fetch', (e) => {
 
         if (url.endsWith('.js') && url.startsWith(hostUrl)) {
             const cache = await caches.open(cacheName);
-            //console.log(`[Service Worker] Caching new resource: ${e.request.url}`);
+            // console.log(`[Service Worker] Caching new resource: ${e.request.url}`);
             cache.put(e.request, response.clone());
         }
 

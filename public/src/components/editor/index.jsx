@@ -1,6 +1,7 @@
 import { nextTick } from '../../modules/utils';
 import Component from '../basecomponent';
 import Button from '../button';
+import ImageUploader from '../image-uploader';
 import './style.scss';
 
 /**
@@ -16,8 +17,9 @@ class EditorComponent extends Component {
         activeLevel = 0,
         cover = null,
         body = [],
-        onSave = (post) => {},
-        onDelete = () => {}
+        onSave = (post) => { },
+        onDelete = () => { },
+        onLoadCover = () => { }
     } = {}) {
         super();
         this.attributes.title = title;
@@ -31,12 +33,15 @@ class EditorComponent extends Component {
 
         this.attributes.onSave = onSave;
         this.attributes.onDelete = onDelete;
+        this.attributes.onLoadCover = onLoadCover;
 
         this.attributes.body.forEach(b => {
             if (!b.hash) {
                 b.hash = String((new Date()).getTime()) + String(Math.random());
             }
         });
+
+        this.attributes.loadingCover = false;
 
         this.checkLast();
     }
@@ -162,7 +167,7 @@ class EditorComponent extends Component {
         this.attributes.onSave({
             title: this.attributes.title,
             description: this.attributes.description,
-            activeLevel: this.attributes.activeLevel,
+            levelId: this.attributes.activeLevel,
             body: Object.assign(this.attributes.body.filter(b => b.text))
         });
     }
@@ -171,7 +176,7 @@ class EditorComponent extends Component {
         this.attributes.onDelete({
             title: this.attributes.title,
             description: this.attributes.description,
-            activeLevel: this.attributes.activeLevel,
+            levelId: this.attributes.activeLevel,
             body: Object.assign(this.attributes.body.filter(b => b.text))
         });
     }
@@ -250,7 +255,7 @@ class EditorComponent extends Component {
                     {this.attributes.isDraft
                         ? <>
                             <div className="btn-container">
-                                <Button color="success" text="Опубликовать" onClick={
+                                <Button color="success" text="Продолжить" onClick={
                                     () => { this.save(); }
                                 } />
                             </div>
@@ -270,46 +275,63 @@ class EditorComponent extends Component {
                         </>}
                     {this.attributes.comment}
                 </div>
-                {this.attributes.body.map((element) => {
-                    return (
-                        <>
-                            {element.text === ''
-                                ? (
-                                    <div key={element.hash + '_helper'} className="editor__helper editor__helper--body">
-                                        <button className="add-icon-button" alt="Добавить музыку">
-                                            <div className="icon" style="--icon: url('/imgs/icons/music_outline_24.svg')" />
-                                        </button>
-                                        <button className="add-icon-button" alt="Добавить картинку">
-                                            <div className="icon" style="--icon: url('/imgs/icons/picture_outline_28.svg')" />
-                                        </button>
-                                        <button className="add-icon-button" alt="Добавить видео">
-                                            <div className="icon" style="--icon: url('/imgs/icons/video_outline_24.svg')" />
-                                        </button>
-                                    </div>
-                                )
-                                : (
-                                    ''
-                                )}
+                {!this.attributes.isDraft
+                    ? <>
+                        <ImageUploader
+                            image={this.attributes.cover}
+                            imageName="обложку"
+                            isCircle={false}
+                            loading={this.attributes.loadingCover}
+                            onChange={async (image) => {
+                                this.attributes.loadingCover = true;
+                                this.attributes.cover = await this.attributes.onLoadCover(image);
+                                this.attributes.loadingCover = false;
+                            }}
+                        />
+                        {this.attributes.body.map((element) => {
+                            return (
+                                <>
+                                    {element.text === ''
+                                        ? (
+                                            <div key={element.hash + '_helper'} className="editor__helper editor__helper--body">
+                                                <button className="add-icon-button" alt="Добавить музыку">
+                                                    <div className="icon" style="--icon: url('/imgs/icons/music_outline_24.svg')" />
+                                                </button>
+                                                <button className="add-icon-button" alt="Добавить картинку">
+                                                    <div className="icon" style="--icon: url('/imgs/icons/picture_outline_28.svg')" />
+                                                </button>
+                                                <button className="add-icon-button" alt="Добавить видео">
+                                                    <div className="icon" style="--icon: url('/imgs/icons/video_outline_24.svg')" />
+                                                </button>
+                                            </div>
+                                        )
+                                        : (
+                                            ''
+                                        )}
 
-                            <div
-                                key={element.hash + '_element'}
-                                className={['editor__body-element', element.text === '' ? 'editor__body-element_show-placeholder' : '']}
-                                contentEditable={true}
-                                placeholder="Пишите текст вашей статьи здесь или выберите  нужный элемент слева"
-                                onInput={(e) => {
-                                    this.editBody(e, element.hash);
-                                }}
-                                onKeyDown={(e) => {
-                                    this.keyPress(e, element.hash);
-                                }}
-                                onPaste={(e) => this.onPaste(e, (a) => { element.text = a; })}
-                                onBlur={(e) => { this.onBlur(e); }}
-                            >
-                                {element.text}
-                            </div>
-                        </>
-                    );
-                })}
+                                    <div
+                                        key={element.hash + '_element'}
+                                        className={['editor__body-element', element.text === '' ? 'editor__body-element_show-placeholder' : '']}
+                                        contentEditable={true}
+                                        placeholder="Пишите текст вашей статьи здесь или выберите  нужный элемент слева"
+                                        onInput={(e) => {
+                                            this.editBody(e, element.hash);
+                                        }}
+                                        onKeyDown={(e) => {
+                                            this.keyPress(e, element.hash);
+                                        }}
+                                        onPaste={(e) => this.onPaste(e, (a) => { element.text = a; })}
+                                        onBlur={(e) => { this.onBlur(e); }}
+                                    >
+                                        {element.text}
+                                    </div>
+                                </>
+                            );
+                        })}
+                    </>
+                    : ''
+                }
+
             </div>
         );
     }

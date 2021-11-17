@@ -11,6 +11,7 @@ class CreatePostView extends Component {
         super();
         this.attributes.loading = 'Загрузка записи';
         this.attributes.deleteWarning = false;
+        this.attributes.levels = [];
         this.attributes.post = null;
     }
 
@@ -42,21 +43,37 @@ class CreatePostView extends Component {
         return <div>
             <h1 className="text-center">Редактирование записи</h1>
             <EditorComponent
+                cover={this.post.image}
                 title={this.post.title}
                 description={this.post.description}
                 body={Object.assign(this.post.body)}
-
+                activeLevel={this.post.levelId}
                 isDraft={false}
                 onSave={(post) => { this.savePost(post); }}
                 onDelete={(post) => { this.deletePost(post); }}
+                levels={this.attributes.levels.map(({ name, id }) => {
+                    return {
+                        title: name,
+                        id
+                    };
+                })}
+                onLoadCover={async (file) => await this.loadCover(file)}
             />
         </div>;
+    }
+
+    async loadCover (file) {
+        await api.uploadPostCover(file, user.user.id, this.postId);
+        const post = await api.postInfo(user.user.id, this.postId);
+        this.post.image = post.image;
+        return post.image;
     }
 
     async savePost ({
         title,
         description,
-        body
+        body,
+        levelId
     }) {
         this.attributes.loading = 'Обновление записи';
 
@@ -66,7 +83,8 @@ class CreatePostView extends Component {
             userId: user.user.id,
             title,
             description,
-            body
+            body,
+            levelId
         });
 
         app.$router.go(app.$router.createUrl('post.view', `${user.user.id}/${this.postId}`));
@@ -101,6 +119,10 @@ class CreatePostView extends Component {
         this.post = post;
 
         this.oldBodyIds = post.body.map((b) => b.id);
+
+        this.attributes.loading = 'Загрузка уровней';
+
+        this.attributes.levels = await api.levelsInfo(user.user.id);
 
         this.attributes.loading = false;
     }
