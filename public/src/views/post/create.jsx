@@ -3,6 +3,7 @@ import Component from '../../components/basecomponent';
 import EditorComponent from '../../components/editor';
 import app from '../../core/app';
 import user from '../../storage/user';
+import ErrorPage from '../errorpage';
 import LoadingView from '../loading-view';
 
 class CreatePostView extends Component {
@@ -13,6 +14,10 @@ class CreatePostView extends Component {
     }
 
     render () {
+        if (this.attributes.errorFirstLoading) {
+            return <ErrorPage desc="Ошибка загрузки" />;
+        }
+
         if (this.attributes.loading) {
             return (
                 <LoadingView>
@@ -59,9 +64,13 @@ class CreatePostView extends Component {
     }
 
     async created () {
-        this.attributes.loading = 'Загрузка уровней';
-        this.attributes.levels = await api.levelsInfo(user.user.id);
-        this.attributes.loading = false;
+        try {
+            this.attributes.loading = 'Загрузка уровней';
+            this.attributes.levels = await api.levelsInfo(user.user.id);
+            this.attributes.loading = false;
+        } catch {
+            this.attributes.errorFirstLoading();
+        }
     }
 }
 

@@ -6,6 +6,7 @@ import ProfileCard from '../../components/profile-card';
 import Skeleton from '../../components/skeleton';
 import app from '../../core/app';
 import user from '../../storage/user';
+import ErrorPage from '../errorpage';
 
 import './style.scss';
 
@@ -14,10 +15,17 @@ class ProfileView extends Component {
         super();
         this.attributes.user = null;
         this.attributes.creators = null;
+
+        this.attributes.errorFirstLoading = false;
     }
 
     render () {
         if (!this.attributes.user) return <></>;
+
+        if (this.attributes.errorFirstLoading) {
+            return <ErrorPage desc="Ошибка загрузки" />;
+        }
+
         return (
             <div>
                 <div className="profile-block shadow">
@@ -96,8 +104,11 @@ class ProfileView extends Component {
         if (!user.user) return app.$router.go('/signin');
 
         this.attributes.user = Object.assign(user.user);
-
-        this.attributes.creators = await api.subscriptions();
+        try {
+            this.attributes.creators = await api.subscriptions();
+        } catch {
+            this.attributes.errorFirstLoading = true;
+        }
     }
 }
 

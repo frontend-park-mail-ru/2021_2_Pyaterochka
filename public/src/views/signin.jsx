@@ -4,6 +4,7 @@ import Button from '../components/button';
 import InputField from '../components/input-field';
 import app from '../core/app';
 import user from '../storage/user';
+import ErrorPage from './errorpage';
 
 class SigninView extends Component {
     constructor () {
@@ -48,9 +49,12 @@ class SigninView extends Component {
     }
 
     render () {
+        if (!navigator.onLine) {
+            return <ErrorPage desc="Нет соединения с интернетом" />;
+        }
         return (
             <div className="auth-block">
-                <h1> Войти </h1>
+                <h1> Вход </h1>
                 <form
                     className="auth-card shadow"
                     onSubmit={(e) => {

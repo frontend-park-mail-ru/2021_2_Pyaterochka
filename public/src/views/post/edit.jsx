@@ -5,6 +5,7 @@ import app from '../../core/app';
 import user from '../../storage/user';
 import LoadingView from '../loading-view';
 import ConfirmComponent from '../../components/confirm';
+import ErrorPage from '../errorpage';
 
 class CreatePostView extends Component {
     constructor () {
@@ -16,6 +17,10 @@ class CreatePostView extends Component {
     }
 
     render () {
+        if (this.attributes.errorFirstLoading) {
+            return <ErrorPage desc="Ошибка загрузки" />;
+        }
+
         if (this.attributes.deleteWarning) {
             return <ConfirmComponent
                 title="Удаление записи"
@@ -110,21 +115,25 @@ class CreatePostView extends Component {
     }
 
     async created () {
-        this.postId = parseInt(this.data);
+        try {
+            this.postId = parseInt(this.data);
 
-        this.attributes.loading = 'Загрузка записи';
+            this.attributes.loading = 'Загрузка записи';
 
-        const post = await api.postInfo(user.user.id, this.postId);
+            const post = await api.postInfo(user.user.id, this.postId);
 
-        this.post = post;
+            this.post = post;
 
-        this.oldBodyIds = post.body.map((b) => b.id);
+            this.oldBodyIds = post.body.map((b) => b.id);
 
-        this.attributes.loading = 'Загрузка уровней';
+            this.attributes.loading = 'Загрузка уровней';
 
-        this.attributes.levels = await api.levelsInfo(user.user.id);
+            this.attributes.levels = await api.levelsInfo(user.user.id);
 
-        this.attributes.loading = false;
+            this.attributes.loading = false;
+        } catch {
+            this.attributes.errorFirstLoading = true;
+        }
     }
 }
 

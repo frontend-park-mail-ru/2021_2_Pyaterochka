@@ -4,6 +4,7 @@ import Button from '../components/button';
 import InputField from '../components/input-field';
 import app from '../core/app';
 import user from '../storage/user';
+import ErrorPage from './errorpage';
 
 class SignupView extends Component {
     constructor () {
@@ -101,6 +102,10 @@ class SignupView extends Component {
     }
 
     render () {
+        if (!navigator.onLine) {
+            return <ErrorPage desc="Нет соединения с интернетом" />;
+        }
+
         return (
             <div className="auth-block">
                 <h1> Регистрация </h1>

@@ -7,11 +7,14 @@ import Layout from '../components/layout';
 import app from '../core/app';
 
 class Router extends Component {
-    constructor ({ routes = [], loadingView = null }) {
+    constructor ({ routes = [], loadingView = null, errorView = null, offlineView = null }) {
         super();
 
         this.routes = routes;
         this.loadingView = loadingView;
+        this.errorView = errorView;
+        this.offlineView = offlineView;
+
         if (this.loadingView) {
             this.slot = this.loadingView;
         } else {
@@ -99,6 +102,15 @@ class Router extends Component {
             </Layout>;
         } catch (e) {
             console.error("Can't load page", e);
+            if (navigator.onLine) {
+                this.slot = <Layout>
+                    {this.errorView}
+                </Layout>;
+            } else {
+                this.slot = <Layout>
+                    {this.offlineView}
+                </Layout>;
+            }
         }
     }
 

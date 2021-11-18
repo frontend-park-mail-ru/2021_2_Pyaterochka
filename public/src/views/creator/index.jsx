@@ -25,9 +25,14 @@ class CreatorView extends Component {
     }
 
     render () {
+        if (this.attributes.errorFirstLoading) {
+            return <ErrorPage desc="Ошибка загрузки" />;
+        }
+
         if (this.attributes.notFound) {
             return <ErrorPage err={404} desc="Страница автора не найдена" />;
         }
+
         return (
             <div className="creator-page">
 
@@ -186,40 +191,44 @@ class CreatorView extends Component {
     }
 
     async created () {
-        this.attributes.creator = null;
+        try {
+            this.attributes.creator = null;
 
-        this.attributes.creator = await api.creatorInfo(this.data);
+            this.attributes.creator = await api.creatorInfo(this.data);
 
-        if (!this.attributes.creator) {
-            this.attributes.notFound = true;
-            return;
-        }
-        const levels = await api.levelsInfo(this.data);
+            if (!this.attributes.creator) {
+                this.attributes.notFound = true;
+                return;
+            }
+            const levels = await api.levelsInfo(this.data);
 
-        const levelId = this.attributes.creator.levelId;
+            const levelId = this.attributes.creator.levelId;
 
-        this.levelsNameMap =
+            this.levelsNameMap =
                 levels.reduce(
                     (map, { id, name }) => map.set(id, name), new Map()
                 );
 
-        if (levelId) {
-            const levelI = levels
-                .findIndex(level => level.id === levelId);
+            if (levelId) {
+                const levelI = levels
+                    .findIndex(level => level.id === levelId);
 
-            this.attributes.level = levels[levelI];
+                this.attributes.level = levels[levelI];
 
-            this.attributes.canUseLevels =
-                levels
-                    .slice(0, levelI + 1)
-                    .map(({ id }) => id);
-        }
+                this.attributes.canUseLevels =
+                    levels
+                        .slice(0, levelI + 1)
+                        .map(({ id }) => id);
+            }
 
-        this.attributes.levels = levels;
-        this.attributes.posts = await api.postsInfo(this.data);
+            this.attributes.levels = levels;
+            this.attributes.posts = await api.postsInfo(this.data);
 
-        if (!this.attributes.posts) {
-            this.attributes.notFound = true;
+            if (!this.attributes.posts) {
+                this.attributes.notFound = true;
+            }
+        } catch {
+            this.attributes.errorFirstLoading = true;
         }
     }
 }
