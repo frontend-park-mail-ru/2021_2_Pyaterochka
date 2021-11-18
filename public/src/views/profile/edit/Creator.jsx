@@ -3,7 +3,6 @@ import Component from '../../../components/basecomponent';
 import Button from '../../../components/button';
 import InputField from '../../../components/input-field';
 import SelectComponent from '../../../components/select';
-import Spinner from '../../../components/spinner';
 import user from '../../../storage/user';
 import ImageUploader from '../../../components/image-uploader';
 import LevelCard from '../../../components/level-card';
@@ -50,11 +49,12 @@ class ProfileEditCreator extends Component {
             description: this.attributes.creatorDesc
         });
 
+        await user.update();
         await this.loadCreator();
     }
 
-    async loadCreator () {
-        this.attributes.loading = true;
+    async loadCreator (loading = true) {
+        this.attributes.loading = loading;
 
         this.attributes.creator = await api.creatorInfo(user.user.id);
 
@@ -67,7 +67,7 @@ class ProfileEditCreator extends Component {
         this.attributes.loadingAvatar = true;
         await api.uploadCreatorAvatar(file, user.user.id);
 
-        await this.loadCreator();
+        await this.loadCreator(false);
         this.attributes.loadingAvatar = false;
     }
 
@@ -75,13 +75,36 @@ class ProfileEditCreator extends Component {
         this.attributes.loadingCover = true;
         await api.uploadCreatorCover(file, user.user.id);
 
-        await this.loadCreator();
+        await this.loadCreator(false);
         this.attributes.loadingCover = false;
     }
 
     render () {
         if (this.attributes.loading) {
-            return <Spinner />;
+            return <div>
+                <p className="profile-edit__subtitle">
+                    Оформление профиля
+                </p>
+                <div className="edit-creator__images">
+                    <Skeleton height={217} width={217} type="circle" />
+                    <Skeleton height={233} width={900} />
+                </div>
+
+                <p className="profile-edit__subtitle">
+                    Уровни подписки
+                </p>
+
+                <div className="profile-edit__levels-container">
+                    <Skeleton width={260} height={420} />
+
+                    <img
+                        src="/imgs/addLevel.svg"
+                        height='420px'
+                        router-go={app.$router.createUrl('creator.level.create')}
+                    />
+
+                </div>
+            </div>;
         }
 
         if (!this.attributes.creator) {

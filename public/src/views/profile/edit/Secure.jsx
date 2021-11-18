@@ -3,6 +3,9 @@ import api from '../../../api';
 import Component from '../../../components/basecomponent';
 import Button from '../../../components/button';
 import InputField from '../../../components/input-field';
+import Skeleton from '../../../components/skeleton';
+import TimeAgoComponent from '../../../components/time-ago';
+import app from '../../../core/app';
 import user from '../../../storage/user';
 
 class ProfileEditSecure extends Component {
@@ -73,6 +76,8 @@ class ProfileEditSecure extends Component {
 
         this.attributes.loading = false;
         this.attributes.passwordChanged = !this.attributes.error;
+
+        this.attributes.payments = null;
     }
 
     render () {
@@ -103,7 +108,59 @@ class ProfileEditSecure extends Component {
                 }}
             />
 
+            <br />
+            <br />
+            <p className="profile-edit__subtitle">
+                Транзакции
+            </p>
+            {
+                this.attributes.payments
+                    ? <table>
+                        <thead>
+                            <tr>
+                                <th>
+                                    Дата
+                                </th>
+                                <th>
+                                    Сумма
+                                </th>
+                                <th>
+                                    Автор
+                                </th>
+                            </tr>
+                        </thead>
+                        {
+                            this.attributes.payments.map(payment => (
+                                <tr key={payment.id}>
+                                    <td>
+                                        <TimeAgoComponent date={payment.date} />
+                                    </td>
+                                    <td>
+                                        {payment.amount} ₽
+                                    </td>
+                                    <td>
+                                        <Button
+                                            text={`Открыть автора ${payment.creatorId}`}
+                                            onClick={
+                                                () => {
+                                                    app.$router.go(app.$router.createUrl('creator', payment.creatorId));
+                                                }
+                                            }
+                                        />
+                                    </td>
+                                </tr>
+                            ))
+                        }
+
+                    </table>
+                    : <Skeleton />
+            }
+
         </div>;
+    }
+
+    async created () {
+        this.attributes.payments = await api.payments();
     }
 }
 

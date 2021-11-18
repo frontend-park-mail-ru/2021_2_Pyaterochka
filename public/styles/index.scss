@@ -15,11 +15,14 @@ body {
   margin: 0;
 }
 
-html, body, #root, #root > div {
+html,
+body,
+#root,
+#root > div {
   min-height: 100vh;
 }
 
-#root > div{
+#root > div {
   display: flex;
   justify-content: space-between;
   flex-direction: column;
@@ -111,9 +114,23 @@ html, body, #root, #root > div {
 }
 
 a {
-  color: var(--color-primary)
+  color: var(--color-primary);
 }
 
 a:visited {
-  color: var(--color-primary-dark)
+  color: var(--color-primary-dark);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+td,
+th {
+  text-align: left;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+th {
+  border-bottom: 2px solid #999;
 }

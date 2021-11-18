@@ -14,7 +14,7 @@
     left: 0;
     background: radial-gradient(50% 50% at 50% 50%, #000 0%, rgba(0, 0, 0, 0.5) 100%), transparent;
     opacity: 0;
-    transition: 0.3s;
+    transition: opacity ease 0.3s;
   }
 
   &-avatar {
@@ -70,7 +70,7 @@
   font-weight: 300;
   font-size: 18px;
   line-height: 21px;
-  transition: 0.5s;
+  transition: transform ease 0.5s, opacity ease 0.3s;
   text-align: center;
   opacity: 0;
 

@@ -1,7 +1,7 @@
 /** @module API */
 
 import { sendJSON, uploadFile } from './hellpers';
-import { mapCreator, mapLevels, mapPost, mapPostFull, mapProfile } from './mappers';
+import { mapCreator, mapLevels, mapPayment, mapPost, mapPostFull, mapProfile } from './mappers';
 
 export default {
     /**
@@ -464,5 +464,18 @@ export default {
         });
 
         return req;
+    },
+    /**
+     * get all user payments
+     */
+    async payments () {
+        const req = await sendJSON({
+            url: '/user/payments',
+            method: 'get'
+        });
+
+        if (req.status === 204) return [];
+
+        return (await req.json()).payments.map(mapPayment);
     }
 };

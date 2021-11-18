@@ -91,11 +91,22 @@ const mapLevels = (data) => {
     return result;
 };
 
+const mapPayment = (data, i) => {
+    return {
+        id: i,
+        amount: data.amount,
+        creatorId: data.creator_id,
+        date: new Date(data.date),
+        userId: data.user_id
+    };
+};
+
 export {
     mapCreator,
     mapPost,
     mapPostFull,
     mapProfile,
     mapLevel,
-    mapLevels
+    mapLevels,
+    mapPayment
 };
