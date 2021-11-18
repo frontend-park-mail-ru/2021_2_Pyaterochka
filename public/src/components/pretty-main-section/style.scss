@@ -1,7 +1,7 @@
 .main-page-section {
   width: 100%;
   background-color: #484745;
-  padding: 100px 0;
+  padding: 100px 20px;
 
   &__container {
     display: flex;
@@ -13,6 +13,7 @@
   }
 
   &__image {
+    width: 446px;
     max-width: 100%;
   }
 
@@ -41,5 +42,25 @@
 
   &__button {
     width: 108px;
+  }
+}
+
+@media (max-width: 800px) {
+  .main-page-section {
+    padding: 20px 20px 40px;
+
+    &__slogan {
+      font-size: 48px;
+      line-height: 52px;
+    }
+
+    &__text {
+      font-size: 28px;
+      line-height: 36px;
+    }
+
+    &__button {
+      width: 100%;
+    }
   }
 }

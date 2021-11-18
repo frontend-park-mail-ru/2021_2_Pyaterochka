@@ -81,6 +81,7 @@ html, body, #root, #root > div {
 .auth-block {
   margin: auto;
   width: 400px;
+  max-width: 100%;
   text-align: center;
   min-height: calc(100vh - 172px);
   display: flex;

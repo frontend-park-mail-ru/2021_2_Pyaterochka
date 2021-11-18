@@ -216,9 +216,7 @@ class CreatorView extends Component {
         }
 
         this.attributes.levels = levels;
-        console.log('dkdkkd');
         this.attributes.posts = await api.postsInfo(this.data);
-        console.log('dkdkkd', this);
 
         if (!this.attributes.posts) {
             this.attributes.notFound = true;

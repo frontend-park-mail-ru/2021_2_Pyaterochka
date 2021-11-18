@@ -7,14 +7,15 @@ body {
 
 .footer {
   width: 100%;
-  background-color: var(--color-primary-dark);
-  height: 120px;
+  background-color: var(--color-primary);
 
   &__body {
     margin: auto;
-    margin-left: 100px;
-    padding-top: 40px;
+    margin-top: 20px;
+    padding: 20px;
     color: #fff;
+    max-width: 1400px;
+    border-radius: 20px;
 
     a {
       color: #fff;
