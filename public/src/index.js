@@ -10,11 +10,7 @@ import MainPageView from './views/main-page';
 import '../styles/index.scss';
 
 document.addEventListener('DOMContentLoaded', async () => {
-    try {
-        await user.update();
-    } catch {
-
-    }
+    user.update();
 
     setupApp();
 

@@ -2,6 +2,8 @@
 import api from '../api/index';
 import app from '../core/app';
 
+const userField = 'user__patreon';
+
 /**
  * Хранилище пользователя
  */
@@ -28,8 +30,17 @@ const user = {
      * Хук при обновлении профиля
      */
     onUpdate () {
+        localStorage.setItem(userField, JSON.stringify(this.user));
         app.$router?.start();
     }
 };
+
+if (localStorage.getItem(userField)) {
+    try {
+        user.user = JSON.parse(localStorage.getItem(userField));
+    } catch {
+        user.user = null;
+    }
+}
 
 export default user;
