@@ -81,11 +81,13 @@ class ProfileView extends Component {
                             {[1, 2, 3].map((i) => (
                                 <div key={i}>
                                     <Skeleton type="circle" />
+                                    <br />
                                     <Skeleton type="text" height={45} width={200} />
                                 </div>
                             ))}
                         </div>
                 }
+                <br />
             </div>
         );
     }
