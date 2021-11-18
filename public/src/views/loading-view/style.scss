@@ -1,12 +1,9 @@
 
 .loading-view_container {
-  height: 100vh;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
   justify-content: center;
   display: flex;
   align-items: center;
   flex-direction: column;
+  min-height: calc(100vh - 172px);
+  padding: 50px;
 }
