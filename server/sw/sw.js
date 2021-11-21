@@ -50,8 +50,8 @@ self.addEventListener('fetch', (e) => {
 
 self.addEventListener('message', async ev => {
     if (ev.data === 'skipWaiting') {
-        // console.log('[Service Worker] skipWaiting');
+    // console.log('[Service Worker] skipWaiting');
         await self.skipWaiting();
-        // console.log('[Service Worker] skipped');
+    // console.log('[Service Worker] skipped');
     }
 });

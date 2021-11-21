@@ -6,7 +6,7 @@
     "build": "node ./server/createSW.js && npx webpack",
     "start": "node ./server/production",
     "dev": "node ./server",
-    "linter": "npx eslint public/src server --fix && npx stylelint \"public/src/**/*.[s]css\" --fix"
+    "linter": "npx eslint src server --fix && npx stylelint \"src/**/*.[s]css\" --fix"
   },
   "repository": {
     "type": "git",
