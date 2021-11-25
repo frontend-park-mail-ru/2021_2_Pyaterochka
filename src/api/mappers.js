@@ -35,7 +35,7 @@ const mapPostFull = (data, creatorId) => {
 
         return {
             id: attach.attach_id,
-            type: attach.type,
+            type: attach.type === 'music' ? 'audio' : attach.type,
             value: `${config.imageBasename}/${attach.value}`
         };
     });
