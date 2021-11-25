@@ -395,7 +395,7 @@ export default {
                         };
                     }
 
-                    return { type, id };
+                    return { type: type === 'audio' ? 'music' : type, id };
                 })
             },
             csrf: true
