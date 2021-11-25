@@ -65,6 +65,7 @@ class CreatePostView extends Component {
                 onDelete={(post) => { this.deletePost(post); }}
                 onLoadCover={async (file) => await this.loadCover(file)}
                 onLoadImage={async (file) => await this.loadImage(file)}
+                onLoadFile={async (file, type) => await this.loadFile(file, type)}
                 onSave={(post) => { this.savePost(post); }}
                 title={this.post.title}
             />
@@ -80,6 +81,13 @@ class CreatePostView extends Component {
 
     async loadImage (file) {
         const res = await api.uploadPostImage(file, user.user.id, this.postId);
+
+        const data = await res.json();
+        return data;
+    }
+
+    async loadFile (file, type) {
+        const res = await api.uploadPostAttach(file, type, user.user.id, this.postId);
 
         const data = await res.json();
         return data;

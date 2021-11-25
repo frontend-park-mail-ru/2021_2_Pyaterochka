@@ -101,6 +101,16 @@ class PostView extends Component {
                                             className="post__image"
                                             src={value} />);
                                     }
+                                    if (type === 'video') {
+                                        return (<video controls>
+                                            <source src={value} />
+                                        </video>);
+                                    }
+                                    if (type === 'audio') {
+                                        return (<audio controls>
+                                            <source src={value} />
+                                        </audio>);
+                                    }
                                     return null;
                                 })
                             }
@@ -235,7 +245,8 @@ class PostView extends Component {
             }
 
             this.attributes.comments = this.attributes.comments.sort((b, a) => a.published - b.published);
-        } catch {
+        } catch (e) {
+            console.log(e);
             this.attributes.errorFirstLoading = true;
         }
     }

@@ -326,6 +326,15 @@ export default {
             'image',
             `/creators/${creatorId}/posts/${postId}/attaches/image`,
             'post');
+    }, /**
+     * Загрузка изображения в запись
+    */
+    async uploadPostAttach (file, type, creatorId, postId) {
+        return uploadFile(
+            file,
+            type,
+            `/creators/${creatorId}/posts/${postId}/attaches/${type}`,
+            'post');
     },
 
     async createPost ({

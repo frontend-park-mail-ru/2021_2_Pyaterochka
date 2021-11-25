@@ -1,6 +1,7 @@
 import { nextTick } from '../../modules/jsx/utils';
 import Component from '../basecomponent';
 import Button from '../button';
+import FileUploader from '../file-uploader';
 import ImageUploader from '../image-uploader';
 import './style.scss';
 
@@ -20,7 +21,8 @@ class EditorComponent extends Component {
         onSave = (post) => { },
         onDelete = () => { },
         onLoadCover = () => { },
-        onLoadImage = () => { }
+        onLoadImage = () => { },
+        onLoadFile = () => { }
     } = {}) {
         super();
         this.attributes.title = title;
@@ -36,6 +38,7 @@ class EditorComponent extends Component {
         this.attributes.onDelete = onDelete;
         this.attributes.onLoadCover = onLoadCover;
         this.attributes.onLoadImage = onLoadImage;
+        this.attributes.onLoadFile = onLoadFile;
 
         this.attributes.body.forEach(b => {
             if (!b.hash) {
@@ -74,7 +77,11 @@ class EditorComponent extends Component {
     }
 
     convertToImage (hash) {
-        this.attributes.body[this.findBody(hash)].type = 'image';
+        return this.convertTo(hash, 'image');
+    }
+
+    convertTo (hash, type) {
+        this.attributes.body[this.findBody(hash)].type = type;
         this.checkLast();
     }
 
@@ -92,11 +99,29 @@ class EditorComponent extends Component {
         this.update();
     }
 
+    async loadFile (hash, file, type) {
+        const element = this.attributes.body[this.findBody(hash)];
+        element.loading = true;
+        element.error = false;
+        this.update();
+
+        const res = await this.attributes.onLoadFile(file, type);
+        if (res.id) {
+            element.id = res.id;
+            element.value = URL.createObjectURL(file);
+        } else {
+            element.error = res.error;
+        }
+
+        element.loading = false;
+        this.update();
+    }
+
     checkLast () {
         if (
             this.attributes.body.length === 0 ||
-      this.attributes.body.at(-1).type !== 'text' ||
-      this.attributes.body.at(-1).value !== ''
+            this.attributes.body.at(-1).type !== 'text' ||
+            this.attributes.body.at(-1).value !== ''
         ) {
             this.appendBody();
         }
@@ -119,7 +144,7 @@ class EditorComponent extends Component {
     }
 
     keyPress (event, hash = null) {
-    // console.log(event, hash)
+        // console.log(event, hash)
         if (hash !== null && (event.keyCode === 8 || event.keyCode === 46)) {
             const i = this.findBody(hash);
             if (this.attributes.body[i].value === '') {
@@ -324,15 +349,18 @@ class EditorComponent extends Component {
                                                 className="editor__helper editor__helper--body"
                                                 key={element.hash + '_helper'}
                                             >
-                                                {/* <button
-                          alt="Добавить музыку"
-                          className="add-icon-button"
-                        >
-                          <div
-                            className="icon"
-                            style="--icon: url('/imgs/icons/music_outline_24.svg')"
-                          />
-                        </button> */}
+                                                <button
+                                                    alt="Добавить музыку"
+                                                    className="add-icon-button"
+                                                    onClick={
+                                                        () => { this.convertTo(element.hash, 'audio'); }
+                                                    }
+                                                >
+                                                    <div
+                                                        className="icon"
+                                                        style="--icon: url('/imgs/icons/music_outline_24.svg')"
+                                                    />
+                                                </button>
 
                                                 <button
                                                     alt="Добавить картинку"
@@ -347,15 +375,18 @@ class EditorComponent extends Component {
                                                     />
                                                 </button>
 
-                                                {/* <button
-                          alt="Добавить видео"
-                          className="add-icon-button"
-                        >
-                          <div
-                            className="icon"
-                            style="--icon: url('/imgs/icons/video_outline_24.svg')"
-                          />
-                        </button> */}
+                                                <button
+                                                    alt="Добавить видео"
+                                                    className="add-icon-button"
+                                                    onClick={
+                                                        () => { this.convertTo(element.hash, 'video'); }
+                                                    }
+                                                >
+                                                    <div
+                                                        className="icon"
+                                                        style="--icon: url('/imgs/icons/video_outline_24.svg')"
+                                                    />
+                                                </button>
                                             </div>
                                         )
                                         : (
@@ -394,6 +425,55 @@ class EditorComponent extends Component {
                                         )
                                         : null}
 
+                                    {element.type === 'audio'
+                                        ? (
+                                            <div>
+                                                Аудио:
+                                                <FileUploader
+                                                    accept=".ogg"
+                                                    onChange={(image) => {
+                                                        this.loadFile(element.hash, image, element.type);
+                                                    }}
+                                                    loading={element.loading}
+                                                />
+
+                                                {element.error ? 'Ошибка загрузки:' + element.error : ''}
+
+                                                {element.value
+                                                    ? <audio controls>
+                                                        <source src={element.value} />
+                                                    </audio>
+                                                    : null}
+
+                                            </div>
+                                        )
+                                        : null}
+
+                                    {
+                                        element.type === 'video'
+                                            ? (
+                                                <div>
+                                                    Видео
+                                                    <FileUploader
+                                                        accept=".3gpp, .mp4"
+                                                        onChange={(image) => {
+                                                            this.loadFile(element.hash, image, element.type);
+                                                        }}
+                                                        loading={element.loading}
+                                                    />
+
+                                                    {element.error ? 'Ошибка загрузки:' + element.error : ''}
+
+                                                    {element.value
+                                                        ? <video controls>
+                                                            <source src={element.value} />
+                                                        </video>
+                                                        : null}
+
+                                                </div>
+                                            )
+                                            : null
+                                    }
                                 </>
                             );
                         })}
