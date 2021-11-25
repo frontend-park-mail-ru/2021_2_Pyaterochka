@@ -82,7 +82,7 @@ class EditorComponent extends Component {
         const element = this.attributes.body[this.findBody(hash)];
         element.loading = true;
         this.update();
-        
+
         const res = await this.attributes.onLoadImage(image);
 
         element.id = res.id;
@@ -90,7 +90,6 @@ class EditorComponent extends Component {
 
         element.loading = false;
         this.update();
-
     }
 
     checkLast () {
