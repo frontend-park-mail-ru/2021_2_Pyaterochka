@@ -93,7 +93,7 @@ class InputField extends Component {
     }
 
     getValue () {
-        return this.vdom.dom.querySelector('input').value;
+        return this.input.value;
     }
 
     onInput (e) {
