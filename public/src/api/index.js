@@ -238,6 +238,53 @@ export default {
     },
 
     /**
+     * Поиск Авторов
+     */
+    async creatorsSearch ({
+        query = '',
+        category = '',
+        page = 0,
+        offset = 0,
+        limit = 9999
+    }) {
+        const params = new URLSearchParams({
+            page,
+            offset,
+            limit
+        });
+
+        if (query) {
+            params.append('search_string', query);
+        }
+        if (category) {
+            params.append('category', category);
+        }
+
+        const req = await sendJSON({
+            url: '/creators/search?' + params.toString(),
+            method: 'get'
+        });
+
+        const data = await req.json();
+
+        return data.creators.map(mapCreator);
+    },
+
+    /**
+    * Получить служебную информацию
+    */
+    async info () {
+        const req = await sendJSON({
+            url: '/info',
+            method: 'get'
+        });
+
+        const data = await req.json();
+
+        return data;
+    },
+
+    /**
      * Список подписок
      */
     async subscriptions () {

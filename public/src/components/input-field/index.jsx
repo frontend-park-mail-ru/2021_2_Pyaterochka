@@ -90,7 +90,7 @@ class InputField extends Component {
     }
 
     onInput (e) {
-        this.attributes.onInput(e);
+        this.attributes.onInput(e, e.value);
         this.input = e.target;
         this.validate();
     }
