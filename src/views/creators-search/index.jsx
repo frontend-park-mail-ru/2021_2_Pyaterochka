@@ -25,7 +25,7 @@ class ProfileView extends Component {
                     Поиск авторов:
                 </h1>
 
-                <div>
+                <div className='search__fields-container'>
                     <InputField
                         placeholder="Поле поиска"
                         onInput={
@@ -54,8 +54,12 @@ class ProfileView extends Component {
                                 return (new CreatorCard(creator)).renderReactive();
                             })}
                         </div>
-                        : 'Ничего не найдено'
-                    : 'Сначала введите поисковый запрос'}
+                        : <h2 className="text-center">
+                            Ничего не найдено
+                        </h2>
+                    : <h2 className="text-center">
+                        Сначала введите поисковый запрос
+                    </h2>}
 
             </div>
         );
