@@ -81,7 +81,15 @@ class EditorComponent extends Component {
     }
 
     convertTo (hash, type) {
-        this.attributes.body[this.findBody(hash)].type = type;
+        console.log(hash, type);
+        const element = this.attributes.body[this.findBody(hash)];
+        console.log(hash, type, element);
+
+        element.type = type;
+        element.value = '';
+        element.id = undefined;
+
+        this.update();
         this.checkLast();
     }
 
@@ -350,7 +358,7 @@ class EditorComponent extends Component {
                                                 key={element.hash + '_helper'}
                                             >
                                                 <button
-                                                    alt="Добавить музыку"
+                                                    title="Добавить музыку"
                                                     className="add-icon-button"
                                                     onClick={
                                                         () => { this.convertTo(element.hash, 'audio'); }
@@ -363,7 +371,7 @@ class EditorComponent extends Component {
                                                 </button>
 
                                                 <button
-                                                    alt="Добавить картинку"
+                                                    title="Добавить картинку"
                                                     className="add-icon-button"
                                                     onClick={
                                                         () => { this.convertToImage(element.hash); }
@@ -376,7 +384,7 @@ class EditorComponent extends Component {
                                                 </button>
 
                                                 <button
-                                                    alt="Добавить видео"
+                                                    title="Добавить видео"
                                                     className="add-icon-button"
                                                     onClick={
                                                         () => { this.convertTo(element.hash, 'video'); }
@@ -385,6 +393,31 @@ class EditorComponent extends Component {
                                                     <div
                                                         className="icon"
                                                         style="--icon: url('/imgs/icons/video_outline_24.svg')"
+                                                    />
+                                                </button>
+                                            </div>
+                                        )
+                                        : (
+                                            ''
+                                        )}
+
+                                    {element.type !== 'text'
+                                        ? (
+                                            <div
+                                                className="editor__helper editor__helper--body"
+                                                key={element.hash + '_helper'}
+                                            >
+                                                <button
+                                                    key="delete"
+                                                    title="Удалить"
+                                                    className="add-icon-button"
+                                                    onClick={
+                                                        () => { this.convertTo(element.hash, 'text'); }
+                                                    }
+                                                >
+                                                    <div
+                                                        className="icon"
+                                                        style="--icon: url('/imgs/icons/delete_outline_20.svg')"
                                                     />
                                                 </button>
                                             </div>
@@ -427,7 +460,7 @@ class EditorComponent extends Component {
 
                                     {element.type === 'audio'
                                         ? (
-                                            <div>
+                                            <div className="temp-file-container">
                                                 Аудио:
                                                 <FileUploader
                                                     accept=".ogg"
@@ -452,7 +485,7 @@ class EditorComponent extends Component {
                                     {
                                         element.type === 'video'
                                             ? (
-                                                <div>
+                                                <div className="temp-file-container">
                                                     Видео
                                                     <FileUploader
                                                         accept=".3gpp, .mp4"
