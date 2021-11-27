@@ -1,16 +1,14 @@
 import Component from '../basecomponent';
 import PlayerControl from '../player-control';
-import Spinner from '../spinner';
 
 import './style.scss';
-class VideoPlayer extends Component {
+class AudioPlayer extends Component {
     constructor ({
-        src = [],
-        poster = ''
+        src = []
     }) {
         super();
 
-        this.video = null;
+        this.audio = null;
 
         this.attributes.time = 0;
         this.attributes.volume = 1;
@@ -19,7 +17,6 @@ class VideoPlayer extends Component {
 
         this.attributes.state = 'paused';
         this.attributes.src = src;
-        this.attributes.poster = poster;
     }
 
     onPlay () {
@@ -31,11 +28,11 @@ class VideoPlayer extends Component {
     }
 
     onTimeUpdate () {
-        this.attributes.time = this.video.currentTime;
+        this.attributes.time = this.audio.currentTime;
     }
 
     onVolumeChange () {
-        this.attributes.volume = this.video.volume;
+        this.attributes.volume = this.audio.volume;
     }
 
     toggle () {
@@ -47,36 +44,17 @@ class VideoPlayer extends Component {
     }
 
     play () {
-        this.video.play();
+        this.audio.play();
     }
 
     pause () {
-        this.video.pause();
-    }
-
-    toggleFullScreen () {
-        if (!document.fullscreenElement) {
-            this.vdom.dom.requestFullscreen();
-        } else {
-            if (document.exitFullscreen) {
-                document.exitFullscreen();
-            }
-        }
+        this.audio.pause();
     }
 
     render () {
-        return (<div className="video-player">
-            {
-                this.attributes.loading
-                    ? <div className="video-player__spinner">
-                        <Spinner color="#FFF" />
-                    </div>
-                    : ''
-            }
-
-            <video
-                className="video-player__video-tag"
-                poster={this.attributes.poster}
+        return (<div className="audio-player">
+            <audio
+                className="audio-player__audio-tag"
                 onClick={() => { this.toggle(); }}
                 onPlay={
                     () => { this.onPlay(); }
@@ -89,8 +67,8 @@ class VideoPlayer extends Component {
                 }
                 onLoadedData={
                     (e) => {
-                        this.video = e.target;
-                        this.attributes.duration = this.video.duration;
+                        this.audio = e.target;
+                        this.attributes.duration = this.audio.duration;
                         this.attributes.loading = false;
                     }
                 }
@@ -109,12 +87,6 @@ class VideoPlayer extends Component {
                 onCanPlayThrough={
                     () => { this.attributes.loading = false; }
                 }
-                onSeeking={
-                    () => { this.attributes.loading = true; }
-                }
-                onSeeked={
-                    () => { this.attributes.loading = false; }
-                }
             >
                 {
                     this.attributes.src.map((src, i) => (
@@ -124,36 +96,32 @@ class VideoPlayer extends Component {
                             type={src.type} />
                     ))
                 }
-            </video>
+            </audio>
 
-            <div className="video-player__controls">
-
+            <div className="audio-player__controls">
                 <PlayerControl
                     time={this.attributes.time}
                     volume={this.attributes.volume}
                     duration={this.attributes.duration}
                     state={this.attributes.state}
-                    canFullScreen
+                    canFullScreen={false}
                     onToggle={(e) => {
                         this.toggle();
                     }}
                     onSeek={(time) => {
-                        this.video.currentTime = time;
+                        this.audio.currentTime = time;
                         this.attributes.time = time;
                     }}
                     onToggleVolume={() => {
-                        this.video.muted = false;
+                        this.audio.muted = false;
                         if (this.attributes.volume < 0.05) {
-                            this.video.volume = 0.7;
+                            this.audio.volume = 0.7;
                         } else {
-                            this.video.volume = 0;
+                            this.audio.volume = 0;
                         }
                     }}
                     onSeekVolume={(volume) => {
-                        this.video.volume = volume;
-                    }}
-                    onToggleFullScreen={() => {
-                        this.toggleFullScreen();
+                        this.audio.volume = volume;
                     }}
                 />
             </div>
@@ -161,4 +129,4 @@ class VideoPlayer extends Component {
     }
 }
 
-export default VideoPlayer;
+export default AudioPlayer;

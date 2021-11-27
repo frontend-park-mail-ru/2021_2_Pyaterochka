@@ -28,6 +28,7 @@ import ImageUploader from '../../components/image-uploader';
 import SelectComponent from '../../components/select';
 import VideoPlayer from '../../components/video-player';
 import FileUploader from '../../components/file-uploader';
+import AudioPlayer from '../../components/audio-player';
 
 class IndexView extends Component {
     constructor () {
@@ -43,6 +44,19 @@ class IndexView extends Component {
                                 type: 'video/mp4'
                             }],
                             poster: 'http://media.w3.org/2010/05/bunny/poster.png'
+                        })
+                    }
+                ]
+            },
+            {
+                name: 'Аудио плеер',
+                data: [
+                    {
+                        component: new AudioPlayer({
+                            src: [{
+                                url: 'https://jplayer.org/audio/mp3/RioMez-01-Sleep_together.mp3',
+                                type: ''
+                            }]
                         })
                     }
                 ]
