@@ -47,12 +47,12 @@ class FileUploader extends Component {
                                     url="/imgs/icons/attach_outline_28.svg"
                                     color="#fff"
                                     colorHover="#fff"
-                                    size={50}
+                                    size={35}
                                 />
 
                                 <div className="file-uploader__action-text">
                                     Загрузить
-                                    <br />
+                                    {' '}
 
                                     {this.attributes.name}
 

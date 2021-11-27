@@ -480,6 +480,8 @@ class EditorComponent extends Component {
                                                     comment={element.error ? 'Ошибка загрузки:' + element.error : ''}
                                                 />
 
+                                                <br />
+
                                                 {element.value
                                                     ? <audio controls>
                                                         <source src={element.value} />
@@ -503,6 +505,8 @@ class EditorComponent extends Component {
                                                         loading={element.loading}
                                                         comment={element.error ? 'Ошибка загрузки:' + element.error : ''}
                                                     />
+
+                                                    <br />
 
                                                     {element.value
                                                         ? <video controls>
