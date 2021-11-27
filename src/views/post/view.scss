@@ -28,7 +28,7 @@
   }
 
   &__text {
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
     font-size: 24px;
     font-weight: 300;
   }
@@ -93,7 +93,7 @@
   max-width: 100%;
 
   &__title {
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
     font-size: 20px;
     font-style: normal;
     font-weight: 400;
@@ -103,7 +103,6 @@
   &__actions {
     display: flex;
     justify-content: left;
-    flex-wrap: wrap;
     align-items: center;
 
     .btn {
@@ -130,5 +129,26 @@
     border-top: 1px solid #acabab;
     margin: 1em 0;
     padding: 0;
+  }
+}
+
+@media (max-width: 800px) {
+  .post {
+    margin-left: 0;
+    margin-right: 0;
+    padding: 20px;
+  }
+
+  .add-comment {
+    top: calc(100vh - 170px);
+    margin-bottom: -170px;
+  }
+
+  .comments-container {
+    padding-bottom: 200px;
+
+    & > :last-of-type {
+      margin-bottom: 100px;
+    }
   }
 }
