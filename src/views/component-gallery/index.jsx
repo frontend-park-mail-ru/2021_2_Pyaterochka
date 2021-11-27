@@ -27,6 +27,7 @@ import TabsContainer from '../../components/tabs-container';
 import ImageUploader from '../../components/image-uploader';
 import SelectComponent from '../../components/select';
 import VideoPlayer from '../../components/video-player';
+import FileUploader from '../../components/file-uploader';
 
 class IndexView extends Component {
     constructor () {
@@ -43,6 +44,15 @@ class IndexView extends Component {
                             }],
                             poster: 'http://media.w3.org/2010/05/bunny/poster.png'
                         })
+                    }
+                ]
+            },
+            {
+                name: 'Загрузка файла',
+                data: [
+                    {
+                        name: 'Файл',
+                        component: new FileUploader({})
                     }
                 ]
             },

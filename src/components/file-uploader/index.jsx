@@ -1,6 +1,7 @@
 import Component from '../basecomponent';
+import IconComponent from '../icon';
 import Spinner from '../spinner';
-// import './style.scss';
+import './style.scss';
 
 /**
  * Компонент загрузки файла
@@ -9,11 +10,15 @@ class FileUploader extends Component {
     constructor ({
         loading = false,
         accept = '*',
+        name = 'файл',
+        comment = '',
         onChange = (file) => { }
     }) {
         super();
         this.attributes.loading = loading;
         this.attributes.accept = accept;
+        this.attributes.name = name;
+        this.attributes.comment = comment;
         this.attributes.onChange = onChange;
     }
 
@@ -25,18 +30,44 @@ class FileUploader extends Component {
 
     render () {
         return (
-            <div>
+            <div className="file-uploader file-uploader--horizontal">
                 {
                     !this.attributes.loading
-                        ? <div>
-                            <input
-                                accept={this.attributes.accept}
-                                onChange={(e) => { this.loadFile(e); }}
-                                type="file"
-                            />
-                        </div>
-                        : <div>
-                            <Spinner />
+
+                        ? <>
+                            <label className="file-uploader__action">
+                                <input
+                                    className="file-uploader__input"
+                                    accept={this.attributes.accept}
+                                    onChange={(e) => { this.loadFile(e); }}
+                                    type="file"
+                                />
+
+                                <IconComponent
+                                    url="/imgs/icons/attach_outline_28.svg"
+                                    color="#fff"
+                                    colorHover="#fff"
+                                    size={50}
+                                />
+
+                                <div className="file-uploader__action-text">
+                                    Загрузить
+                                    <br />
+
+                                    {this.attributes.name}
+
+                                </div>
+
+                            </label>
+
+                            {this.attributes.comment
+                                ? <div className="file-uploader__comment">
+                                    {this.attributes.comment}
+                                </div>
+                                : null}
+                        </>
+                        : <div className="file-uploader__spinner">
+                            <Spinner color="#fff" />
                         </div>
                 }
 

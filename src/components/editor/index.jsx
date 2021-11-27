@@ -2,6 +2,7 @@ import { nextTick } from '../../modules/jsx/utils';
 import Component from '../basecomponent';
 import Button from '../button';
 import FileUploader from '../file-uploader';
+import IconComponent from '../icon';
 import ImageUploader from '../image-uploader';
 import './style.scss';
 
@@ -91,6 +92,20 @@ class EditorComponent extends Component {
 
         this.update();
         this.checkLast();
+    }
+
+    deleteElement (hash) {
+        const i = this.findBody(hash);
+        this.attributes.body.splice(i, 1);
+        this.update();
+
+        this.checkLast();
+    }
+
+    addTextBefore (hash) {
+        const i = this.findBody(hash);
+        this.attributes.body.splice(i, 0, this.newTextBody());
+        this.update();
     }
 
     async loadImage (hash, image) {
@@ -351,75 +366,67 @@ class EditorComponent extends Component {
                         {this.attributes.body.map((element) => {
                             return (
                                 <>
+                                    <div
+                                        title="Добавить элемент"
+                                        key={element.hash + '_helper--add-line'}
+                                        className="editor__helper--add-line"
+                                        onClick={
+                                            () => { this.addTextBefore(element.hash); }
+                                        } />
+
                                     {element.type === 'text' && !element.value
                                         ? (
                                             <div
                                                 className="editor__helper editor__helper--body"
                                                 key={element.hash + '_helper'}
                                             >
-                                                <button
+                                                <IconComponent
                                                     title="Добавить музыку"
-                                                    className="add-icon-button"
+                                                    size="24"
                                                     onClick={
                                                         () => { this.convertTo(element.hash, 'audio'); }
                                                     }
-                                                >
-                                                    <div
-                                                        className="icon"
-                                                        style="--icon: url('/imgs/icons/music_outline_24.svg')"
-                                                    />
-                                                </button>
+                                                    url='/imgs/icons/music_outline_24.svg'
+                                                />
 
-                                                <button
+                                                <IconComponent
                                                     title="Добавить картинку"
-                                                    className="add-icon-button"
+                                                    size="24"
                                                     onClick={
-                                                        () => { this.convertToImage(element.hash); }
+                                                        () => { this.convertTo(element.hash, 'image'); }
                                                     }
-                                                >
-                                                    <div
-                                                        className="icon"
-                                                        style="--icon: url('/imgs/icons/picture_outline_28.svg')"
-                                                    />
-                                                </button>
+                                                    url='/imgs/icons/picture_outline_28.svg'
+                                                />
 
-                                                <button
+                                                <IconComponent
                                                     title="Добавить видео"
-                                                    className="add-icon-button"
+                                                    size="24"
                                                     onClick={
                                                         () => { this.convertTo(element.hash, 'video'); }
                                                     }
-                                                >
-                                                    <div
-                                                        className="icon"
-                                                        style="--icon: url('/imgs/icons/video_outline_24.svg')"
-                                                    />
-                                                </button>
+                                                    url='/imgs/icons/video_outline_24.svg'
+                                                />
                                             </div>
                                         )
                                         : (
                                             ''
                                         )}
 
-                                    {element.type !== 'text'
+                                    {element.type !== 'text' || element.value
                                         ? (
                                             <div
-                                                className="editor__helper editor__helper--body"
+                                                className="editor__helper editor__helper--body editor__helper--body--delete"
                                                 key={element.hash + '_helper'}
                                             >
-                                                <button
+                                                <IconComponent
                                                     key="delete"
                                                     title="Удалить"
-                                                    className="add-icon-button"
+                                                    size="24"
                                                     onClick={
-                                                        () => { this.convertTo(element.hash, 'text'); }
+                                                        () => { this.deleteElement(element.hash); }
                                                     }
-                                                >
-                                                    <div
-                                                        className="icon"
-                                                        style="--icon: url('/imgs/icons/delete_outline_20.svg')"
-                                                    />
-                                                </button>
+                                                    url='/imgs/icons/delete_outline_20.svg'
+                                                />
                                             </div>
                                         )
                                         : (
@@ -447,30 +454,31 @@ class EditorComponent extends Component {
 
                                     {element.type === 'image'
                                         ? (
-                                            <ImageUploader
-                                                image={element.value}
-                                                isCircle={false}
-                                                onChange={(image) => {
-                                                    this.loadImage(element.hash, image);
-                                                }}
-                                                loading={element.loading}
-                                            />
+                                            <div className="editor__body-element  editor__body-element--file">
+                                                <ImageUploader
+                                                    image={element.value}
+                                                    isCircle={false}
+                                                    onChange={(image) => {
+                                                        this.loadImage(element.hash, image);
+                                                    }}
+                                                    loading={element.loading}
+                                                />
+                                            </div>
                                         )
                                         : null}
 
                                     {element.type === 'audio'
                                         ? (
-                                            <div className="temp-file-container">
-                                                Аудио:
+                                            <div className="editor__body-element  editor__body-element--file">
                                                 <FileUploader
-                                                    accept=".ogg"
+                                                    accept=".ogg, .mp3"
                                                     onChange={(image) => {
                                                         this.loadFile(element.hash, image, element.type);
                                                     }}
+                                                    name='аудио'
                                                     loading={element.loading}
+                                                    comment={element.error ? 'Ошибка загрузки:' + element.error : ''}
                                                 />
-
-                                                {element.error ? 'Ошибка загрузки:' + element.error : ''}
 
                                                 {element.value
                                                     ? <audio controls>
@@ -485,17 +493,16 @@ class EditorComponent extends Component {
                                     {
                                         element.type === 'video'
                                             ? (
-                                                <div className="temp-file-container">
-                                                    Видео
+                                                <div className="editor__body-element  editor__body-element--file">
                                                     <FileUploader
                                                         accept=".3gpp, .mp4"
                                                         onChange={(image) => {
                                                             this.loadFile(element.hash, image, element.type);
                                                         }}
+                                                        name='видео'
                                                         loading={element.loading}
+                                                        comment={element.error ? 'Ошибка загрузки:' + element.error : ''}
                                                     />
-
-                                                    {element.error ? 'Ошибка загрузки:' + element.error : ''}
 
                                                     {element.value
                                                         ? <video controls>

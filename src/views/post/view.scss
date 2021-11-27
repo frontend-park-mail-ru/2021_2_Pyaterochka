@@ -37,6 +37,18 @@
     max-width: 100%;
   }
 
+  &__video {
+    padding: 10px 0;
+    width: 100%;
+    display: block;
+  }
+
+  &__audio {
+    padding: 10px 0;
+    width: 100%;
+    display: block;
+  }
+
   &__actions {
     display: flex;
     justify-content: space-between;

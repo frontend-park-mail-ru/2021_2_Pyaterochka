@@ -1,0 +1,26 @@
+.icon-container {
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 0;
+  display: inline-block;
+
+  &__icon {
+    width: var(--size);
+    height: var(--size);
+    mask-image: var(--icon);
+    mask-position: center;
+    mask-size: contain;
+    -webkit-mask-image: var(--icon);
+    -webkit-mask-position: center;
+    -webkit-mask-size: contain;
+    background-color: var(--icon-color);
+    display: block;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: var(--icon-color-hover);
+    }
+  }
+}

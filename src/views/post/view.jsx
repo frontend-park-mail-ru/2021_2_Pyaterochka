@@ -102,12 +102,16 @@ class PostView extends Component {
                                             src={value} />);
                                     }
                                     if (type === 'video') {
-                                        return (<video controls>
+                                        return (<video
+                                            className="post__video"
+                                            controls>
                                             <source src={value} />
                                         </video>);
                                     }
                                     if (type === 'audio') {
-                                        return (<audio controls>
+                                        return (<audio
+                                            className="post__audio"
+                                            controls>
                                             <source src={value} />
                                         </audio>);
                                     }

@@ -1,30 +1,3 @@
-.add-icon-button {
-  background: none;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  padding: 0;
-  margin: 0 5px;
-
-  .icon {
-    width: 24px;
-    height: 24px;
-    mask-image: var(--icon);
-    mask-position: center;
-    mask-size: contain;
-    -webkit-mask-image: var(--icon);
-    -webkit-mask-position: center;
-    -webkit-mask-size: contain;
-    background-color: #7c7c7c;
-    display: block;
-    transition: background-color 0.2s ease;
-
-    &:hover {
-      background-color: #000;
-    }
-  }
-}
-
 .editor__save-panel {
   padding: 15px 15px;
   font-size: 14px;
@@ -71,7 +44,7 @@
   padding: 40px;
   position: relative;
 
-  [contentEditable=true] {
+  [contentEditable="true"] {
     border: none;
     outline: none;
     cursor: text;
@@ -80,14 +53,6 @@
     br {
       display: block;
     }
-  }
-
-  textarea {
-    display: block;
-    width: 100%;
-    border: none;
-    outline: none;
-    font-family: Roboto, sans-serif;
   }
 
   &__title {
@@ -118,6 +83,65 @@
 
   &__body-element {
     padding: 15px 15px;
+
+    &--file {
+      padding: 10px;
+      padding-top: 0;
+
+      video {
+        width: 100%;
+        display: block;
+      }
+
+      audio {
+        width: 100%;
+        display: block;
+      }
+    }
+  }
+
+  &__helper--add-line {
+    display: block;
+    width: 100%;
+    cursor: pointer;
+    height: 3px;
+    transition: border ease 0.3s, margin ease 0.3s, height ease 0.3s;
+    position: relative;
+    border-radius: 10px;
+    background: #ccc;
+    margin-top: 11px + 10px;
+    margin-bottom: 11px + 10px;
+
+    &::before {
+      content: "+";
+      color: #fff;
+      width: 24px;
+      height: 24px;
+      display: block;
+      background: #999;
+      text-align: center;
+      border-radius: 100%;
+      margin-top: -10px;
+      position: absolute;
+      left: 0;
+      top: 0;
+      font-weight: 600;
+      transition: background ease 0.3s, top ease 0.3s, transform ease 0.3s;
+      font-size: 20px;
+    }
+
+    &:hover {
+      margin-top: 5px + 10px;
+      margin-bottom: 5px + 10px;
+      height: 15px;
+      background: #000;
+
+      &::before {
+        transform: scale(1.3);
+        background: #666;
+        top: 5px;
+      }
+    }
   }
 
   &__helper--body {
@@ -125,6 +149,10 @@
     padding-right: 22px;
     margin-left: 22px;
     border-right: 2px solid #888;
+
+    & > * {
+      margin: 0 5px;
+    }
   }
 
   &__title,
@@ -133,7 +161,7 @@
     margin-bottom: 4px;
   }
 
-  [contentEditable=true]:empty::after,
+  [contentEditable="true"]:empty::after,
   .editor__body-element--show-placeholder::after,
   .editor_show-placeholder::after {
     content: attr(placeholder);
@@ -141,8 +169,11 @@
   }
 }
 
-.temp-file-container {
-  padding: 20px;
+@media (min-width: 1100px) {
+  .editor__helper--add-line {
+    margin-left: -50px;
+    width: calc(100% + 50px);
+  }
 }
 
 @media (max-width: 1100px) {
@@ -158,6 +189,15 @@
 
         + .editor__body-element {
           margin-left: 150px;
+        }
+      }
+
+      &--body--delete {
+        left: -160px;
+        display: block;
+
+        + .editor__body-element {
+          margin-left: 70px;
         }
       }
     }
