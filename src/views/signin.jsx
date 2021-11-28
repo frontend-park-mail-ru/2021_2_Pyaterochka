@@ -13,37 +13,27 @@ class SigninView extends Component {
         this.attributes.loading = false;
         this.attributes.error = false;
 
-        this.form = [
-            new InputField({
-                placeholder: 'Эл. почта',
-                type: 'email',
-                validation: []
-            }),
-            new InputField({
-                placeholder: 'Пароль',
-                type: 'password',
-                validation: []
-            })
-        ];
+        this.state.email = '';
+        this.state.password = '';
     }
 
     async submit (e) {
         e.preventDefault();
 
-        const error = this.form.reduce(
-            (status, form) => status || form.getValue() === '',
-            false
-        );
-        if (error) return (this.attributes.error = 'Введите логин и пароль');
+        const error = this.state.password === '' || this.state.email === '';
+        if (error) {
+            return (this.attributes.error = 'Введите логин и пароль');
+        }
         this.attributes.error = '';
         this.attributes.loading = true;
         const res = await api.login({
-            email: this.form[0].getValue(),
-            password: this.form[1].getValue()
+            email: this.state.email,
+            password: this.state.password
         });
         if (res.error) {
             this.attributes.loading = false;
             this.attributes.error = 'Неправильный логин и/или пароль';
+            return;
         }
         user.update();
         this.attributes.loading = false;
@@ -65,7 +55,19 @@ class SigninView extends Component {
                         this.submit(e);
                     }}
                 >
-                    {this.form.map((c) => c.renderReactive())}
+                    <InputField
+                        placeholder="Эл. почта"
+                        type="email"
+                        value={this.state.email}
+                        onInput={(e) => { this.state.email = e.target.value; }}
+                    />
+
+                    <InputField
+                        placeholder="Пароль"
+                        type="password"
+                        value={this.state.password}
+                        onInput={(e) => { this.state.password = e.target.value; }}
+                    />
 
                     <div className="error">
                         {this.attributes.error}
@@ -97,20 +99,9 @@ class SigninView extends Component {
     }
 
     created () {
-        if (user.user) return app.$router.go(app.$router.createUrl('profile'));
-
-        this.form = [
-            new InputField({
-                placeholder: 'Эл. почта',
-                type: 'email',
-                validation: []
-            }),
-            new InputField({
-                placeholder: 'Пароль',
-                type: 'password',
-                validation: []
-            })
-        ];
+        if (user.user) {
+            return app.$router.go(app.$router.createUrl('profile'));
+        }
     }
 }
 
