@@ -99,6 +99,12 @@ const mapPayment = (data, i) => {
         id: i,
         amount: data.amount,
         creatorId: data.creator_id,
+        creator: {
+            id: data.creator_id,
+            nickname: data.creator_nickname,
+            category: data.creator_category,
+            description: data.creator_description
+        },
         date: new Date(data.date),
         userId: data.user_id
     };

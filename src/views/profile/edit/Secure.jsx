@@ -74,7 +74,7 @@ class ProfileEditSecure extends Component {
                                                     app.$router.go(app.$router.createUrl('creator', payment.creatorId));
                                                 }
                                             }
-                                            text={`Открыть автора ${payment.creatorId}`}
+                                            text={`${payment.creator.nickname}`}
                                         />
                                     </td>
                                 </tr>
