@@ -13,9 +13,7 @@ class SwitchContainer extends Component {
     }
 
     change () {
-        this.attributes.isOn = !this.attributes.isOn;
-
-        this.attributes.onChange(this.attributes.isOn);
+        this.attributes.onChange(!this.props.isOn);
     }
 
     render () {

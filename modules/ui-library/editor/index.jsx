@@ -84,9 +84,7 @@ class EditorComponent extends Component {
     }
 
     convertTo (hash, type) {
-        console.log(hash, type);
         const element = this.attributes.body[this.findBody(hash)];
-        console.log(hash, type, element);
 
         element.type = type;
         element.value = '';
@@ -265,7 +263,7 @@ class EditorComponent extends Component {
                         <div
                             className={[
                                 'editor__level',
-                                this.attributes.activeLevel === 0 ? 'active' : ''
+                                !this.state.activeLevel ? 'active' : ''
                             ]}
                             onClick={() => {
                                 this.setLevel(0);

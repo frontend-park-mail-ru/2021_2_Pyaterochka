@@ -7,5 +7,3 @@ const config = {
     }
 };
 export default config;
-
-console.log((v) => { config.basename = v; config.imageBasename = v; });

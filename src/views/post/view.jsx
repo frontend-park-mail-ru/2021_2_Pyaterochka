@@ -254,7 +254,7 @@ class PostView extends Component {
 
             this.attributes.comments = this.attributes.comments.sort((b, a) => a.published - b.published);
         } catch (e) {
-            console.log(e);
+            console.error(e);
             this.attributes.errorFirstLoading = true;
         }
     }
