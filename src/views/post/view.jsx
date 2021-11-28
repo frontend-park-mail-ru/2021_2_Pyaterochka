@@ -104,10 +104,14 @@ class PostView extends Component {
                                             src={value} />);
                                     }
                                     if (type === 'video') {
-                                        return (<VideoPlayer src={[{ url: value }]} />);
+                                        return (<div className="post__attach">
+                                            <VideoPlayer src={[{ url: value }]} />
+                                        </div>);
                                     }
                                     if (type === 'audio') {
-                                        return (<AudioPlayer src={[{ url: value }]} />);
+                                        return (<div className="post__attach">
+                                            <AudioPlayer src={[{ url: value }]} />
+                                        </div>);
                                     }
                                     return null;
                                 })

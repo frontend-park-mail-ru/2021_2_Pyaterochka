@@ -74,6 +74,7 @@ class Router extends Component {
         history.pushState(url, url, url);
 
         if (rerender) {
+            window.scrollTo(0, 0);
             this.start();
         }
     }
