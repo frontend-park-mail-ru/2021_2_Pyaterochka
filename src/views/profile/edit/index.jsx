@@ -10,6 +10,12 @@ import ProfileEditSecure from './Secure';
 import './style.scss';
 
 class ProfileEditView extends Component {
+    defaultProps () {
+        return {
+            route: null
+        };
+    }
+
     render () {
         return (<div className="profile-edit">
             <h1 className="profile-edit__title">
@@ -17,7 +23,7 @@ class ProfileEditView extends Component {
             </h1>
 
             <TabsContainer
-                activeTab={this.data || 'common'}
+                activeTab={this.props?.route?.data || 'common'}
                 onChange={
                     (tab) => {
                         app.$router.go(

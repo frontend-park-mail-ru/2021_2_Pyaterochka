@@ -82,7 +82,7 @@ class AudioPlayer extends Component {
                     () => { this.onVolumeChange(); }
                 }
                 onTimeUpdate={
-                    (e) => { this.onTimeUpdate(); }
+                    () => { this.onTimeUpdate(); }
                 }
                 onWaiting={
                     () => { this.attributes.loading = true; }
@@ -108,7 +108,7 @@ class AudioPlayer extends Component {
                     duration={this.attributes.duration}
                     state={this.attributes.state}
                     canFullScreen={false}
-                    onToggle={(e) => {
+                    onToggle={() => {
                         this.toggle();
                     }}
                     onSeek={(time) => {

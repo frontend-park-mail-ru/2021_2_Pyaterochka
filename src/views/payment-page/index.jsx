@@ -11,6 +11,12 @@ import LoadingView from '../loading-view';
 import './style.scss';
 
 class PaymentPage extends Component {
+    defaultProps () {
+        return {
+            route: null
+        };
+    }
+
     constructor () {
         super();
 
@@ -178,10 +184,10 @@ class PaymentPage extends Component {
         </div>);
     }
 
-    async created () {
+    async propsChanged () {
         this.attributes.loading = true;
         try {
-            const data = this.data.split('/');
+            const data = this.props.route.data.split('/');
 
             [this.creatorId, this.levelId] = data.slice(0, 2).map(x => parseInt(x));
 

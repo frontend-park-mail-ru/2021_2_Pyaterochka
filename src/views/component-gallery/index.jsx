@@ -594,7 +594,7 @@ class IndexView extends Component {
         const componentMenu = [];
         const componentWrappers = [];
 
-        this.attributes.cps.forEach((info, ii) => {
+        this.attributes.cps.forEach((info) => {
             const componentWrapper = (
                 <div className="component-wrapper">
                     <h2>

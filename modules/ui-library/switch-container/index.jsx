@@ -7,7 +7,7 @@ class SwitchContainer extends Component {
     defaultProps () {
         return {
             isOn: true,
-            onChange: (i) => { },
+            onChange: () => { },
             title: ''
         };
     }

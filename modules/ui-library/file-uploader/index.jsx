@@ -13,7 +13,7 @@ class FileUploader extends Component {
             accept: '*',
             name: 'файл',
             comment: '',
-            onChange: (file) => { }
+            onChange: () => { }
         };
     }
 

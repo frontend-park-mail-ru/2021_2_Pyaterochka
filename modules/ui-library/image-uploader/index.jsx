@@ -12,7 +12,7 @@ class ImageUploader extends Component {
             loading: false,
             isCircle: true,
             imageName: 'изображение',
-            onChange: (file) => { }
+            onChange: () => { }
         };
     }
 

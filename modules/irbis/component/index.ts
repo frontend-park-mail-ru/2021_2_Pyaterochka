@@ -13,7 +13,7 @@ class Component {
         [key: string]: any
     }
 
-    _slot: VDomNode[] = [];
+    _slot: VDomNode | VDomNode[] = [];
 
     vdom: VDomNode;
 

@@ -6,7 +6,7 @@ class TabsPanel extends Component {
         return {
             tabs: [],
             activeTab: null,
-            onChange: (e) => { }
+            onChange: () => { }
         };
     }
 

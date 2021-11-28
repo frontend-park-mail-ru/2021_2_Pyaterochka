@@ -21,7 +21,7 @@ class EditorComponent extends Component {
         activeLevel = 0,
         cover = null,
         body = [],
-        onSave = (post) => { },
+        onSave = () => { },
         onDelete = () => { },
         onLoadCover = () => { },
         onLoadImage = () => { },

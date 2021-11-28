@@ -2,24 +2,29 @@
  * @module Роутер
  */
 
-import Component from 'irbis/component';
-import Layout from '../components/layout';
-import app from 'irbis';
+import Component from '../irbis/component';
+import app from '../irbis';
+import VDomComponent from '../irbis/vdom/vdom-component';
+import Route from './route';
+import VDomNode from '../jsx/vdom-node';
 
 class Router extends Component {
-    constructor ({ routes = [], loadingView = null, errorView = null, offlineView = null }) {
+    defaultProps () {
+        return {
+            routes: [],
+            loadingView: null,
+            errorView: null,
+            offlineView: null,
+            layout: null
+        };
+    }
+
+    propsChanged () {
+        this.slot = [new VDomComponent(this.props.layout, {}, [])];
+    }
+
+    constructor () {
         super();
-
-        this.routes = routes;
-        this.loadingView = loadingView;
-        this.errorView = errorView;
-        this.offlineView = offlineView;
-
-        if (this.loadingView) {
-            this.slot = this.loadingView;
-        } else {
-            this.slot = null;
-        }
 
         this.addRouterListeners();
 
@@ -27,6 +32,9 @@ class Router extends Component {
     }
 
     render () {
+        if (Array.isArray(this.slot)) {
+            return this.slot[0];
+        }
         return this.slot;
     }
 
@@ -40,8 +48,8 @@ class Router extends Component {
      * @param {string} url
      * @returns {Route} путь
      */
-    getRoute (url) {
-        const route = this.routes.find((route) => {
+    getRoute (url: string): Route {
+        const route = this.props.routes.find((route: Route) => {
             if (route.url === '') return true;
             if (route.url.endsWith('*')) {
                 return url.startsWith(route.url.replace('*', ''));
@@ -83,44 +91,39 @@ class Router extends Component {
      * Отобразить путь
      * @param {Route} route путь
      */
-    async renderRoute (route) {
+    async renderRoute (route: Route) {
         document.title = route.title;
 
-        if (this.loadingView) {
-            this.slot = (<Layout>
-                {this.loadingView}
-            </Layout>);
+        let slot: VDomNode;
+        if (Array.isArray(this.slot)) {
+            slot = this.slot[0];
+        } else {
+            slot = this.slot;
+        }
+        if (!(slot instanceof VDomComponent) || !slot._component) return;
+
+        if (this.props.loadingView) {
+            slot._component.slot = this.props.loadingView;
         }
         try {
             const Component = (await route.component()).default;
-            const view = new Component();
-
-            if (route.data) {
-                view.data = route.data;
-            }
-            this.slot = (<Layout>
-                {view.renderReactive()}
-            </Layout>);
+            slot._component.slot = new VDomComponent(Component, { route }, []);
         } catch (e) {
             console.error("Can't load page", e);
             if (navigator.onLine) {
-                this.slot = (<Layout>
-                    {this.errorView}
-                </Layout>);
+                slot._component.slot = this.props.errorView;
             } else {
-                this.slot = (<Layout>
-                    {this.offlineView}
-                </Layout>);
+                slot._component.slot = this.props.offlineView;
             }
         }
     }
 
-    onClick (e) {
+    onClick (e: MouseEvent) {
         if (e.target) {
             let url = null;
             let node = e.target;
 
-            while (!url && node) {
+            while (!url && node && node instanceof Element) {
                 if (node.hasAttribute('router-go')) {
                     url = node.getAttribute('router-go');
                 }
@@ -131,7 +134,6 @@ class Router extends Component {
                 this.go(url);
             }
         }
-    // e.preventDefault();
     }
 
     onPopState () {
@@ -142,12 +144,12 @@ class Router extends Component {
      * Установка обработчиков
      */
     addRouterListeners () {
-        document.addEventListener('click', (e) => { this.onClick(e); });
-        window.addEventListener('popstate', (e) => { this.onPopState(e); });
+        document.addEventListener('click', (e: MouseEvent) => { this.onClick(e); });
+        window.addEventListener('popstate', () => { this.onPopState(); });
     }
 
-    createUrl (name, param = null) {
-        const route = this.routes.find((r) => {
+    createUrl (name: string, param: string = null) {
+        const route = this.props.routes.find((r) => {
             if (!r) return false;
             return r.name === name;
         });

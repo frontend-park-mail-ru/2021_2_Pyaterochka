@@ -1,4 +1,4 @@
-import Router from './router';
+import Router from 'irbis-router';
 import LoadingView from './views/loading-view';
 import user from './storage/user';
 import App from 'irbis';
@@ -7,12 +7,14 @@ import registerValidSW from './service-worker';
 import routes from './routes';
 
 import './styles/index.scss';
+import Layout from './components/layout';
 
 document.addEventListener('DOMContentLoaded', async () => {
     user.update();
 
     App.setup(
         <Router
+            layout={Layout}
             errorView={
                 <ErrorPage desc="Не удалось загрузить страницу" />
             }

@@ -13,6 +13,10 @@ import ErrorPage from '../errorpage';
 import './style.scss';
 
 class CreatorView extends Component {
+    defaultProps () {
+        return { route: null };
+    }
+
     constructor () {
         super();
         this.attributes.creator = null;
@@ -211,17 +215,18 @@ class CreatorView extends Component {
         );
     }
 
-    async created () {
+    async propsChanged () {
+        const creatorId = this.props.route.data;
         try {
             this.attributes.creator = null;
 
-            this.attributes.creator = await api.creatorInfo(this.data);
+            this.attributes.creator = await api.creatorInfo(creatorId);
 
             if (!this.attributes.creator) {
                 this.attributes.notFound = true;
                 return;
             }
-            const levels = await api.levelsInfo(this.data);
+            const levels = await api.levelsInfo(creatorId);
 
             const levelId = this.attributes.creator.levelId;
 
@@ -243,7 +248,7 @@ class CreatorView extends Component {
             }
 
             this.attributes.levels = levels;
-            this.attributes.posts = await api.postsInfo(this.data);
+            this.attributes.posts = await api.postsInfo(creatorId);
 
             if (!this.attributes.posts) {
                 this.attributes.notFound = true;

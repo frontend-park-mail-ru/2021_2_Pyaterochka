@@ -1,5 +1,6 @@
+import Route from 'irbis-router/route';
+
 import MainPageView from './views/main-page';
-import Route from './router/route';
 import LoadingView from './views/loading-view';
 import ErrorPage from './views/errorpage';
 

@@ -7,22 +7,30 @@ class SwitchComponent extends Component {
         return {
             isOn: true,
             changeOnClick: true,
-            onChange: (i) => { }
+            onChange: () => { }
         };
     }
 
-    onClick (e) {
-        if (!this.attributes.changeOnClick) return;
+    get isOn () {
+        if (this.props.changeOnClick) {
+            return this.state.isOn;
+        }
+        return this.props.isOn;
+    }
 
-        this.attributes.isOn = !this.attributes.isOn;
-        this.attributes.onChange(this.attributes.isOn);
+    onClick () {
+        this.attributes.onChange(!this.isOn);
+
+        if (this.props.changeOnClick) {
+            this.state.isOn = !this.state.isOn;
+        }
     }
 
     render () {
         return (<div
-            className={['switch', this.attributes.isOn ? 'switch_on' : 'switch_off']}
-            onClick={(e) => {
-                this.onClick(e);
+            className={['switch', this.isOn ? 'switch_on' : 'switch_off']}
+            onClick={() => {
+                this.onClick();
             }}
         />);
     }

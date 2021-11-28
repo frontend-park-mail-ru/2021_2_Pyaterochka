@@ -16,6 +16,12 @@ import AudioPlayer from 'ui-library/audio-player';
 import VideoPlayer from 'ui-library/video-player';
 
 class PostView extends Component {
+    defaultProps () {
+        return {
+            route: ''
+        };
+    }
+
     constructor () {
         super();
         this.attributes.post = null;
@@ -211,8 +217,8 @@ class PostView extends Component {
         );
     }
 
-    async created () {
-        [this.userId, this.postId] = this.data.split('/');
+    async propsChanged () {
+        [this.userId, this.postId] = this.props.route.data.split('/');
 
         this.attributes.loading = true;
 

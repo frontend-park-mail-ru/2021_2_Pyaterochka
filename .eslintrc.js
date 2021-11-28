@@ -27,7 +27,7 @@ module.exports = {
         'react/react-in-jsx-scope': 'off',
         'react/prop-types': 'off',
         'react/jsx-indent': ['error', 4],
-        'react/jsx-no-literals': 'warn',
+        'react/jsx-no-literals': 'off',
         'react/jsx-no-bind': 'off',
         'react/sort-comp': 'off',
         'react/jsx-closing-tag-location': 'off',

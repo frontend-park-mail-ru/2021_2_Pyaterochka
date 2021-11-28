@@ -14,7 +14,7 @@ class VDomElement implements VDomNode {
     } = {};
 
     listeners: {
-        [key: string]: (this: Element, ev: any) => any;
+        [key: string]: (this: Element, ev: any) => void;
     } = {};
 
     constructor (tagName: string, attributes: {

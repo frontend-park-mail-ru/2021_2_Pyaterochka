@@ -9,6 +9,12 @@ import ConfirmComponent from 'ui-library/confirm';
 import './style.scss';
 
 class CreatorAddLevel extends Component {
+    defaultProps () {
+        return {
+            route: null
+        };
+    }
+
     constructor () {
         super();
         this.level = null;
@@ -131,14 +137,17 @@ class CreatorAddLevel extends Component {
         </div>);
     }
 
-    async created () {
+    created () {
         if (!user.user) {
             app.$router.go(app.$router.createUrl('signin'));
-            return;
         }
-        if (this.data) {
+    }
+
+    async propsChanged () {
+        const data = this.props.route.data;
+        if (data) {
             this.attributes.loading = 'Загрузка уровня';
-            this.levelId = parseInt(this.data);
+            this.levelId = parseInt(data);
             this.level = (
                 await api.levelsInfo(user.user.id)
             ).find(level => level.id === this.levelId);

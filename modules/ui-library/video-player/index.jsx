@@ -101,7 +101,7 @@ class VideoPlayer extends Component {
                     () => { this.onVolumeChange(); }
                 }
                 onTimeUpdate={
-                    (e) => { this.onTimeUpdate(); }
+                    () => { this.onTimeUpdate(); }
                 }
                 onWaiting={
                     () => { this.attributes.loading = true; }
@@ -134,7 +134,7 @@ class VideoPlayer extends Component {
                     duration={this.attributes.duration}
                     state={this.attributes.state}
                     canFullScreen
-                    onToggle={(e) => {
+                    onToggle={() => {
                         this.toggle();
                     }}
                     onSeek={(time) => {

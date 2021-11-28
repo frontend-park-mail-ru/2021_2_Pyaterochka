@@ -8,6 +8,12 @@ import ConfirmComponent from 'ui-library/confirm';
 import ErrorPage from '../errorpage';
 
 class CreatePostView extends Component {
+    defaultProps () {
+        return {
+            route: null
+        };
+    }
+
     constructor () {
         super();
         this.attributes.loading = 'Загрузка записи';
@@ -132,9 +138,9 @@ class CreatePostView extends Component {
         app.$router.go(app.$router.createUrl('creator', `${user.user.id}`));
     }
 
-    async created () {
+    async propsChanged () {
         try {
-            this.postId = parseInt(this.data);
+            this.postId = parseInt(this.props.route.data);
 
             this.attributes.loading = 'Загрузка записи';
 
