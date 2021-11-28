@@ -1,14 +1,19 @@
 module.exports = {
+    root: true,
+    parser: '@typescript-eslint/parser',
     env: {
         browser: true,
         es2021: true,
         node: true
     },
+
     extends: [
+        'plugin:@typescript-eslint/recommended',
         'standard',
-        'plugin:react/all'
+        'plugin:react/all',
+
     ],
-    plugins: ['react'],
+    plugins: ['@typescript-eslint', 'react'],
     parserOptions: {
         ecmaVersion: 12,
         sourceType: 'module',
@@ -37,11 +42,12 @@ module.exports = {
         'react/button-has-type': 'off',
         'react/jsx-child-element-spacing': 'off',
         'react/destructuring-assignment': 'off',
-        'react/no-direct-mutation-state': 'off'
+        'react/no-direct-mutation-state': 'off',
+        '@typescript-eslint/no-empty-function': 'off'
     },
     overrides: [
         {
-            files: ['*.jsx', '*.js']
+            files: ['*.jsx', '*.js', '*.tsx', '*.ts']
         }
     ]
 };

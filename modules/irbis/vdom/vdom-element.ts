@@ -1,10 +1,25 @@
 import { arrayOfArraysToArray, findReplacements } from './utils';
 import VDomNode from './vdom-node';
 
-class VDomElement extends VDomNode {
-    constructor (tagName, attributes, jsxChildren) {
-        super();
+class VDomElement implements VDomNode {
+    dom: Element = null;
+    children: VDomNode[] = [];
+    tagName = '';
+    className = '';
+    key: string = null;
+    parent: VDomNode = null;
 
+    attributes: {
+        [key: string]: string;
+    } = {};
+
+    listeners: {
+        [key: string]: (this: Element, ev: any) => any;
+    } = {};
+
+    constructor (tagName: string, attributes: {
+        [key: string]: any;
+    }, jsxChildren: VDomNode[]) {
         this.attributes = {};
         this.listeners = {};
         this.dom = null;
@@ -12,8 +27,6 @@ class VDomElement extends VDomNode {
         this.tagName = tagName;
         this.children = jsxChildren;
         this.children.forEach(child => { child.parent = this; });
-
-        this.className = '';
 
         Object.keys(attributes).forEach(key => {
             if (!attributes[key]) { return; }
@@ -36,7 +49,7 @@ class VDomElement extends VDomNode {
         });
     }
 
-    createElement () {
+    createElement (): Element {
         const element = document.createElement(this.tagName);
         this.dom = element;
 
@@ -53,11 +66,11 @@ class VDomElement extends VDomNode {
         return element;
     }
 
-    setListeners (element = this.dom) {
+    setListeners (element: Element = this.dom) {
         Object.entries(this.listeners).forEach(([attr, val]) => element.addEventListener(attr, val));
     }
 
-    removeListeners (element = this.dom) {
+    removeListeners (element: Element = this.dom) {
         Object.entries(this.listeners).forEach(([attr, val]) => element.removeEventListener(attr, val));
     }
 
@@ -69,20 +82,16 @@ class VDomElement extends VDomNode {
         this.dom = null;
     }
 
-    replace (newJsxDom) {
-        const newDom = newJsxDom.createElement(true);
+    replace (newJsxDom: VDomNode) {
+        const newDom = newJsxDom.createElement();
         this.dom.replaceWith(newDom);
-
-        if (this.parentComponent) {
-            this.parentComponent.dom = newDom;
-        }
 
         this.destroy();
 
         return newJsxDom;
     }
 
-    patch (newJsxDom) {
+    patch (newJsxDom: VDomNode) {
         if (
             !(newJsxDom instanceof VDomElement) ||
             newJsxDom.tagName !== this.tagName
@@ -106,7 +115,6 @@ class VDomElement extends VDomNode {
             if (this.dom !== document.activeElement) {
                 this.childrenPatchContentEditable(newJsxDom);
             }
-            // this.patchListeners(newJsxDom);
             return this;
         }
 
@@ -114,19 +122,11 @@ class VDomElement extends VDomNode {
         this.childrenPatch(newJsxDom);
         this.patchListeners(newJsxDom);
 
-        if (this.parentComponent) {
-            this.parentComponent.dom = this;
-        }
-
-        if (newJsxDom.parentComponent) {
-            newJsxDom.parentComponent.dom = this;
-        }
-
         return this;
     }
 
-    childrenPatchContentEditable (newJsxDom) {
-        this.dom.innerText = '';
+    childrenPatchContentEditable (newJsxDom: VDomElement) {
+        this.dom.innerHTML = '';
         this.children.forEach(child => {
             child.destroy();
         });
@@ -136,14 +136,19 @@ class VDomElement extends VDomNode {
         });
     }
 
-    patchListeners (newJsxDom) {
+    patchListeners (newJsxDom: VDomElement) {
         this.removeListeners();
         this.listeners = newJsxDom.listeners;
         this.setListeners();
     }
 
-    patchAttributes (newJsxDom) {
-        if (this.tagName === 'input' && this.attributes.type !== 'checkbox' && this.attributes.value !== newJsxDom.attributes.value) {
+    patchAttributes (newJsxDom: VDomElement) {
+        if (
+            this.tagName === 'input' &&
+            this.dom instanceof HTMLInputElement &&
+            this.attributes.type !== 'checkbox' &&
+            this.attributes.value !== newJsxDom.attributes.value
+        ) {
             this.dom.value = newJsxDom.attributes.value || '';
         }
 
@@ -165,7 +170,7 @@ class VDomElement extends VDomNode {
         });
     }
 
-    prepareKeys (children) {
+    prepareKeys (children: VDomNode[]) {
         children.forEach((child, i) => {
             if (child.key && !String(child.key).endsWith('_generated')) return;
 
@@ -174,22 +179,7 @@ class VDomElement extends VDomNode {
         return children.map((child) => child.key);
     }
 
-    // getPositions(children) {
-    //     return children.map(element => {
-    //         if (!element.dom) {
-    //             console.log("NULL DOM", element);
-    //             return null;
-    //         }
-    //         if (!element.dom.getBoundingClientRect) {
-    //             return [0, 0];
-    //         }
-    //         const pos = element.dom.getBoundingClientRect();
-
-    //         return [pos.left, pos.top];
-    //     })
-    // }
-
-    async childrenPatch (newJsxDom) {
+    async childrenPatch (newJsxDom: VDomElement) {
         const newChildren = arrayOfArraysToArray(newJsxDom.children);
 
         const oldKeys = this.prepareKeys(this.children);
@@ -199,33 +189,29 @@ class VDomElement extends VDomNode {
 
         const patchedChildren = [];
 
-        replacements.forEach(r => {
-            if (r.to < 0) {
+        replacements.forEach(({ to, from }) => {
+            if (to < 0) {
                 // Deleted element
-                const el = this.children[r.from];
+                const el = this.children[from];
 
                 el.destroy();
 
                 return;
             }
-            if (r.from < 0) {
+            if (from < 0) {
                 // New element
-                const el = newChildren[r.to];
+                const el = newChildren[to];
 
                 el.createElement();
-                patchedChildren[r.to] = el;
+                patchedChildren[to] = el;
                 return;
             }
 
             // Replacement
-            const oldElement = this.children[r.from];
-            const newElement = newChildren[r.to];
-            patchedChildren[r.to] = oldElement.patch(newElement);
+            const oldElement = this.children[from];
+            const newElement = newChildren[to];
+            patchedChildren[to] = oldElement.patch(newElement);
         });
-
-        // await nextTick()
-
-        // const oldPos = this.getPositions(patchedChildren)
 
         if (patchedChildren.length) {
             const reversedChildren = patchedChildren.reverse();
@@ -241,51 +227,6 @@ class VDomElement extends VDomNode {
         }
 
         this.children = patchedChildren;
-
-        // const newPos = this.getPositions(patchedChildren);
-
-        // oldPos.forEach(async (oldP, i) => {
-        //     if (replacements[i].from < 0) {
-        //         const element = patchedChildren[i].dom;
-        //         if (element instanceof Text) {
-        //             return;
-        //         }
-
-        //         const oldD = element.style.visibility;
-        //         element.style.visibility = 'hidden'
-        //         await nextTick();
-        //         element.style.visibility = oldD
-
-        //         element.classList.add("fade-in");
-        //         element.addEventListener("animationend", () => {
-        //             element.classList.remove("fade-in")
-        //         }, {
-        //             once: true
-        //         })
-
-        //         return;
-        //     }
-
-        //     const newP = newPos[i];
-        //     if (!newP) return;
-
-        //     const dx = oldP[0] - newP[0];
-        //     const dy = oldP[1] - newP[1];
-
-        //     const element = patchedChildren[i].dom;
-
-    //     if (dx || dy) {
-    //         element.style.transform = `translate(${dx}px, ${dy}px)`;
-    //         await nextTick();
-    //         element.classList.add("move");
-    //         element.style.transform = ``;
-    //         element.addEventListener("transitionend", () => {
-    //             element.classList.remove("move");
-    //         }, {
-    //             once: true
-    //         })
-    //     }
-    // })
     }
 }
 

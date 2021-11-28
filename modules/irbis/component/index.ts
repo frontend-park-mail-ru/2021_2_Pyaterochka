@@ -1,34 +1,22 @@
+import VDomNode from '../vdom/vdom-node';
 import VDomText from '../vdom/vdom-text';
-
-/**
- * Аккумулятор запросов на обновление компонентов
- */
-const updateBlocks = new Set();
-
-/**
- * Применяет к компонентам аккумулированные запросы на обновление
- */
-function applyUpdates () {
-    updateBlocks.forEach((block) => {
-        try {
-            block.updatePartly();
-        } catch (err) {
-            console.error('Не удалось обновить компонент', block, err);
-            try {
-                block.updateForce();
-            } catch {
-                console.error('Не удалось обновить компонент принудительно', block, err);
-            }
-        }
-    });
-    updateBlocks.clear();
-}
-setInterval(applyUpdates, 100);
 
 /**
  * Базовый компонент, заложен интерфейс компонента и его обновление
  */
 class Component {
+    state: {
+        [key: string]: any
+    }
+
+    props: {
+        [key: string]: any
+    }
+
+    _slot: VDomNode[] = [];
+
+    vdom: VDomNode;
+
     constructor () {
         const getter = (attrs, key) => attrs[key];
 
@@ -64,7 +52,7 @@ class Component {
             .forEach(
                 ([key, defaultValue]) => {
                     newProps[key] =
-                    props[key] === undefined ? defaultValue : props[key];
+                        props[key] === undefined ? defaultValue : props[key];
                 }
             );
         this.props = newProps;
@@ -97,35 +85,33 @@ class Component {
 
     /**
      * Формируется отображение компонента
-     *
-     * @return {Element | Text}
      */
-    render () {
+    render (): VDomNode | null {
+        return null;
     }
 
     /**
      * Хук, вызываемый после внедрения компонента в страницу
      */
-    created () {
-
+    created (): void {
     }
 
     /**
      * Хук, вызываемый после изменения параметров компонента
      */
-    propsChanged () {
+    propsChanged (): void {
 
     }
 
     /**
      * Запрос на обновление компонента
      *
-     * @param {Bool} force - если true, компонент будет обновлен
+     * @param {boolean} force - если true, компонент будет обновлен
      * немедленно с помощью замены старого представления компонента
      * на новый, иначе будут применены изменения в старое
      * представление
      */
-    update (force = false) {
+    update (force = false): void {
         if (!this.vdom) return;
         if (force) return this.updateForce();
 
@@ -169,9 +155,38 @@ class Component {
     renderReactive () {
         this.created();
         this.vdom = this.render() || new VDomText('');
-        this.vdom.parentComponent = this;
         return this.vdom;
     }
+}
+
+/**
+ * Аккумулятор запросов на обновление компонентов
+ */
+const updateBlocks = new Set<Component>();
+
+/**
+ * Применяет к компонентам аккумулированные запросы на обновление
+ */
+function applyUpdates () {
+    updateBlocks.forEach((block) => {
+        try {
+            block.updatePartly();
+        } catch (err) {
+            console.error('Не удалось обновить компонент', block, err);
+            try {
+                block.updateForce();
+            } catch {
+                console.error('Не удалось обновить компонент принудительно', block, err);
+            }
+        }
+    });
+    updateBlocks.clear();
+    requestAnimationFrame(applyUpdates);
+}
+requestAnimationFrame(applyUpdates);
+
+export interface ComponentConstructor {
+    new(props: any, ...slot: VDomNode[]): Component;
 }
 
 export default Component;

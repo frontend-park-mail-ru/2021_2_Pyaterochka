@@ -1,42 +1,31 @@
 /**
  * Узел виртуального дерева
  */
-class VDomNode {
-    constructor () {
-        this.children = [];
-    }
+interface VDomNode {
+    children: VDomNode[];
+    dom?: Element | Text;
+    key?: string;
+    parent: VDomNode;
 
     /**
      * Создать DOM дерево
-     *
-     * @returns Element | Text
      */
-    createElement () {
-
-    }
+    createElement(): Element | Text;
 
     /**
      * Применить изменения в дереве
-     * @param {*} newJsxDom
      */
-    patch (newJsxDom) {
-
-    }
+    patch(newJsxDom: VDomNode): VDomNode;
 
     /**
      * Заменить данное виртуальное дерево другим деревом
-     * @param {*} newJsxDom
      */
-    replace (newJsxDom) {
-
-    }
+    replace(newJsxDom: VDomNode): VDomNode;
 
     /**
      * Уничтожить данное виртуальное дерево
      */
-    destroy () {
-
-    }
+    destroy();
 }
 
 export default VDomNode;

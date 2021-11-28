@@ -3,11 +3,13 @@ import VDomNode from './vdom-node';
 /**
  * Компонент экранированного текста
  */
-class VDomText extends VDomNode {
-    constructor (text) {
-        super();
+class VDomText implements VDomNode {
+    children = [];
+    dom?: Text;
+    text: string;
+    parent: VDomNode = null;
 
-        this.children = [];
+    constructor (text: string) {
         this.text = text;
         this.dom = null;
     }
@@ -17,7 +19,7 @@ class VDomText extends VDomNode {
         return this.dom;
     }
 
-    patch (newJsxDom) {
+    patch (newJsxDom: VDomNode) {
         if (newJsxDom instanceof VDomText) {
             if (this.text !== newJsxDom.text) {
                 this.text = newJsxDom?.dom?.textContent || newJsxDom?.text || '';
@@ -29,7 +31,7 @@ class VDomText extends VDomNode {
         return this.replace(newJsxDom);
     }
 
-    replace (newJsxDom) {
+    replace (newJsxDom: VDomNode) {
         const newDom = newJsxDom.createElement();
         this.dom.replaceWith(newDom);
 

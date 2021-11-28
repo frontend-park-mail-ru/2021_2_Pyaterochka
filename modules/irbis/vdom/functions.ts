@@ -1,3 +1,4 @@
+import { ComponentConstructor } from '../component';
 import Fragment from './fragment';
 import { arrayOfArraysToArray } from './utils';
 import VDomComponent from './vdom-component';
@@ -14,7 +15,10 @@ import VDomText from './vdom-text';
  * @param {Object} attributes атрибуты компонента
  * @returns {Component | Text} представление компонента
  */
-function jsx (Element, attributes, key = null) {
+function jsx (Element: ComponentConstructor | string, attributes: {
+    children: VDomNode | string | null,
+    [key: string]: any
+}, key: string = null) {
     return createVDomNode(Element, attributes,
         attributes.children ? [attributes.children] : [], key);
 }
@@ -23,12 +27,16 @@ function jsx (Element, attributes, key = null) {
  * Обертка JSX для создания представления компонента
  * с несколькими детьми
  *
- * @param {Function | String} Element - тип компонента, если поле
+ * @param {ComponentConstructor | string} Element - тип компонента, если поле
  * представлено строкой, то название тега, иначе класс компонента
  * @param {Object} attributes атрибуты компонента
+ * @param {string} key ключ
  * @returns {Component | Text} представление компонента
  */
-function jsxs (Element, attributes, key = null) {
+function jsxs (Element: ComponentConstructor | string, attributes: {
+    children: (VDomNode | string)[],
+    [key: string]: any
+}, key: string = null) {
     return createVDomNode(Element, attributes, attributes.children, key);
 }
 
@@ -41,27 +49,34 @@ function jsxs (Element, attributes, key = null) {
  * @param {Array} jsxChildren дети компонента
  * @returns {Component | Text} представление компонента
  */
-function createVDomNode (JsxElement, attributes, jsxChildren, key) {
+function createVDomNode (JsxElement: ComponentConstructor | string, attributes: {
+    [key: string]: any
+}, jsxChildren: (VDomNode | string)[], key: string) {
     const children = arrayOfArraysToArray(jsxChildren)
         .map(child => child || '')
         .map((child) => {
-            if (child instanceof VDomNode) {
+            if (
+                child instanceof VDomComponent ||
+                child instanceof VDomText ||
+                child instanceof VDomElement
+            ) {
                 return child;
             }
-            return new VDomText(child);
+            return new VDomText(String(child));
         });
 
-    if (JsxElement instanceof Function) {
+    if (typeof JsxElement === 'string') {
+        const el = new VDomElement(JsxElement, attributes, children);
+        el.key = key;
+        el.attributes.key = key;
+        return el;
+    } else {
         if (JsxElement === Fragment) {
             return children;
+        } else {
+            return new VDomComponent(JsxElement, attributes, children);
         }
-        return new VDomComponent(JsxElement, attributes, children);
     }
-
-    const el = new VDomElement(JsxElement, attributes, children);
-    el.key = key;
-    el.attributes.key = key;
-    return el;
 }
 
 export { jsx, jsxs };

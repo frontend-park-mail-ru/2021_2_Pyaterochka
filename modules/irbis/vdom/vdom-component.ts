@@ -1,10 +1,21 @@
+import Component, { ComponentConstructor } from '../component';
 import VDomNode from './vdom-node';
 
-class VDomComponent extends VDomNode {
-    constructor (Component, props, slot) {
-        super();
+class VDomComponent implements VDomNode {
+    _component: Component = null;
+    Component: ComponentConstructor;
+    props: {
+        [key: string]: any
+    };
 
-        this._component = null;
+    slot: VDomNode[]
+
+    children = [];
+    parent = null;
+
+    constructor (Component: ComponentConstructor, props: {
+        [key: string]: any
+    }, slot: VDomNode[]) {
         this.Component = Component;
         this.props = props;
         this.slot = slot;

@@ -1,12 +1,17 @@
+import VDomNode from './vdom/vdom-node';
+
 class App {
-    setup (component, container) {
+    container: Element = null;
+    component: VDomNode = null;
+
+    setup (component: VDomNode, container: Element) {
         this.setComponent(component);
         this.container = container;
 
         this.forceUpdate();
     }
 
-    setComponent (component) {
+    setComponent (component: VDomNode) {
         this.component = component;
     }
 

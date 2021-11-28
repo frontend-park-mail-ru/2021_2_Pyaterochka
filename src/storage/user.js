@@ -17,7 +17,7 @@ const user = {
             const user = await api.profile();
             if (user.status === 'error') {
                 this.user = null;
-            };
+            }
             this.user = user;
         } catch {
             this.user = null;

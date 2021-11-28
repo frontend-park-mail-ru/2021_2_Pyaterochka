@@ -26,7 +26,7 @@ class SignupView extends Component {
                     return value !== '' ? null : 'Поле не должно быть пустым';
                 },
                 (value) => {
-                    return length < 255 ? null : 'Никнейм слишком длинный';
+                    return value.length < 255 ? null : 'Никнейм слишком длинный';
                 }
             ]
         });

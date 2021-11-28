@@ -4,7 +4,8 @@
  * @param {any} a - исходный массив
  * @returns {any} результирующий массив
  */
-export function arrayOfArraysToArray (a) {
+
+export function arrayOfArraysToArray<Type> (a: Type[]): Type[] {
     if (!Array.isArray(a)) { return a; }
 
     return a.reduce((acc, a) => {
@@ -16,13 +17,17 @@ export function arrayOfArraysToArray (a) {
 }
 
 class Replacement {
-    constructor (id, from, to) {
+    id: string;
+    from: number;
+    to: number;
+
+    constructor (id: string, from: number, to: number) {
         this.id = id;
         this.from = from;
         this.to = to;
     }
 }
-export function findReplacements (oldArray, newArray) {
+export function findReplacements (oldArray: string[], newArray: string[]): Replacement[] {
     const replacements = newArray.map((key, i) => {
         return new Replacement(
             key,

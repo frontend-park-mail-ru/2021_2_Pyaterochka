@@ -29,7 +29,7 @@ class ProfileView extends Component {
                     <InputField
                         placeholder="Поле поиска"
                         onInput={
-                            (e, value) => {
+                            (e) => {
                                 this.attributes.searchQuery = e.target.value;
                                 this.onUpdate();
                             }
