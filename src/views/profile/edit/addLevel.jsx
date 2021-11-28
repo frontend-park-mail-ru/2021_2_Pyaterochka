@@ -115,7 +115,7 @@ class CreatorAddLevel extends Component {
 
         return (<div className="profile-edit">
             <EditLevelComponent
-                level={this.level}
+                level={this.level || undefined}
                 onDelete={
                     this.levelId
                         ? (level, coverFile) => {

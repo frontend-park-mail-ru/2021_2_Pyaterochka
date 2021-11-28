@@ -7,28 +7,18 @@ import './style.scss';
  * Компонент каточки уровня подписки
  */
 class LevelCard extends Component {
-    constructor ({
-        id = null,
-        name = '',
-        parentName = null,
-        benefits = [],
-        cover = '',
-        price = '0 $',
-        color = 'primary',
-        btnText = 'Выбрать уровень',
-        onClick = () => { }
-    }) {
-        super();
-        this.attributes.id = id;
-        this.attributes.name = name;
-        this.attributes.parentName = parentName;
-        this.attributes.benefits = benefits;
-        this.attributes.cover = cover;
-        this.attributes.price = price;
-        this.attributes.color = color;
-
-        this.attributes.btnText = btnText;
-        this.attributes.onClick = onClick;
+    defaultProps () {
+        return {
+            id: null,
+            name: '',
+            parentName: null,
+            benefits: [],
+            cover: '',
+            price: '0 $',
+            color: 'primary',
+            btnText: 'Выбрать уровень',
+            onClick: () => { }
+        };
     }
 
     render () {

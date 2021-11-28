@@ -1,6 +1,6 @@
 /** @module Поддержка JSX  */
 
-import Fragment from './jsx/fragment';
-import { jsx, jsxs } from './jsx/functions';
+import Fragment from './vdom/fragment';
+import { jsx, jsxs } from './vdom/functions';
 
 export { jsx, jsxs, Fragment };

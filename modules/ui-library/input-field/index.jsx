@@ -1,4 +1,5 @@
 import Component from 'irbis/component';
+import ValidationError from 'ui-library/validation-error';
 import './style.scss';
 
 /**
@@ -13,7 +14,8 @@ class InputField extends Component {
             disabled: false,
             onInput: () => { },
             onChange: () => { },
-            validation: []
+            validation: [],
+            validateAlways: false
         };
     }
 
@@ -21,6 +23,12 @@ class InputField extends Component {
         super();
         this.state.valid = '';
         this.state.errors = [];
+    }
+
+    propsChanged () {
+        if (this.props.validateAlways) {
+            this.validate();
+        }
     }
 
     render () {
@@ -55,12 +63,9 @@ class InputField extends Component {
                     {
                         this.attributes.errors.map((error) => {
                             return (
-                                <div
-                                    className="input-validation_error"
-                                    key={error.key}
-                                >
-                                    {error.error}
-                                </div>
+                                <ValidationError
+                                    value={error.error}
+                                    key={error.key} />
                             );
                         })
                     }

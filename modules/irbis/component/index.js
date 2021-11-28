@@ -1,4 +1,4 @@
-import VDomText from '../jsx/vdom-text';
+import VDomText from '../vdom/vdom-text';
 
 /**
  * Аккумулятор запросов на обновление компонентов
@@ -69,6 +69,8 @@ class Component {
             );
         this.props = newProps;
 
+        this.propsChanged();
+
         this.update();
     }
 
@@ -105,6 +107,13 @@ class Component {
      * Хук, вызываемый после внедрения компонента в страницу
      */
     created () {
+
+    }
+
+    /**
+     * Хук, вызываемый после изменения параметров компонента
+     */
+    propsChanged () {
 
     }
 

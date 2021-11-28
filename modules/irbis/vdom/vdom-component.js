@@ -42,7 +42,9 @@ class VDomComponent extends VDomNode {
     }
 
     destroy () {
-        this._component.vdom.destroy();
+        if (this?._component?.vdom) {
+            this._component.vdom.destroy();
+        }
     }
 }
 

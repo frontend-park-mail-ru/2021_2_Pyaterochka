@@ -1,4 +1,4 @@
-import { nextTick } from 'irbis/jsx/utils';
+import { nextTick } from 'irbis/vdom/utils';
 import AudioPlayer from '../audio-player';
 import Component from 'irbis/component';
 import Button from '../button';

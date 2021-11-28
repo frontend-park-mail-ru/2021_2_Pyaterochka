@@ -29,7 +29,7 @@ import SelectComponent from 'ui-library/select';
 import VideoPlayer from 'ui-library/video-player';
 import FileUploader from 'ui-library/file-uploader';
 import AudioPlayer from 'ui-library/audio-player';
-import VDomComponent from 'irbis/jsx/vdom-component';
+import VDomComponent from 'irbis/vdom/vdom-component';
 
 class IndexView extends Component {
     constructor () {

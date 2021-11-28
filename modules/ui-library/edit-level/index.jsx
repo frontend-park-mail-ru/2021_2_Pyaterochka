@@ -3,19 +3,13 @@ import Button from '../button';
 import ImageUploader from '../image-uploader';
 import InputField from '../input-field';
 import LevelCard from '../level-card';
+import ValidationError from '../validation-error';
 
 import './style.scss';
 
 class EditLevelComponent extends Component {
     defaultProps () {
         return {
-            level: {
-                name: '',
-                cover: '',
-                benefits: [''],
-                price: 0,
-                color: 'primary'
-            },
             title: '',
             onSave: () => { },
             onDelete: null
@@ -23,54 +17,69 @@ class EditLevelComponent extends Component {
     }
 
     constructor (
-
+        {
+            level = {
+                name: '',
+                cover: '',
+                benefits: [''],
+                price: 0,
+                color: 'primary'
+            }
+        }
     ) {
         super();
 
+        this.state.level = level;
         this.state.error = '';
     }
 
     loadCover (file) {
         this.coverFile = file;
 
-        this.attributes.level.cover = URL.createObjectURL(this.coverFile);
+        this.state.level.cover = URL.createObjectURL(this.coverFile);
     }
 
     save () {
         this.state.error = '';
 
-        if (!this.attributes.level.name ||
-            this.attributes.level.price <= 0 ||
-            this.attributes.level.benefits.reduce((acc, val) => acc || !val, false)
+        if (!this.state.level.name ||
+            this.state.level.price <= 0 ||
+            this.state.level.benefits.reduce((acc, val) => acc || !val, false)
         ) {
             this.state.error = 'Проверьте правильность заполнения полей';
             return;
         }
 
-        this.attributes.onSave(this.attributes.level, this.coverFile);
+        this.props.onSave(this.state.level, this.coverFile);
     }
 
     delete () {
-        this.attributes.onDelete(this.attributes.level, this.coverFile);
+        this.props.onDelete(this.state.level, this.coverFile);
     }
 
     render () {
         return (<div className="edit-level">
             <div className="edit-level__fields">
                 <p className="edit-level__title">
-                    {this.attributes.title}
+                    {this.props.title}
                 </p>
 
                 <InputField
                     onInput={(e) => {
-                        this.attributes.level.name = e.target.value;
+                        this.state.level.name = e.target.value;
                     }}
                     placeholder="Название уровня"
-                    value={this.attributes.level.name}
+                    value={this.state.level.name}
+                    validation={[
+                        (value) => {
+                            return value !== '' ? null : 'Поле не должно быть пустым';
+                        }
+                    ]}
+                    validateAlways={!!this.state.error}
                 />
 
                 <ImageUploader
-                    image={this.attributes.level.cover}
+                    image={this.state.level.cover}
                     imageName="обложку"
                     isCircle={false}
                     onChange={(file) => { this.loadCover(file); }}
@@ -81,27 +90,33 @@ class EditLevelComponent extends Component {
                 </p>
 
                 {
-                    this.attributes.level.benefits.map((benefit, i) => {
+                    this.state.level.benefits.map((benefit, i) => {
                         return (<div
                             className="input-field--delete-able"
                             key={i}
                         >
                             <InputField
                                 onInput={(e) => {
-                                    this.attributes.level.benefits[i] = e.target.value;
+                                    this.state.level.benefits[i] = e.target.value;
                                     this.update();
                                 }}
                                 placeholder="Название преимущества"
                                 value={benefit}
+                                validation={[
+                                    (value) => {
+                                        return value !== '' ? null : this.state.level.benefits.length !== 1 ? 'Заполните преимущество или удалите его' : 'Заполните хотя бы одно преимущество';
+                                    }
+                                ]}
+                                validateAlways={!!this.state.error}
                             />
 
-                            {!benefit && this.attributes.level.benefits.length > 1
+                            {!benefit && this.state.level.benefits.length > 1
                                 ? <Button
                                     color="primary"
                                     text="&times;"
                                     onClick={
                                         () => {
-                                            this.attributes.level.benefits.splice(i, 1);
+                                            this.state.level.benefits.splice(i, 1);
                                             this.update();
                                         }
                                     }
@@ -116,7 +131,7 @@ class EditLevelComponent extends Component {
                         color="warning"
                         onClick={
                             () => {
-                                this.attributes.level.benefits.push('');
+                                this.state.level.benefits.push('');
                                 this.update();
                             }
                         }
@@ -128,11 +143,24 @@ class EditLevelComponent extends Component {
 
                 <InputField
                     onInput={(e) => {
-                        this.attributes.level.price = e.target.value;
+                        this.state.level.price = e.target.value;
                     }}
                     placeholder="Стоимость подписки в месяц"
                     type="number"
-                    value={this.attributes.level.price}
+                    value={this.state.level.price}
+                    validation={[
+                        (value) => {
+                            return value !== '' ? null : 'Поле не должно быть пустым';
+                        },
+                        (value) => {
+                            return value === String(parseInt(value)) ? null : 'Поле должно быть числом';
+                        },
+
+                        (value) => {
+                            return parseInt(value) > 0 ? null : 'Стоимость подписки в месяц должна быть больше нуля';
+                        }
+                    ]}
+                    validateAlways={!!this.state.error}
                 />
 
                 <br />
@@ -147,7 +175,7 @@ class EditLevelComponent extends Component {
                     text="Сохранить"
                 />
 
-                {this.state.error}
+                {this.state.error ? <ValidationError value={this.state.error} /> : ''}
 
                 {
                     this.attributes.onDelete
@@ -169,11 +197,11 @@ class EditLevelComponent extends Component {
                 </p>
 
                 <LevelCard
-                    benefits={this.attributes.level.benefits.map(b => b || 'Преимущество')}
-                    color={this.attributes.level.color}
-                    cover={this.attributes.level.cover}
-                    name={this.attributes.level.name || 'Название'}
-                    price={(this.attributes.level.price || 0) + ' ₽'}
+                    benefits={this.state.level.benefits.map(b => b || 'Преимущество')}
+                    color={this.state.level.color}
+                    cover={this.state.level.cover}
+                    name={this.state.level.name || 'Название'}
+                    price={(this.state.level.price || 0) + ' ₽'}
                 />
             </div>
         </div>);
