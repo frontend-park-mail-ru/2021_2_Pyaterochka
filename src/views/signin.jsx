@@ -1,9 +1,9 @@
 import api from '../api/index';
-import Component from '../components/basecomponent';
-import Button from '../components/button';
-import InputField from '../components/input-field';
+import Component from 'irbis/component';
+import Button from 'ui-library/button';
+import InputField from 'ui-library/input-field';
 import consts from '../consts';
-import app from '../core/app';
+import app from 'irbis';
 import user from '../storage/user';
 import ErrorPage from './errorpage';
 

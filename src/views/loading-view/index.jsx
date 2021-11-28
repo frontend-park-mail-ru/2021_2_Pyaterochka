@@ -1,5 +1,5 @@
-import Component from '../../components/basecomponent';
-import Spinner from '../../components/spinner';
+import Component from 'irbis/component';
+import Spinner from 'ui-library/spinner';
 
 import './style.scss';
 

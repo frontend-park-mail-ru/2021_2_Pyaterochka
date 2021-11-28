@@ -1,7 +1,7 @@
-import Component from '../../components/basecomponent';
-import Step from '../../components/step';
-import PrettySection from '../../components/pretty-main-section';
-import app from '../../core/app';
+import Component from 'irbis/component';
+import Step from 'ui-library/step';
+import PrettySection from 'ui-library/pretty-main-section';
+import app from 'irbis';
 
 import './style.scss';
 import consts from '../../consts';

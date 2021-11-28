@@ -1,5 +1,5 @@
-import Component from '../../../components/basecomponent';
-import SwitchContainer from '../../../components/switch-container';
+import Component from 'irbis/component';
+import SwitchContainer from 'ui-library/switch-container';
 import consts from '../../../consts';
 import user from '../../../storage/user';
 

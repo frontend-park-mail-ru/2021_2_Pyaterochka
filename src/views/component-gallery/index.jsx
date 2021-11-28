@@ -1,34 +1,35 @@
-import Component from '../../components/basecomponent';
-import Button from '../../components/button';
-import CreatorCard from '../../components/creator-card';
-import Footer from '../../components/footer';
-import InputField from '../../components/input-field';
-import LevelCard from '../../components/level-card';
-import LockMessage from '../../components/lock-message';
 import Navbar from '../../components/navbar';
-import PostCard from '../../components/post-card';
-import ProfileCard from '../../components/profile-card';
-import Skeleton from '../../components/skeleton';
-import Spinner from '../../components/spinner';
-import Step from '../../components/step';
-import Comment from '../../components/comment';
-import PrettySection from '../../components/pretty-main-section';
-import Like from '../../components/like/index';
+import Footer from '../../components/footer';
+
+import Component from 'irbis/component';
+import Button from 'ui-library/button';
+import CreatorCard from 'ui-library/creator-card';
+import InputField from 'ui-library/input-field';
+import LevelCard from 'ui-library/level-card';
+import LockMessage from 'ui-library/lock-message';
+import PostCard from 'ui-library/post-card';
+import ProfileCard from 'ui-library/profile-card';
+import Skeleton from 'ui-library/skeleton';
+import Spinner from 'ui-library/spinner';
+import Step from 'ui-library/step';
+import Comment from 'ui-library/comment';
+import PrettySection from 'ui-library/pretty-main-section';
+import Like from 'ui-library/like/index';
 
 import './style.scss';
-import app from '../../core/app';
-import EditorComponent from '../../components/editor';
+import app from 'irbis';
+import EditorComponent from 'ui-library/editor';
 import { PropsView } from './PropsView';
-import TimeAgoComponent from '../../components/time-ago';
-import SimplifyNumComponent from '../../components/simplify-num';
-import SwitchComponent from '../../components/switch';
-import TabsPanel from '../../components/tabs-panel';
-import ImageUploader from '../../components/image-uploader';
-import SelectComponent from '../../components/select';
-import VideoPlayer from '../../components/video-player';
-import FileUploader from '../../components/file-uploader';
-import AudioPlayer from '../../components/audio-player';
-import VDomComponent from '../../modules/jsx/vdom-component';
+import TimeAgoComponent from 'ui-library/time-ago';
+import SimplifyNumComponent from 'ui-library/simplify-num';
+import SwitchComponent from 'ui-library/switch';
+import TabsPanel from 'ui-library/tabs-panel';
+import ImageUploader from 'ui-library/image-uploader';
+import SelectComponent from 'ui-library/select';
+import VideoPlayer from 'ui-library/video-player';
+import FileUploader from 'ui-library/file-uploader';
+import AudioPlayer from 'ui-library/audio-player';
+import VDomComponent from 'irbis/jsx/vdom-component';
 
 class IndexView extends Component {
     constructor () {

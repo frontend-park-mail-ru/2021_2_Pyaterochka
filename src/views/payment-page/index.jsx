@@ -1,10 +1,10 @@
 import api from '../../api';
-import Component from '../../components/basecomponent';
-import Button from '../../components/button';
-import CreatorCard from '../../components/creator-card';
-import LevelCard from '../../components/level-card';
+import Component from 'irbis/component';
+import Button from 'ui-library/button';
+import CreatorCard from 'ui-library/creator-card';
+import LevelCard from 'ui-library/level-card';
 import consts from '../../consts';
-import app from '../../core/app';
+import app from 'irbis';
 import ErrorPage from '../errorpage';
 import LoadingView from '../loading-view';
 

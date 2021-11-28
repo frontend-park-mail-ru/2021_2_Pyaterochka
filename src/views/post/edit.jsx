@@ -1,10 +1,10 @@
 import api from '../../api';
-import Component from '../../components/basecomponent';
-import EditorComponent from '../../components/editor';
-import app from '../../core/app';
+import Component from 'irbis/component';
+import EditorComponent from 'ui-library/editor';
+import app from 'irbis';
 import user from '../../storage/user';
 import LoadingView from '../loading-view';
-import ConfirmComponent from '../../components/confirm';
+import ConfirmComponent from 'ui-library/confirm';
 import ErrorPage from '../errorpage';
 
 class CreatePostView extends Component {

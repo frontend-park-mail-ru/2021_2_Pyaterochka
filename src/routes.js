@@ -105,10 +105,6 @@ export default [
         name: 'post.view'
     }),
     new Route({
-        url: '/core/pathChildren',
-        component: async () => await import('components/random-anim')
-    }),
-    new Route({
         url: '',
         component: async () => { return { default: ErrorPage }; },
         title: 'Страница не найдена'

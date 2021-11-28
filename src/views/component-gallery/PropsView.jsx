@@ -1,6 +1,6 @@
-import Component from '../../components/basecomponent';
-import InputField from '../../components/input-field';
-import SwitchContainer from '../../components/switch-container';
+import Component from 'irbis/component';
+import InputField from 'ui-library/input-field';
+import SwitchContainer from 'ui-library/switch-container';
 
 export class PropsView extends Component {
     constructor ({

@@ -1,4 +1,4 @@
-import Component from '../basecomponent';
+import Component from 'irbis/component';
 import Navbar from '../navbar';
 import user from '../../storage/user';
 import Footer from '../footer';

@@ -1,5 +1,5 @@
-import app from '../../core/app';
-import Component from '../basecomponent';
+import app from 'irbis';
+import Component from 'irbis/component';
 import './style.scss';
 
 /**

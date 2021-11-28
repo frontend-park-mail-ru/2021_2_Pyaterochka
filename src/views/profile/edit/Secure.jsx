@@ -1,12 +1,12 @@
 
 import api from '../../../api';
-import Component from '../../../components/basecomponent';
-import Button from '../../../components/button';
-import InputField from '../../../components/input-field';
-import Skeleton from '../../../components/skeleton';
-import TimeAgoComponent from '../../../components/time-ago';
+import Component from 'irbis/component';
+import Button from 'ui-library/button';
+import InputField from 'ui-library/input-field';
+import Skeleton from 'ui-library/skeleton';
+import TimeAgoComponent from 'ui-library/time-ago';
 import consts from '../../../consts';
-import app from '../../../core/app';
+import app from 'irbis';
 import user from '../../../storage/user';
 
 class ProfileEditSecure extends Component {

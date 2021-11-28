@@ -11,7 +11,7 @@ module.exports = {
     },
 
     resolve: {
-        modules: [path.resolve(__dirname, 'src'), 'node_modules'],
+        modules: [path.resolve(__dirname, 'src'), path.resolve(__dirname, 'modules'), 'node_modules'],
         extensions: ['.js', '.jsx', '.ts', '.tsx']
     },
 
@@ -33,7 +33,7 @@ module.exports = {
                                 {
                                     throwIfNamespace: false,
                                     runtime: 'automatic',
-                                    importSource: 'modules'
+                                    importSource: 'irbis'
                                 }
                             ]
                         ]

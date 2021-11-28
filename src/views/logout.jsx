@@ -1,6 +1,6 @@
-import Component from '../components/basecomponent';
-import ConfirmComponent from '../components/confirm';
-import app from '../core/app';
+import Component from 'irbis/component';
+import ConfirmComponent from 'ui-library/confirm';
+import app from 'irbis';
 import user from '../storage/user';
 
 class LogoutView extends Component {

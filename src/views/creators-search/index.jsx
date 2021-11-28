@@ -1,8 +1,8 @@
 import api from '../../api/index';
-import Component from '../../components/basecomponent';
-import CreatorCard from '../../components/creator-card';
-import InputField from '../../components/input-field';
-import SelectComponent from '../../components/select';
+import Component from 'irbis/component';
+import CreatorCard from 'ui-library/creator-card';
+import InputField from 'ui-library/input-field';
+import SelectComponent from 'ui-library/select';
 
 import './style.scss';
 const all = 'Любая категория';

@@ -1,19 +1,19 @@
-import Component from '../../components/basecomponent';
-import CreatorCard from '../../components/creator-card';
-import Comment from '../../components/comment';
+import Component from 'irbis/component';
+import CreatorCard from 'ui-library/creator-card';
+import Comment from 'ui-library/comment';
 import './view.scss';
-import InputField from '../../components/input-field';
-import Button from '../../components/button';
-import Like from '../../components/like';
-import PostHeaderComponent from '../../components/post-header';
+import InputField from 'ui-library/input-field';
+import Button from 'ui-library/button';
+import Like from 'ui-library/like';
+import PostHeaderComponent from 'ui-library/post-header';
 import api from '../../api';
 import ErrorPage from '../errorpage';
 import LoadingView from '../loading-view';
 import user from '../../storage/user';
-import app from '../../core/app';
+import app from 'irbis';
 import consts from '../../consts';
-import AudioPlayer from '../../components/audio-player';
-import VideoPlayer from '../../components/video-player';
+import AudioPlayer from 'ui-library/audio-player';
+import VideoPlayer from 'ui-library/video-player';
 
 class PostView extends Component {
     constructor () {

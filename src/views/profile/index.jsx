@@ -1,11 +1,11 @@
 import api from '../../api/index';
-import Component from '../../components/basecomponent';
-import Button from '../../components/button';
-import CreatorCard from '../../components/creator-card';
-import ProfileCard from '../../components/profile-card';
-import Skeleton from '../../components/skeleton';
+import Component from 'irbis/component';
+import Button from 'ui-library/button';
+import CreatorCard from 'ui-library/creator-card';
+import ProfileCard from 'ui-library/profile-card';
+import Skeleton from 'ui-library/skeleton';
 import consts from '../../consts';
-import app from '../../core/app';
+import app from 'irbis';
 import user from '../../storage/user';
 import ErrorPage from '../errorpage';
 

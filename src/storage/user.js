@@ -1,6 +1,6 @@
 /** @module Хранилище профиля пользователя */
 import api from '../api/index';
-import app from '../core/app';
+import app from 'irbis';
 
 const userField = 'user__patreon';
 

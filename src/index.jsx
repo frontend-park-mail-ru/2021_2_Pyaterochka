@@ -1,9 +1,9 @@
 import Router from './router';
 import LoadingView from './views/loading-view';
 import user from './storage/user';
-import App from './core/app';
+import App from 'irbis';
 import ErrorPage from './views/errorpage';
-import registerValidSW from './modules/service-worker';
+import registerValidSW from './service-worker';
 import routes from './routes';
 
 import './styles/index.scss';

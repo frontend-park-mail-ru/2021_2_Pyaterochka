@@ -1,10 +1,10 @@
 import api from '../../../api';
-import Component from '../../../components/basecomponent';
-import EditLevelComponent from '../../../components/edit-level';
-import app from '../../../core/app';
+import Component from 'irbis/component';
+import EditLevelComponent from 'ui-library/edit-level';
+import app from 'irbis';
 import user from '../../../storage/user';
 import LoadingView from '../../loading-view';
-import ConfirmComponent from '../../../components/confirm';
+import ConfirmComponent from 'ui-library/confirm';
 
 import './style.scss';
 

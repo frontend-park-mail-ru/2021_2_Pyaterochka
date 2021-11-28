@@ -2,9 +2,9 @@
  * @module Роутер
  */
 
-import Component from '../components/basecomponent';
+import Component from 'irbis/component';
 import Layout from '../components/layout';
-import app from '../core/app';
+import app from 'irbis';
 
 class Router extends Component {
     constructor ({ routes = [], loadingView = null, errorView = null, offlineView = null }) {

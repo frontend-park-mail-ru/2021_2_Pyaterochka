@@ -1,13 +1,13 @@
 import api from '../../../api';
-import Component from '../../../components/basecomponent';
-import Button from '../../../components/button';
-import InputField from '../../../components/input-field';
-import SelectComponent from '../../../components/select';
+import Component from 'irbis/component';
+import Button from 'ui-library/button';
+import InputField from 'ui-library/input-field';
+import SelectComponent from 'ui-library/select';
 import user from '../../../storage/user';
-import ImageUploader from '../../../components/image-uploader';
-import LevelCard from '../../../components/level-card';
-import app from '../../../core/app';
-import Skeleton from '../../../components/skeleton';
+import ImageUploader from 'ui-library/image-uploader';
+import LevelCard from 'ui-library/level-card';
+import app from 'irbis';
+import Skeleton from 'ui-library/skeleton';
 import consts from '../../../consts';
 
 class ProfileEditCreator extends Component {

@@ -1,7 +1,7 @@
 import api from '../../../api';
-import ImageUploader from '../../../components/image-uploader';
-import Component from '../../../components/basecomponent';
-import InputField from '../../../components/input-field';
+import ImageUploader from 'ui-library/image-uploader';
+import Component from 'irbis/component';
+import InputField from 'ui-library/input-field';
 import user from '../../../storage/user';
 import consts from '../../../consts';
 

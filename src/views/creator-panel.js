@@ -1,5 +1,5 @@
-import Component from '../components/basecomponent';
-import app from '../core/app';
+import Component from 'irbis/component';
+import app from 'irbis';
 import user from '../storage/user';
 
 class CreatorPanel extends Component {
