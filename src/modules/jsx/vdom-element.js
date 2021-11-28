@@ -1,7 +1,10 @@
-import { findReplacements } from './utils';
+import { arrayOfArraysToArray, findReplacements } from './utils';
+import VDomNode from './vdom-node';
 
-class VDomElement {
+class VDomElement extends VDomNode {
     constructor (tagName, attributes, jsxChildren) {
+        super();
+
         this.attributes = {};
         this.listeners = {};
         this.dom = null;
@@ -81,6 +84,7 @@ class VDomElement {
 
     patch (newJsxDom) {
         if (
+            !(newJsxDom instanceof VDomElement) ||
             newJsxDom.tagName !== this.tagName
         ) {
             return this.replace(newJsxDom);
@@ -186,7 +190,7 @@ class VDomElement {
     // }
 
     async childrenPatch (newJsxDom) {
-        const newChildren = newJsxDom.children;
+        const newChildren = arrayOfArraysToArray(newJsxDom.children);
 
         const oldKeys = this.prepareKeys(this.children);
         const newKeys = this.prepareKeys(newChildren);
@@ -195,38 +199,12 @@ class VDomElement {
 
         const patchedChildren = [];
 
-        // replacements.filter(r=>r.to < 0).forEach(r => {
-        //     // Deleted element
-        //     const el = this.children[r.from];
-        //      if (!(el instanceof Text) && el.dom && el.dom.style) {
-        //         const bodyRect = document.body.getBoundingClientRect();
-        //         const pos = el.dom.getBoundingClientRect();
-        //         console.log("POS", pos);
-        //         el.dom.style.left = (pos.left - bodyRect.left) + "px"
-        //         el.dom.style.top = (pos.top - bodyRect.top) + "px"
-        //     }
-        // })
-
         replacements.forEach(r => {
             if (r.to < 0) {
                 // Deleted element
                 const el = this.children[r.from];
 
-                // if (el instanceof Text) {
                 el.destroy();
-                // }
-                // else if (el.dom && el.dom.style) {
-                //     await nextTick();
-                //     document.body.appendChild(el.dom);
-                //     el.dom.style.position = "fixed"
-                //     el.dom.style.margin = "unset"
-                //     el.dom.classList.add("fade-out")
-                //     el.dom.addEventListener("animationend", () => {
-                //         el.destroy();
-                //     })
-                // } else {
-                //     el.destroy();
-                // }
 
                 return;
             }

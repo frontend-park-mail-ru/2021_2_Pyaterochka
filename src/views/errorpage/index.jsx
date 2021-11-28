@@ -27,7 +27,7 @@ class ErrorPage extends Component {
                             text="Перейти на главную"
                             color="primary"
                             rounded
-                            onclick={() => {
+                            onClick={() => {
                                 app.$router.go('/');
                             }}
                         />

@@ -7,19 +7,13 @@ import './style.scss';
  */
 
 class Like extends Component {
-    constructor ({
-        user = null,
-        liked = false,
-        count = 0,
-        onClick = () => {
-
-        }
-    }) {
-        super();
-        this.attributes.user = user;
-        this.attributes.liked = liked;
-        this.attributes.count = count;
-        this.attributes.onClick = onClick;
+    defaultProps () {
+        return {
+            user: null,
+            liked: false,
+            count: 0,
+            onClick: () => { }
+        };
     }
 
     render () {

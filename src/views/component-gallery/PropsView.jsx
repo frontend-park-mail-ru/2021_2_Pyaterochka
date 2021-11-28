@@ -7,7 +7,7 @@ export class PropsView extends Component {
         component
     }) {
         super();
-        this.component = component;
+        this.componentVDom = component;
 
         this.component.updatePartly = () => {
             Component.prototype.updatePartly.bind(this.component)();
@@ -15,9 +15,13 @@ export class PropsView extends Component {
         };
     }
 
+    get component () {
+        return this.componentVDom._component;
+    }
+
     render () {
         return (<div className="component-wrapper__table">
-            {Object.keys(this.component.attributes).map((key) => {
+            {Object.keys({ ...this.component.defaultProps(), ...this.component.state }).map((key) => {
                 const typeC = typeof this.component.attributes[key];
 
                 if (this.component.attributes[key] instanceof Date) {

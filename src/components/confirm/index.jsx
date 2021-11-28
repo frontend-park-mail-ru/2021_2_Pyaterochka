@@ -4,22 +4,15 @@ import Button from '../button';
 import './style.scss';
 
 class ConfirmComponent extends Component {
-    constructor ({
-        title = '',
-        description = '',
-        dangerButton = 'Удалить',
-        positiveButton = 'Отмена',
-        onDanger = () => { },
-        onPositive = () => { }
-    }) {
-        super();
-
-        this.attributes.title = title;
-        this.attributes.description = description;
-        this.attributes.dangerButton = dangerButton;
-        this.attributes.positiveButton = positiveButton;
-        this.attributes.onDanger = onDanger;
-        this.attributes.onPositive = onPositive;
+    defaultProps () {
+        return {
+            title: '',
+            description: '',
+            dangerButton: 'Удалить',
+            positiveButton: 'Отмена',
+            onDanger: () => { },
+            onPositive: () => { }
+        };
     }
 
     render () {

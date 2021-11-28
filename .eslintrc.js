@@ -35,7 +35,9 @@ module.exports = {
         'react/jsx-indent-props': 'off',
         'react/no-array-index-key': 'off',
         'react/button-has-type': 'off',
-        'react/jsx-child-element-spacing': 'off'
+        'react/jsx-child-element-spacing': 'off',
+        'react/destructuring-assignment': 'off',
+        'react/no-direct-mutation-state': 'off'
     },
     overrides: [
         {

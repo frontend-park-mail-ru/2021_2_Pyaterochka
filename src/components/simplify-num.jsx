@@ -1,11 +1,10 @@
 import Component from './basecomponent';
 
 class SimplifyNumComponent extends Component {
-    constructor ({
-        num
-    }) {
-        super();
-        this.attributes.num = num;
+    defaultProps () {
+        return {
+            num: 0
+        };
     }
 
     simplifyNum (num) {
@@ -17,7 +16,7 @@ class SimplifyNumComponent extends Component {
 
     render () {
         return (<span>
-            {this.simplifyNum(this.attributes.num)}
+            {this.simplifyNum(this.props.num)}
         </span>);
     }
 }

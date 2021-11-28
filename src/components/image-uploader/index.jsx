@@ -6,19 +6,14 @@ import './style.scss';
  * Компонент загрузки аватара
  */
 class ImageUploader extends Component {
-    constructor ({
-        image = '',
-        loading = false,
-        isCircle = true,
-        imageName = 'изображение',
-        onChange = (file) => { }
-    }) {
-        super();
-        this.attributes.image = image;
-        this.attributes.loading = loading;
-        this.attributes.isCircle = isCircle;
-        this.attributes.imageName = imageName;
-        this.attributes.onChange = onChange;
+    defaultProps () {
+        return {
+            image: '',
+            loading: false,
+            isCircle: true,
+            imageName: 'изображение',
+            onChange: (file) => { }
+        };
     }
 
     loadFile (e) {

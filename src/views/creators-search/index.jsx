@@ -51,7 +51,13 @@ class ProfileView extends Component {
                     ? this.attributes.creators.length
                         ? <div className="creators-container">
                             {this.attributes.creators.map((creator) => {
-                                return (new CreatorCard(creator)).renderReactive();
+                                return (<CreatorCard
+                                    key={creator.id}
+                                    id={creator.id}
+                                    name={creator.name}
+                                    avatar={creator.avatar}
+                                    description={creator.description}
+                                />);
                             })}
                         </div>
                         : <h2 className="text-center">

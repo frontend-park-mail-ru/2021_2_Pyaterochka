@@ -4,15 +4,12 @@ import SwitchComponent from '../switch';
 import './style.scss';
 
 class SwitchContainer extends Component {
-    constructor ({
-        isOn = true,
-        onChange = (i) => { },
-        title = ''
-    }) {
-        super();
-        this.attributes.title = title;
-        this.attributes.isOn = !!isOn;
-        this.attributes.onChange = onChange;
+    defaultProps () {
+        return {
+            isOn: true,
+            onChange: (i) => { },
+            title: ''
+        };
     }
 
     change () {

@@ -7,19 +7,14 @@ import './style.scss';
  * Компонент загрузки файла
  */
 class FileUploader extends Component {
-    constructor ({
-        loading = false,
-        accept = '*',
-        name = 'файл',
-        comment = '',
-        onChange = (file) => { }
-    }) {
-        super();
-        this.attributes.loading = loading;
-        this.attributes.accept = accept;
-        this.attributes.name = name;
-        this.attributes.comment = comment;
-        this.attributes.onChange = onChange;
+    defaultProps () {
+        return {
+            loading: false,
+            accept: '*',
+            name: 'файл',
+            comment: '',
+            onChange: (file) => { }
+        };
     }
 
     loadFile (e) {

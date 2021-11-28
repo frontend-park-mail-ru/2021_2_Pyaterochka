@@ -1,8 +1,12 @@
+import VDomNode from './vdom-node';
+
 /**
  * Компонент экранированного текста
  */
-class VDomText {
+class VDomText extends VDomNode {
     constructor (text) {
+        super();
+
         this.children = [];
         this.text = text;
         this.dom = null;

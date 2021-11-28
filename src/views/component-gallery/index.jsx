@@ -23,12 +23,12 @@ import TimeAgoComponent from '../../components/time-ago';
 import SimplifyNumComponent from '../../components/simplify-num';
 import SwitchComponent from '../../components/switch';
 import TabsPanel from '../../components/tabs-panel';
-import TabsContainer from '../../components/tabs-container';
 import ImageUploader from '../../components/image-uploader';
 import SelectComponent from '../../components/select';
 import VideoPlayer from '../../components/video-player';
 import FileUploader from '../../components/file-uploader';
 import AudioPlayer from '../../components/audio-player';
+import VDomComponent from '../../modules/jsx/vdom-component';
 
 class IndexView extends Component {
     constructor () {
@@ -36,87 +36,92 @@ class IndexView extends Component {
         this.attributes.cps = [
             {
                 name: 'Видео плеер',
+                Component: VideoPlayer,
                 data: [
                     {
-                        component: new VideoPlayer({
+                        component: {
                             src: [{
                                 url: 'http://media.w3.org/2010/05/bunny/movie.mp4',
                                 type: 'video/mp4'
                             }],
                             poster: 'http://media.w3.org/2010/05/bunny/poster.png'
-                        })
+                        }
                     }
                 ]
             },
             {
                 name: 'Аудио плеер',
+                Component: AudioPlayer,
                 data: [
                     {
-                        component: new AudioPlayer({
+                        component: {
                             src: [{
                                 url: 'https://jplayer.org/audio/mp3/RioMez-01-Sleep_together.mp3',
                                 type: ''
                             }]
-                        })
+                        }
                     }
                 ]
             },
             {
                 name: 'Загрузка файла',
+                Component: FileUploader,
                 data: [
                     {
                         name: 'Файл',
-                        component: new FileUploader({})
+                        component: {}
                     }
                 ]
             },
             {
                 name: 'Загрузка аватара',
+                Component: ImageUploader,
                 data: [
                     {
                         name: 'Загружен аватар',
 
-                        component: new ImageUploader({
+                        component: {
                             isCircle: true,
                             imageName: 'аватар',
                             image: 'https://sun9-12.userapi.com/impf/c854228/v854228051/16558/K7rRvW0xelY.jpg?size=647x809&quality=96&sign=83e72450667c775a5831dac80fb2dea5&type=album'
-                        })
+                        }
                     },
                     {
                         name: 'Загружена обложка',
 
-                        component: new ImageUploader({
+                        component: {
                             isCircle: false,
                             imageName: 'обложку',
                             image: 'https://wallpaperscave.ru/images/original/18/01-10/abstract-colors-8119.jpg'
 
-                        })
+                        }
                     },
                     {
                         name: 'Спиннер на аватарке',
 
-                        component: new ImageUploader({
+                        component: {
                             loading: true,
                             isCircle: true,
                             image: 'https://sun9-12.userapi.com/impf/c854228/v854228051/16558/K7rRvW0xelY.jpg?size=647x809&quality=96&sign=83e72450667c775a5831dac80fb2dea5&type=album'
-                        })
+                        }
                     },
                     {
                         name: 'Спиннер на обложке',
 
-                        component: new ImageUploader({
+                        component: {
                             loading: true,
                             isCircle: false,
                             image: 'https://wallpaperscave.ru/images/original/18/01-10/abstract-colors-8119.jpg'
-                        })
+                        }
                     }
                 ]
             },
             {
                 name: 'Выпадающее меню',
+                Component: SelectComponent,
                 data: [
                     {
-                        component: new SelectComponent({
+                        component: {
                             placeholder: 'Категория',
                             inital: 'Выберите категорию',
                             options: [
@@ -129,57 +134,16 @@ class IndexView extends Component {
                                 'Программирование',
                                 'Другое'
                             ]
-                        })
-                    }]
-            },
-            {
-                name: 'Вкладки',
-                data: [
-                    {
-                        name: 'ON',
-                        component: new TabsContainer({
-                            tabs: [
-                                {
-                                    key: 'common',
-                                    title: 'Основная информация',
-                                    component: <>
-                                        Тут будет оформление профиля, тек. имя и почта
-                                    </>
-                                },
-                                {
-                                    key: 'account',
-                                    title: 'Аккаунт',
-                                    component: <>
-                                        Тут будет смена пароля
-                                    </>
-                                },
-                                {
-                                    key: 'notifications',
-                                    title: 'Уведомления',
-                                    component: <>
-                                        Тут будут уведомления
-                                    </>
-                                },
-                                {
-                                    key: 'creator_settings',
-                                    title: 'Аккаунт креатора',
-                                    component: <>
-                                        Тут будут уровни подписки
-                                    </>
-                                }
-                            ],
-                            noActive: <>
-                                Нет активной вкладки :(
-                            </>
-                        })
+                        }
                     }]
             },
             {
                 name: 'Панель вкладок',
+                Component: TabsPanel,
                 data: [
                     {
                         name: 'ON',
-                        component: new TabsPanel({
+                        component: {
                             tabs: [
                                 {
                                     key: 'common',
@@ -199,203 +163,213 @@ class IndexView extends Component {
                                 }
                             ],
                             activeTab: 'notifications'
-                        })
+                        }
                     }
                 ]
             }, {
                 name: 'Переключатель',
+                Component: SwitchComponent,
                 data: [
                     {
                         name: 'ON',
-                        component: new SwitchComponent({
+                        component: {
                             isOn: true
-                        })
+                        }
                     }
                 ]
             },
             {
                 name: 'Лайк',
+                Component: Like,
                 data: [
                     {
                         name: 'Авторизирован',
-                        component: new Like({
+                        component: {
                             user: {
                                 username: 'Person',
                                 avatar: 'https://thispersondoesnotexist.com/image'
                             },
                             count: 0
-                        })
+                        }
                     },
                     {
                         name: 'Не авторизирован',
-                        component: new Like({
+                        component: {
                             count: 230
-                        })
+                        }
                     }
                 ]
             },
             {
                 name: 'Шапка',
+                Component: Navbar,
                 data: [
                     {
                         name: 'Не авторизирован',
-                        component: new Navbar()
+                        component: {}
                     },
                     {
                         name: 'Авторизирован',
-                        component: new Navbar({
+                        component: {
                             user: {
                                 username: 'Person',
                                 avatar: 'https://thispersondoesnotexist.com/image'
                             }
-                        })
+                        }
                     }
                 ]
             },
             {
                 name: 'Редактор',
                 showAll: true,
+                Component: EditorComponent,
                 data: [
                     {
                         name: 'Создание записи',
-                        component: new EditorComponent({
+                        component: {
                             comment: 'Черновик был сохранен автоматически'
-                        })
+                        }
                     },
                     {
                         name: 'Редактирование',
-                        component: new EditorComponent({
+                        component: {
                             title: 'Some title',
                             description: 'Some description',
                             isDraft: false
-                        })
+                        }
                     }
                 ]
             },
             {
                 name: 'Подвал',
+                Component: Footer,
                 data: [
                     {
                         name: '',
-                        component: new Footer()
+                        component: {}
                     }
                 ]
             },
             {
                 name: 'Карточка профиля',
+                Component: ProfileCard,
                 data: [
                     {
                         name: 'Без слота',
-                        component: new ProfileCard({
+                        component: {
                             username: 'HenSI.Pro2929',
                             supportCount: 15,
                             avatar: 'https://thispersondoesnotexist.com/image'
-                        })
+                        }
                     },
                     {
                         name: 'Со слотом',
-                        component: new ProfileCard(
-                            {
-                                username: 'HenSI.Pro2929',
-                                supportCount: 15,
-                                avatar: 'https://thispersondoesnotexist.com/image'
-                            },
-                            new Button({
-                                text: 'Редактировать профиль',
-                                color: 'primary'
-                            }).renderReactive()
-                        )
+                        component:
+                        {
+                            username: 'HenSI.Pro2929',
+                            supportCount: 15,
+                            avatar: 'https://thispersondoesnotexist.com/image'
+                        },
+                        slot: <Button
+                            text='Редактировать профиль'
+                            color='primary' />
                     }
                 ]
             },
             {
                 name: 'Скелетон',
+                Component: Skeleton,
                 data: [
                     {
                         name: 'Прямоугольник',
-                        component: new Skeleton()
+                        component: {}
                     },
                     {
                         name: 'Текст',
-                        component: new Skeleton({ type: 'text' })
+                        component: { type: 'text' }
                     },
                     {
                         name: 'Круг',
-                        component: new Skeleton({ type: 'circle', height: 100 })
+                        component: { type: 'circle', height: 100 }
                     }
                 ]
             },
             {
                 name: 'Спинер',
+                Component: Spinner,
                 data: [
                     {
                         name: '',
-                        component: new Spinner()
+                        component: {}
                     }
                 ]
             },
             {
                 name: 'Карточка автора',
+                Component: CreatorCard,
                 data: [
                     {
                         name: 'Без тени',
-                        component: new CreatorCard({
+                        component: {
                             name: 'IU7-memes',
                             description: 'создает мемы из закулисий цирка',
                             avatar:
                                 'https://sun9-12.userapi.com/impf/c854228/v854228051/16558/K7rRvW0xelY.jpg?size=647x809&quality=96&sign=83e72450667c775a5831dac80fb2dea5&type=album'
-                        })
+                        }
                     },
                     {
                         name: 'С тенью',
-                        component: new CreatorCard({
+                        component: {
                             name: 'IU7-memes',
                             description: 'создает мемы из закулисий цирка',
                             shadow: true,
                             avatar:
                                 'https://sun9-12.userapi.com/impf/c854228/v854228051/16558/K7rRvW0xelY.jpg?size=647x809&quality=96&sign=83e72450667c775a5831dac80fb2dea5&type=album'
-                        })
+                        }
                     }
                 ]
             },
             {
                 name: 'Красивая секция на главной',
+                Component: PrettySection,
                 data: [
                     {
-                        component: new PrettySection({})
+                        component: {}
                     }
                 ]
             },
             {
                 name: 'Сообщение с замочком',
+                Component: LockMessage,
                 data: [
                     {
                         name: 'Без слота',
-                        component: new LockMessage({
+                        component: {
                             text: 'Профи'
-                        })
+                        }
                     },
                     {
                         name: 'Со слотом',
-                        component: new LockMessage(
-                            {
-                                text: 'Стань патроном, чтобы продолжить наслаждаться работами автора'
-                            },
+                        component: {
+                            text: 'Стань патроном, чтобы продолжить наслаждаться работами автора'
+                        },
+                        slot:
                             new Button({
                                 text: 'Стать патроном',
                                 color: 'primary'
                             }).renderReactive()
-                        )
+
                     }
                 ]
             },
 
             {
                 name: 'Карточка записи',
+                Component: PostCard,
                 data: [
                     {
                         name: 'Доступная',
-                        component: new PostCard({
+                        component: {
                             title:
                                 'Новый выпуск игрового ролика о невероятных машинах нашего времени',
                             published: new Date(new Date() - 60 * 1000 * 5),
@@ -406,11 +380,11 @@ class IndexView extends Component {
                             level: 'Профессионал',
                             image:
                                 'https://w-dog.ru/wallpapers/12/12/456213867326621/fraktaly-prelomlenie-sveta-cvetovaya-gamma-figury-geometrii-triptix.jpg'
-                        })
+                        }
                     },
                     {
                         name: 'Закрытая',
-                        component: new PostCard({
+                        component: {
                             title:
                                 'Новый выпуск игрового ролика о невероятных машинах нашего времени',
                             published: new Date(new Date() - 60 * 1000 * 60 * 5),
@@ -422,17 +396,18 @@ class IndexView extends Component {
                             level: 'Профессионал',
                             image:
                                 'https://w-dog.ru/wallpapers/12/12/456213867326621/fraktaly-prelomlenie-sveta-cvetovaya-gamma-figury-geometrii-triptix.jpg'
-                        })
+                        }
                     }
                 ]
             },
 
             {
                 name: 'Комментарий',
+                Component: Comment,
                 data: [
                     {
                         name: '',
-                        component: new Comment({
+                        component: {
                             user: {
                                 username: 'Person',
                                 avatar:
@@ -440,17 +415,18 @@ class IndexView extends Component {
                             },
                             published: new Date(new Date() - 60 * 1000 * 5),
                             body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti quod iure necessitatibus doloribus magni assumenda quasi, a maiores repellendus et, quidem sit vitae totam fugiat ut voluptas libero dolor perspiciatis.'
-                        })
+                        }
                     }
                 ]
             },
 
             {
                 name: 'Шаг',
+                Component: Step,
                 data: [
                     {
                         name: 'Шаг 1',
-                        component: new Step({
+                        component: {
                             number: 1,
                             name: 'Настройте свою страницу и уровни подписки',
                             description: (
@@ -470,35 +446,36 @@ class IndexView extends Component {
                                     чему будут рады ваши фанаты. Не усложняйте!
                                 </>
                             )
-                        })
+                        }
                     },
                     {
                         name: 'Шаг 2',
-                        component: new Step({
+                        component: {
                             number: 2,
                             name: 'Расскажите своим подписчикам, что вы теперь есть на Patreon',
                             description:
                                 'Сделайте посты во всех ваших основных соц.сетях, чтобы оповестить всех ваших подписчиков. Patreon - это место, где рождаются особые отношения между вами и вашими самыми активными фанатами - теми, кто хочет чего-то большего, чем просто следить за вами в социальных сетях.'
-                        })
+                        }
                     },
                     {
                         name: 'Шаг 3',
-                        component: new Step({
+                        component: {
                             number: 3,
                             name: 'Будьте активны и прислушивайтесь к вашим подписчикам',
                             description:
                                 'Регулярно делитесь обновлениями на Patreon, предоставляйте преимущества. Цель - чтобы подписчики были с вами долго и их число стабильно росло. Также поддерживайте импульс, периодически напоминая в социальных сетях о вашем Boosty, чтобы привлечь больше поклонников к подписке.'
-                        })
+                        }
                     }
                 ]
             },
 
             {
                 name: 'Карточка уровня подписки',
+                Component: LevelCard,
                 data: [
                     {
                         name: 'С родителем',
-                        component: new LevelCard({
+                        component: {
                             name: 'Профессионал',
                             parentName: 'Геймер',
                             cover:
@@ -508,11 +485,11 @@ class IndexView extends Component {
                                 'Безлимитное мыло из Анапы'
                             ],
                             price: '10 $'
-                        })
+                        }
                     },
                     {
                         name: 'Без родителя',
-                        component: new LevelCard({
+                        component: {
                             name: 'Геймер',
                             cover:
                                 'https://w-dog.ru/wallpapers/12/12/456213867326621/fraktaly-prelomlenie-sveta-cvetovaya-gamma-figury-geometrii-triptix.jpg',
@@ -522,11 +499,11 @@ class IndexView extends Component {
                             ],
                             price: '10 $',
                             color: 'accent'
-                        })
+                        }
                     },
                     {
                         name: 'Без обложки и много преимуществ',
-                        component: new LevelCard({
+                        component: {
                             name: 'Без обложки и много преимуществ',
                             cover: null,
                             benefits: [
@@ -538,62 +515,66 @@ class IndexView extends Component {
                             ],
                             price: '10 ₽',
                             color: 'success'
-                        })
+                        }
                     }
                 ]
             },
             {
                 name: 'Поле ввода',
+                Component: InputField,
                 data: [
                     {
                         name: '',
-                        component: new InputField({
+                        component: {
                             placeholder: 'Placeholder',
                             validation: [
                                 (v) => (v === '' ? null : 'Поле не должно быть пустым')
                             ]
-                        })
+                        }
                     }
                 ]
             },
             {
                 name: 'Кнопка',
+                Component: Button,
                 data: [
                     ...['default', 'primary', 'success', 'grey', 'warning', 'accent'].map(
                         (color) => ({
                             name: color,
-                            component: new Button({ text: 'Button ' + color, color: color })
+                            component: { text: 'Button ' + color, color: color }
                         })
                     ),
                     ...['default', 'primary', 'success', 'grey', 'warning', 'accent'].map(
                         (color) => ({
                             name: color + ' rounded',
-                            component: new Button({
+                            component: {
                                 text: 'Button ' + color,
                                 color: color,
                                 rounded: true
-                            })
+                            }
                         })
                     )
                 ]
             },
             {
                 name: 'Форматированная дата',
+                Component: TimeAgoComponent,
                 data: [
                     {
-                        component: new TimeAgoComponent({
+                        component: {
                             date: new Date()
-                        })
+                        }
                     }
                 ]
             },
             {
                 name: 'Упрощенное число',
+                Component: SimplifyNumComponent,
                 data: [
                     {
-                        component: new SimplifyNumComponent({
+                        component: {
                             num: 1001
-                        })
+                        }
                     }
                 ]
             }
@@ -601,6 +582,10 @@ class IndexView extends Component {
 
         this.attributes.cps.forEach((c) => {
             c.active = 0;
+            if (!c.Component) {
+                console.error('No component', c);
+            }
+            c.vdom = new VDomComponent(c.Component, c.data[0].component, []);
         });
     }
 
@@ -609,73 +594,46 @@ class IndexView extends Component {
         const componentWrappers = [];
 
         this.attributes.cps.forEach((info, ii) => {
-            const component = info.data[info.active].component;
-            const componentWrapper = info.showAll
-                ? (
-                    <div className="component-wrapper">
-                        <h2>
-                            {info.name}
-                        </h2>
+            const componentWrapper = (
+                <div className="component-wrapper">
+                    <h2>
+                        {info.name}
+                    </h2>
 
-                        {info.data.map((component, i) =>
-                            (<>
-                                Вариант компонента:
-                                {' '}
-
-                                {component.name}
-
-                                <div className="component-wrapper__component">
-                                    {component.component.renderReactive()}
+                    {info.data.length > 1
+                        ? (
+                            <>
+                                Варианты компонента:
+                                <div className="component-wrapper__variants">
+                                    {info.data.map((c, i) => (
+                                        <Button
+                                            color={info.active === i ? 'primary' : 'default'}
+                                            key={i}
+                                            onClick={() => {
+                                                info.active = i;
+                                                info.vdom._component.setProps(c.component);
+                                                this.update();
+                                            }}
+                                            text={c.name}
+                                        />
+                                    ))}
                                 </div>
-                                Описание атрибутов:
-
-                                <div key={i}>
-                                    <PropsView component={component.component} />
-                                </div>
-                            </>)
-
+                            </>
+                        )
+                        : (
+                            ''
                         )}
+
+                    <div className="component-wrapper__component">
+                        {info.vdom}
                     </div>
-                )
-                : (
-                    <div className="component-wrapper">
-                        <h2>
-                            {info.name}
-                        </h2>
+                    Описание атрибутов:
 
-                        {info.data.length > 1
-                            ? (
-                                <>
-                                    Варианты компонента:
-                                    <div className="component-wrapper__variants">
-                                        {info.data.map((c, i) => (
-                                            <Button
-                                                color={info.active === i ? 'primary' : 'default'}
-                                                key={i}
-                                                onClick={() => {
-                                                    this.attributes.cps[ii].active = i;
-                                                    this.attributes.cps = Object.assign(this.attributes.cps);
-                                                }}
-                                                text={c.name}
-                                            />
-                                        ))}
-                                    </div>
-                                </>
-                            )
-                            : (
-                                ''
-                            )}
-
-                        <div className="component-wrapper__component">
-                            {component.renderReactive()}
-                        </div>
-                        Описание атрибутов:
-
-                        <div key={info.active}>
-                            <PropsView component={component} />
-                        </div>
+                    <div>
+                        <PropsView component={info.vdom} />
                     </div>
-                );
+                </div>
+            );
 
             componentWrappers.push(componentWrapper);
             componentMenu.push(

@@ -5,35 +5,22 @@ import './style.scss';
  * Компонент поля ввода
  */
 class InputField extends Component {
-    constructor ({
-        placeholder = '',
-        type = 'text',
-        value = '',
-        disabled = false,
-        onInput = () => { },
-        onChange = () => { },
-        validation = []
-    }) {
-        super();
-        this.attributes.placeholder = placeholder;
-        this.attributes.type = type;
-        this.attributes.value = value;
-        this.attributes.validation = validation;
-        this._value = '';
-        this.attributes.valid = '';
-        this.attributes.errors = [];
-        this.attributes.onInput = onInput;
-        this.attributes.onChange = onChange;
-        this.attributes.disabled = disabled;
+    defaultProps () {
+        return {
+            placeholder: '',
+            type: 'text',
+            value: '',
+            disabled: false,
+            onInput: () => { },
+            onChange: () => { },
+            validation: []
+        };
     }
 
-    onCheckBox (e) {
-        this.input = e.target;
-        this.attributes.value = !this.attributes.value;
-        this.attributes.onInput(e);
-        this.attributes.onChange(e);
-
-        this.updateForce();
+    constructor () {
+        super();
+        this.state.valid = '';
+        this.state.errors = [];
     }
 
     render () {
@@ -42,28 +29,18 @@ class InputField extends Component {
                 <label
                     className={['input-field', this.attributes.valid, this.attributes.disabled ? 'input-field_disabled' : '']}
                 >
-                    {this.attributes.type === 'checkbox'
-                        ? <input
-                            placeholder=" "
-                            type={this.attributes.type}
-                            checked={this.attributes.value ? 'checked' : ''}
-                            onClick={(e) => {
-                                this.onCheckBox(e);
-                            }}
-                            disabled={this.attributes.disabled}
-                        />
-                        : <input
-                            placeholder=" "
-                            type={this.attributes.type}
-                            value={this.attributes.value}
-                            onInput={(e) => {
-                                this.onInput(e);
-                            }}
-                            onChange={(e) => {
-                                this.attributes.onChange(e);
-                            }}
-                            disabled={this.attributes.disabled}
-                        />}
+                    <input
+                        placeholder=" "
+                        type={this.attributes.type}
+                        value={this.attributes.value}
+                        onInput={(e) => {
+                            this.onInput(e);
+                        }}
+                        onChange={(e) => {
+                            this.attributes.onChange(e);
+                        }}
+                        disabled={this.attributes.disabled}
+                    />
 
                     <span onClick="this.parentElement.querySelector('input').focus();">
                         {' '}
@@ -92,13 +69,16 @@ class InputField extends Component {
         );
     }
 
+    get input () {
+        return this?.vdom?.dom?.querySelector('input');
+    }
+
     getValue () {
-        return this.input.value;
+        return this.input?.value;
     }
 
     onInput (e) {
         this.attributes.onInput(e, e.value);
-        this.input = e.target;
         this.validate();
     }
 

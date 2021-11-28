@@ -4,11 +4,10 @@ import Component from '../basecomponent';
  * Компонент спинера - индикатор загрузки
  */
 class Spinner extends Component {
-    constructor ({
-        color = '#000'
-    } = {}) {
-        super();
-        this.attributes.color = color;
+    defaultProps () {
+        return {
+            color: '#000'
+        };
     }
 
     render () {

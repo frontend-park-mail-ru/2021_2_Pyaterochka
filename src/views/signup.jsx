@@ -11,7 +11,40 @@ class SignupView extends Component {
     constructor () {
         super();
         this.attributes.error = null;
-        const passwordInput = new InputField({
+
+        this.form = [
+            new InputField(),
+            new InputField(),
+            new InputField(),
+            new InputField()
+        ];
+
+        this.form[0].setProps({
+            placeholder: 'Никнейм',
+            validation: [
+                (value) => {
+                    return value !== '' ? null : 'Поле не должно быть пустым';
+                },
+                (value) => {
+                    return length < 255 ? null : 'Никнейм слишком длинный';
+                }
+            ]
+        });
+
+        this.form[1].setProps({
+            placeholder: 'Эл. почта',
+            type: 'email',
+            validation: [
+                (email) => {
+                    const re =
+                        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                    const isValid = re.test(String(email).toLowerCase());
+
+                    return isValid ? null : 'Email не валиден';
+                }
+            ]
+        });
+        this.form[2].setProps({
             placeholder: 'Пароль',
             type: 'password',
             validation: [
@@ -20,48 +53,22 @@ class SignupView extends Component {
                 }
             ]
         });
+        this.form[3].setProps({
+            placeholder: 'Подтвердите пароль',
+            type: 'password',
+            validation: [
+                (value) => {
+                    return value !== '' ? null : 'Поле не должно быть пустым';
+                },
+                (value) => {
+                    return this.form[2].getValue() === value
+                        ? null
+                        : 'Пароли не совпадают';
+                }
+            ]
+        });
 
-        this.form = [
-            new InputField({
-                placeholder: 'Никнейм',
-                validation: [
-                    (value) => {
-                        return value !== '' ? null : 'Поле не должно быть пустым';
-                    },
-                    (value) => {
-                        return length < 255 ? null : 'Никнейм слишком длинный';
-                    }
-                ]
-            }),
-            new InputField({
-                placeholder: 'Эл. почта',
-                type: 'email',
-                validation: [
-                    (email) => {
-                        const re =
-              /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-                        const isValid = re.test(String(email).toLowerCase());
-
-                        return isValid ? null : 'Email не валиден';
-                    }
-                ]
-            }),
-            passwordInput,
-            new InputField({
-                placeholder: 'Подтвердите пароль',
-                type: 'password',
-                validation: [
-                    (value) => {
-                        return value !== '' ? null : 'Поле не должно быть пустым';
-                    },
-                    (value) => {
-                        return passwordInput.getValue() === value
-                            ? null
-                            : 'Пароли не совпадают';
-                    }
-                ]
-            })
-        ];
+        this.form.forEach((f) => f.renderReactive());
     }
 
     async submit (e) {
@@ -119,7 +126,7 @@ class SignupView extends Component {
                         this.submit(e);
                     }}
                 >
-                    {this.form.map((c) => c.renderReactive())}
+                    {this.form.map((c) => c.vdom)}
 
                     {
                         this.attributes.error
@@ -132,7 +139,7 @@ class SignupView extends Component {
                     <Button
                         color="primary"
                         loading={this.attributes.loading}
-                        onclick={(e) => {
+                        onClick={(e) => {
                             this.submit(e);
                         }}
                         rounded

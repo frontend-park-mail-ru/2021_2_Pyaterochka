@@ -3,9 +3,7 @@ import PlayerControl from '../player-control';
 
 import './style.scss';
 class AudioPlayer extends Component {
-    constructor ({
-        src = []
-    }) {
+    constructor () {
         super();
 
         this.audio = null;
@@ -16,7 +14,12 @@ class AudioPlayer extends Component {
         this.attributes.loading = true;
 
         this.attributes.state = 'paused';
-        this.attributes.src = src;
+    }
+
+    defaultProps () {
+        return {
+            src: []
+        };
     }
 
     onPlay () {
@@ -89,7 +92,7 @@ class AudioPlayer extends Component {
                 }
             >
                 {
-                    this.attributes.src.map((src, i) => (
+                    this.props.src.map((src, i) => (
                         <source
                             key={i}
                             src={src.url}

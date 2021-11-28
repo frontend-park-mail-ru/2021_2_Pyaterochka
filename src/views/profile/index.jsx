@@ -69,7 +69,7 @@ class ProfileView extends Component {
                 </div>
 
                 <h1 className="text-center">
-                    {consts.subscriptions + ':' }
+                    {consts.subscriptions + ':'}
                 </h1>
 
                 {
@@ -78,7 +78,13 @@ class ProfileView extends Component {
 
                             <div className="creators-container">
                                 {this.attributes.creators.map((creator) => {
-                                    return (new CreatorCard(creator)).renderReactive();
+                                    return (<CreatorCard
+                                        key={creator.id}
+                                        id={creator.id}
+                                        name={creator.name}
+                                        avatar={creator.avatar}
+                                        description={creator.description}
+                                    />);
                                 })}
                             </div>
 

@@ -6,16 +6,12 @@ import './style.scss';
  * Компонент комментария
  */
 class Comment extends Component {
-    constructor ({
-        user = null,
-        published = new Date(),
-        body = ''
-
-    }) {
-        super();
-        this.attributes.user = user;
-        this.attributes.published = published;
-        this.attributes.body = body;
+    defaultProps () {
+        return {
+            user: null,
+            published: new Date(),
+            body: ''
+        };
     }
 
     render () {
@@ -24,22 +20,22 @@ class Comment extends Component {
                 <div className="comment__user-avatar">
                     <img
                         alt="Аватар комментатора"
-                        src={this.attributes.user.avatar}
+                        src={this.props.user.avatar}
                     />
                 </div>
 
                 <div className="comment__info">
                     <span className="comment__info-username">
-                        {this.attributes.user.username}
+                        {this.props.user.username}
                     </span>
 
                     <span className="comment__info-published">
-                        <TimeAgoComponent date={this.attributes.published} />
+                        <TimeAgoComponent date={this.props.published} />
                     </span>
                 </div>
 
                 <div className="comment__body">
-                    {this.attributes.body}
+                    {this.props.body}
                 </div>
             </div>
         </div>);

@@ -7,11 +7,12 @@ import './style.scss';
  * Элемент имитирующий элемент во время загрузки
  */
 class Skeleton extends Component {
-    constructor ({ type = 'rect', height = 200, width = null } = {}) {
-        super();
-        this.attributes.type = type;
-        this.attributes.height = height;
-        this.attributes.width = width;
+    defaultProps () {
+        return {
+            type: 'rect',
+            height: 200,
+            width: null
+        };
     }
 
     range (count) {

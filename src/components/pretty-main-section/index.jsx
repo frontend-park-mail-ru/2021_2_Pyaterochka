@@ -36,7 +36,7 @@ class PrettySection extends Component {
                     <div className="main-page-section__button">
                         <Button
                             color="primary"
-                            onclick={() => {
+                            onClick={() => {
                                 this.submit();
                             }}
                             rounded

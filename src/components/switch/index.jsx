@@ -3,15 +3,12 @@ import Component from '../basecomponent';
 import './style.scss';
 
 class SwitchComponent extends Component {
-    constructor ({
-        isOn = true,
-        changeOnClick = true,
-        onChange = (i) => {}
-    }) {
-        super();
-        this.attributes.isOn = !!isOn;
-        this.attributes.onChange = onChange;
-        this.attributes.changeOnClick = changeOnClick;
+    defaultProps () {
+        return {
+            isOn: true,
+            changeOnClick: true,
+            onChange: (i) => { }
+        };
     }
 
     onClick (e) {

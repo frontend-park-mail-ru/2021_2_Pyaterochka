@@ -3,32 +3,19 @@ import IconComponent from '../icon';
 
 import './style.scss';
 class PlayerControl extends Component {
-    constructor ({
-        time = 0,
-        volume = 1,
-        duration = 0,
-        state = 'paused',
-        canFullScreen = true,
-        onToggle = () => { },
-        onSeek = () => { },
-        onToggleVolume = () => { },
-        onSeekVolume = () => { },
-        onToggleFullScreen = () => { }
-    }) {
-        super();
-
-        this.attributes.canFullScreen = canFullScreen;
-        this.attributes.time = time;
-        this.attributes.volume = volume;
-        this.attributes.duration = duration;
-        this.attributes.state = state;
-
-        this.attributes.onToggle = onToggle;
-        this.attributes.onSeek = onSeek;
-
-        this.attributes.onToggleVolume = onToggleVolume;
-        this.attributes.onSeekVolume = onSeekVolume;
-        this.attributes.onToggleFullScreen = onToggleFullScreen;
+    defaultProps () {
+        return {
+            time: 0,
+            volume: 1,
+            duration: 0,
+            state: 'paused',
+            canFullScreen: true,
+            onToggle: () => { },
+            onSeek: () => { },
+            onToggleVolume: () => { },
+            onSeekVolume: () => { },
+            onToggleFullScreen: () => { }
+        };
     }
 
     renderTime (time) {
@@ -44,10 +31,10 @@ class PlayerControl extends Component {
         return (<div className="player-control">
             <div
                 className="player-control__play"
-                onClick={() => { this.attributes.onToggle(); }}
+                onClick={() => { this.props.onToggle(); }}
             >
                 {
-                    this.attributes.state === 'paused'
+                    this.props.state === 'paused'
                         ? <IconComponent
                             url="/imgs/icons/play_28.svg"
                             color="#fff"
@@ -56,7 +43,7 @@ class PlayerControl extends Component {
                 }
 
                 {
-                    this.attributes.state === 'playing'
+                    this.props.state === 'playing'
                         ? <IconComponent
                             url="/imgs/icons/pause_28.svg"
                             color="#fff"
@@ -68,37 +55,37 @@ class PlayerControl extends Component {
             <div
                 className="player-control__time"
             >
-                {this.renderTime(this.attributes.time)}
+                {this.renderTime(this.props.time)}
 
                 {' '}
 
                 /
-                {this.renderTime(this.attributes.duration)}
+                {this.renderTime(this.props.duration)}
 
             </div>
 
             <input
                 type="range"
-                value={this.attributes.time || '0'}
+                value={this.props.time || '0'}
                 min="0"
-                max={this.attributes.duration}
+                max={this.props.duration}
                 step="0.01"
                 className="player-control__slider"
                 onInput={
                     (e) => {
-                        this.attributes.onSeek(e.target.value);
+                        this.props.onSeek(e.target.value);
                     }
                 }
             />
 
-            {this.attributes.volume > 0.05
+            {this.props.volume > 0.05
                 ? <IconComponent
                     key="volume_24"
                     url="/imgs/icons/volume_24.svg"
                     color="#fff"
                     colorHover="#fff"
                     onClick={
-                        () => { this.attributes.onToggleVolume(); }
+                        () => { this.props.onToggleVolume(); }
                     } />
                 : <IconComponent
                     key="mute_24"
@@ -106,28 +93,28 @@ class PlayerControl extends Component {
                     color="#fff"
                     colorHover="#fff"
                     onClick={
-                        () => { this.attributes.onToggleVolume(); }
+                        () => { this.props.onToggleVolume(); }
                     } />}
 
             <input
                 type="range"
-                value={this.attributes.volume || '0'}
+                value={this.props.volume || '0'}
                 min="0"
                 max="1"
                 step="0.001"
                 className="player-control__slider player-control__slider--audio"
                 onInput={
                     (e) => {
-                        this.attributes.onSeekVolume(e.target.value);
+                        this.props.onSeekVolume(e.target.value);
                     }
                 }
             />
 
             {
-                this.attributes.canFullScreen
+                this.props.canFullScreen
                     ? <div
                         className="player-control__fullscreen"
-                        onClick={() => { this.attributes.onToggleFullScreen(); }}
+                        onClick={() => { this.props.onToggleFullScreen(); }}
                     >
                         <IconComponent
                             url="/imgs/icons/fullscreen_24.svg"

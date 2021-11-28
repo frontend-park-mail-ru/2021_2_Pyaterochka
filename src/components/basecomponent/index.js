@@ -13,11 +13,11 @@ function applyUpdates () {
         try {
             block.updatePartly();
         } catch (err) {
-            // console.error('Не удалось обновить компонент', block, err);
+            console.error('Не удалось обновить компонент', block, err);
             try {
                 block.updateForce();
             } catch {
-                // console.error('Не удалось обновить компонент принудительно', block, err);
+                console.error('Не удалось обновить компонент принудительно', block, err);
             }
         }
     });
@@ -43,12 +43,54 @@ class Component {
             this.update();
             return true;
         };
-        this.attributes = new Proxy({}, {
+        this.state = new Proxy({}, {
             set: update,
             get: getter
         });
+
+        this.props = {};
+
         this._slot = null;
         this.vdom = null;
+    }
+
+    /**
+     * Установка параметров компонента
+     * @param {*} props
+     */
+    setProps (props) {
+        const newProps = {};
+        Object.entries(this.defaultProps())
+            .forEach(
+                ([key, defaultValue]) => {
+                    newProps[key] =
+                    props[key] === undefined ? defaultValue : props[key];
+                }
+            );
+        this.props = newProps;
+
+        this.update();
+    }
+
+    /**
+     * Параметры компонента по умолчанию
+     * @returns
+     */
+    defaultProps () {
+        return {};
+    }
+
+    get attributes () {
+        const getter = (_, key) => this.state[key] || this.props[key];
+
+        const update = (_, key, value) => {
+            this.state[key] = value;
+            return true;
+        };
+        return new Proxy({}, {
+            set: update,
+            get: getter
+        });
     }
 
     /**

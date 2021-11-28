@@ -1,5 +1,8 @@
+import Fragment from './fragment';
 import { arrayOfArraysToArray } from './utils';
+import VDomComponent from './vdom-component';
 import VDomElement from './vdom-element';
+import VDomNode from './vdom-node';
 import VDomText from './vdom-text';
 
 /**
@@ -42,17 +45,17 @@ function createVDomNode (JsxElement, attributes, jsxChildren, key) {
     const children = arrayOfArraysToArray(jsxChildren)
         .map(child => child || '')
         .map((child) => {
-            if (child instanceof VDomElement || child instanceof VDomText) {
+            if (child instanceof VDomNode) {
                 return child;
             }
             return new VDomText(child);
         });
 
     if (JsxElement instanceof Function) {
-        const component = new JsxElement(attributes, ...children);
-        const el = component.renderReactive();
-        el.key = key;
-        return el;
+        if (JsxElement === Fragment) {
+            return children;
+        }
+        return new VDomComponent(JsxElement, attributes, children);
     }
 
     const el = new VDomElement(JsxElement, attributes, children);

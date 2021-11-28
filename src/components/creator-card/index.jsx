@@ -6,41 +6,34 @@ import './style.scss';
  * Компонент карточки создателя
  */
 class CreatorCard extends Component {
-    constructor ({
-        id = null,
-        name = '',
-        avatar = '',
-        description = '',
-        shadow = false,
-        clickable = true,
-        noHoverShadow = false
-    }) {
-        super();
-        this.attributes.id = id;
-        this.attributes.name = name;
-        this.attributes.avatar = avatar;
-        this.attributes.description = description;
-        this.attributes.shadow = shadow;
-        this.attributes.noHoverShadow = noHoverShadow;
-        this.attributes.clickable = clickable;
+    defaultProps () {
+        return {
+            id: null,
+            name: '',
+            avatar: '',
+            description: '',
+            shadow: false,
+            clickable: true,
+            noHoverShadow: false
+        };
     }
 
     render () {
-        const style = `background-image: url('${this.attributes.avatar}')`;
+        const style = `background-image: url('${this.props.avatar}')`;
 
         return (
             <div
                 className={[
                     'creator-card',
-                    this.attributes.clickable ? 'clickable' : '',
-                    this.attributes.noHoverShadow ? 'creator-card--no-hover-shadow' : ''
+                    this.props.clickable ? 'clickable' : '',
+                    this.props.noHoverShadow ? 'creator-card--no-hover-shadow' : ''
                 ]}
-                router-go={this.attributes.clickable ? app.$router.createUrl('creator', this.attributes.id) : null}
+                router-go={this.props.clickable ? app.$router.createUrl('creator', this.props.id) : null}
             >
                 <div
                     className={[
                         'creator-card__avatar',
-                        this.attributes.shadow ? 'shadow' : ''
+                        this.props.shadow ? 'shadow' : ''
                     ]}
                 >
                     <div
@@ -50,11 +43,11 @@ class CreatorCard extends Component {
                 </div>
 
                 <div className="creator-card__header">
-                    {this.attributes.name}
+                    {this.props.name}
                 </div>
 
                 <div className="creator-card__description">
-                    {this.attributes.description}
+                    {this.props.description}
                 </div>
             </div>
         );

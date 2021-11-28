@@ -3,33 +3,31 @@ import SimplifyNumComponent from '../simplify-num';
 import './style.scss';
 
 class CountersComponent extends Component {
-    constructor ({
-        likes = null,
-        views = null
-    }) {
-        super();
-        this.attributes.likes = likes;
-        this.attributes.views = views;
+    defaultProps () {
+        return {
+            likes: null,
+            views: null
+        };
     }
 
     render () {
         return (<div className="counters">
             {
-                this.attributes.views
+                this.props.views
                     ? <span className="counters__visits">
                         <img src="/imgs/icons/view_outline_28.svg" />
 
-                        <SimplifyNumComponent num={this.attributes.views} />
+                        <SimplifyNumComponent num={this.props.views} />
                     </span>
                     : ''
             }
 
             {
-                this.attributes.likes
+                this.props.likes
                     ? <span className="counters__likes">
                         <img src="/imgs/icons/like_outline_28.svg" />
 
-                        <SimplifyNumComponent num={this.attributes.likes} />
+                        <SimplifyNumComponent num={this.props.likes} />
                     </span>
                     : ''
             }

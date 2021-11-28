@@ -5,15 +5,16 @@ import './style.scss';
  * Компонент карточки профиля
  */
 class ProfileCard extends Component {
-    constructor ({
-        username = '',
-        avatar = null,
-        supportCount = 0
-    } = {}, ...slot) {
+    defaultProps () {
+        return {
+            username: '',
+            avatar: null,
+            supportCount: 0
+        };
+    }
+
+    constructor (_, ...slot) {
         super();
-        this.attributes.username = username;
-        this.attributes.avatar = avatar;
-        this.attributes.supportCount = supportCount;
         this.slot = slot;
     }
 

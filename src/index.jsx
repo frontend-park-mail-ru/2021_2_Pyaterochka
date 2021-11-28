@@ -26,5 +26,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         />,
         document.getElementById('root'));
 
+    console.log(App);
+
     registerValidSW('/sw.js');
 });

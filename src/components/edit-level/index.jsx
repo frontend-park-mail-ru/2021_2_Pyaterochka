@@ -7,30 +7,27 @@ import LevelCard from '../level-card';
 import './style.scss';
 
 class EditLevelComponent extends Component {
+    defaultProps () {
+        return {
+            level: {
+                name: '',
+                cover: '',
+                benefits: [''],
+                price: 0,
+                color: 'primary'
+            },
+            title: '',
+            onSave: () => { },
+            onDelete: null
+        };
+    }
+
     constructor (
-        {
-            level = null,
-            title = '',
-            onSave = () => { },
-            onDelete = null
-        }
+
     ) {
         super();
 
-        this.attributes.level = level || {
-            name: '',
-            cover: '',
-            benefits: [''],
-            price: 0,
-            color: 'primary'
-        };
-
-        this.coverFile = null;
-        this.attributes.title = title;
-        this.attributes.onSave = onSave;
-        this.attributes.onDelete = onDelete;
-
-        this.attributes.error = '';
+        this.state.error = '';
     }
 
     loadCover (file) {
@@ -40,13 +37,13 @@ class EditLevelComponent extends Component {
     }
 
     save () {
-        this.attributes.error = '';
+        this.state.error = '';
 
         if (!this.attributes.level.name ||
             this.attributes.level.price <= 0 ||
             this.attributes.level.benefits.reduce((acc, val) => acc || !val, false)
         ) {
-            this.attributes.error = 'Проверьте правильность заполнения полей';
+            this.state.error = 'Проверьте правильность заполнения полей';
             return;
         }
 
@@ -150,7 +147,7 @@ class EditLevelComponent extends Component {
                     text="Сохранить"
                 />
 
-                {this.attributes.error}
+                {this.state.error}
 
                 {
                     this.attributes.onDelete

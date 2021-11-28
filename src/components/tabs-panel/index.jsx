@@ -2,16 +2,12 @@ import Component from '../basecomponent';
 import './style.scss';
 
 class TabsPanel extends Component {
-    constructor ({
-        tabs = [],
-        activeTab = null,
-        onChange = (e) => { }
-    }) {
-        super();
-
-        this.attributes.tabs = tabs;
-        this.attributes.activeTab = activeTab;
-        this.attributes.onChange = onChange;
+    defaultProps () {
+        return {
+            tabs: [],
+            activeTab: null,
+            onChange: (e) => { }
+        };
     }
 
     changeTab (e, tab) {
