@@ -2,11 +2,11 @@
  * @module Роутер
  */
 
-import Component from '../irbis/component';
-import app from '../irbis';
-import VDomComponent from '../irbis/vdom/vdom-component';
+import Component from 'irbis/component';
+import app from 'irbis';
+import VDomComponent from 'irbis/vdom/vdom-component';
 import Route from './route';
-import VDomNode from '../jsx/vdom-node';
+import VDomNode from 'irbis/vdom/vdom-node';
 
 class Router extends Component {
     defaultProps () {
