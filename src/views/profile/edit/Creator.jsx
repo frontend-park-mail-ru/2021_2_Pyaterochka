@@ -207,7 +207,7 @@ class ProfileEditCreator extends Component {
                     }
 
                     <img
-                        height='420px'
+                        style="width: 260px;height: 420px;"
                         router-go={app.$router.createUrl('creator.level.create')}
                         src="/imgs/addLevel.svg"
                     />
