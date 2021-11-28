@@ -12,6 +12,8 @@ import LoadingView from '../loading-view';
 import user from '../../storage/user';
 import app from '../../core/app';
 import consts from '../../consts';
+import AudioPlayer from '../../components/audio-player';
+import VideoPlayer from '../../components/video-player';
 
 class PostView extends Component {
     constructor () {
@@ -102,18 +104,10 @@ class PostView extends Component {
                                             src={value} />);
                                     }
                                     if (type === 'video') {
-                                        return (<video
-                                            className="post__video"
-                                            controls>
-                                            <source src={value} />
-                                        </video>);
+                                        return (<VideoPlayer src={[{ url: value }]} />);
                                     }
                                     if (type === 'audio') {
-                                        return (<audio
-                                            className="post__audio"
-                                            controls>
-                                            <source src={value} />
-                                        </audio>);
+                                        return (<AudioPlayer src={[{ url: value }]} />);
                                     }
                                     return null;
                                 })

@@ -1,9 +1,11 @@
 import { nextTick } from '../../modules/jsx/utils';
+import AudioPlayer from '../audio-player';
 import Component from '../basecomponent';
 import Button from '../button';
 import FileUploader from '../file-uploader';
 import IconComponent from '../icon';
 import ImageUploader from '../image-uploader';
+import VideoPlayer from '../video-player';
 import './style.scss';
 
 /**
@@ -483,9 +485,7 @@ class EditorComponent extends Component {
                                                 <br />
 
                                                 {element.value
-                                                    ? <audio controls>
-                                                        <source src={element.value} />
-                                                    </audio>
+                                                    ? <AudioPlayer src={[{ url: element.value }]} />
                                                     : null}
 
                                             </div>
@@ -509,9 +509,7 @@ class EditorComponent extends Component {
                                                     <br />
 
                                                     {element.value
-                                                        ? <video controls>
-                                                            <source src={element.value} />
-                                                        </video>
+                                                        ? <VideoPlayer src={[{ url: element.value }]} />
                                                         : null}
 
                                                 </div>
