@@ -2,20 +2,21 @@ import Component from 'irbis/component';
 import './style.scss';
 
 class SelectComponent extends Component {
+    defaultProps () {
+        return {
+            inital: '',
+            options: [],
+            placeholder: '',
+            onChange: () => { }
+        };
+    }
+
     constructor ({
-        inital = '',
-        value = inital,
-        options = [],
-        placeholder = '',
-        onChange = () => { }
+        inital
     }) {
         super();
 
-        this.attributes.inital = inital;
-        this.attributes.value = value;
-        this.attributes.options = options;
-        this.attributes.placeholder = placeholder;
-        this.attributes.onChange = onChange;
+        this.state.value = inital;
     }
 
     change (e) {
