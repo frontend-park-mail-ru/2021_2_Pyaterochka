@@ -184,20 +184,22 @@
       display: none;
 
       &--body {
-        left: -70px;
+        left: -100px;
         display: block;
+        padding-right: 10px;
 
         + .editor__body-element {
-          margin-left: 150px;
+          margin-left: 115px;
         }
       }
 
       &--body--delete {
-        left: -160px;
+        left: -170px;
         display: block;
+        padding-right: 10px;
 
         + .editor__body-element {
-          margin-left: 70px;
+          margin-left: 50px;
         }
       }
     }
