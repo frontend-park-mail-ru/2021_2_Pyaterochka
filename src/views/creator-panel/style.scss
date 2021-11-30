@@ -1,0 +1,35 @@
+.creator-panel {
+  max-width: 1100px;
+  margin: auto;
+  padding: 20px;
+
+  &__add-post {
+    padding: 20px 0;
+    display: flex;
+    justify-content: flex-end;
+
+    .btn {
+      width: auto;
+    }
+  }
+
+  &__topper {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    flex-wrap: wrap;
+  }
+
+  &__posts__last-cell {
+    display: flex;
+    justify-content: space-between;
+
+    .counters {
+      min-width: 100px;
+    }
+
+    .btn {
+      width: auto;
+    }
+  }
+}

@@ -135,7 +135,7 @@ class CreatePostView extends Component {
             creatorId: user.user.id
         });
 
-        app.$router.go(app.$router.createUrl('creator', `${user.user.id}`));
+        app.$router.go(app.$router.createUrl('creator.panel'));
     }
 
     async propsChanged () {

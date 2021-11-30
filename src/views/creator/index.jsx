@@ -95,12 +95,13 @@ class CreatorView extends Component {
                             <Button
                                 color="default"
                                 onClick={
-                                    () => { app.$router.go(app.$router.createUrl('profile.edit', 'creator_settings')); }
+                                    () => {
+                                        app.$router.go(app.$router.createUrl('creator.panel'));
+                                    }
                                 }
-                                text="Настройки автора"
+                                text="Панель автора"
                             />
                         </div>
-
                         : !this.attributes.levels
                             ? <div className="level-card-container">
                                 {[1, 2, 3].map((v) => (
