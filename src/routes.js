@@ -1,13 +1,13 @@
 import Route from 'irbis-router/route';
 
-import MainPageView from './views/main-page';
 import LoadingView from './views/loading-view';
 import ErrorPage from './views/errorpage';
+import IndexView from './views/index-view';
 
 export default [
     new Route({
         url: '/',
-        component: async () => { return { default: MainPageView }; },
+        component: async () => { return { default: IndexView }; },
         title: 'Главная страница',
         name: 'main'
     }),
