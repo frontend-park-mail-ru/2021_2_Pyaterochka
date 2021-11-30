@@ -12,22 +12,22 @@
     background: #f4f4f4;
 
     + span {
-      top: 12px;
+      top: 18px;
       font-size: 18px;
     }
   }
 
   input:focus + span {
-    font-size: 10px;
-    top: 0;
+    font-size: 14px;
+    top: 6px;
   }
 
   span {
-    color: #4c4c4c;
+    color: #666;
     position: absolute;
-    top: 0;
+    top: 6px;
     left: 10px;
-    font-size: 10px;
+    font-size: 14px;
     cursor: text;
     transition: all 0.3s;
   }
@@ -36,7 +36,7 @@
     background: #fff;
     display: block;
     width: 100%;
-    padding: 12px 10px 8px;
+    padding: 24px 10px 10px;
     border-radius: 5px;
     border: 1px solid #dedede;
     outline: 0;

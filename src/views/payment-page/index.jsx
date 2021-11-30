@@ -28,9 +28,13 @@ class PaymentPage extends Component {
     async pay () {
         this.attributes.loadingMessage = 'Оплата';
 
+        if (this.state.creator.levelId) {
+            this.attributes.loadingMessage = 'Изменение подписки';
+            await api.levelUnsubscribe(this.creatorId, this.state.creator.levelId);
+        }
         await api.levelSubscribe(this.creatorId, this.levelId);
 
-        app.$router.go(app.$router.createUrl('profile'));
+        app.$router.go(app.$router.createUrl('creator', this.creatorId));
     }
 
     async unsubscribe () {
@@ -38,7 +42,7 @@ class PaymentPage extends Component {
 
         await api.levelUnsubscribe(this.creatorId, this.levelId);
 
-        app.$router.go(app.$router.createUrl('profile'));
+        app.$router.go(app.$router.createUrl('creator', this.creatorId));
     }
 
     render () {
@@ -144,7 +148,7 @@ class PaymentPage extends Component {
             </div>
 
             {
-                this.attributes.pay && this.attributes.otherLevels && this.attributes.otherLevels.length
+                this.attributes.otherLevels && this.attributes.otherLevels.length
                     ? <>
                         <div className="payment-page__other-levels-title">
                             {consts.maybeInterestedSubscriptions}
@@ -191,15 +195,16 @@ class PaymentPage extends Component {
 
             [this.creatorId, this.levelId] = data.slice(0, 2).map(x => parseInt(x));
 
-            this.attributes.pay = !(data[2] && data[2] === 'unsubscribe');
+            this.state.creator = await api.creatorInfo(this.creatorId);
 
-            this.attributes.creator = await api.creatorInfo(this.creatorId);
-
+            if (this.attributes.creator.levelId === this.levelId) {
+                this.attributes.pay = false;
+            }
             const levels = await api.levelsInfo(this.creatorId);
 
             const level = levels.find(level => level.id === this.levelId);
 
-            this.attributes.level = level;
+            this.state.level = level;
 
             let benefits = [...level.benefits];
 
@@ -210,14 +215,18 @@ class PaymentPage extends Component {
                 benefits = [...level.benefits, ...benefits];
             }
 
-            this.attributes.benefits = benefits;
-            this.attributes.otherLevels = levels.filter(level => level.id !== this.levelId);
+            this.state.benefits = benefits;
+            this.state.otherLevels = levels.filter(
+                level =>
+                    level.id !== this.levelId &&
+                    level.id !== this.state.creator.levelId
+            );
         } catch (e) {
-            this.attributes.creator = null;
-            this.attributes.level = null;
-            this.attributes.otherLevels = null;
+            this.state.creator = null;
+            this.state.level = null;
+            this.state.otherLevels = null;
         }
-        this.attributes.loading = false;
+        this.state.loading = false;
     }
 }
 
