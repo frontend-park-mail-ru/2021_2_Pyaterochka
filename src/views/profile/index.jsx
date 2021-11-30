@@ -41,29 +41,40 @@ class ProfileView extends Component {
                     >
                         <>
                             <Button
-                                color="primary"
+                                color="default"
                                 onClick={
                                     () => {
                                         app.$router.go(app.$router.createUrl('profile.edit'));
                                     }
                                 }
-                                text="Редактировать профиль"
+                                text="Настройки"
                             />
 
                             {user.user.haveCreator
                                 ? <div style="margin-top:10px;">
 
                                     <Button
-                                        color="primary"
+                                        color="default"
                                         onClick={
                                             () => {
                                                 app.$router.go(app.$router.createUrl('creator.panel'));
                                             }
                                         }
-                                        text="Перейти в панель автора"
+                                        text="Панель автора"
                                     />
                                 </div>
-                                : ''}
+                                : <div style="margin-top:10px;">
+
+                                    <Button
+                                        color="default"
+                                        onClick={
+                                            () => {
+                                                app.$router.go(app.$router.createUrl('profile.edit', 'creator_settings'));
+                                            }
+                                        }
+                                        text="Создать автора"
+                                    />
+                                </div>}
                         </>
                     </ProfileCard>
                 </div>
@@ -102,6 +113,7 @@ class ProfileView extends Component {
                                                 app.$router.go(app.$router.createUrl('creators.search'));
                                             }}
                                             text="Найти новых авторов"
+                                            color="primary"
                                         />
                                     </div>
                             }

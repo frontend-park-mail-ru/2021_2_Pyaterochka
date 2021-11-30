@@ -82,10 +82,10 @@ class CreatorView extends Component {
                     )}
 
                 {
-                    user.user && this.attributes.creator && user.user.id === this.attributes.creator.id
+                    this.isOwner()
                         ? <div className="creator-page__creator-toolbox">
                             <Button
-                                color="primary"
+                                color="default"
                                 onClick={
                                     () => { app.$router.go(app.$router.createUrl('post.create')); }
                                 }
@@ -93,11 +93,11 @@ class CreatorView extends Component {
                             />
 
                             <Button
-                                color="primary"
+                                color="default"
                                 onClick={
                                     () => { app.$router.go(app.$router.createUrl('profile.edit', 'creator_settings')); }
                                 }
-                                text="Перейти к настройкам автора"
+                                text="Настройки автора"
                             />
                         </div>
 
@@ -111,50 +111,33 @@ class CreatorView extends Component {
                                     />
                                 ))}
                             </div>
-                            : !this.attributes.level
-                                ? <div className="level-card-container">
-                                    {this.attributes.levels.map((level) =>
-                                        (<LevelCard
-                                            key={level.id}
-                                            name={level.name}
-                                            benefits={level.benefits}
-                                            cover={level.cover}
-                                            price={level.price}
-                                            color={level.color}
-                                            parentName={level.parentName}
-                                            onClick={
-                                                () => {
-                                                    app.$router.go(
-                                                        app.$router.createUrl(
-                                                            'payment', `${this.attributes.creator.id}/${level.id}`
-                                                        )
-                                                    );
-                                                }
-                                            }
-                                        />)
-                                    )}
-                                </div>
-                                : <div className="level-card-container">
-                                    <LevelCard
-                                        benefits={this.attributes.level.benefits}
-                                        btnText="Отписаться"
-                                        color={this.attributes.level.color}
-                                        cover={this.attributes.level.cover}
-                                        key={this.attributes.level.id}
-                                        name={this.attributes.level.name}
+                            : <div className="level-card-container">
+                                {this.attributes.levels.map((level) =>
+                                    (<LevelCard
+                                        key={level.id}
+                                        name={level.name}
+                                        benefits={level.benefits}
+                                        cover={level.cover}
+                                        price={level.price}
+                                        color={level.color}
+                                        parentName={level.parentName}
+                                        btnText={
+                                            level.id === this.attributes.creator.levelId
+                                                ? 'Отписаться'
+                                                : 'Выбрать уровень'
+                                        }
                                         onClick={
                                             () => {
                                                 app.$router.go(
                                                     app.$router.createUrl(
-                                                        'payment', `${this.attributes.creator.id}/${this.attributes.level.id}/unsubscribe`
+                                                        'payment', `${this.attributes.creator.id}/${level.id}`
                                                     )
                                                 );
                                             }
-
                                         }
-                                        price={this.attributes.level.price}
-                                    />
-                                </div>
+                                    />)
+                                )}
+                            </div>
                 }
 
                 {
@@ -178,7 +161,7 @@ class CreatorView extends Component {
                                         level={post.levelId ? this.levelsNameMap.get(post.levelId) : ''}
                                         levelId={post.levelId}
                                         likes={post.likes}
-                                        opened={!post.levelId || this.attributes.canUseLevels.includes(post.levelId)}
+                                        opened={this.isOwner() || !post.levelId || this.attributes.canUseLevels.includes(post.levelId)}
                                         published={post.published}
                                         title={post.title}
                                         views={post.views}
@@ -213,6 +196,10 @@ class CreatorView extends Component {
 
             </div>
         );
+    }
+
+    isOwner () {
+        return user.user && this.attributes.creator && user.user.id === this.attributes.creator.id;
     }
 
     async propsChanged () {

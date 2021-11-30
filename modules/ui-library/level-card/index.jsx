@@ -28,7 +28,12 @@ class LevelCard extends Component {
         `;
         const priceColor = `color:var(--color-${this.attributes.color})`;
         return (
-            <div className="level-card">
+            <div
+                className={[
+                    'level-card',
+                    !this.props.cover ? 'level-card--no-cover' : ''
+                ]}
+            >
                 <div
                     className="level-card__header"
                     style={style}

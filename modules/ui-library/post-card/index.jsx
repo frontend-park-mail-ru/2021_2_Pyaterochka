@@ -37,11 +37,25 @@ class PostCard extends Component {
         this.attributes.levelId = levelId;
     }
 
+    open () {
+        app.$router.go(
+            this.goUrl()
+        );
+    }
+
+    goUrl () {
+        return this.attributes.opened
+            ? app.$router.createUrl('post.view', this.attributes.creatorId + '/' + this.attributes.id)
+            : app.$router.createUrl('payment', this.attributes.creatorId + '/' + this.attributes.levelId);
+    }
+
     render () {
         const style = `background-image:url('${this.attributes.image}')`;
         return (
             <div className="post-card">
-                <div className="post-card__image">
+                <div
+                    className="post-card__image"
+                    router-go={this.goUrl()}>
                     <div
                         className={['image', this.attributes.opened ? '' : 'blur']}
                         style={style}
@@ -60,7 +74,9 @@ class PostCard extends Component {
                 </div>
 
                 <div className="post-card__body">
-                    <div className="post-card__title">
+                    <div
+                        className="post-card__title"
+                        router-go={this.goUrl()}>
                         {this.attributes.title}
                     </div>
 
@@ -83,12 +99,7 @@ class PostCard extends Component {
 
                     <Button
                         onClick={() => {
-                            app.$router.go(
-                                this.attributes.opened
-                                    ? app.$router.createUrl('post.view', this.attributes.creatorId + '/' + this.attributes.id)
-                                    : app.$router.createUrl('payment', this.attributes.creatorId + '/' + this.attributes.levelId)
-
-                            );
+                            this.open();
                         }}
                         text="Открыть материал"
                     />

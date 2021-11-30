@@ -87,7 +87,7 @@ class PostView extends Component {
                             <hr />
 
                             <PostHeaderComponent
-                                creatorId={this.attributes.post.creatorId}
+                                creatorId={this.attributes.creator.id}
                                 id={this.attributes.post.id}
                                 published={this.attributes.post.published}
                                 title={this.attributes.post.title}
