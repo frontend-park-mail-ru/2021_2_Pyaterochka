@@ -467,6 +467,24 @@ export default {
     },
 
     /**
+     * Получить записи ленты
+     */
+    async postsFeedInfo (id) {
+        const req = await sendJSON({
+            url: '/user/posts?page=0&offset=0&limit=100000',
+            method: 'get'
+        });
+
+        if (req.status === 204) {
+            return null;
+        }
+
+        const data = await req.json();
+
+        return data.available_posts.map(p => mapPost(p, id));
+    },
+
+    /**
      * Получить запись создателя
      * @param {*} userId
      * @param {*} postId
