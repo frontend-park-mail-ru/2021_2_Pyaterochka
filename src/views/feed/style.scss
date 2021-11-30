@@ -1,0 +1,13 @@
+.feed-page {
+  padding: 20px;
+
+  &__no-creators {
+    display: flex;
+    justify-content: center;
+    padding-top: 50px;
+
+    img {
+      max-width: 100%;
+    }
+  }
+}

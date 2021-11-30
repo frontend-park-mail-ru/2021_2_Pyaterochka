@@ -1,5 +1,6 @@
 import app from 'irbis';
 import Component from 'irbis/component';
+import user from '../../storage/user';
 import './style.scss';
 
 /**
@@ -38,6 +39,14 @@ class Navbar extends Component {
                                     <a router-go={app.$router.createUrl('profile')}>
                                         Профиль
                                     </a>
+
+                                    {
+                                        user.user.haveCreator
+                                            ? <a router-go={app.$router.createUrl('creator.panel')}>
+                                                Панель автора
+                                            </a>
+                                            : null
+                                    }
 
                                     <a
                                         router-go={app.$router.createUrl('logout')}

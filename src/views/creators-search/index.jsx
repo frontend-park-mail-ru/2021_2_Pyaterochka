@@ -11,11 +11,12 @@ class ProfileView extends Component {
     constructor () {
         super();
 
-        this.attributes.searchQuery = '';
-        this.attributes.searchCategory = all;
-        this.attributes.creators = [];
+        this.state.searchQuery = '';
+        this.state.searchCategory = all;
+        this.state.creators = [];
+        this.state.popularCreators = [];
 
-        this.attributes.categories = [all];
+        this.state.categories = [all];
     }
 
     render () {
@@ -63,9 +64,23 @@ class ProfileView extends Component {
                         : <h2 className="text-center">
                             Ничего не найдено
                         </h2>
-                    : <h2 className="text-center">
-                        Сначала введите поисковый запрос
-                    </h2>}
+                    : <div>
+                        <h2 className="text-center">
+                            Популярные авторы:
+                        </h2>
+
+                        <div className="creators-container">
+                            {this.state.popularCreators.map((creator) => {
+                                return (<CreatorCard
+                                    key={creator.id}
+                                    id={creator.id}
+                                    name={creator.name}
+                                    avatar={creator.avatar}
+                                    description={creator.description}
+                                />);
+                            })}
+                        </div>
+                    </div>}
 
             </div>
         );
@@ -117,6 +132,8 @@ class ProfileView extends Component {
 
         const info = await api.info();
         this.attributes.categories = [all, ...info.category];
+
+        this.state.popularCreators = await api.creators();
     }
 }
 

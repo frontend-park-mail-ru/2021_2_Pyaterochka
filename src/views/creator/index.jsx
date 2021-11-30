@@ -78,8 +78,34 @@ class CreatorView extends Component {
                                 name={this.attributes.creator.name}
                                 shadow
                             />
+
+                            <div className="text-center">
+                                {this.state.isCopied ? 'Ссылка скопирована в буфер обмена' : null}
+
+                            </div>
                         </div>
                     )}
+
+                <div className="creator-page__creator-toolbox">
+                    <Button
+                        color="default"
+                        onClick={
+                            () => {
+                                const text = document.createElement('input');
+                                text.value = location.origin + app.$router.createUrl('creator', this.attributes.creator.id);
+                                document.body.appendChild(text);
+                                text.select();
+                                document.execCommand('copy');
+                                text.remove();
+                                this.state.isCopied = true;
+                                setTimeout(() => {
+                                    this.state.isCopied = false;
+                                }, 3000);
+                            }
+                        }
+                        text="Поделиться аккаунтом"
+                    />
+                </div>
 
                 {
                     this.isOwner()

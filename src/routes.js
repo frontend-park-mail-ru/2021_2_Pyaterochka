@@ -36,6 +36,12 @@ export default [
         name: 'component-gallery'
     }),
     new Route({
+        url: '/feed',
+        component: async () => await import('views/feed'),
+        title: 'Лента',
+        name: 'feed'
+    }),
+    new Route({
         url: '/payment/*',
         component: async () => await import('views/payment-page'),
         title: 'Страница оформления подписки',

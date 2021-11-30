@@ -39,11 +39,18 @@ class CreatorPanel extends Component {
                 </div>
 
                 <div>
-                    <br />
-
                     <div
                         className="shadow"
-                        style="width:600px;height:300px;padding:20px;max-width: 100%;">
+                        style={
+                            `
+                            width: 600px;
+                            height: 300px;
+                            padding: 20px;
+                            max-width: calc(100vw - 90px);
+                            display: inline-block;
+                            margin-top: 20px;
+                            `
+                        }>
                         Здесь будет статистика
 
                     </div>
