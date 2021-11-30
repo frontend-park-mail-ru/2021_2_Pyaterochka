@@ -5,21 +5,22 @@ import './style.scss';
  * Компонент шага
  */
 class Step extends Component {
-    constructor ({ number = 0, image = '', name = '', description = '' }) {
-        super();
-        this.attributes.number = number;
-        this.attributes.image = image;
-        this.attributes.name = name;
-        this.attributes.description = description;
+    defaultProps () {
+        return {
+            number: 0,
+            image: '',
+            name: '',
+            description: ''
+        };
     }
 
     render () {
-        const isLeftText = this.attributes.number % 2;
+        const isLeftText = this.props.number % 2;
         return (
             <div className={['step', isLeftText ? 'step_left-text' : '']}>
                 <img
                     alt=""
-                    src={this.attributes.image}
+                    src={this.props.image}
                 />
 
                 <div className="step-content">
@@ -27,16 +28,16 @@ class Step extends Component {
                         ШАГ
                         {' '}
 
-                        {this.attributes.number}
+                        {this.props.number}
                     </div>
 
                     <div className="step-content__name">
-                        {this.attributes.name}
+                        {this.props.name}
                     </div>
 
                     <div className="step-content__description">
                         <span>
-                            {this.attributes.description}
+                            {this.props.description}
                         </span>
                     </div>
                 </div>
