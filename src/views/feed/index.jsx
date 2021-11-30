@@ -6,8 +6,9 @@ import Skeleton from 'ui-library/skeleton';
 import ErrorPage from '../errorpage';
 
 import './style.scss';
+import Button from '../../../modules/ui-library/button';
 
-class CreatorView extends Component {
+class FeedView extends Component {
     defaultProps () {
         return { route: null };
     }
@@ -25,6 +26,29 @@ class CreatorView extends Component {
 
         return (
             <div className="feed-page">
+                <h2 className="text-center">
+                    Лента
+                </h2>
+
+                <div className="feed-page__buttons">
+                    <Button
+                        text="Мои подписки"
+                        onClick={
+                            () => {
+                                app.$router.go(app.$router.createUrl('profile'));
+                            }
+                        }
+                    />
+
+                    <Button
+                        text="Поиск авторов"
+                        onClick={
+                            () => {
+                                app.$router.go(app.$router.createUrl('creators.search'));
+                            }
+                        }
+                    />
+                </div>
 
                 {
                     this.state.loading
@@ -44,10 +68,9 @@ class CreatorView extends Component {
                                         id={post.id}
                                         image={post.image}
                                         key={post.id}
-                                        level={post.levelId ? this.levelsNameMap.get(post.levelId) : ''}
                                         levelId={post.levelId}
                                         likes={post.likes}
-                                        opened={this.isOwner() || !post.levelId || this.attributes.canUseLevels.includes(post.levelId)}
+                                        opened
                                         published={post.published}
                                         title={post.title}
                                         views={post.views}
@@ -78,4 +101,4 @@ class CreatorView extends Component {
     }
 }
 
-export default CreatorView;
+export default FeedView;
