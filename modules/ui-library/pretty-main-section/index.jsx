@@ -5,13 +5,11 @@ import Button from '../button';
 import './style.scss';
 
 class PrettySection extends Component {
-    constructor ({
-        slogan = 'Твой талант стоит денег',
-        text = 'Ежемесячная поддержка вашего творчества от самых преданных фанатов'
-    }) {
-        super();
-        this.attributes.slogan = slogan;
-        this.attributes.text = text;
+    defaultProps () {
+        return {
+            slogan: 'Твой талант стоит денег',
+            text: 'Ежемесячная поддержка вашего творчества от самых преданных фанатов'
+        };
     }
 
     async submit () {
@@ -26,11 +24,11 @@ class PrettySection extends Component {
             <div className="main-page-section__container">
                 <div className="main-page-section__info">
                     <h1 className="main-page-section__slogan">
-                        {this.attributes.slogan}
+                        {this.props.slogan}
                     </h1>
 
                     <div className="main-page-section__text">
-                        {this.attributes.text}
+                        {this.props.text}
                     </div>
 
                     <div className="main-page-section__button">
