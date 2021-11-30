@@ -1,4 +1,19 @@
 .main-page {
+  &__switch-container {
+    font-size: 22px;
+    padding: 20px;
+    position: sticky;
+    top: 0;
+    background: #fff;
+    text-align: center;
+
+    .switch {
+      background: #ff424d;
+      transform: scale(1.5);
+      margin: 0 30px;
+    }
+  }
+
   &-container {
     max-width: 1240px;
     margin: 0 auto;
