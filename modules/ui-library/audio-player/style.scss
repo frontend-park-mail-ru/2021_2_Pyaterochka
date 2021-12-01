@@ -1,0 +1,9 @@
+.audio-player {
+  background: #000;
+  border-radius: 5px;
+  overflow: hidden;
+
+  &__audio-tag {
+    display: none;
+  }
+}

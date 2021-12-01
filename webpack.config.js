@@ -3,7 +3,7 @@ const path = require('path');
 module.exports = {
     mode: process.env.PRODUCTION ? 'production' : 'development',
     entry: {
-        index: './public/src/index.js'
+        index: './src/index.jsx'
     },
     output: {
         path: path.resolve(__dirname, 'public/scripts'),
@@ -11,7 +11,7 @@ module.exports = {
     },
 
     resolve: {
-        modules: [path.resolve(__dirname, 'public/src'), 'node_modules'],
+        modules: [path.resolve(__dirname, 'src'), path.resolve(__dirname, 'modules'), 'node_modules'],
         extensions: ['.js', '.jsx', '.ts', '.tsx']
     },
 
@@ -24,7 +24,7 @@ module.exports = {
                     loader: 'babel-loader',
                     options: {
                         presets: [
-
+                            "@babel/preset-typescript"
                         ],
                         plugins: [
                             '@babel/plugin-syntax-jsx',
@@ -33,7 +33,7 @@ module.exports = {
                                 {
                                     throwIfNamespace: false,
                                     runtime: 'automatic',
-                                    importSource: 'modules'
+                                    importSource: 'irbis'
                                 }
                             ]
                         ]

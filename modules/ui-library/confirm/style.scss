@@ -1,0 +1,20 @@
+.confirm-component {
+  width: 600px;
+  max-width: 100%;
+  margin: auto;
+
+  &__button-box {
+    display: flex;
+    margin: -10px;
+
+    & > * {
+      margin: 10px;
+    }
+  }
+}
+
+@media (max-width: 1100px) {
+  .confirm-component {
+    padding: 0 10px;
+  }
+}

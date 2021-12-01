@@ -1,0 +1,18 @@
+.validation_error {
+  text-align: left;
+  color: #707070;
+  font-size: 14px;
+  margin: 2px;
+  margin-left: 20px;
+  position: relative;
+
+  &::before {
+    content: '!';
+    position: absolute;
+    left: -10px;
+    color: #e42f2f;
+    font-weight: 900;
+    font-size: 16px;
+    top: -2px;
+  }
+}

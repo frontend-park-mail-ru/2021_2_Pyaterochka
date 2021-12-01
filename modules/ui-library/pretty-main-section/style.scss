@@ -1,0 +1,67 @@
+.main-page-section {
+  width: 100%;
+  background-color: #484745;
+  padding: 100px 20px;
+
+  &__container {
+    display: flex;
+    justify-content: space-around;
+    width: 1240px;
+    max-width: 100%;
+    margin: auto;
+    flex-wrap: wrap-reverse;
+    align-items: center;
+  }
+
+  &__image {
+    width: 446px;
+    max-width: 100%;
+  }
+
+  &__slogan {
+    font-family: Montserrat, sans-serif;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 60px;
+    line-height: 73px;
+    color: #fff;
+  }
+
+  &__info {
+    width: 790px;
+    max-width: 100%;
+  }
+
+  &__text {
+    margin-bottom: 50px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 36px;
+    line-height: 42px;
+    color: #fff;
+  }
+
+  &__button {
+    width: 200px;
+  }
+}
+
+@media (max-width: 800px) {
+  .main-page-section {
+    padding: 20px 20px 40px;
+
+    &__slogan {
+      font-size: 48px;
+      line-height: 52px;
+    }
+
+    &__text {
+      font-size: 28px;
+      line-height: 36px;
+    }
+
+    &__button {
+      width: 100%;
+    }
+  }
+}
