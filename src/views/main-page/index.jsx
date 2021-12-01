@@ -48,10 +48,7 @@ class MainPageView extends Component {
                     {' '}
 
                     <b>
-                        {' '}
                         Автор
-
-                        {' '}
                     </b>
                 </div>
 

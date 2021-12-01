@@ -1,12 +1,12 @@
 export default {
     signup: {
         title: 'Регистрация',
-        alreadyRegistered: 'Уже есть аккаунт?',
+        alreadyRegistered: 'Уже есть аккаунт? ',
         signin: 'Войти'
     },
     signin: {
         title: 'Вход',
-        notRegistered: 'Впервые на Patreon?',
+        notRegistered: 'Впервые на Patreon? ',
         signup: 'Зарегистрируйтесь'
 
     },
