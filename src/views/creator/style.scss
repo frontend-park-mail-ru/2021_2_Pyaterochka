@@ -15,9 +15,7 @@
     display: flex;
     width: 500px;
     max-width: 100%;
-    margin: auto;
-    margin-bottom: 60px;
-    margin-top: -30px;
+    margin: -30px auto 60px;
 
     & > * {
       margin: 0 10px;
@@ -56,4 +54,23 @@
 .lock-message {
   max-width: 500px;
   margin: auto;
+}
+
+@media (max-width: 1100px) {
+  .level-card-container {
+    width: 100%;
+    overflow: hidden;
+    overflow-x: scroll;
+    flex-wrap: nowrap;
+    justify-content: start;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    & > * {
+      min-width: 260px;
+      display: inline-block;
+    }
+  }
 }

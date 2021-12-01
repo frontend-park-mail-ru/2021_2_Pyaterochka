@@ -1,14 +1,14 @@
 .step {
   display: flex;
-  justify-content: space-around;
-  margin-bottom: 110px;
+  justify-content: space-between;
+  margin-bottom: 50px;
   align-items: flex-start;
   flex-wrap: wrap;
 
   img {
     width: 400px;
     max-width: 100%;
-    margin-bottom: 20px;
+    padding-top: 10px;
   }
 
   &_left-text {
@@ -17,7 +17,7 @@
 
   &-content {
     display: inline-block;
-    max-width: 786px;
+    max-width: 760px;
 
     &__number {
       display: flex;

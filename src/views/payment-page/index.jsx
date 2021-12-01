@@ -82,12 +82,16 @@ class PaymentPage extends Component {
                                 ? <>
                                     {consts.subscribeOnLevel}
 
+                                    {' '}
+
                                     <b>
                                         {this.attributes.level.name}
                                     </b>
                                 </>
                                 : <>
                                     {consts.unsubscribeOnLevel}
+
+                                    {' '}
 
                                     <b>
                                         {this.attributes.level.name}
@@ -126,9 +130,13 @@ class PaymentPage extends Component {
                                 ? <>
                                     {consts.subscribeFor}
 
+                                    {' '}
+
                                     <b>
                                         {this.attributes.level.price}
                                     </b>
+
+                                    {' '}
 
                                     {consts.inMonth}
 

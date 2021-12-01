@@ -39,20 +39,8 @@ class CreatorPanel extends Component {
                 </div>
 
                 <div>
-                    <div
-                        className="shadow"
-                        style={
-                            `
-                            width: 600px;
-                            height: 300px;
-                            padding: 20px;
-                            max-width: calc(100vw - 90px);
-                            display: inline-block;
-                            margin-top: 20px;
-                            `
-                        }>
+                    <div className="creator-panel__statistics shadow">
                         Здесь будет статистика
-
                     </div>
                 </div>
             </div>
@@ -68,7 +56,7 @@ class CreatorPanel extends Component {
             </div>
 
             <div className="table-container">
-                <table>
+                <table className="table__posts-info">
                     <thead>
                         <tr>
                             <th>
@@ -87,12 +75,13 @@ class CreatorPanel extends Component {
                         </tr>
                     </thead>
 
-                    {
-                        this.state.posts.map(post => (
-                            <tr key={post.id}>
-                                <td>
-                                    <TimeAgoComponent date={post.published} />
-                                </td>
+                    <tbody>
+                        {
+                            this.state.posts.map(post => (
+                                <tr key={post.id}>
+                                    <td>
+                                        <TimeAgoComponent date={post.published} />
+                                    </td>
 
                                 <td
                                 >
@@ -113,19 +102,19 @@ class CreatorPanel extends Component {
                                         views={post.views}
                                     />
 
-                                    <Button
-                                        onClick={
-                                            () => {
-                                                app.$router.go(app.$router.createUrl('post.edit', post.id));
+                                        <Button
+                                            onClick={
+                                                () => {
+                                                    app.$router.go(app.$router.createUrl('post.edit', post.id));
+                                                }
                                             }
-                                        }
-                                        text="Редактировать"
-                                    />
-                                </td>
-                            </tr>
-                        ))
-                    }
-
+                                            text="Редактировать"
+                                        />
+                                    </td>
+                                </tr>
+                            ))
+                        }
+                    </tbody>
                 </table>
             </div>
 

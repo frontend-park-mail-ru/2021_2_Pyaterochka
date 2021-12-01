@@ -153,7 +153,7 @@ class PostView extends Component {
                         <div className="comments-container">
                             <div className="add-comment">
                                 <div className="add-comment__title">
-                                    {consts.leaveСomment}
+                                    {consts.leaveComment}
                                 </div>
 
                                 <InputField

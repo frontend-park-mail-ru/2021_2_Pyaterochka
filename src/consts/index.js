@@ -1,12 +1,12 @@
 export default {
     signup: {
         title: 'Регистрация',
-        alreadyRegistered: 'Уже есть аккаунт?',
+        alreadyRegistered: 'Уже есть аккаунт? ',
         signin: 'Войти'
     },
     signin: {
         title: 'Вход',
-        notRegistered: 'Впервые на Patreon?',
+        notRegistered: 'Впервые на Patreon? ',
         signup: 'Зарегистрируйтесь'
 
     },
@@ -28,7 +28,7 @@ export default {
 
     nickname: 'Никнейм',
 
-    leaveСomment: 'Оставить комментарий',
+    leaveComment: 'Оставить комментарий',
     communityWarning: 'Пожалуйста,  уважайте участников сообщества',
     moreFromCreator: 'Также у автора',
 
@@ -47,10 +47,8 @@ export default {
         whatIs: 'Что такое Patreon?',
         howItWorks: 'Как это работает?',
         steps: {
-            signup: 'Зарегистрируйтесь',
+            signup: 'Зарегистрируйтесь ',
             configPage: 'и настройте вашу страницу на Patreon. Продумайте уровни подписки, от самого дешевого до привилегированного. Каждый уровень предлагает особые условия и преимущества вашим фанатам. Подумайте, что вы реально сможете давать регулярно и чему будут рады ваши фанаты. Не усложняйте!'
         }
-
     }
-
 };

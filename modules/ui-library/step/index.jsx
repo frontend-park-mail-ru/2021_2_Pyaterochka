@@ -18,10 +18,6 @@ class Step extends Component {
         const isLeftText = this.props.number % 2;
         return (
             <div className={['step', isLeftText ? 'step_left-text' : '']}>
-                <img
-                    alt=""
-                    src={this.props.image}
-                />
 
                 <div className="step-content">
                     <div className="step-content__number">
@@ -41,6 +37,11 @@ class Step extends Component {
                         </span>
                     </div>
                 </div>
+
+                <img
+                    alt=""
+                    src={this.props.image}
+                />
 
             </div>
         );
