@@ -51,8 +51,9 @@
   }
 
   .edit-creator__images {
-    justify-content: flex-start;
+    justify-content: space-between;
     flex-direction: column-reverse;
+    height: 480px;
   }
 
   .tabs-panel {
