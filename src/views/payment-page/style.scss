@@ -1,0 +1,50 @@
+.payment-page {
+  &__topper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 50px 5px;
+    align-items: center;
+
+    &__about {
+      font-size: 18px;
+      font-weight: 300;
+
+      .btn {
+        font-size: 20px;
+        padding: 20px;
+      }
+    }
+  }
+
+  &__title {
+    font-family: Roboto, sans-serif;
+    font-size: 24px;
+    font-weight: 400;
+  }
+
+  &__disclaimer {
+    font-family: Roboto, sans-serif;
+    font-size: 14px;
+    padding: 10px 0;
+  }
+
+  &__other-levels {
+    &-title {
+      font-family: Roboto, sans-serif;
+      font-size: 24px;
+      font-weight: 300;
+      text-align: center;
+    }
+
+    &-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+
+      .level-card {
+        margin: 20px;
+      }
+    }
+  }
+}

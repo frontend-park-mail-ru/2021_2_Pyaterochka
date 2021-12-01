@@ -1,0 +1,92 @@
+.navbar {
+  color: #fff;
+  font-size: 20px;
+  padding: 0 20px;
+  background: var(--color-navbar);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  display: flex;
+  justify-content: space-between;
+
+  &__brand,
+  &__link {
+    display: block;
+    padding: 7px 10px;
+    margin: 7px 0;
+    border-radius: 10px;
+    transition: background-color 0.3s ease-in;
+  }
+
+  &__profile:hover,
+  &__link:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
+
+  a,
+  a:visited {
+    color: #fff;
+    text-decoration: none;
+  }
+
+  &__brand {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 900;
+  }
+
+  &__link {
+    float: right;
+  }
+
+  &__profile {
+    float: right;
+    display: flex;
+    position: relative;
+    padding: 0 10px;
+    padding-right: 40px;
+    cursor: pointer;
+    align-items: center;
+    border-radius: 10px;
+
+    &::after {
+      content: '';
+      border: 10px solid transparent;
+      border-top: 10px solid #fff;
+      position: absolute;
+      top: 22px;
+      right: 10px;
+    }
+
+    img {
+      margin-top: -5px;
+      width: 34px;
+      height: 34px;
+      border-radius: 100%;
+      background: #ccc;
+    }
+
+    &-name {
+      margin-left: 10px;
+    }
+
+    &:hover .navbar__popup {
+      display: flex;
+    }
+  }
+
+  &__popup {
+    position: absolute;
+    right: 0;
+    top: 52px;
+    background: var(--color-primary);
+    padding: 10px;
+    border-radius: 5px;
+    min-width: 200px;
+    text-align: center;
+    display: none;
+    flex-direction: column;
+    z-index: 100;
+
+    a {
+      padding: 10px;
+    }
+  }
+}
