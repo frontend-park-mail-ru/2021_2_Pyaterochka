@@ -6,6 +6,7 @@ import ProfileEditCommon from './Common';
 import ProfileEditCreator from './Creator';
 import ProfileEditNotification from './Notification';
 import ProfileEditSecure from './Secure';
+import ErrorPage from '../../errorpage';
 
 import './style.scss';
 
@@ -17,6 +18,10 @@ class ProfileEditView extends Component {
     }
 
     render () {
+        if (!navigator.onLine) {
+            return <ErrorPage desc="Нет соединения с интернетом" />;
+        }
+
         return (<div className="profile-edit">
             <h1 className="profile-edit__title">
                 {consts.settings}

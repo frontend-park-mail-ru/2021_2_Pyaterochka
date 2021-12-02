@@ -72,7 +72,7 @@ class CreatePostView extends Component {
             this.attributes.levels = await api.levelsInfo(user.user.id);
             this.attributes.loading = false;
         } catch {
-            this.attributes.errorFirstLoading();
+            this.attributes.errorFirstLoading = true;
         }
     }
 }

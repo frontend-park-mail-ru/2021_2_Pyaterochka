@@ -79,11 +79,19 @@ class SignupView extends Component {
 
         this.attributes.error = null;
         this.attributes.loading = true;
-        const res = await api.register({
-            username: this.form[0].getValue(),
-            email: this.form[1].getValue(),
-            password: this.form[2].getValue()
-        });
+        let res;
+
+        try {
+            res = await api.register({
+                username: this.form[0].getValue(),
+                email: this.form[1].getValue(),
+                password: this.form[2].getValue()
+            });
+        } catch {
+            this.attributes.loading = false;
+            this.attributes.error = 'Ошибка сети';
+            return;
+        }
         this.attributes.loading = false;
 
         if (res.error) {

@@ -3,11 +3,13 @@ import Component from 'irbis/component';
 import CreatorCard from 'ui-library/creator-card';
 import InputField from 'ui-library/input-field';
 import SelectComponent from 'ui-library/select';
+import ErrorPage from '../errorpage';
 
 import './style.scss';
+
 const all = 'Любая категория';
 
-class ProfileView extends Component {
+class CreatorsSearch extends Component {
     constructor () {
         super();
 
@@ -20,6 +22,10 @@ class ProfileView extends Component {
     }
 
     render () {
+        if (!navigator.onLine) {
+            return <ErrorPage desc="Нет соединения с интернетом" />;
+        }
+
         return (
             <div>
                 <h1 className="text-center">
@@ -137,4 +143,4 @@ class ProfileView extends Component {
     }
 }
 
-export default ProfileView;
+export default CreatorsSearch;

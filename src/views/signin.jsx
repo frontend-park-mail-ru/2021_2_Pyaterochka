@@ -26,10 +26,18 @@ class SigninView extends Component {
         }
         this.attributes.error = '';
         this.attributes.loading = true;
-        const res = await api.login({
-            email: this.state.email,
-            password: this.state.password
-        });
+        let res;
+        try {
+            res = await api.login({
+                email: this.state.email,
+                password: this.state.password
+            });
+        } catch {
+            this.attributes.loading = false;
+            this.attributes.error = 'Ошибка сети';
+            return;
+        }
+
         if (res.error) {
             this.attributes.loading = false;
             this.attributes.error = 'Неправильный логин и/или пароль';

@@ -9,9 +9,13 @@ import Skeleton from 'ui-library/skeleton';
 import CreatorCard from 'ui-library/creator-card';
 
 import './style.scss';
+import ErrorPage from '../errorpage';
 
 class CreatorPanel extends Component {
     render () {
+        if (this.attributes.errorFirstLoading) {
+            return <ErrorPage desc="Ошибка загрузки" />;
+        }
         if (!this.state.posts) {
             return <Skeleton />;
         }
@@ -127,15 +131,18 @@ class CreatorPanel extends Component {
             return;
         }
 
-        this.state.creator = await api.creatorInfo(user.user.id);
-        this.state.levels = await api.levelsInfo(user.user.id);
+        try {
+            this.state.creator = await api.creatorInfo(user.user.id);
+            this.state.levels = await api.levelsInfo(user.user.id);
 
-        this.state.levelsNames = { 0: 'Доступен всем' };
-        this.state.levels.forEach((level) => {
-            this.state.levelsNames[level.id] = level.name;
-        });
-        console.log(this.state.levelsNames);
-        this.state.posts = await api.postsInfo(user.user.id);
+            this.state.levelsNames = { 0: 'Доступен всем' };
+            this.state.levels.forEach((level) => {
+                this.state.levelsNames[level.id] = level.name;
+            });
+            this.state.posts = await api.postsInfo(user.user.id);
+        } catch (e) {
+            this.state.errorFirstLoading = true;
+        }
     }
 }
 
