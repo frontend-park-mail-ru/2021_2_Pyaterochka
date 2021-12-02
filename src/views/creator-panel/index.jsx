@@ -83,24 +83,24 @@ class CreatorPanel extends Component {
                                         <TimeAgoComponent date={post.published} />
                                     </td>
 
-                                <td
-                                >
-                                    <a router-go={app.$router.createUrl('post.view', `${user.user.id}/${post.id}`)}
+                                    <td
                                     >
-                                        {post.title}
-                                    </a>
+                                        <a router-go={app.$router.createUrl('post.view', `${user.user.id}/${post.id}`)}
+                                        >
+                                            {post.title}
+                                        </a>
 
-                                </td>
+                                    </td>
 
-                                <td>
-                                    {post.levelId ? this.state.levelsNames[post.levelId] : ''}
-                                </td>
+                                    <td>
+                                        {post.levelId ? this.state.levelsNames[post.levelId] : ''}
+                                    </td>
 
-                                <td className="creator-panel__posts__last-cell">
-                                    <CountersComponent
-                                        likes={post.likes}
-                                        views={post.views}
-                                    />
+                                    <td className="creator-panel__posts__last-cell">
+                                        <CountersComponent
+                                            likes={post.likes}
+                                            views={post.views}
+                                        />
 
                                         <Button
                                             onClick={

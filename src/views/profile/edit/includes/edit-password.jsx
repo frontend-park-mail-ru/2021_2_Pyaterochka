@@ -72,7 +72,7 @@ class EditPassword extends Component {
 
         this.state.error = res.error;
         if (res.status === 403) {
-            this.state.error = 'Не правильный старый пароль';
+            this.state.error = 'Неправильный старый пароль';
         }
 
         this.state.loading = false;

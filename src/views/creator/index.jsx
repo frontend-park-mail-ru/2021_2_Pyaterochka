@@ -56,10 +56,14 @@ class CreatorView extends Component {
                                     type="circle"
                                 />
 
+                                <br />
+
                                 <Skeleton
                                     height={40}
                                     type="text"
                                 />
+
+                                <br />
                             </div>
                         </>
                     )
