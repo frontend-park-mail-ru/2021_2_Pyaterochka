@@ -20,7 +20,11 @@ class Router extends Component {
     }
 
     propsChanged () {
-        this.slot = [new VDomComponent(this.props.layout, {}, [])];
+        this.slot = [new VDomComponent(this.props.layout, {}, [
+            this.props.loadingView || ''
+        ])];
+
+        this.start();
     }
 
     constructor () {
