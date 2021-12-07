@@ -73,6 +73,8 @@
 
     &.active {
       color: #000;
+      font-weight: 700;
+      letter-spacing: 0.02em;
     }
   }
 
@@ -125,7 +127,7 @@
       position: absolute;
       left: 0;
       top: 0;
-      font-weight: 600;
+      font-weight: 700;
       transition: background ease 0.3s, top ease 0.3s, transform ease 0.3s;
       font-size: 20px;
     }
