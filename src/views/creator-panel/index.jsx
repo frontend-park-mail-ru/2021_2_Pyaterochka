@@ -13,9 +13,14 @@ import ErrorPage from '../errorpage';
 
 class CreatorPanel extends Component {
     render () {
-        if (this.attributes.errorFirstLoading) {
-            return <ErrorPage desc="Ошибка загрузки" />;
+        // if (this.attributes.errorFirstLoading) {
+        //     return <ErrorPage desc="Нет соединения с интернетом" />;
+        // }
+
+        if (!navigator.onLine) {
+            return <ErrorPage desc="Нет соединения с интернетом" />;
         }
+
         if (!this.state.posts) {
             return <Skeleton />;
         }
