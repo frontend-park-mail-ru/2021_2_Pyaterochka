@@ -76,7 +76,7 @@ class ProfileView extends Component {
                                                 app.$router.go(app.$router.createUrl('profile.edit', 'creator_settings'));
                                             }
                                         }
-                                        text="Создать автора"
+                                        text="Создать аккаунт автора"
                                     />
                                 </div>}
                         </>

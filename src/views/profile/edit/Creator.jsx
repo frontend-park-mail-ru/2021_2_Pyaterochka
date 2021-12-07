@@ -25,8 +25,6 @@ class ProfileEditCreator extends Component {
         this.attributes.creatorCategory = '';
         this.attributes.creatorError = null;
 
-        this.attributes.errors = [];
-
         this.categories = [
             'Подкасты',
             'Музыканты',
@@ -42,10 +40,8 @@ class ProfileEditCreator extends Component {
     async createCreator () {
         if (!this.attributes.creatorCategory || !this.attributes.creatorDesc) {
             this.attributes.creatorError = 'Заполните все поля';
-            this.attributes.errors.push(this.attributes.creatorError);
             return;
         }
-        // this.attributes.creatorError = null;
 
         this.attributes.loading = true;
 
@@ -150,18 +146,14 @@ class ProfileEditCreator extends Component {
 
                 <div className="input-validation">
                     {
-                        this.attributes.errors.map(() => {
-                            return (
-                                <ValidationError
-                                    value={this.attributes.creatorError}
-                                    key={null}
-                                />
-                            );
-                        })
+                        this.attributes.creatorError
+                            ? <ValidationError
+                                value={this.attributes.creatorError}
+                                key={null}
+                            />
+                            : null
                     }
                 </div>
-
-                {/* {this.attributes.creatorError} */}
 
                 <Button
                     color="primary"
@@ -233,22 +225,6 @@ class ProfileEditCreator extends Component {
             </div>
         );
     }
-
-    // validate () {
-    //     if (!this.attributes.creatorCategory || !this.attributes.creatorDesc) {
-    //         this.attributes.creatorError = 'Заполните все поля';
-    //         this.attributes.errors = this.attributes.errors
-    //             .map((rule, i) => {
-    //                 return {
-    //                     key: i,
-    //                     error: this.attributes.creatorError
-    //                 };
-    //             })
-    //             .filter((err) => err.error !== null);
-    //         // this.attributes.errors.push(this.attributes.creatorError);
-    //     }
-    //     return this.attributes.errors;
-    // }
 
     async created () {
         this.loadCreator();
