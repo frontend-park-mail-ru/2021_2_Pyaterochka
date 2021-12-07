@@ -110,17 +110,17 @@ class EditLevelComponent extends Component {
                                 validateAlways={!!this.state.error}
                             />
 
-                            {!benefit && this.state.level.benefits.length > 1
-                                ? <Button
-                                    color="primary"
-                                    text="&times;"
+                            {this.state.level.benefits.length > 1
+                                ? <div
+                                    className="input-field--delete-able__btn"
                                     onClick={
                                         () => {
                                             this.state.level.benefits.splice(i, 1);
                                             this.update();
                                         }
-                                    }
-                                />
+                                    }>
+                                    &times;
+                                </div>
                                 : ''}
                         </div>);
                     })

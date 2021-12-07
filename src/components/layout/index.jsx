@@ -17,14 +17,18 @@ class Layout extends Component {
         return (
             <div>
                 <div>
-                    <Navbar user={user.user} />
+                    <Navbar
+                        user={user.user}
+                        key='navbar' />
 
-                    {this.slot}
+                    <div>
+                        {this.slot}
+                    </div>
                 </div>
 
-                <Footer />
+                <Footer key='footer' />
 
-                <NotificationPool />
+                <NotificationPool key='notification-pool' />
             </div>
         );
     }
