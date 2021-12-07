@@ -1,7 +1,7 @@
 import api from '../../../api';
 import ImageUploader from 'ui-library/image-uploader';
 import Component from 'irbis/component';
-import InputField from 'ui-library/input-field';
+import EditNickname from './includes/edit-nickname';
 import user from '../../../storage/user';
 import consts from '../../../consts';
 
@@ -37,15 +37,7 @@ class ProfileEditCommon extends Component {
             <br />
 
             <div className="profile-edit--little-width">
-                <p className="profile-edit__subtitle">
-                    {consts.nickname}
-                </p>
-
-                <InputField
-                    disabled
-                    placeholder="Текущее имя пользователя"
-                    value={user.user.username}
-                />
+                <EditNickname nickname={user.user.username} />
             </div>
 
         </div>);

@@ -42,6 +42,35 @@ export default {
 
         if (status === 400) {
             return {
+                status,
+                error: (await req.json()).error
+            };
+        }
+
+        return {
+            status,
+            error: status !== 200 ? 'Произошла ошибка' : null
+        };
+    },
+
+    /**
+     * Смена пароля
+     */
+    async changeNickname ({ oldNickname, newNickname }) {
+        const req = await sendJSON({
+            url: '/user/update/nickname',
+            method: 'put',
+            body: {
+                old: oldNickname,
+                new: newNickname
+            },
+            csrf: true
+        });
+
+        const status = req.status;
+
+        if (status >= 400 && status < 500) {
+            return {
                 error: (await req.json()).error
             };
         }

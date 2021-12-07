@@ -28,12 +28,17 @@ export default class Notification extends Component {
 
             </div>
 
-            <Button
-                text={this.props.action}
-                color="primary"
-                onClick={() => {
-                    this.props.onAction();
-                }} />
+            {
+                this.props.action
+                    ? <Button
+                        text={this.props.action}
+                        color="primary"
+                        onClick={() => {
+                            this.props.onAction();
+                        }} />
+                    : ''
+            }
+
         </div>);
     }
 }
