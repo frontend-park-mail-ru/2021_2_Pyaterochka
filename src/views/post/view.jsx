@@ -9,7 +9,6 @@ import Like from 'ui-library/like';
 import PostHeaderComponent from 'ui-library/post-header';
 import api from '../../api';
 import ErrorPage from '../errorpage';
-import LoadingView from '../loading-view';
 import user from '../../storage/user';
 import app from 'irbis';
 import consts from '../../consts';
@@ -56,7 +55,117 @@ class PostView extends Component {
             return <ErrorPage desc="Ошибка загрузки" />;
         }
 
-        if (this.attributes.loading) { return <LoadingView />; }
+        if (this.attributes.loading) {
+            return (
+                <div className="post-page">
+                    <div
+                        className="post-cover"
+                    >
+                        <Skeleton height={512} />
+                    </div>
+
+                    <div className="post-page__container">
+                        <div className="post-page__container_left">
+
+                            <div className="post">
+                                <div className="creator-card">
+                                    <Skeleton
+                                        height={200}
+                                        type="circle"
+                                    />
+
+                                    <br />
+
+                                    <Skeleton
+                                        height={40}
+                                        type="text"
+                                    />
+
+                                    <br />
+                                </div>
+
+                                <hr />
+
+                                <Skeleton
+                                    type="text"
+                                    height={62} />
+
+                                <br />
+
+                                <Skeleton height={300} />
+
+                                <br />
+
+                                <div className="post__actions">
+                                    <Like />
+
+                                </div>
+
+                            </div>
+
+                            <div className="comments-container">
+                                <div className="add-comment">
+                                    <div className="add-comment__title">
+                                        {consts.leaveComment}
+                                    </div>
+
+                                    <InputField
+                                        placeholder="Текст комментария"
+                                        disabled
+                                    />
+
+                                    <div className="add-comment__actions">
+                                        <Button
+                                            color="primary"
+                                            text="Отправить"
+                                        />
+
+                                        <span className="add-comment__actions_warn">
+                                            {consts.communityWarning}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <Skeleton
+                                    height={120}
+                                    width={792} />
+                            </div>
+
+                        </div>
+
+                        <div className="other-posts">
+                            {
+                                this.attributes.otherPosts
+                                    ? this.attributes.otherPosts.map((post) =>
+                                        (<PostHeaderComponent
+                                            creatorId={post.creatorId}
+                                            id={post.id}
+                                            key={post.id}
+                                            likes={post.likes}
+                                            published={post.published}
+                                            size="20px"
+                                            title={post.title}
+                                            views={post.views}
+                                        />)
+                                    )
+                                    : <>
+                                        <Skeleton height={50} />
+
+                                        <br />
+
+                                        <Skeleton height={50} />
+
+                                        <br />
+
+                                        <Skeleton height={50} />
+                                    </>
+                            }
+                        </div>
+
+                    </div>
+
+                </div>);
+        }
 
         if (!this.attributes.loading && !this.attributes.post) {
             return (<ErrorPage
