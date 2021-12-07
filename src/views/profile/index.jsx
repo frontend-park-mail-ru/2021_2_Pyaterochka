@@ -23,8 +23,12 @@ class ProfileView extends Component {
     render () {
         if (!this.attributes.user) return null;
 
-        if (this.attributes.errorFirstLoading) {
-            return <ErrorPage desc="Ошибка загрузки" />;
+        // if (this.attributes.errorFirstLoading) {
+        //     return <ErrorPage desc="Нет соединения с интернетом" />;
+        // }
+
+        if (!navigator.onLine) {
+            return <ErrorPage desc="Нет соединения с интернетом" />;
         }
 
         return (
@@ -72,7 +76,7 @@ class ProfileView extends Component {
                                                 app.$router.go(app.$router.createUrl('profile.edit', 'creator_settings'));
                                             }
                                         }
-                                        text="Создать автора"
+                                        text="Создать аккаунт автора"
                                     />
                                 </div>}
                         </>

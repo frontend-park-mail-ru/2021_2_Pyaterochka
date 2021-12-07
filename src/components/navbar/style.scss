@@ -60,7 +60,8 @@
       width: 34px;
       height: 34px;
       border-radius: 100%;
-      background: #ccc;
+      background-color: #ccc;
+      object-fit: cover;
     }
 
     &-name {

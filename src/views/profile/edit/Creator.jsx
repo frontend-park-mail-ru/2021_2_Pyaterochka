@@ -8,6 +8,7 @@ import ImageUploader from 'ui-library/image-uploader';
 import LevelCard from 'ui-library/level-card';
 import app from 'irbis';
 import Skeleton from 'ui-library/skeleton';
+import ValidationError from 'ui-library/validation-error';
 import consts from '../../../consts';
 
 class ProfileEditCreator extends Component {
@@ -22,7 +23,7 @@ class ProfileEditCreator extends Component {
 
         this.attributes.creatorDesc = '';
         this.attributes.creatorCategory = '';
-        this.attributes.creatorError = '';
+        this.attributes.creatorError = null;
 
         this.categories = [
             'Подкасты',
@@ -41,7 +42,6 @@ class ProfileEditCreator extends Component {
             this.attributes.creatorError = 'Заполните все поля';
             return;
         }
-        this.attributes.creatorError = '';
 
         this.attributes.loading = true;
 
@@ -142,9 +142,18 @@ class ProfileEditCreator extends Component {
                     placeholder="Категория"
                 />
 
-                <br />
+                { /* <br /> */ }
 
-                {this.attributes.creatorError}
+                <div className="input-validation">
+                    {
+                        this.attributes.creatorError
+                            ? <ValidationError
+                                value={this.attributes.creatorError}
+                                key={null}
+                            />
+                            : null
+                    }
+                </div>
 
                 <Button
                     color="primary"
