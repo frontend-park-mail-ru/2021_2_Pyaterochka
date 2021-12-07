@@ -1,6 +1,7 @@
 import Component from 'irbis/component';
 import CreatorCard from 'ui-library/creator-card';
 import Comment from 'ui-library/comment';
+import Skeleton from 'ui-library/skeleton';
 import './view.scss';
 import InputField from 'ui-library/input-field';
 import Button from 'ui-library/button';
@@ -26,7 +27,7 @@ class PostView extends Component {
         super();
         this.attributes.post = null;
         this.attributes.author = [];
-        this.attributes.otherPosts = [];
+        this.attributes.otherPosts = null;
         this.attributes.comments = [];
 
         this.attributes.loading = true;
@@ -196,18 +197,30 @@ class PostView extends Component {
                         <hr />
 
                         {
-                            this.attributes.otherPosts.map((post) =>
-                                (<PostHeaderComponent
-                                    creatorId={post.creatorId}
-                                    id={post.id}
-                                    key={post.id}
-                                    likes={post.likes}
-                                    published={post.published}
-                                    size="20px"
-                                    title={post.title}
-                                    views={post.views}
-                                />)
-                            )
+                            this.attributes.otherPosts
+                                ? this.attributes.otherPosts.map((post) =>
+                                    (<PostHeaderComponent
+                                        creatorId={post.creatorId}
+                                        id={post.id}
+                                        key={post.id}
+                                        likes={post.likes}
+                                        published={post.published}
+                                        size="20px"
+                                        title={post.title}
+                                        views={post.views}
+                                    />)
+                                )
+                                : <>
+                                    <Skeleton height={50} />
+
+                                    <br />
+
+                                    <Skeleton height={50} />
+
+                                    <br />
+
+                                    <Skeleton height={50} />
+                                </>
                         }
                     </div>
 
