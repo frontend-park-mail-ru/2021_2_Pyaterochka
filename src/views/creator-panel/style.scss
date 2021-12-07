@@ -34,7 +34,7 @@
     justify-content: space-between;
 
     .counters {
-      min-width: 100px;
+      min-width: 80px;
       padding: 15px 0;
     }
 
@@ -42,27 +42,6 @@
       width: auto;
     }
   }
-}
-
-.table-container {
-  overflow-x: auto;
-}
-
-table.table__posts-info {
-  border-collapse: collapse;
-  border-spacing: 0;
-  width: 100%;
-}
-
-table.table__posts-info th,
-table.table__posts-info td {
-  text-align: left;
-  padding: 8px;
-  border: 1px solid #ddd;
-}
-
-table.table__posts-info th {
-  font-weight: bold;
 }
 
 @media (max-width: 1000px) {
@@ -89,5 +68,43 @@ table.table__posts-info th {
   .creator-panel__add-post {
     justify-content: center;
     width: 100%;
+  }
+
+  table, thead, tbody, th, td, tr {
+    display: block;
+  }
+
+  thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  tr { border: 1px solid #ccc; }
+
+  td {
+    border: none;
+    border-bottom: 1px solid #ccc;
+    position: relative;
+    padding-left: 50%;
+    min-height: 40px;
+  }
+
+  td:before {
+    position: absolute;
+    top: auto;
+    left: 6px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+  }
+
+  td:nth-of-type(1):before { content: "Дата публикации"; }
+  td:nth-of-type(2):before { content: "Название"; }
+  td:nth-of-type(3):before { content: "Уровень"; }
+
+  .creator-panel__posts__last-cell {
+    display: flex;
+    justify-content: end;
   }
 }
