@@ -8,6 +8,7 @@ import ImageUploader from 'ui-library/image-uploader';
 import LevelCard from 'ui-library/level-card';
 import app from 'irbis';
 import Skeleton from 'ui-library/skeleton';
+import ValidationError from 'ui-library/validation-error';
 import consts from '../../../consts';
 
 class ProfileEditCreator extends Component {
@@ -22,7 +23,9 @@ class ProfileEditCreator extends Component {
 
         this.attributes.creatorDesc = '';
         this.attributes.creatorCategory = '';
-        this.attributes.creatorError = '';
+        this.attributes.creatorError = null;
+
+        this.attributes.errors = [];
 
         this.categories = [
             'Подкасты',
@@ -39,9 +42,10 @@ class ProfileEditCreator extends Component {
     async createCreator () {
         if (!this.attributes.creatorCategory || !this.attributes.creatorDesc) {
             this.attributes.creatorError = 'Заполните все поля';
+            this.attributes.errors.push(this.attributes.creatorError);
             return;
         }
-        this.attributes.creatorError = '';
+        // this.attributes.creatorError = null;
 
         this.attributes.loading = true;
 
@@ -142,9 +146,22 @@ class ProfileEditCreator extends Component {
                     placeholder="Категория"
                 />
 
-                <br />
+                { /* <br /> */ }
 
-                {this.attributes.creatorError}
+                <div className="input-validation">
+                    {
+                        this.attributes.errors.map(() => {
+                            return (
+                                <ValidationError
+                                    value={this.attributes.creatorError}
+                                    key={null}
+                                />
+                            );
+                        })
+                    }
+                </div>
+
+                {/* {this.attributes.creatorError} */}
 
                 <Button
                     color="primary"
@@ -216,6 +233,22 @@ class ProfileEditCreator extends Component {
             </div>
         );
     }
+
+    // validate () {
+    //     if (!this.attributes.creatorCategory || !this.attributes.creatorDesc) {
+    //         this.attributes.creatorError = 'Заполните все поля';
+    //         this.attributes.errors = this.attributes.errors
+    //             .map((rule, i) => {
+    //                 return {
+    //                     key: i,
+    //                     error: this.attributes.creatorError
+    //                 };
+    //             })
+    //             .filter((err) => err.error !== null);
+    //         // this.attributes.errors.push(this.attributes.creatorError);
+    //     }
+    //     return this.attributes.errors;
+    // }
 
     async created () {
         this.loadCreator();
