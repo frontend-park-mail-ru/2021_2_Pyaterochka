@@ -46,6 +46,7 @@ body,
   --color-accent-dark: #e12497;
   --color-navbar: #e42f2f;
   --color-step-text: #7c7c7c;
+  --border-radius: 10px;
 }
 
 .spinner {
@@ -74,6 +75,7 @@ body,
 
 .shadow {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+  border-radius: var(--border-radius);
 }
 
 .auth-block {

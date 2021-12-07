@@ -6,6 +6,7 @@
   width: 600px;
   justify-content: center;
   align-items: stretch;
+  border-radius: var(--border-radius);
 
   &__title {
     font-size: 18px;
@@ -17,7 +18,7 @@
     min-width: 220px;
     position: relative;
     overflow: hidden;
-    border-radius: 5px;
+    border-radius: var(--border-radius);
 
     .image {
       position: absolute;

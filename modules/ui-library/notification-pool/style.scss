@@ -1,0 +1,26 @@
+.notification-pool {
+  width: 400px;
+  position: fixed;
+  bottom: 0;
+  right: 5vw;
+  z-index: 1000;
+  max-width: 90vw;
+  padding-bottom: 20px;
+
+  & > * {
+    margin: 10px;
+    transition: 0.5s;
+    overflow: hidden;
+    height: 150px;
+    background: #fff;
+    box-shadow: 0 0 3px #0005;
+    display: flex;
+    border-radius: var(--border-radius);
+  }
+
+  & > .added {
+    margin: 0 10px;
+    height: 0;
+    transform: scale(0);
+  }
+}

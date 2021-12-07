@@ -1,5 +1,5 @@
 .skeleton-box {
-  border-radius: 10px;
+  border-radius: var(--border-radius);
   height: 10px;
   position: relative;
   overflow: hidden;

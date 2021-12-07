@@ -1,6 +1,6 @@
 .audio-player {
   background: #000;
-  border-radius: 5px;
+  border-radius: var(--border-radius);
   overflow: hidden;
 
   &__audio-tag {

@@ -22,7 +22,7 @@
 
 .post {
   padding: 20px 50px;
-  border-radius: 5px;
+  border-radius: var(--border-radius);
 
   .creator-card {
     margin-top: -110px;
@@ -59,6 +59,7 @@
   width: 300px;
   min-width: 300px;
   padding: 20px;
+  border-radius: var(--border-radius);
 
   &__title {
     font-size: 20px;

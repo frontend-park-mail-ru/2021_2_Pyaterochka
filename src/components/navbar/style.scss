@@ -12,7 +12,7 @@
     display: block;
     padding: 7px 10px;
     margin: 7px 0;
-    border-radius: 10px;
+    border-radius: var(--border-radius);
     transition: background-color 0.3s ease-in;
   }
 
@@ -78,7 +78,7 @@
     top: 52px;
     background: var(--color-primary);
     padding: 10px;
-    border-radius: 5px;
+    border-radius: var(--border-radius);
     min-width: 200px;
     text-align: center;
     display: none;
