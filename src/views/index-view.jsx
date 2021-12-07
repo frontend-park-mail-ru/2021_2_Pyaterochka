@@ -5,7 +5,7 @@ import MainPageView from './main-page';
 
 class IndexView extends Component {
     render () {
-        if (!user.user) return <MainPageView />;
+        if (!user.user || !navigator.onLine) return <MainPageView />;
 
         return <FeedView />;
     }
