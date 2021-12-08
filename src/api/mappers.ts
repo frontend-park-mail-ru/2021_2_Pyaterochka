@@ -1,8 +1,9 @@
 import config from './config';
+import { AttachmentEntity, CreatorEntity, FullPostEntity, IdType, InData, LevelEntity, LevelWithParentEntity, PaymentEntity, PostEntity, ProfileEntity } from './types';
 
 const basename = config.imageBasename;
 
-const mapCreator = (data) => {
+const mapCreator = (data: InData): CreatorEntity => {
     return {
         id: data.id,
         name: data.nickname,
@@ -13,7 +14,7 @@ const mapCreator = (data) => {
     };
 };
 
-const mapPost = (data, creatorId) => {
+const mapPost = (data: InData, creatorId: IdType): PostEntity => {
     return {
         id: data.posts_id,
         creatorId: creatorId || data.creator_id,
@@ -27,33 +28,37 @@ const mapPost = (data, creatorId) => {
     };
 };
 
-const mapPostFull = (data, creatorId) => {
-    const post = mapPost(data.post, creatorId);
+const mapPostFull = (data: InData & {
+    attaches: InData[]
+} & {
+    post: InData
+}, creatorId?: IdType): FullPostEntity => {
+    const post: FullPostEntity = mapPost(data.post, creatorId);
+
     post.liked = !!data.post.add_like;
     post.body = data.attaches.map(attach => {
-        if (attach.type === 'text') return attach;
-
-        return {
+        const mappedAttach: AttachmentEntity = {
             id: attach.attach_id,
             type: attach.type === 'music' ? 'audio' : attach.type,
             value: `${config.imageBasename}/${attach.value}`
         };
+        return mappedAttach;
     });
 
     return post;
 };
 
-const mapProfile = (data) => {
+const mapProfile = (data: InData): ProfileEntity => {
     return {
         email: data.login,
         username: data.nickname,
         id: data.id,
         avatar: data.avatar ? `${basename}/${data.avatar}` : config.fallback.avatar,
-        haveCreator: data.have_creator
+        haveCreator: !!data.have_creator
     };
 };
 
-const mapLevel = (data) => {
+const mapLevel = (data: InData): LevelEntity => {
     const description = data.description.split('\n');
 
     return {
@@ -67,9 +72,9 @@ const mapLevel = (data) => {
     };
 };
 
-const mapLevels = (data) => {
+const mapLevels = (data: InData[]): LevelWithParentEntity[] => {
     const levels = data
-        .sort((a, b) => (a.price - b.price))
+        .sort((a, b) => (Number(a.price) - Number(b.price)))
         .map(mapLevel);
 
     const result = levels.map(level => {
@@ -83,10 +88,10 @@ const mapLevels = (data) => {
             return level;
         }
 
-        const levelCopy = Object.assign(level);
+        const levelCopy: LevelWithParentEntity = Object.assign(level);
 
         levelCopy.parent = Object.assign(levelParent);
-        levelCopy.parentName = level.parent.name;
+        levelCopy.parentName = levelCopy.parent.name;
 
         return levelCopy;
     });
@@ -94,7 +99,7 @@ const mapLevels = (data) => {
     return result;
 };
 
-const mapPayment = (data, i) => {
+const mapPayment = (data: InData, i: IdType):PaymentEntity => {
     return {
         id: i,
         amount: data.amount,

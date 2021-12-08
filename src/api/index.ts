@@ -2,12 +2,19 @@
 
 import { sendJSON, uploadFile } from './helpers';
 import { mapCreator, mapLevels, mapPayment, mapPost, mapPostFull, mapProfile } from './mappers';
+import { AttachmentEntity, IdType } from './types';
 
 export default {
     /**
      * Авторизация
      */
-    async login ({ email, password }) {
+    async login ({
+        email,
+        password
+    }: {
+        email: string,
+        password: string
+    }) {
         const req = await sendJSON({
             url: '/login',
             method: 'post',
@@ -27,7 +34,16 @@ export default {
     /**
      * Смена пароля
      */
-    async changePassword ({ oldPassword, newPassword }) {
+    async changePassword (
+        {
+            oldPassword,
+            newPassword
+        }:
+            {
+                oldPassword: string,
+                newPassword: string
+            }
+    ) {
         const req = await sendJSON({
             url: '/user/update/password',
             method: 'put',
@@ -56,7 +72,15 @@ export default {
     /**
      * Смена пароля
      */
-    async changeNickname ({ oldNickname, newNickname }) {
+    async changeNickname (
+        {
+            oldNickname,
+            newNickname
+        }: {
+            oldNickname: string,
+            newNickname: string
+        }
+    ) {
         const req = await sendJSON({
             url: '/user/update/nickname',
             method: 'put',
@@ -84,7 +108,17 @@ export default {
     /**
      * Регистрация
      */
-    async register ({ username, email, password }) {
+    async register (
+        {
+            username,
+            email,
+            password
+        }: {
+            username: string,
+            email: string,
+            password: string
+        }
+    ) {
         const req = await sendJSON({
             url: '/register',
             method: 'post',
@@ -120,10 +154,15 @@ export default {
     /**
      * Создания автора
      */
-    async creatorCreate ({
-        description,
-        category
-    }) {
+    async creatorCreate (
+        {
+            description,
+            category
+        }: {
+            description: string,
+            category: string
+        }
+    ) {
         const req = await sendJSON({
             url: '/creators',
             method: 'post',
@@ -145,7 +184,13 @@ export default {
         benefits,
         price,
         creatorId
-    }) {
+    }: {
+        name: string,
+        benefits: string[],
+        price: number,
+        creatorId: IdType
+    }
+    ) {
         const req = await sendJSON({
             url: `/creators/${creatorId}/awards`,
             method: 'post',
@@ -172,6 +217,12 @@ export default {
         benefits,
         price,
         creatorId
+    }: {
+        levelId: IdType,
+        name: string,
+        benefits: string[],
+        price: string,
+        creatorId: IdType
     }) {
         const req = await sendJSON({
             url: `/creators/${creatorId}/awards/${levelId}/update`,
@@ -195,6 +246,9 @@ export default {
     async levelDelete ({
         levelId,
         creatorId
+    }: {
+        levelId: IdType,
+        creatorId: IdType
     }) {
         const req = await sendJSON({
             url: `/creators/${creatorId}/awards/${levelId}`,
@@ -214,6 +268,10 @@ export default {
         creatorId,
         postId,
         like = true
+    }: {
+        creatorId: IdType,
+        postId: IdType,
+        like?: boolean
     }) {
         const req = await sendJSON({
             url: `/creators/${creatorId}/posts/${postId}/like`,
@@ -227,28 +285,28 @@ export default {
     /**
      * Загрузка аватара пользователя
      */
-    async uploadAvatar (avatar) {
+    async uploadAvatar (avatar: File) {
         return uploadFile(avatar, 'avatar', '/user/update/avatar');
     },
 
     /**
      * Загрузка аватара креатора
      */
-    async uploadCreatorAvatar (avatar, creatorId) {
+    async uploadCreatorAvatar (avatar: File, creatorId: IdType) {
         return uploadFile(avatar, 'avatar', `/creators/${creatorId}/update/avatar`);
     },
 
     /**
      * Загрузка обложки креатора
      */
-    async uploadCreatorCover (cover, creatorId) {
+    async uploadCreatorCover (cover: File, creatorId: IdType) {
         return uploadFile(cover, 'cover', `/creators/${creatorId}/update/cover`);
     },
 
     /**
      * Загрузка обложки уровня подписки
      */
-    async uploadLevelCover (cover, creatorId, levelId) {
+    async uploadLevelCover (cover: File, creatorId: IdType, levelId: IdType) {
         return uploadFile(cover, 'cover', `/creators/${creatorId}/awards/${levelId}/update/cover`);
     },
 
@@ -275,11 +333,17 @@ export default {
         page = 0,
         offset = 0,
         limit = 9999
+    }: {
+        query?: string,
+        category?: string,
+        page?: number,
+        offset?: number,
+        limit?: number,
     }) {
         const params = new URLSearchParams({
-            page,
-            offset,
-            limit
+            page: String(page),
+            offset: String(offset),
+            limit: String(limit)
         });
 
         if (query) {
@@ -342,14 +406,14 @@ export default {
     /**
      * Загрузка обложки записи
     */
-    async uploadPostCover (cover, creatorId, postId) {
+    async uploadPostCover (cover: File, creatorId: IdType, postId: IdType) {
         return uploadFile(cover, 'cover', `/creators/${creatorId}/posts/${postId}/update/cover`);
     },
 
     /**
      * Загрузка изображения в запись
     */
-    async uploadPostImage (image, creatorId, postId) {
+    async uploadPostImage (image: File, creatorId: IdType, postId: IdType) {
         return uploadFile(
             image,
             'image',
@@ -358,7 +422,7 @@ export default {
     }, /**
      * Загрузка изображения в запись
     */
-    async uploadPostAttach (file, type, creatorId, postId) {
+    async uploadPostAttach (file: File, type: string, creatorId: IdType, postId: IdType) {
         return uploadFile(
             file,
             type,
@@ -371,6 +435,11 @@ export default {
         levelId,
         title,
         description
+    }:{
+        userId: IdType,
+        levelId: IdType,
+        title: string,
+        description: string
     }) {
         const req = await sendJSON({
             url: `/creators/${userId}/posts`,
@@ -398,6 +467,13 @@ export default {
         levelId,
         description,
         attaches
+    }: {
+        postId: IdType,
+        userId: IdType,
+        title: string,
+        levelId: IdType,
+        description: string,
+        attaches: AttachmentEntity[]
     }) {
         await sendJSON({
             url: `/creators/${userId}/posts/${postId}/update`,
@@ -436,6 +512,9 @@ export default {
     async removePost ({
         creatorId,
         postId
+    }: {
+        creatorId: IdType,
+        postId: IdType
     }) {
         const req = await sendJSON({
             url: `/creators/${creatorId}/posts/${postId}`,
@@ -450,7 +529,7 @@ export default {
      * @param {*} id
      * @returns
      */
-    async creatorInfo (id) {
+    async creatorInfo (id: IdType) {
         const req = await sendJSON({
             url: '/creators/' + id,
             method: 'get'
@@ -469,7 +548,7 @@ export default {
      * Получить уровни поддержки создателя
      * @param {*} id
      */
-    async levelsInfo (id) {
+    async levelsInfo (id: IdType) {
         const req = await sendJSON({
             url: `/creators/${id}/awards`,
             method: 'get'
@@ -484,7 +563,7 @@ export default {
      * Получить записи создателя
      * @param {*} id
      */
-    async postsInfo (id) {
+    async postsInfo (id:IdType) {
         const req = await sendJSON({
             url: `/creators/${id}/posts?offset=0&limit=100`,
             method: 'get'
@@ -498,7 +577,7 @@ export default {
     /**
      * Получить записи ленты
      */
-    async postsFeedInfo (id) {
+    async postsFeedInfo (id:IdType) {
         const req = await sendJSON({
             url: '/user/posts?page=0&offset=0&limit=100000',
             method: 'get'
@@ -519,7 +598,7 @@ export default {
      * @param {*} postId
      * @param {*} addView
      */
-    async postInfo (userId, postId, addView = false) {
+    async postInfo (userId:IdType, postId:IdType, addView = false) {
         const req = await sendJSON({
             url: `/creators/${userId}/posts/${postId}?add-view=${addView ? 'yes' : 'no'}`,
             method: 'get'
@@ -539,7 +618,7 @@ export default {
      * @param {*} creatorId
      * @param {*} levelId
      */
-    async levelSubscribe (creatorId, levelId) {
+    async levelSubscribe (creatorId: IdType, levelId: IdType) {
         const req = await sendJSON({
             url: `/creators/${creatorId}/awards/${levelId}/subscribe`,
             method: 'post',
@@ -554,7 +633,7 @@ export default {
      * @param {*} creatorId
      * @param {*} levelId
      */
-    async levelUnsubscribe (creatorId, levelId) {
+    async levelUnsubscribe (creatorId:IdType, levelId:IdType) {
         const req = await sendJSON({
             url: `/creators/${creatorId}/awards/${levelId}/subscribe`,
             method: 'delete',

@@ -13,13 +13,23 @@ async function getCsrfToken () {
     return data.token;
 }
 
-async function sendJSON ({
+type methodAjax = 'get' | 'post' | 'put' | 'delete' | 'options';
+
+interface sendJsonType<T> {
+    url: string,
+    method?: methodAjax,
+    csrf?: boolean,
+    body?: T,
+    credentials?: boolean
+}
+
+async function sendJSON<T> ({
     url,
     method = 'post',
     csrf = false,
     body = null,
     credentials = true
-}) {
+}: sendJsonType<T>): Promise<Response> {
     const req = await fetch(basename + url, {
         method: method,
         headers: {
@@ -37,7 +47,12 @@ async function sendJSON ({
 /**
  * Загрузка файла
  */
-async function uploadFile (file, fieldName, url, method = 'put') {
+async function uploadFile (
+    file: File,
+    fieldName: string,
+    url: string,
+    method: methodAjax = 'put'
+): Promise<Response> {
     const form = new FormData();
     form.set(fieldName, file);
     const req = await fetch(basename + url, {
