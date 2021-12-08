@@ -11,15 +11,15 @@
 
 .editor__header {
   padding: 5px 15px;
-  border-left: 2px #878787 solid;
+  border-left: 2px var(--color-text-light) solid;
   transition: border-color 0.2s ease;
 
   &:hover {
     padding: 5px 15px;
-    border-color: #000;
+    border-color: var(--color-text);
 
     .editor__helper {
-      color: #000;
+      color: var(--color-text);
     }
   }
 }
@@ -31,7 +31,7 @@
   left: -180px;
   font-size: 18px;
   width: 200px;
-  color: #7c7c7c;
+  color: var(--color-text-light);
 
   &-title {
     font-size: 28px;
@@ -48,7 +48,7 @@
     border: none;
     outline: none;
     cursor: text;
-    color: #000;
+    color: var(--color-text);
 
     br {
       display: block;
@@ -63,7 +63,7 @@
   &__levels {
     font-size: 18px;
     font-weight: 400;
-    color: #878787;
+    color: var(--color-text-light);
   }
 
   &__level {
@@ -72,7 +72,7 @@
     transition: all ease 0.1s;
 
     &.active {
-      color: #000;
+      color: var(--color-text);
       font-weight: 700;
       letter-spacing: 0.02em;
     }
@@ -150,7 +150,7 @@
     margin: 10px 0;
     padding-right: 22px;
     margin-left: 22px;
-    border-right: 2px solid #888;
+    border-right: 2px solid var(--color-text-light);
 
     & > * {
       margin: 0 5px;
@@ -167,7 +167,7 @@
   .editor__body-element--show-placeholder::after,
   .editor_show-placeholder::after {
     content: attr(placeholder);
-    color: #7c7c7c;
+    color: var(--color-text-light);
   }
 }
 

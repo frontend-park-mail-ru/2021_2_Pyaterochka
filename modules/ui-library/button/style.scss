@@ -3,7 +3,7 @@
   width: 100%;
   background: var(--color-background);
   border: none;
-  box-shadow: 0 1px 4px 0 #0000000d;
+  box-shadow: var(--shadow-light);
   font-size: 16px;
   padding: 14px;
   border-radius: var(--border-radius);
@@ -11,14 +11,16 @@
   transition: background-color 0.1s;
 
   &_default {
-    border: 1px solid #dcdfe6;
+    border: 1px var(--color-border) solid;
+    background: var(--color-default);
+    color: var(--color--text);
 
     &:hover {
-      background: #ddd;
+      background: var(--color-default-light);
     }
 
     &:active {
-      background: #eee;
+      background: var(--color-default-dark);
     }
   }
 

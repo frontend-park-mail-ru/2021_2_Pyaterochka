@@ -9,7 +9,7 @@
   }
 
   input:placeholder-shown {
-    background: #f4f4f4;
+    background: var(--color-background-dark);
 
     + span {
       top: 18px;
@@ -42,6 +42,7 @@
     outline: 0;
     transition: all 0.3s;
     font-size: 18px;
+    color: var(--color-text);
 
     &:focus {
       background: var(--color-background);

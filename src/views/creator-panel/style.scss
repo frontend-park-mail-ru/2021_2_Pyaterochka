@@ -62,7 +62,7 @@
   }
 
   .shadow {
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+    box-shadow: var(--shadow);
   }
 
   .creator-panel__add-post {

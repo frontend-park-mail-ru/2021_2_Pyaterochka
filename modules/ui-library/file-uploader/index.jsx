@@ -40,8 +40,8 @@ class FileUploader extends Component {
 
                                 <IconComponent
                                     url="/imgs/icons/attach_outline_28.svg"
-                                    color="#fff"
-                                    colorHover="#fff"
+                                    color="var(--color-text-light)"
+                                    colorHover="var(--color-text)"
                                     size={35}
                                 />
 

@@ -1,4 +1,5 @@
 import Component from 'irbis/component';
+import IconComponent from '../icon';
 import SimplifyNumComponent from '../simplify-num';
 import './style.scss';
 
@@ -15,7 +16,12 @@ class CountersComponent extends Component {
             {
                 this.props.views
                     ? <span className="counters__visits">
-                        <img src="/imgs/icons/view_outline_28.svg" />
+                        <IconComponent
+                            size={18}
+                            url="/imgs/icons/view_outline_28.svg"
+                            color="var(--color-text)"
+                            colorHover="var(--color-text)"
+                        />
 
                         <SimplifyNumComponent num={this.props.views} />
                     </span>
@@ -25,7 +31,12 @@ class CountersComponent extends Component {
             {
                 this.props.likes
                     ? <span className="counters__likes">
-                        <img src="/imgs/icons/like_outline_28.svg" />
+                        <IconComponent
+                            size={18}
+                            url="/imgs/icons/like_outline_28.svg"
+                            color="var(--color-text)"
+                            colorHover="var(--color-text)"
+                        />
 
                         <SimplifyNumComponent num={this.props.likes} />
                     </span>

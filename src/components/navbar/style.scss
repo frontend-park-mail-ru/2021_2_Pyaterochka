@@ -3,7 +3,7 @@
   font-size: 20px;
   padding: 0 20px;
   background: var(--color-navbar);
-  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: var(--shadow);
 
   &__content {
     max-width: 1400px;

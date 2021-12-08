@@ -10,8 +10,8 @@ class IconComponent extends Component {
             title: '',
             url: '',
             size: 24,
-            color: '#7c7c7c',
-            colorHover: '#000',
+            color: 'var(--color-text-light)',
+            colorHover: 'var(--color-text)',
             onClick: () => { }
         };
     }

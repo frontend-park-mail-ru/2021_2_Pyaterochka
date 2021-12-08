@@ -13,7 +13,7 @@
     overflow: hidden;
     height: 125px;
     background: var(--color-background);
-    box-shadow: 0 0 3px #0005;
+    box-shadow: var(--shadow);
     display: flex;
     border-radius: var(--border-radius);
   }

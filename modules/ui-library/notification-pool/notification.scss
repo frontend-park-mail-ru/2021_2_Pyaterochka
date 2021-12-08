@@ -1,7 +1,7 @@
 .notification {
   border-radius: var(--border-radius);
   background: var(--color-background);
-  box-shadow: 0 0 3px #0005;
+  box-shadow: var(--shadow);
   display: flex;
   flex-direction: column;
   width: 100%;
