@@ -2,7 +2,7 @@
   position: relative;
 
   &--not-selected .select-component__select {
-    background: #f4f4f4;
+    background: var(--color-background-dark);
   }
 
   &__select {
@@ -15,12 +15,13 @@
     cursor: pointer;
     border: 1px solid #dedede;
     outline: none;
+    color: var(--color-text);
   }
 
   &__placeholder {
     position: absolute;
     font-family: Roboto, sans-serif;
-    color: #4c4c4c;
+    color: var(--color-text-light);
     top: 0;
     left: 10px;
     font-size: 10px;
