@@ -12,7 +12,7 @@
     transition: 0.5s;
     overflow: hidden;
     height: 125px;
-    background: #fff;
+    background: var(--color-background);
     box-shadow: 0 0 3px #0005;
     display: flex;
     border-radius: var(--border-radius);

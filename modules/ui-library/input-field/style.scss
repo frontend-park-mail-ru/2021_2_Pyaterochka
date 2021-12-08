@@ -33,7 +33,7 @@
   }
 
   input {
-    background: #fff;
+    background: var(--color-background);
     display: block;
     width: 100%;
     padding: 24px 10px 10px;
@@ -44,7 +44,7 @@
     font-size: 18px;
 
     &:focus {
-      background: #fff;
+      background: var(--color-background);
     }
   }
 
