@@ -15,7 +15,7 @@ class Layout extends Component {
 
     render () {
         return (
-            <div>
+            <div className={user.theme}>
                 <div>
                     <Navbar
                         user={user.user}

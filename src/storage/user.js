@@ -3,12 +3,14 @@ import api from '../api/index';
 import app from 'irbis';
 
 const userField = 'user__patreon';
+const themeField = 'theme__patreon';
 
 /**
  * Хранилище пользователя
  */
 const user = {
     user: null,
+    theme: 'default',
     /**
      * Обновление хранилища
      */
@@ -38,6 +40,7 @@ const user = {
      */
     onUpdate () {
         localStorage.setItem(userField, JSON.stringify(this.user));
+        localStorage.setItem(themeField, this.theme);
         app.$router?.start();
     }
 };
@@ -45,6 +48,7 @@ const user = {
 if (localStorage.getItem(userField)) {
     try {
         user.user = JSON.parse(localStorage.getItem(userField));
+        user.theme = String(localStorage.getItem(themeField));
     } catch {
         user.user = null;
     }

@@ -1,4 +1,5 @@
 import api from '../../../api';
+import SwitchContainer from 'ui-library/switch-container';
 import ImageUploader from 'ui-library/image-uploader';
 import Component from 'irbis/component';
 import EditNickname from './includes/edit-nickname';
@@ -33,6 +34,24 @@ class ProfileEditCommon extends Component {
                 loading={this.attributes.loadingImage}
                 onChange={(image) => { this.uploadImage(image); }}
             />
+
+            <div className="profile-edit--little-width">
+
+                <SwitchContainer
+                    isOn={user.theme === 'dark'}
+                    onChange={
+                        () => {
+                            if (user.theme === 'dark') {
+                                user.theme = 'default';
+                            } else {
+                                user.theme = 'dark';
+                            }
+
+                            user.onUpdate();
+                        }
+                    }
+                    title="Тёмная тема" />
+            </div>
 
             <br />
 
