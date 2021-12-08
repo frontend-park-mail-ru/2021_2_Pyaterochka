@@ -62,6 +62,7 @@ const mapLevel = (data) => {
         cover: data.cover ? `${basename}/${data.cover}` : null,
         benefits: description,
         price: data.price + ' ₽',
+        priceNumber: Number(data.price),
         color: 'primary',
         parentId: data.child_award
     };

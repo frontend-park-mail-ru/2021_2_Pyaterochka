@@ -9,6 +9,7 @@ import ErrorPage from '../errorpage';
 import LoadingView from '../loading-view';
 
 import './style.scss';
+import user from '../../storage/user';
 
 class PaymentPage extends Component {
     defaultProps () {
@@ -32,9 +33,8 @@ class PaymentPage extends Component {
             this.attributes.loadingMessage = 'Изменение подписки';
             await api.levelUnsubscribe(this.creatorId, this.state.creator.levelId);
         }
-        await api.levelSubscribe(this.creatorId, this.levelId);
 
-        app.$router.go(app.$router.createUrl('creator', this.creatorId));
+        api.pay(this.attributes.level, this.attributes.creator, user.user);
     }
 
     async unsubscribe () {

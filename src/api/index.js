@@ -1,6 +1,9 @@
 /** @module API */
 
+import app from 'irbis';
+import consts from '../consts';
 import { sendJSON, uploadFile } from './helpers';
+import post from './hiddenForm';
 import { mapCreator, mapLevels, mapPayment, mapPost, mapPostFull, mapProfile } from './mappers';
 
 export default {
@@ -532,6 +535,20 @@ export default {
         const data = await req.json();
 
         return mapPostFull(data);
+    },
+
+    pay (level, creator, user) {
+        const message = consts.subscribeOnLevel + ' ' + level.name + ' автора ' + creator.name;
+        post('https://yoomoney.ru/quickpay/confirm.xml', {
+            receiver: '410014403049809',
+            'quickpay-form': 'shop',
+            targets: message,
+            paymentType: 'AC',
+            sum: level.priceNumber,
+            label: message,
+            successURL: `${location.origin}/${app.$router.createUrl('profile')}`,
+            comment: 'THERE WIL BE TOKEN FOR PAYMENT'
+        });
     },
 
     /**
