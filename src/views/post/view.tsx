@@ -14,22 +14,43 @@ import app from 'irbis';
 import consts from '../../consts';
 import AudioPlayer from 'ui-library/audio-player';
 import VideoPlayer from 'ui-library/video-player';
+import Route from 'irbis-router/route';
+import { CreatorEntity, FullPostEntity, PostEntity } from '../../api/types';
 
-class PostView extends Component {
+class PostView extends Component<{
+    route?: Route
+}, {
+    post: FullPostEntity,
+    creator: CreatorEntity,
+    otherPosts: PostEntity[],
+    comments: {
+        id: string | number,
+        user: {
+            username: string,
+            avatar: string
+        },
+        body: string,
+        published: Date
+    }[],
+    loading: boolean,
+    errorFirstLoading?: boolean
+}> {
+    postId;
+    userId;
+
     defaultProps () {
         return {
-            route: ''
+            route: null
         };
     }
 
     constructor () {
         super();
-        this.attributes.post = null;
-        this.attributes.author = [];
-        this.attributes.otherPosts = null;
-        this.attributes.comments = [];
+        this.state.post = null;
+        this.state.otherPosts = null;
+        this.state.comments = [];
 
-        this.attributes.loading = true;
+        this.state.loading = true;
     }
 
     async like () {
@@ -37,21 +58,21 @@ class PostView extends Component {
             {
                 postId: this.postId,
                 creatorId: this.userId,
-                like: !this.attributes.post.liked
+                like: !this.state.post.liked
             }
         );
 
-        if (this.attributes.post.liked) {
-            this.attributes.post.likes--;
-            this.attributes.post.liked = false;
+        if (this.state.post.liked) {
+            this.state.post.likes--;
+            this.state.post.liked = false;
         } else {
-            this.attributes.post.likes++;
-            this.attributes.post.liked = true;
+            this.state.post.likes++;
+            this.state.post.liked = true;
         }
     }
 
     render () {
-        // if (this.attributes.errorFirstLoading) {
+        // if (this.state.errorFirstLoading) {
         //     return <ErrorPage desc="Нет соединения с интернетом" />;
         // }
 
@@ -59,7 +80,7 @@ class PostView extends Component {
             return <ErrorPage desc="Нет соединения с интернетом" />;
         }
 
-        if (this.attributes.loading) {
+        if (this.state.loading) {
             return (
                 <div className="post-page">
                     <div
@@ -101,7 +122,9 @@ class PostView extends Component {
                                 <br />
 
                                 <div className="post__actions">
-                                    <Like />
+                                    <Like
+                                        user={false}
+                                    />
 
                                 </div>
 
@@ -132,15 +155,16 @@ class PostView extends Component {
 
                                 <Skeleton
                                     height={120}
-                                    width={792} />
+                                    width={792}
+                                />
                             </div>
 
                         </div>
 
                         <div className="other-posts">
                             {
-                                this.attributes.otherPosts
-                                    ? this.attributes.otherPosts.map((post) =>
+                                this.state.otherPosts
+                                    ? this.state.otherPosts.map((post) =>
                                         (<PostHeaderComponent
                                             creatorId={post.creatorId}
                                             id={post.id}
@@ -171,7 +195,7 @@ class PostView extends Component {
                 </div>);
         }
 
-        if (!this.attributes.loading && !this.attributes.post) {
+        if (!this.state.loading && !this.state.post) {
             return (<ErrorPage
                 desc="Запись не найдена"
                 err={404}
@@ -181,7 +205,7 @@ class PostView extends Component {
             <div className="post-page">
                 <div
                     className="post-cover"
-                    style={`background-image:url('${this.attributes.post.image}'`}
+                    style={`background-image:url('${this.state.post.image}'`}
                 />
 
                 <div className="post-page__container">
@@ -189,11 +213,11 @@ class PostView extends Component {
 
                         <div className="post">
                             <CreatorCard
-                                avatar={this.attributes.creator.avatar}
+                                avatar={this.state.creator.avatar}
                                 clickable
-                                description={this.attributes.creator.description}
-                                id={this.attributes.creator.id}
-                                name={this.attributes.creator.name}
+                                description={this.state.creator.description}
+                                id={this.state.creator.id}
+                                name={this.state.creator.name}
                                 noHoverShadow
                                 shadow
                             />
@@ -201,15 +225,19 @@ class PostView extends Component {
                             <hr />
 
                             <PostHeaderComponent
-                                creatorId={this.attributes.creator.id}
-                                id={this.attributes.post.id}
-                                published={this.attributes.post.published}
-                                title={this.attributes.post.title}
-                                views={this.attributes.post.views}
+                                creatorId={this.state.creator.id}
+                                id={this.state.post.id}
+                                published={this.state.post.published}
+                                title={this.state.post.title}
+                                views={this.state.post.views}
                             />
 
                             {
-                                this.attributes.post.body.map(({ id, type, value }) => {
+                                this.state.post.body.map(({
+                                    id,
+                                    type,
+                                    value
+                                }) => {
                                     if (type === 'text') {
                                         return (<p
                                             className="post__text"
@@ -239,8 +267,8 @@ class PostView extends Component {
 
                             <div className="post__actions">
                                 <Like
-                                    count={this.attributes.post.likes}
-                                    liked={this.attributes.post.liked}
+                                    count={this.state.post.likes}
+                                    liked={this.state.post.liked}
                                     onClick={() => {
                                         this.like();
                                     }}
@@ -290,7 +318,7 @@ class PostView extends Component {
                             </div>
 
                             {
-                                this.attributes.comments.map((comment) =>
+                                this.state.comments.map((comment) =>
                                     (<Comment
                                         body={comment.body}
                                         key={comment.id}
@@ -310,8 +338,8 @@ class PostView extends Component {
                         <hr />
 
                         {
-                            this.attributes.otherPosts
-                                ? this.attributes.otherPosts.map((post) =>
+                            this.state.otherPosts
+                                ? this.state.otherPosts.map((post) =>
                                     (<PostHeaderComponent
                                         creatorId={post.creatorId}
                                         id={post.id}
@@ -346,26 +374,26 @@ class PostView extends Component {
     async propsChanged () {
         [this.userId, this.postId] = this.props.route.data.split('/');
 
-        this.attributes.loading = true;
+        this.state.loading = true;
 
         try {
             [
-                this.attributes.creator,
-                this.attributes.post
+                this.state.creator,
+                this.state.post
             ] =
                 await Promise.all([
                     api.creatorInfo(this.userId),
                     api.postInfo(this.userId, this.postId, true)
                 ]);
 
-            this.attributes.loading = false;
+            this.state.loading = false;
 
-            this.attributes.otherPosts = (await api.postsInfo(this.userId)).filter(p => String(p.id) !== String(this.postId));
+            this.state.otherPosts = (await api.postsInfo(this.userId)).filter(p => String(p.id) !== String(this.postId));
 
-            this.attributes.comments = [];
+            this.state.comments = [];
 
             for (let i = 0; i < 50; ++i) {
-                this.attributes.comments.push(
+                this.state.comments.push(
                     {
                         id: i,
                         user: {
@@ -373,15 +401,15 @@ class PostView extends Component {
                             avatar: 'https://sun9-12.userapi.com/impf/c854228/v854228051/16558/K7rRvW0xelY.jpg?size=647x809&quality=96&sign=83e72450667c775a5831dac80fb2dea5&type=album'
                         },
                         body: 'Ортодоксальный предикат порождает и индуцирует интеллигибельность. Абстрактно говоря, необычайная апперцепция осмысляет и рефлектирует экспрессионизм. Параллелизм генетивен. Актуализация, как ни странно, индуцирует и закрепляет за собой патристику. Безусловный предикат заполняет метафоризм. Апокатастас, обходя, отделяет парадокс. Космизм подчеркивает и подчеркивает здравый смысл. Откровенно говоря из ряда вон выходящая атомистика не всем ясна. Обскурантизм, траснсформируя, преобразует апперцепцию.',
-                        published: new Date(new Date() - Math.round(60 * 1000 * 60 * 5 * Math.random()))
+                        published: new Date((new Date()).getTime() - Math.round(60 * 1000 * 60 * 5 * Math.random()))
                     }
                 );
             }
 
-            this.attributes.comments = this.attributes.comments.sort((b, a) => a.published - b.published);
+            this.state.comments = this.state.comments.sort((b, a) => a.published.getTime() - b.published.getTime());
         } catch (e) {
             console.error(e);
-            this.attributes.errorFirstLoading = true;
+            this.state.errorFirstLoading = true;
         }
     }
 }

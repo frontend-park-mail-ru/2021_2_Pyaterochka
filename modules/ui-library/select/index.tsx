@@ -1,12 +1,13 @@
 import Component from 'irbis/component';
 import './style.scss';
 
-class SelectComponent extends Component<{
-    inital: string,
-    options: string[],
-    placeholder: string,
-    onChange: (value?: string) => unknown
-}, {
+type PropsType = {
+    inital?: string,
+    options?: string[],
+    placeholder?: string,
+    onChange?: (value?: string) => unknown
+};
+class SelectComponent extends Component<PropsType, {
     value: string
 }> {
     defaultProps () {
@@ -21,9 +22,7 @@ class SelectComponent extends Component<{
 
     constructor ({
         inital
-    }: {
-        inital: string
-    }) {
+    }: PropsType) {
         super();
 
         this.state.value = inital;

@@ -10,20 +10,28 @@ import user from '../../storage/user';
 import ErrorPage from '../errorpage';
 
 import './style.scss';
+import { CreatorEntity } from '../../api/types';
 
-class ProfileView extends Component {
+class ProfileView extends Component<never, {
+    user?: {
+        avatar: string,
+        username: string
+    },
+    creators?:CreatorEntity[],
+    errorFirstLoading?: boolean
+}> {
     constructor () {
         super();
-        this.attributes.user = null;
-        this.attributes.creators = null;
+        this.state.user = null;
+        this.state.creators = null;
 
-        this.attributes.errorFirstLoading = false;
+        this.state.errorFirstLoading = false;
     }
 
     render () {
-        if (!this.attributes.user) return null;
+        if (!this.state.user) return null;
 
-        // if (this.attributes.errorFirstLoading) {
+        // if (this.state.errorFirstLoading) {
         //     return <ErrorPage desc="Нет соединения с интернетом" />;
         // }
 
@@ -35,13 +43,13 @@ class ProfileView extends Component {
             <div>
                 <div className="profile-block shadow">
                     <ProfileCard
-                        avatar={this.attributes.user.avatar}
+                        avatar={this.state.user.avatar}
                         supportCount={
-                            this.attributes.creators
-                                ? this.attributes.creators.length
+                            this.state.creators
+                                ? this.state.creators.length
                                 : '?'
                         }
-                        username={this.attributes.user.username}
+                        username={this.state.user.username}
                     >
                         <>
                             <Button
@@ -88,11 +96,11 @@ class ProfileView extends Component {
                 </h1>
 
                 {
-                    this.attributes.creators
+                    this.state.creators
                         ? <>
 
                             <div className="creators-container">
-                                {this.attributes.creators.map((creator) => {
+                                {this.state.creators.map((creator) => {
                                     return (<CreatorCard
                                         key={creator.id}
                                         id={creator.id}
@@ -104,7 +112,7 @@ class ProfileView extends Component {
                             </div>
 
                             {
-                                !this.attributes.creators.length
+                                !this.state.creators.length
                                     ? <div className="profile-block__no-creators">
                                         <img
                                             router-go={app.$router.createUrl('creators.search')}
@@ -147,11 +155,11 @@ class ProfileView extends Component {
     async created () {
         if (!user.user) return app.$router.go('/signin');
 
-        this.attributes.user = Object.assign(user.user);
+        this.state.user = Object.assign(user.user);
         try {
-            this.attributes.creators = await api.subscriptions();
+            this.state.creators = await api.subscriptions();
         } catch {
-            this.attributes.errorFirstLoading = true;
+            this.state.errorFirstLoading = true;
         }
     }
 }

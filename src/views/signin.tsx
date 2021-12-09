@@ -7,11 +7,16 @@ import app from 'irbis';
 import user from '../storage/user';
 import ErrorPage from './errorpage';
 
-class SigninView extends Component {
+class SigninView extends Component<never, {
+    email: string,
+    password: string,
+    loading: boolean,
+    error: false | string
+}> {
     constructor () {
         super();
-        this.attributes.loading = false;
-        this.attributes.error = false;
+        this.state.loading = false;
+        this.state.error = false;
 
         this.state.email = '';
         this.state.password = '';
@@ -22,10 +27,10 @@ class SigninView extends Component {
 
         const error = this.state.password === '' || this.state.email === '';
         if (error) {
-            return (this.attributes.error = 'Введите логин и пароль');
+            return (this.state.error = 'Введите логин и пароль');
         }
-        this.attributes.error = '';
-        this.attributes.loading = true;
+        this.state.error = '';
+        this.state.loading = true;
         let res;
         try {
             res = await api.login({
@@ -33,18 +38,24 @@ class SigninView extends Component {
                 password: this.state.password
             });
         } catch {
-            this.attributes.loading = false;
-            this.attributes.error = 'Ошибка сети';
+            this.state.loading = false;
+            this.state.error = 'Ошибка сети';
             return;
         }
 
         if (res.error) {
-            this.attributes.loading = false;
-            this.attributes.error = 'Неправильный логин и/или пароль';
+            this.state.loading = false;
+            this.state.error = 'Неправильный логин и/или пароль';
             return;
         }
-        user.update();
-        this.attributes.loading = false;
+        try {
+            await user.update();
+        } catch {
+            this.state.error = 'Неизвестная ошибка';
+            this.state.loading = false;
+            return;
+        }
+        this.state.loading = false;
     }
 
     render () {
@@ -67,23 +78,27 @@ class SigninView extends Component {
                         placeholder="Эл. почта"
                         type="email"
                         value={this.state.email}
-                        onInput={(e) => { this.state.email = e.target.value; }}
+                        onInput={(e) => {
+                            this.state.email = e.target.value;
+                        }}
                     />
 
                     <InputField
                         placeholder="Пароль"
                         type="password"
                         value={this.state.password}
-                        onInput={(e) => { this.state.password = e.target.value; }}
+                        onInput={(e) => {
+                            this.state.password = e.target.value;
+                        }}
                     />
 
                     <div className="error">
-                        {this.attributes.error}
+                        {this.state.error}
                     </div>
 
                     <Button
                         color="primary"
-                        loading={this.attributes.loading}
+                        loading={this.state.loading}
                         onClick={(e) => {
                             this.submit(e);
                         }}

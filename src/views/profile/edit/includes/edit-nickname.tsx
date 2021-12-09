@@ -1,13 +1,22 @@
 import Component from 'irbis/component';
 import app from 'irbis';
 import ValidationError from 'ui-library/validation-error';
-import InputField from 'ui-library/input-field';
+import InputField, { ValidationRule } from 'ui-library/input-field';
 import Button from 'ui-library/button';
 
 import api from '../../../../api';
 import user from '../../../../storage/user';
 
-class EditNickname extends Component {
+class EditNickname extends Component<{
+    nickname: string
+}, {
+    newNickname: string,
+    loading?: boolean,
+    error: string | false,
+    nicknameChanged: boolean
+}> {
+    nicknameValidation: ValidationRule[];
+
     defaultProps () {
         return {
             nickname: ''
@@ -32,7 +41,7 @@ class EditNickname extends Component {
         ];
     }
 
-    checkValidation (field, rules) {
+    checkValidation (field:string, rules: ValidationRule[]) {
         return rules
             .map(validate => validate(field))
             .reduce((acc, v) => acc || v, false);
@@ -69,7 +78,7 @@ class EditNickname extends Component {
             await user.update();
             setTimeout(() => {
                 app.$notification.push('', 5000, {
-                    message: 'Пароль изменен'
+                    message: 'Никнейм изменен'
                 });
             }, 500);
         }
@@ -78,7 +87,7 @@ class EditNickname extends Component {
     render () {
         return (<div>
             <InputField
-                placeholder='Никнейм'
+                placeholder="Никнейм"
                 validation={this.nicknameValidation}
                 onInput={(e) => {
                     this.state.newNickname = e.target.value;
@@ -91,8 +100,8 @@ class EditNickname extends Component {
                 ? <Button
                     color="primary"
                     loading={this.state.loading}
-                    onClick={(e) => {
-                        this.changeNickname(e);
+                    onClick={() => {
+                        this.changeNickname();
                     }}
                     text="Сменить никнейм"
                 />

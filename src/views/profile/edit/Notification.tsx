@@ -3,7 +3,7 @@ import SwitchContainer from 'ui-library/switch-container';
 import consts from '../../../consts';
 import user from '../../../storage/user';
 
-class ProfileEditNotification extends Component {
+class ProfileEditNotification extends Component<never> {
     render () {
         if (!user.user) return <div />;
         return (<div>
@@ -16,11 +16,23 @@ class ProfileEditNotification extends Component {
                     {consts.emailNotifications}
                 </p>
 
-                <SwitchContainer title="Новый подписчик или донат" />
+                <SwitchContainer
+                    title="Новый подписчик или донат"
+                    isOn
+                    onChange={() => {
+                    }} />
 
-                <SwitchContainer title="Новости сервиса" />
+                <SwitchContainer
+                    title="Новости сервиса"
+                    isOn
+                    onChange={() => {
+                    }} />
 
-                <SwitchContainer title="Новый комментарий" />
+                <SwitchContainer
+                    title="Новый комментарий"
+                    isOn
+                    onChange={() => {
+                    }} />
 
             </div>
 

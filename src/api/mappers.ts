@@ -1,5 +1,16 @@
 import config from './config';
-import { AttachmentEntity, CreatorEntity, FullPostEntity, IdType, InData, LevelEntity, LevelWithParentEntity, PaymentEntity, PostEntity, ProfileEntity } from './types';
+import {
+    AttachmentEntity,
+    CreatorEntity,
+    FullPostEntity,
+    IdType,
+    InData,
+    LevelEntity,
+    LevelWithParentEntity,
+    PaymentEntity,
+    PostEntity,
+    ProfileEntity
+} from './types';
 
 const basename = config.imageBasename;
 
@@ -22,7 +33,7 @@ const mapPost = (data: InData, creatorId: IdType): PostEntity => {
         title: data.title,
         published: new Date(data.date),
         views: data.views,
-        likes: data.likes,
+        likes: Number(data.likes),
         description: data.description,
         image: data.cover ? `${basename}/${data.cover}` : config.fallback.cover
     };
@@ -77,7 +88,7 @@ const mapLevels = (data: InData[]): LevelWithParentEntity[] => {
         .sort((a, b) => (Number(a.price) - Number(b.price)))
         .map(mapLevel);
 
-    const result = levels.map(level => {
+    return levels.map(level => {
         if (!level.parentId) {
             return level;
         }
@@ -95,8 +106,6 @@ const mapLevels = (data: InData[]): LevelWithParentEntity[] => {
 
         return levelCopy;
     });
-
-    return result;
 };
 
 const mapPayment = (data: InData, i: IdType):PaymentEntity => {

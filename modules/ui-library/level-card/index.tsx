@@ -13,9 +13,9 @@ class LevelCard extends Component<{
     benefits: string[],
     cover: string,
     price: string,
-    color: string,
-    btnText: string,
-    onClick: () => unknown
+    color?: string,
+    btnText?: string,
+    onClick?: () => unknown
 }> {
     defaultProps () {
         return {

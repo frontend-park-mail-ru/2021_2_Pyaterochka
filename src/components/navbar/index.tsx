@@ -6,11 +6,16 @@ import './style.scss';
 /**
  * Компонент шапки
  */
-class Navbar extends Component {
-    constructor ({ user = null } = {}) {
-        super();
-        this.attributes.user = user;
-        this.attributes.isOpen = false;
+class Navbar extends Component<{
+    user?: {
+        avatar: string,
+        username: string
+    }
+}> {
+    defaultProps () {
+        return {
+            user: null
+        };
     }
 
     render () {
@@ -27,13 +32,13 @@ class Navbar extends Component {
 
                     {!app.$router
                         ? ''
-                        : this.attributes.user
+                        : this.props.user
                             ? (
                                 <div className="navbar__profile">
-                                    <img src={this.attributes.user.avatar} />
+                                    <img src={this.props.user.avatar} />
 
                                     <div className="navbar__profile-name">
-                                        {this.attributes.user.username}
+                                        {this.props.user.username}
                                     </div>
 
                                     <div className="navbar__popup">
@@ -80,4 +85,5 @@ class Navbar extends Component {
         );
     }
 }
+
 export default Navbar;

@@ -11,25 +11,39 @@ import user from '../../storage/user';
 import ErrorPage from '../errorpage';
 
 import './style.scss';
+import Route from 'irbis-router/route';
 
-class CreatorView extends Component {
+class CreatorView extends Component<{
+    route?: Route
+}, {
+    creator,
+    levels,
+    level,
+    posts,
+    notFound,
+    canUseLevels,
+    isCopied,
+    errorFirstLoading
+}> {
+    levelsNameMap?;
+
     defaultProps () {
         return { route: null };
     }
 
     constructor () {
         super();
-        this.attributes.creator = null;
-        this.attributes.levels = null;
-        this.attributes.level = null;
-        this.attributes.posts = null;
-        this.attributes.notFound = false;
+        this.state.creator = null;
+        this.state.levels = null;
+        this.state.level = null;
+        this.state.posts = null;
+        this.state.notFound = false;
 
-        this.attributes.canUseLevels = [];
+        this.state.canUseLevels = [];
     }
 
     render () {
-        // if (this.attributes.errorFirstLoading) {
+        // if (this.state.errorFirstLoading) {
         //     return <ErrorPage desc="Нет соединения с интернетом" />;
         // }
 
@@ -37,7 +51,7 @@ class CreatorView extends Component {
             return <ErrorPage desc="Нет соединения с интернетом" />;
         }
 
-        if (this.attributes.notFound) {
+        if (this.state.notFound) {
             return (<ErrorPage
                 desc="Страница автора не найдена"
                 err={404}
@@ -47,7 +61,7 @@ class CreatorView extends Component {
         return (
             <div className="creator-page">
 
-                {!this.attributes.creator
+                {!this.state.creator
                     ? (
                         <>
                             <div className="creator-cover">
@@ -75,15 +89,15 @@ class CreatorView extends Component {
                         <div className="creator-page">
                             <div
                                 className="creator-cover"
-                                style={`background-image:url('${this.attributes.creator.cover}'`}
+                                style={`background-image:url('${this.state.creator.cover}'`}
                             />
 
                             <CreatorCard
-                                avatar={this.attributes.creator.avatar}
+                                avatar={this.state.creator.avatar}
                                 clickable={false}
-                                description={this.attributes.creator.description}
-                                id={this.attributes.creator.id}
-                                name={this.attributes.creator.name}
+                                description={this.state.creator.description}
+                                id={this.state.creator.id}
+                                name={this.state.creator.name}
                                 shadow
                             />
 
@@ -100,7 +114,7 @@ class CreatorView extends Component {
                         onClick={
                             () => {
                                 const text = document.createElement('input');
-                                text.value = location.origin + app.$router.createUrl('creator', this.attributes.creator.id);
+                                text.value = location.origin + app.$router.createUrl('creator', this.state.creator.id);
                                 document.body.appendChild(text);
                                 text.select();
                                 document.execCommand('copy');
@@ -121,7 +135,9 @@ class CreatorView extends Component {
                             <Button
                                 color="default"
                                 onClick={
-                                    () => { app.$router.go(app.$router.createUrl('post.create')); }
+                                    () => {
+                                        app.$router.go(app.$router.createUrl('post.create'));
+                                    }
                                 }
                                 text="Добавить пост"
                             />
@@ -136,7 +152,7 @@ class CreatorView extends Component {
                                 text="Панель автора"
                             />
                         </div>
-                        : !this.attributes.levels
+                        : !this.state.levels
                             ? <div className="level-card-container">
                                 {[1, 2, 3].map((v) => (
                                     <Skeleton
@@ -147,7 +163,7 @@ class CreatorView extends Component {
                                 ))}
                             </div>
                             : <div className="level-card-container">
-                                {this.attributes.levels.map((level) =>
+                                {this.state.levels.map((level) =>
                                     (<LevelCard
                                         key={level.id}
                                         name={level.name}
@@ -157,7 +173,7 @@ class CreatorView extends Component {
                                         color={level.color}
                                         parentName={level.parentName}
                                         btnText={
-                                            level.id === this.attributes.creator.levelId
+                                            level.id === this.state.creator.levelId
                                                 ? 'Отписаться'
                                                 : 'Выбрать уровень'
                                         }
@@ -165,7 +181,7 @@ class CreatorView extends Component {
                                             () => {
                                                 app.$router.go(
                                                     app.$router.createUrl(
-                                                        'payment', `${this.attributes.creator.id}/${level.id}`
+                                                        'payment', `${this.state.creator.id}/${level.id}`
                                                     )
                                                 );
                                             }
@@ -176,7 +192,7 @@ class CreatorView extends Component {
                 }
 
                 {
-                    !this.attributes.posts
+                    !this.state.posts
                         ? <div className="post-container">
                             <Skeleton width={600} />
 
@@ -186,7 +202,7 @@ class CreatorView extends Component {
                         </div>
                         : <>
                             <div className="post-container">
-                                {this.attributes.posts.map(
+                                {this.state.posts.map(
                                     (post) => (<PostCard
                                         creatorId={post.creatorId}
                                         description={post.description}
@@ -196,7 +212,7 @@ class CreatorView extends Component {
                                         level={post.levelId ? this.levelsNameMap.get(post.levelId) : ''}
                                         levelId={post.levelId}
                                         likes={post.likes}
-                                        opened={this.isOwner() || !post.levelId || this.attributes.canUseLevels.includes(post.levelId)}
+                                        opened={this.isOwner() || !post.levelId || this.state.canUseLevels.includes(post.levelId)}
                                         published={post.published}
                                         title={post.title}
                                         views={post.views}
@@ -205,17 +221,17 @@ class CreatorView extends Component {
                             </div>
 
                             {
-                                !this.attributes.level && this.attributes.levels.length &&
-                                    !(user.user && this.attributes.creator && user.user.id === this.attributes.creator.id)
+                                !this.state.level && this.state.levels.length &&
+                                !(user.user && this.state.creator && user.user.id === this.state.creator.id)
                                     ? <LockMessage text="Стань патроном, чтобы продолжить наслаждаться работами автора">
                                         <Button
                                             color="primary"
                                             onClick={
                                                 () => {
-                                                    const level = this.attributes.levels.at(-1);
+                                                    const level = this.state.levels.at(-1);
                                                     app.$router.go(
                                                         app.$router.createUrl(
-                                                            'payment', `${this.attributes.creator.id}/${level.id}`
+                                                            'payment', `${this.state.creator.id}/${level.id}`
                                                         )
                                                     );
                                                 }
@@ -234,49 +250,52 @@ class CreatorView extends Component {
     }
 
     isOwner () {
-        return user.user && this.attributes.creator && user.user.id === this.attributes.creator.id;
+        return user.user && this.state.creator && user.user.id === this.state.creator.id;
     }
 
     async propsChanged () {
         const creatorId = this.props.route.data;
         try {
-            this.attributes.creator = null;
+            this.state.creator = null;
 
-            this.attributes.creator = await api.creatorInfo(creatorId);
+            this.state.creator = await api.creatorInfo(creatorId);
 
-            if (!this.attributes.creator) {
-                this.attributes.notFound = true;
+            if (!this.state.creator) {
+                this.state.notFound = true;
                 return;
             }
             const levels = await api.levelsInfo(creatorId);
 
-            const levelId = this.attributes.creator.levelId;
+            const levelId = this.state.creator.levelId;
 
             this.levelsNameMap =
                 levels.reduce(
-                    (map, { id, name }) => map.set(id, name), new Map()
+                    (map, {
+                        id,
+                        name
+                    }) => map.set(id, name), new Map()
                 );
 
             if (levelId) {
                 const levelI = levels
                     .findIndex(level => level.id === levelId);
 
-                this.attributes.level = levels[levelI];
+                this.state.level = levels[levelI];
 
-                this.attributes.canUseLevels =
+                this.state.canUseLevels =
                     levels
                         .slice(0, levelI + 1)
                         .map(({ id }) => id);
             }
 
-            this.attributes.levels = levels;
-            this.attributes.posts = await api.postsInfo(creatorId);
+            this.state.levels = levels;
+            this.state.posts = await api.postsInfo(creatorId);
 
-            if (!this.attributes.posts) {
-                this.attributes.notFound = true;
+            if (!this.state.posts) {
+                this.state.notFound = true;
             }
         } catch {
-            this.attributes.errorFirstLoading = true;
+            this.state.errorFirstLoading = true;
         }
     }
 }

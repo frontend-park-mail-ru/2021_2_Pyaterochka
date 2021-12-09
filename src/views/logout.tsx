@@ -3,7 +3,7 @@ import ConfirmComponent from 'ui-library/confirm';
 import app from 'irbis';
 import user from '../storage/user';
 
-class LogoutView extends Component {
+class LogoutView extends Component<never> {
     render () {
         return (<ConfirmComponent
             dangerButton="Да"

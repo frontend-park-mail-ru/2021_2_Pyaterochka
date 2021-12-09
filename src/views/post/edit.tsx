@@ -1,13 +1,33 @@
 import api from '../../api';
 import Component from 'irbis/component';
-import EditorComponent from 'ui-library/editor';
+import EditorComponent, { PostExportType } from 'ui-library/editor';
 import app from 'irbis';
 import user from '../../storage/user';
 import LoadingView from '../loading-view';
 import ConfirmComponent from 'ui-library/confirm';
 import ErrorPage from '../errorpage';
+import Route from '../../../modules/irbis-router/route';
+import { LevelEntity, PostEntity } from '../../api/types';
 
-class CreatePostView extends Component {
+class CreatePostView extends Component<{
+    route: Route
+}, {
+    loading: false | string,
+    deleteWarning: boolean,
+    levels: LevelEntity[],
+    post?: PostEntity,
+    errorFirstLoading?: boolean
+}> {
+    post?: {
+        levelId?,
+        title?,
+        body?,
+        image?,
+        description?,
+    };
+
+    postId: number;
+
     defaultProps () {
         return {
             route: null
@@ -16,14 +36,14 @@ class CreatePostView extends Component {
 
     constructor () {
         super();
-        this.attributes.loading = 'Загрузка записи';
-        this.attributes.deleteWarning = false;
-        this.attributes.levels = [];
-        this.attributes.post = null;
+        this.state.loading = 'Загрузка записи';
+        this.state.deleteWarning = false;
+        this.state.levels = [];
+        this.state.post = null;
     }
 
     render () {
-        // if (this.attributes.errorFirstLoading) {
+        // if (this.state.errorFirstLoading) {
         //     return <ErrorPage desc="Нет соединения с интернетом" />;
         // }
 
@@ -31,7 +51,7 @@ class CreatePostView extends Component {
             return <ErrorPage desc="Нет соединения с интернетом" />;
         }
 
-        if (this.attributes.deleteWarning) {
+        if (this.state.deleteWarning) {
             return (<ConfirmComponent
                 dangerButton="Удалить"
                 description="Данное действие не возможно будет отменить"
@@ -42,7 +62,7 @@ class CreatePostView extends Component {
                 }
                 onPositive={
                     () => {
-                        this.attributes.deleteWarning = false;
+                        this.state.deleteWarning = false;
                     }
                 }
                 positiveButton="Отмена"
@@ -50,9 +70,9 @@ class CreatePostView extends Component {
             />);
         }
 
-        if (this.attributes.loading) {
+        if (this.state.loading) {
             return (<LoadingView>
-                {this.attributes.loading}
+                {this.state.loading}
             </LoadingView>);
         }
         return (<div>
@@ -66,41 +86,46 @@ class CreatePostView extends Component {
                 cover={this.post.image}
                 description={this.post.description}
                 isDraft={false}
-                levels={this.attributes.levels.map(({ name, id }) => {
+                levels={this.state.levels.map(({
+                    name,
+                    id
+                }) => {
                     return {
                         title: name,
-                        id
+                        id: Number(id)
                     };
                 })}
-                onDelete={(post) => { this.deletePost(post); }}
+                onDelete={(post) => {
+                    this.deletePost(post);
+                }}
                 onLoadCover={async (file) => await this.loadCover(file)}
                 onLoadImage={async (file) => await this.loadImage(file)}
                 onLoadFile={async (file, type) => await this.loadFile(file, type)}
-                onSave={(post) => { this.savePost(post); }}
+                onSave={(post) => {
+                    this.savePost(post);
+                }}
                 title={this.post.title}
             />
         </div>);
     }
 
-    async loadCover (file) {
+    async loadCover (file: File) {
         await api.uploadPostCover(file, user.user.id, this.postId);
         const post = await api.postInfo(user.user.id, this.postId);
         this.post.image = post.image;
         return post.image;
     }
 
-    async loadImage (file) {
+    async loadImage (file: File) {
         const res = await api.uploadPostImage(file, user.user.id, this.postId);
 
-        const data = await res.json();
-        return data;
+        return await res.json();
     }
 
-    async loadFile (file, type) {
+    async loadFile (file: File, type: string) {
         const res = await api.uploadPostAttach(file, type, user.user.id, this.postId);
 
-        const data = await res.json();
-        return data;
+        return await res.json();
     }
 
     async savePost ({
@@ -108,8 +133,8 @@ class CreatePostView extends Component {
         description,
         body,
         levelId
-    }) {
-        this.attributes.loading = 'Обновление записи';
+    }: PostExportType) {
+        this.state.loading = 'Обновление записи';
 
         await api.updatePost({
             postId: this.postId,
@@ -123,16 +148,16 @@ class CreatePostView extends Component {
         app.$router.go(app.$router.createUrl('post.view', `${user.user.id}/${this.postId}`));
     }
 
-    async deletePost (post) {
+    async deletePost (post?: PostExportType) {
         if (post) {
             this.post = post;
         }
-        if (!this.attributes.deleteWarning) {
-            this.attributes.deleteWarning = true;
+        if (!this.state.deleteWarning) {
+            this.state.deleteWarning = true;
             return;
         }
 
-        this.attributes.loading = 'Удаление записи';
+        this.state.loading = 'Удаление записи';
 
         await api.removePost({
             postId: this.postId,
@@ -146,19 +171,17 @@ class CreatePostView extends Component {
         try {
             this.postId = parseInt(this.props.route.data);
 
-            this.attributes.loading = 'Загрузка записи';
+            this.state.loading = 'Загрузка записи';
 
-            const post = await api.postInfo(user.user.id, this.postId);
+            this.post = await api.postInfo(user.user.id, this.postId);
 
-            this.post = post;
+            this.state.loading = 'Загрузка уровней';
 
-            this.attributes.loading = 'Загрузка уровней';
+            this.state.levels = await api.levelsInfo(user.user.id);
 
-            this.attributes.levels = await api.levelsInfo(user.user.id);
-
-            this.attributes.loading = false;
+            this.state.loading = false;
         } catch (e) {
-            this.attributes.errorFirstLoading = true;
+            this.state.errorFirstLoading = true;
         }
     }
 }

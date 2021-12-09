@@ -6,19 +6,20 @@ import EditNickname from './includes/edit-nickname';
 import user from '../../../storage/user';
 import consts from '../../../consts';
 
-class ProfileEditCommon extends Component {
+class ProfileEditCommon extends Component<never, {
+    loadingImage: boolean
+}> {
     constructor () {
         super();
-
-        this.attributes.loadingImage = false;
+        this.state.loadingImage = false;
     }
 
-    async uploadImage (file) {
-        this.attributes.loadingImage = true;
+    async uploadImage (file:File) {
+        this.state.loadingImage = true;
         await api.uploadAvatar(file);
 
         await user.update();
-        this.attributes.loadingImage = false;
+        this.state.loadingImage = false;
     }
 
     render () {
@@ -31,7 +32,7 @@ class ProfileEditCommon extends Component {
             <ImageUploader
                 image={user.user.avatar}
                 imageName="аватар"
-                loading={this.attributes.loadingImage}
+                loading={this.state.loadingImage}
                 onChange={(image) => { this.uploadImage(image); }}
             />
 

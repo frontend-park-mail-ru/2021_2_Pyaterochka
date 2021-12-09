@@ -10,8 +10,21 @@ import CreatorCard from 'ui-library/creator-card';
 
 import './style.scss';
 import ErrorPage from '../errorpage';
+import { LevelEntity, PostEntity } from '../../api/types';
 
-class CreatorPanel extends Component {
+class CreatorPanel extends Component<never, {
+    creator?: {
+        name:string,
+        avatar:string,
+        description:string,
+    },
+    posts?: PostEntity[],
+    errorFirstLoading?: boolean,
+    levels?: LevelEntity[],
+    levelsNames: {
+        [key: string]: string
+    }
+}> {
     render () {
         // if (this.attributes.errorFirstLoading) {
         //     return <ErrorPage desc="Нет соединения с интернетом" />;

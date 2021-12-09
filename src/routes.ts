@@ -1,6 +1,5 @@
 import Route from 'irbis-router/route';
 
-import LoadingView from './views/loading-view';
 import ErrorPage from './views/errorpage';
 import IndexView from './views/index-view';
 
@@ -52,10 +51,6 @@ export default [
         component: async () => await import('views/creator'),
         title: 'Страница автора',
         name: 'creator'
-    }),
-    new Route({
-        url: '/loading-view',
-        component: async () => { return { default: LoadingView }; }
     }),
     new Route({
         url: '/profile',

@@ -2,7 +2,7 @@
 
 import { sendJSON, uploadFile } from './helpers';
 import { mapCreator, mapLevels, mapPayment, mapPost, mapPostFull, mapProfile } from './mappers';
-import { AttachmentEntity, IdType } from './types';
+import { AttachmentEntity, CreatorEntity, IdType } from './types';
 
 export default {
     /**
@@ -221,7 +221,7 @@ export default {
         levelId: IdType,
         name: string,
         benefits: string[],
-        price: string,
+        price: number,
         creatorId: IdType
     }) {
         const req = await sendJSON({
@@ -236,7 +236,10 @@ export default {
         });
 
         return {
-            status: req.status
+            status: req.status,
+            data: {
+                error: null
+            }
         };
     },
 
@@ -380,7 +383,7 @@ export default {
     /**
      * Список подписок
      */
-    async subscriptions () {
+    async subscriptions (): Promise<CreatorEntity[]> {
         const req = await sendJSON({
             url: '/user/subscriptions',
             method: 'get'
@@ -577,7 +580,7 @@ export default {
     /**
      * Получить записи ленты
      */
-    async postsFeedInfo (id:IdType) {
+    async postsFeedInfo (id?:IdType) {
         const req = await sendJSON({
             url: '/user/posts?page=0&offset=0&limit=100000',
             method: 'get'

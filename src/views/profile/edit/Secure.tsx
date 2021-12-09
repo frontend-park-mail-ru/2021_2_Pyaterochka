@@ -8,8 +8,11 @@ import consts from '../../../consts';
 import app from 'irbis';
 import user from '../../../storage/user';
 import EditPassword from './includes/edit-password';
+import { PaymentEntity } from '../../../api/types';
 
-class ProfileEditSecure extends Component {
+class ProfileEditSecure extends Component<never, {
+    payments: PaymentEntity[]
+}> {
     constructor () {
         super();
         this.state.payments = null;
@@ -89,7 +92,7 @@ class ProfileEditSecure extends Component {
     }
 
     async created () {
-        this.attributes.payments = await api.payments();
+        this.state.payments = await api.payments();
     }
 }
 

@@ -5,7 +5,7 @@ import './style.scss';
 /**
  * Компонент подвала
  */
-class Footer extends Component {
+class Footer extends Component<Record<string, never>> {
     render () {
         return (<div className="footer">
             <div className="footer__body">

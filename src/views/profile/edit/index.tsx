@@ -9,8 +9,11 @@ import ProfileEditSecure from './Secure';
 import ErrorPage from '../../errorpage';
 
 import './style.scss';
+import Route from 'irbis-router/route';
 
-class ProfileEditView extends Component {
+class ProfileEditView extends Component<{
+    route: Route
+}> {
     defaultProps () {
         return {
             route: null

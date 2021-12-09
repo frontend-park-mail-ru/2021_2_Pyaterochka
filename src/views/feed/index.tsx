@@ -6,16 +6,24 @@ import Skeleton from 'ui-library/skeleton';
 import ErrorPage from '../errorpage';
 
 import './style.scss';
-import Button from '../../../modules/ui-library/button';
+import Button from 'ui-library/button';
+import Route from 'irbis-router/route';
+import { PostEntity } from '../../api/types';
 
-class FeedView extends Component {
+class FeedView extends Component<{
+    route: Route
+}, {
+    posts?: PostEntity,
+    loading: boolean,
+    errorFirstLoading?: boolean
+}> {
     defaultProps () {
         return { route: null };
     }
 
     constructor () {
         super();
-        this.attributes.posts = null;
+        this.state.posts = null;
         this.state.loading = false;
     }
 

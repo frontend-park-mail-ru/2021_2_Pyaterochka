@@ -24,11 +24,15 @@ type Level = {
     title: string
 }
 
-type PostExportType = {
+export type PostExportType = {
     title: string,
     description: string,
     levelId: number,
-    body: Attachment[]
+    body: {
+        value: string,
+        type: AttachType,
+        id?: string,
+    }[]
 }
 type Props = {
     isDraft?: boolean,
@@ -40,7 +44,7 @@ type Props = {
     cover?: string,
     body?: Attachment[],
     onSave?: (post: PostExportType) => unknown,
-    onDelete?: (post: PostExportType) => unknown,
+    onDelete?: (post?: PostExportType) => unknown,
     onLoadCover?: (image?: File) => Promise<string>,
     onLoadImage?: (image?: File) => Promise<{
         id: string,

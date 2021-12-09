@@ -1,11 +1,22 @@
 import Component from 'irbis/component';
 import ValidationError from 'ui-library/validation-error';
-import InputField from 'ui-library/input-field';
+import InputField, { ValidationRule } from 'ui-library/input-field';
 import Button from 'ui-library/button';
 
 import api from '../../../../api';
 
-class EditPassword extends Component {
+class EditPassword extends Component<never, {
+    oldPassword,
+    newPassword,
+    repeatPassword,
+    loading: boolean
+    passwordChanged:boolean,
+    error
+}> {
+    oldPasswordValidation: ValidationRule[];
+    newPasswordValidation: ValidationRule[];
+    repeatPasswordValidation: ValidationRule[];
+
     constructor () {
         super();
 
@@ -42,7 +53,7 @@ class EditPassword extends Component {
         ];
     }
 
-    checkValidation (field, rules) {
+    checkValidation (field:string, rules: ValidationRule[]) {
         return rules
             .map(validate => validate(field))
             .reduce((acc, v) => acc || v, false);
@@ -119,8 +130,8 @@ class EditPassword extends Component {
             <Button
                 color="primary"
                 loading={this.state.loading}
-                onClick={(e) => {
-                    this.changePassword(e);
+                onClick={() => {
+                    this.changePassword();
                 }}
                 text="Сменить пароль"
             />

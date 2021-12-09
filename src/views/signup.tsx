@@ -7,10 +7,15 @@ import app from 'irbis';
 import user from '../storage/user';
 import ErrorPage from './errorpage';
 
-class SignupView extends Component {
+class SignupView extends Component<never, {
+    error: string | false,
+    loading?: boolean
+}> {
+    form: InputField[];
+
     constructor () {
         super();
-        this.attributes.error = null;
+        this.state.error = null;
 
         this.form = [
             new InputField(),
@@ -77,8 +82,8 @@ class SignupView extends Component {
         const errors = Math.max(...this.form.map((e) => e.validate().length));
         if (errors) return;
 
-        this.attributes.error = null;
-        this.attributes.loading = true;
+        this.state.error = null;
+        this.state.loading = true;
         let res;
 
         try {
@@ -88,25 +93,25 @@ class SignupView extends Component {
                 password: this.form[2].getValue()
             });
         } catch {
-            this.attributes.loading = false;
-            this.attributes.error = 'Ошибка сети';
+            this.state.loading = false;
+            this.state.error = 'Ошибка сети';
             return;
         }
-        this.attributes.loading = false;
+        this.state.loading = false;
 
         if (res.error) {
             if (res.data.error === 'user already exist') {
-                this.attributes.error = 'Пользователь с данной почтой уже существует.';
+                this.state.error = 'Пользователь с данной почтой уже существует.';
                 return;
             }
             if (res.data.error === 'nickname already exist') {
-                this.attributes.error = 'Пользователь с данным никнеймом уже существует.';
+                this.state.error = 'Пользователь с данным никнеймом уже существует.';
                 return;
             }
-            this.attributes.error = res.data.error;
+            this.state.error = res.data.error;
             return;
         }
-        this.attributes.loading = true;
+        this.state.loading = true;
 
         await api.login({
             email: this.form[1].getValue(),
@@ -114,7 +119,7 @@ class SignupView extends Component {
         });
 
         user.update();
-        this.attributes.loading = false;
+        this.state.loading = false;
     }
 
     render () {
@@ -137,16 +142,16 @@ class SignupView extends Component {
                     {this.form.map((c) => c.vdom)}
 
                     {
-                        this.attributes.error
+                        this.state.error
                             ? <div className="error">
-                                {this.attributes.error}
+                                {this.state.error}
                             </div>
                             : ''
                     }
 
                     <Button
                         color="primary"
-                        loading={this.attributes.loading}
+                        loading={this.state.loading}
                         onClick={(e) => {
                             this.submit(e);
                         }}

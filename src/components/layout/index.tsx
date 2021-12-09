@@ -7,7 +7,7 @@ import NotificationPool from 'ui-library/notification-pool';
 /**
  * Компонент разметки страницы
  */
-class Layout extends Component {
+class Layout extends Component<Record<string, never>> {
     constructor (attr, slot = null) {
         super();
         this.slot = slot;

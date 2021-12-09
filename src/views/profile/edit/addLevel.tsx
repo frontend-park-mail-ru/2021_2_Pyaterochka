@@ -1,14 +1,26 @@
 import api from '../../../api';
 import Component from 'irbis/component';
-import EditLevelComponent from 'ui-library/edit-level';
+import EditLevelComponent, { EditLevelExportType } from 'ui-library/edit-level';
 import app from 'irbis';
 import user from '../../../storage/user';
 import LoadingView from '../../loading-view';
 import ConfirmComponent from 'ui-library/confirm';
 
 import './style.scss';
+import Route from 'irbis-router/route';
+import { LevelEntity } from '../../../api/types';
 
-class CreatorAddLevel extends Component {
+class CreatorAddLevel extends Component<{
+    route: Route
+}, {
+    loading: false | string,
+    deleteWarning: boolean,
+    level: LevelEntity,
+    error: string | false;
+}> {
+    level?;
+    levelId?: string | number;
+
     defaultProps () {
         return {
             route: null
@@ -18,21 +30,21 @@ class CreatorAddLevel extends Component {
     constructor () {
         super();
         this.level = null;
-        this.attributes.loading = false;
-        this.attributes.deleteWarning = false;
+        this.state.loading = false;
+        this.state.deleteWarning = false;
     }
 
-    async delete (level) {
+    async delete (level?) {
         if (level) {
-            this.attributes.level = level;
+            this.state.level = level;
         }
 
-        if (!this.attributes.deleteWarning) {
-            this.attributes.deleteWarning = true;
+        if (!this.state.deleteWarning) {
+            this.state.deleteWarning = true;
             return;
         }
 
-        this.attributes.loading = 'Удаление уровня';
+        this.state.loading = 'Удаление уровня';
 
         await api.levelDelete({
             levelId: this.levelId,
@@ -45,7 +57,7 @@ class CreatorAddLevel extends Component {
     async save ({
         name, price, benefits
     }, coverFile) {
-        this.attributes.loading = this.levelId ? 'Редактирование уровня' : 'Создание уровня';
+        this.state.loading = this.levelId ? 'Редактирование уровня' : 'Создание уровня';
         this.level = {
             name,
             price,
@@ -54,6 +66,8 @@ class CreatorAddLevel extends Component {
 
         const res = await (this.levelId ? api.levelUpdate : api.levelCreate)(
             {
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
                 levelId: this.levelId,
                 name,
                 price: Number(price),
@@ -63,10 +77,11 @@ class CreatorAddLevel extends Component {
         );
 
         if (res.status > 299) {
-            this.attributes.loading = false;
-            this.attributes.error = res?.data?.error || 'Произошла ошибка';
+            this.state.loading = false;
+
+            this.state.error = res?.data?.error || 'Произошла ошибка';
             setTimeout(() => {
-                this.attributes.error = '';
+                this.state.error = '';
             }, 3000);
             return;
         }
@@ -76,7 +91,7 @@ class CreatorAddLevel extends Component {
         }
 
         if (coverFile) {
-            this.attributes.loading = 'Загрузка обложки';
+            this.state.loading = 'Загрузка обложки';
             await api.uploadLevelCover(coverFile, user.user.id, this.levelId);
         }
 
@@ -85,12 +100,12 @@ class CreatorAddLevel extends Component {
 
     render () {
         if (!user.user) return <div />;
-        if (this.attributes.loading) {
+        if (this.state.loading) {
             return (<LoadingView>
-                {this.attributes.loading}
+                {this.state.loading}
             </LoadingView>);
         }
-        if (this.attributes.deleteWarning) {
+        if (this.state.deleteWarning) {
             return (<ConfirmComponent
                 dangerButton="Удалить"
                 description={`
@@ -105,7 +120,7 @@ class CreatorAddLevel extends Component {
                 }
                 onPositive={
                     () => {
-                        this.attributes.deleteWarning = false;
+                        this.state.deleteWarning = false;
                     }
                 }
                 positiveButton="Отмена"
@@ -113,9 +128,9 @@ class CreatorAddLevel extends Component {
             />);
         }
 
-        if (this.attributes.error) {
+        if (this.state.error) {
             return (<h1 className="profile-edit__title text-center">
-                {this.attributes.error}
+                {this.state.error}
             </h1>);
         }
 
@@ -124,8 +139,8 @@ class CreatorAddLevel extends Component {
                 level={this.level || undefined}
                 onDelete={
                     this.levelId
-                        ? (level, coverFile) => {
-                            this.delete(level, coverFile);
+                        ? (level: EditLevelExportType) => {
+                            this.delete(level);
                         }
                         : null
                 }
@@ -146,14 +161,14 @@ class CreatorAddLevel extends Component {
     async propsChanged () {
         const data = this.props.route.data;
         if (data) {
-            this.attributes.loading = 'Загрузка уровня';
+            this.state.loading = 'Загрузка уровня';
             this.levelId = parseInt(data);
             this.level = (
                 await api.levelsInfo(user.user.id)
             ).find(level => level.id === this.levelId);
 
             this.level.price = Number(this.level.price.split(' ')[0]);
-            this.attributes.loading = '';
+            this.state.loading = '';
         }
     }
 }

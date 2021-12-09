@@ -5,7 +5,7 @@ import TimeAgoComponent from '../time-ago';
 import './style.scss';
 
 class PostHeaderComponent extends Component<{
-    size: string,
+    size?: string,
     title: string,
     published?: Date,
     views?: number,

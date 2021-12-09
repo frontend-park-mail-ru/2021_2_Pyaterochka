@@ -16,11 +16,7 @@ const user = {
      */
     async update () {
         try {
-            const user = await api.profile();
-            if (user.status === 'error') {
-                this.user = null;
-            }
-            this.user = user;
+            this.user = await api.profile();
         } catch {
             this.user = null;
         }

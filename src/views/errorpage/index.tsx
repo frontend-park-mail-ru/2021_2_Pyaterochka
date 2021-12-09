@@ -4,25 +4,32 @@ import app from 'irbis';
 
 import './style.scss';
 
-class ErrorPage extends Component {
-    constructor ({ err = 404, desc = 'Страница не найдена', goHome = true } = {}) {
-        super();
-        this.attributes.error = err;
-        this.attributes.message = desc;
-        this.attributes.goHome = goHome;
+type PropsType = {
+    err?: number,
+    desc?: string,
+    goHome?: boolean
+};
+
+class ErrorPage extends Component<PropsType> {
+    defaultProps (): PropsType {
+        return {
+            err: 404,
+            desc: 'Страница не найдена',
+            goHome: true
+        };
     }
 
     render () {
         return (
             <div className="error-block">
                 <h1>
-                    {this.attributes.message}
+                    {this.props.desc}
                 </h1>
 
                 <img src="/imgs/error_page.svg" />
 
                 {
-                    this.attributes.goHome
+                    this.props.goHome
                         ? <Button
                             text="Перейти на главную"
                             color="primary"

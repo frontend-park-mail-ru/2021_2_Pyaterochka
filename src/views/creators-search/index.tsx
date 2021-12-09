@@ -6,10 +6,20 @@ import SelectComponent from 'ui-library/select';
 import ErrorPage from '../errorpage';
 
 import './style.scss';
+import { CreatorEntity } from '../../api/types';
 
 const all = 'Любая категория';
 
-class CreatorsSearch extends Component {
+class CreatorsSearch extends Component<never, {
+    searchQuery: string,
+    searchCategory: string | typeof all
+    creators: CreatorEntity[],
+    popularCreators: CreatorEntity[]
+    categories: string[]
+}> {
+    // eslint-disable-next-line no-undef
+    timerId: NodeJS.Timeout;
+
     constructor () {
         super();
 
@@ -32,32 +42,34 @@ class CreatorsSearch extends Component {
                     Поиск авторов:
                 </h1>
 
-                <div className='search__fields-container'>
+                <div className="search__fields-container">
                     <InputField
                         placeholder="Поле поиска"
                         onInput={
                             (e) => {
-                                this.attributes.searchQuery = e.target.value;
+                                this.state.searchQuery = e.target.value;
                                 this.onUpdate();
                             }
                         }
-                        value={this.attributes.searchQuery} />
+                        value={this.state.searchQuery} />
 
                     <SelectComponent
+                        inital={all}
+                        options={this.state.categories}
+                        placeholder="Категория"
                         onChange={
-                            (value) => {
-                                this.attributes.searchCategory = value;
+                            (value: string) => {
+                                this.state.searchCategory = value;
                                 this.loadCreators();
                             }
                         }
-                        value={this.attributes.searchQuery}
-                        options={this.attributes.categories} />
+                    />
                 </div>
 
-                {this.attributes.searchQuery
-                    ? this.attributes.creators.length
+                {this.state.searchQuery
+                    ? this.state.creators.length
                         ? <div className="creators-container">
-                            {this.attributes.creators.map((creator) => {
+                            {this.state.creators.map((creator) => {
                                 return (<CreatorCard
                                     key={creator.id}
                                     id={creator.id}
@@ -104,13 +116,13 @@ class CreatorsSearch extends Component {
     }
 
     async loadCreators () {
-        this.attributes.creators = await api.creatorsSearch({
-            query: this.attributes.searchQuery,
-            category: this.attributes.searchCategory === all ? '' : this.attributes.searchCategory
+        this.state.creators = await api.creatorsSearch({
+            query: this.state.searchQuery,
+            category: this.state.searchCategory === all ? '' : this.state.searchCategory
         });
         // const p = new URLSearchParams({
-        //     query: this.attributes.searchQuery,
-        //     category: this.attributes.searchCategory
+        //     query: this.state.searchQuery,
+        //     category: this.state.searchCategory
         // });
         // location.hash = p.toString();
     }
@@ -127,8 +139,8 @@ class CreatorsSearch extends Component {
 
         //     if (query && category) {
 
-        //         this.attributes.searchQuery = query;
-        //         this.attributes.searchCategory = category;
+        //         this.state.searchQuery = query;
+        //         this.state.searchCategory = category;
         //         return;
         //     }
         //     throw '';
@@ -137,7 +149,7 @@ class CreatorsSearch extends Component {
         // }
 
         const info = await api.info();
-        this.attributes.categories = [all, ...info.category];
+        this.state.categories = [all, ...info.category];
 
         this.state.popularCreators = await api.creators();
     }

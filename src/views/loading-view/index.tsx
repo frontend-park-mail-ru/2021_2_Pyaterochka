@@ -3,7 +3,7 @@ import Spinner from 'ui-library/spinner';
 
 import './style.scss';
 
-class LoadingView extends Component {
+class LoadingView extends Component<never> {
     constructor (props, ...slot) {
         super();
         this.slot = slot;

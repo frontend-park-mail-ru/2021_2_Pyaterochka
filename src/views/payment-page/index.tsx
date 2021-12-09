@@ -9,8 +9,23 @@ import ErrorPage from '../errorpage';
 import LoadingView from '../loading-view';
 
 import './style.scss';
+import Route from 'irbis-router/route';
+import { CreatorEntity, LevelWithParentEntity } from '../../api/types';
 
-class PaymentPage extends Component {
+class PaymentPage extends Component<{
+    route?: Route
+}, {
+    pay: boolean,
+    loading: boolean,
+    loadingMessage?: false | string,
+    creator?: CreatorEntity,
+    level?: LevelWithParentEntity,
+    benefits?: string[],
+    otherLevels?: LevelWithParentEntity[]
+}> {
+    creatorId?: string | number;
+    levelId?: string | number;
+
     defaultProps () {
         return {
             route: null
@@ -20,16 +35,16 @@ class PaymentPage extends Component {
     constructor () {
         super();
 
-        this.attributes.pay = true;
-        this.attributes.loading = true;
-        this.attributes.loadingMessage = false;
+        this.state.pay = true;
+        this.state.loading = true;
+        this.state.loadingMessage = false;
     }
 
     async pay () {
-        this.attributes.loadingMessage = 'Оплата';
+        this.state.loadingMessage = 'Оплата';
 
         if (this.state.creator.levelId) {
-            this.attributes.loadingMessage = 'Изменение подписки';
+            this.state.loadingMessage = 'Изменение подписки';
             await api.levelUnsubscribe(this.creatorId, this.state.creator.levelId);
         }
         await api.levelSubscribe(this.creatorId, this.levelId);
@@ -38,7 +53,7 @@ class PaymentPage extends Component {
     }
 
     async unsubscribe () {
-        this.attributes.loadingMessage = 'Отмена подписки';
+        this.state.loadingMessage = 'Отмена подписки';
 
         await api.levelUnsubscribe(this.creatorId, this.levelId);
 
@@ -46,10 +61,10 @@ class PaymentPage extends Component {
     }
 
     render () {
-        if (this.attributes.loading) {
+        if (this.state.loading) {
             return (<LoadingView>
                 {
-                    this.attributes.pay
+                    this.state.pay
                         ? 'Загрузка страницы оплаты'
                         : 'Загрузка страницы отмены подписки'
                 }
@@ -57,35 +72,35 @@ class PaymentPage extends Component {
             </LoadingView>);
         }
 
-        if (this.attributes.loadingMessage) {
+        if (this.state.loadingMessage) {
             return (<LoadingView>
-                {this.attributes.loadingMessage}
+                {this.state.loadingMessage}
             </LoadingView>);
         }
 
-        if (!this.attributes.level || !this.attributes.creator) { return <ErrorPage />; }
+        if (!this.state.level || !this.state.creator) { return <ErrorPage />; }
 
         return (<div className="payment-page">
             <div className="payment-page__topper">
                 <CreatorCard
-                    avatar={this.attributes.creator.avatar}
-                    description={this.attributes.creator.description}
-                    id={this.attributes.creator.id}
-                    name={this.attributes.creator.name}
+                    avatar={this.state.creator.avatar}
+                    description={this.state.creator.description}
+                    id={this.state.creator.id}
+                    name={this.state.creator.name}
                     noHoverShadow
                 />
 
                 <div className="payment-page__topper__about">
                     <p className="payment-page__title">
                         {
-                            this.attributes.pay
+                            this.state.pay
                                 ? <>
                                     {consts.subscribeOnLevel}
 
                                     {' '}
 
                                     <b>
-                                        {this.attributes.level.name}
+                                        {this.state.level.name}
                                     </b>
                                 </>
                                 : <>
@@ -94,7 +109,7 @@ class PaymentPage extends Component {
                                     {' '}
 
                                     <b>
-                                        {this.attributes.level.name}
+                                        {this.state.level.name}
                                     </b>
                                 </>
                         }
@@ -102,14 +117,14 @@ class PaymentPage extends Component {
 
                     <p>
                         {
-                            this.attributes.pay
+                            this.state.pay
                                 ? 'Вы получите следующие преимущества:'
                                 : 'Вы потеряете следующие преимущества:'
                         }
 
                     </p>
 
-                    {this.attributes.benefits.map((benefit, i) => (
+                    {this.state.benefits.map((benefit, i) => (
                         <p
                             className="level-card__body__benefit"
                             key={i}
@@ -121,19 +136,19 @@ class PaymentPage extends Component {
                     <Button
                         color="primary"
                         onClick={() => {
-                            this.attributes.pay
+                            this.state.pay
                                 ? this.pay()
                                 : this.unsubscribe();
                         }}
                         text={
-                            this.attributes.pay
+                            this.state.pay
                                 ? <>
                                     {consts.subscribeFor}
 
                                     {' '}
 
                                     <b>
-                                        {this.attributes.level.price}
+                                        {this.state.level.price}
                                     </b>
 
                                     {' '}
@@ -145,7 +160,7 @@ class PaymentPage extends Component {
                         }
                     />
 
-                    {this.attributes.pay
+                    {this.state.pay
                         ? <div className="payment-page__disclaimer">
                             {consts.subscribeWarning}
                         </div>
@@ -156,19 +171,19 @@ class PaymentPage extends Component {
             </div>
 
             {
-                this.attributes.otherLevels && this.attributes.otherLevels.length
+                this.state.otherLevels && this.state.otherLevels.length
                     ? <>
                         <div className="payment-page__other-levels-title">
                             {consts.maybeInterestedSubscriptions}
 
                             <b>
-                                {this.attributes.creator.name}
+                                {this.state.creator.name}
                             </b>
 
                         </div>
 
                         <div className="payment-page__other-levels-container">
-                            {this.attributes.otherLevels.map((level) => (
+                            {this.state.otherLevels.map((level) => (
                                 <LevelCard
                                     benefits={level.benefits}
                                     cover={level.cover}
@@ -179,7 +194,7 @@ class PaymentPage extends Component {
                                         () => {
                                             app.$router.go(
                                                 app.$router.createUrl(
-                                                    'payment', `${this.attributes.creator.id}/${level.id}`
+                                                    'payment', `${this.state.creator.id}/${level.id}`
                                                 )
                                             );
                                         }
@@ -197,7 +212,7 @@ class PaymentPage extends Component {
     }
 
     async propsChanged () {
-        this.attributes.loading = true;
+        this.state.loading = true;
         try {
             const data = this.props.route.data.split('/');
 
@@ -205,8 +220,8 @@ class PaymentPage extends Component {
 
             this.state.creator = await api.creatorInfo(this.creatorId);
 
-            if (this.attributes.creator.levelId === this.levelId) {
-                this.attributes.pay = false;
+            if (this.state.creator.levelId === this.levelId) {
+                this.state.pay = false;
             }
             const levels = await api.levelsInfo(this.creatorId);
 

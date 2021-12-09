@@ -7,7 +7,7 @@ import ValidationError from '../validation-error';
 
 import './style.scss';
 
-type Level = {
+export type EditLevelExportType = {
     name: string,
     cover: string,
     benefits: string[],
@@ -15,12 +15,15 @@ type Level = {
     color: string
 };
 
-class EditLevelComponent extends Component<{
+type PropsType = {
+    level: EditLevelExportType
     title: string,
-    onSave: (level: Level, file?: File) => unknown,
-    onDelete?: (level: Level, file?: File) => unknown
-}, {
-    level: Level,
+    onSave: (level: EditLevelExportType, file?: File) => unknown,
+    onDelete?: (level: EditLevelExportType, file?: File) => unknown
+};
+
+class EditLevelComponent extends Component<PropsType, {
+    level: EditLevelExportType,
     error: string
 }> {
     coverFile?: File;
@@ -43,7 +46,7 @@ class EditLevelComponent extends Component<{
                 price: 0,
                 color: 'primary'
             }
-        }
+        }: PropsType
     ) {
         super();
 

@@ -1,20 +1,25 @@
 import api from '../../api';
 import Component from 'irbis/component';
-import EditorComponent from 'ui-library/editor';
+import EditorComponent, { PostExportType } from 'ui-library/editor';
 import app from 'irbis';
 import user from '../../storage/user';
 import ErrorPage from '../errorpage';
 import LoadingView from '../loading-view';
+import { LevelEntity } from '../../api/types';
 
-class CreatePostView extends Component {
+class CreatePostView extends Component<never, {
+    loading: false | string,
+    levels: LevelEntity[],
+    errorFirstLoading: boolean
+}> {
     constructor () {
         super();
-        this.attributes.loading = false;
-        this.attributes.levels = [];
+        this.state.loading = false;
+        this.state.levels = [];
     }
 
     render () {
-        // if (this.attributes.errorFirstLoading) {
+        // if (this.state.errorFirstLoading) {
         //     return <ErrorPage desc="Нет соединения с интернетом" />;
         // }
 
@@ -22,10 +27,10 @@ class CreatePostView extends Component {
             return <ErrorPage desc="Нет соединения с интернетом" />;
         }
 
-        if (this.attributes.loading) {
+        if (this.state.loading) {
             return (
                 <LoadingView>
-                    {this.attributes.loading}
+                    {this.state.loading}
                 </LoadingView>
             );
         }
@@ -37,10 +42,10 @@ class CreatePostView extends Component {
 
             <EditorComponent
                 isDraft
-                levels={this.attributes.levels.map(({ name, id }) => {
+                levels={this.state.levels.map(({ name, id }) => {
                     return {
                         title: name,
-                        id
+                        id: Number(id)
                     };
                 })}
                 onSave={(post) => { this.savePost(post); }}
@@ -52,19 +57,18 @@ class CreatePostView extends Component {
         title,
         description,
         levelId
-    }) {
+    }: PostExportType) {
         if (!title) {
             return;
         }
 
-        this.attributes.loading = 'Сохранение черновика';
+        this.state.loading = 'Сохранение черновика';
 
         const data = await api.createPost({
             userId: user.user.id,
             title,
             description,
-            levelId,
-            body: []
+            levelId
         });
 
         app.$router.go(app.$router.createUrl('post.edit', `${data.id}`));
@@ -72,11 +76,11 @@ class CreatePostView extends Component {
 
     async created () {
         try {
-            this.attributes.loading = 'Загрузка уровней';
-            this.attributes.levels = await api.levelsInfo(user.user.id);
-            this.attributes.loading = false;
+            this.state.loading = 'Загрузка уровней';
+            this.state.levels = await api.levelsInfo(user.user.id);
+            this.state.loading = false;
         } catch {
-            this.attributes.errorFirstLoading = true;
+            this.state.errorFirstLoading = true;
         }
     }
 }

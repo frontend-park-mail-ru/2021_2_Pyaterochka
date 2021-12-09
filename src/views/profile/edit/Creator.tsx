@@ -10,20 +10,33 @@ import app from 'irbis';
 import Skeleton from 'ui-library/skeleton';
 import ValidationError from 'ui-library/validation-error';
 import consts from '../../../consts';
+import { CreatorEntity, LevelWithParentEntity } from '../../../api/types';
 
-class ProfileEditCreator extends Component {
+class ProfileEditCreator extends Component<never, {
+    loading: boolean,
+    loadingAvatar: boolean,
+    loadingCover: boolean,
+    creator: CreatorEntity,
+    levels: LevelWithParentEntity[],
+    //
+    creatorDesc: string,
+    creatorCategory: string,
+    creatorError?: string
+}> {
+    categories: string[];
+
     constructor () {
         super();
-        this.attributes.loading = false;
-        this.attributes.loadingAvatar = false;
-        this.attributes.loadingCover = false;
+        this.state.loading = false;
+        this.state.loadingAvatar = false;
+        this.state.loadingCover = false;
 
-        this.attributes.creator = null;
-        this.attributes.levels = null;
+        this.state.creator = null;
+        this.state.levels = null;
 
-        this.attributes.creatorDesc = '';
-        this.attributes.creatorCategory = '';
-        this.attributes.creatorError = null;
+        this.state.creatorDesc = '';
+        this.state.creatorCategory = '';
+        this.state.creatorError = null;
 
         this.categories = [
             'Подкасты',
@@ -38,16 +51,16 @@ class ProfileEditCreator extends Component {
     }
 
     async createCreator () {
-        if (!this.attributes.creatorCategory || !this.attributes.creatorDesc) {
-            this.attributes.creatorError = 'Заполните все поля';
+        if (!this.state.creatorCategory || !this.state.creatorDesc) {
+            this.state.creatorError = 'Заполните все поля';
             return;
         }
 
-        this.attributes.loading = true;
+        this.state.loading = true;
 
         await api.creatorCreate({
-            category: this.attributes.creatorCategory,
-            description: this.attributes.creatorDesc
+            category: this.state.creatorCategory,
+            description: this.state.creatorDesc
         });
 
         await user.update();
@@ -55,33 +68,33 @@ class ProfileEditCreator extends Component {
     }
 
     async loadCreator (loading = true) {
-        this.attributes.loading = loading;
+        this.state.loading = loading;
 
-        this.attributes.creator = await api.creatorInfo(user.user.id);
+        this.state.creator = await api.creatorInfo(user.user.id);
 
-        this.attributes.loading = false;
+        this.state.loading = false;
 
-        this.attributes.levels = await api.levelsInfo(user.user.id);
+        this.state.levels = await api.levelsInfo(user.user.id);
     }
 
-    async uploadAvatar (file) {
-        this.attributes.loadingAvatar = true;
+    async uploadAvatar (file:File) {
+        this.state.loadingAvatar = true;
         await api.uploadCreatorAvatar(file, user.user.id);
 
         await this.loadCreator(false);
-        this.attributes.loadingAvatar = false;
+        this.state.loadingAvatar = false;
     }
 
-    async uploadCover (file) {
-        this.attributes.loadingCover = true;
+    async uploadCover (file:File) {
+        this.state.loadingCover = true;
         await api.uploadCreatorCover(file, user.user.id);
 
         await this.loadCreator(false);
-        this.attributes.loadingCover = false;
+        this.state.loadingCover = false;
     }
 
     render () {
-        if (this.attributes.loading) {
+        if (this.state.loading) {
             return (<div>
                 <p className="profile-edit__subtitle">
                     {consts.profileDesign}
@@ -111,7 +124,7 @@ class ProfileEditCreator extends Component {
                     />
 
                     <img
-                        height='420px'
+                        height="420px"
                         router-go={app.$router.createUrl('creator.level.create')}
                         src="/imgs/addLevel.svg"
                     />
@@ -120,7 +133,7 @@ class ProfileEditCreator extends Component {
             </div>);
         }
 
-        if (!this.attributes.creator) {
+        if (!this.state.creator) {
             return (<div className="profile-edit--little-width">
                 <p className="profile-edit__subtitle">
                     {consts.createCreatorPage}
@@ -128,27 +141,27 @@ class ProfileEditCreator extends Component {
 
                 <InputField
                     onChange={(e) => {
-                        this.attributes.creatorDesc = e.target.value;
+                        this.state.creatorDesc = e.target.value;
                     }}
                     placeholder="Описание креатора"
                 />
 
                 <SelectComponent
-                    inital='Выберите категорию'
+                    inital="Выберите категорию"
                     onChange={value => {
-                        this.attributes.creatorCategory = value;
+                        this.state.creatorCategory = value;
                     }}
                     options={this.categories}
                     placeholder="Категория"
                 />
 
-                { /* <br /> */ }
+                { /* <br /> */}
 
                 <div className="input-validation">
                     {
-                        this.attributes.creatorError
+                        this.state.creatorError
                             ? <ValidationError
-                                value={this.attributes.creatorError}
+                                value={this.state.creatorError}
                                 key={null}
                             />
                             : null
@@ -158,7 +171,9 @@ class ProfileEditCreator extends Component {
                 <Button
                     color="primary"
                     onClick={
-                        () => { this.createCreator(); }
+                        () => {
+                            this.createCreator();
+                        }
                     }
                     text="Стать автором"
                 />
@@ -172,18 +187,22 @@ class ProfileEditCreator extends Component {
 
                 <div className="edit-creator__images">
                     <ImageUploader
-                        image={this.attributes.creator.avatar}
+                        image={this.state.creator.avatar}
                         imageName="аватар"
-                        loading={this.attributes.loadingAvatar}
-                        onChange={(image) => { this.uploadAvatar(image); }}
+                        loading={this.state.loadingAvatar}
+                        onChange={(image) => {
+                            this.uploadAvatar(image);
+                        }}
                     />
 
                     <ImageUploader
-                        image={this.attributes.creator.cover}
+                        image={this.state.creator.cover}
                         imageName="обложку"
                         isCircle={false}
-                        loading={this.attributes.loadingCover}
-                        onChange={(image) => { this.uploadCover(image); }}
+                        loading={this.state.loadingCover}
+                        onChange={(image) => {
+                            this.uploadCover(image);
+                        }}
                     />
                 </div>
 
@@ -193,17 +212,19 @@ class ProfileEditCreator extends Component {
 
                 <div className="profile-edit__levels-container">
                     {
-                        this.attributes.levels
-                            ? this.attributes.levels.map(level => (
+                        this.state.levels
+                            ? this.state.levels.map(level => (
                                 <LevelCard
                                     benefits={level.benefits}
-                                    btnText='Редактировать уровень'
+                                    btnText="Редактировать уровень"
                                     color={level.color}
                                     cover={level.cover}
                                     id={level.id}
                                     key={level.id}
                                     name={level.name}
-                                    onClick={() => { app.$router.go(app.$router.createUrl('creator.level.edit', level.id)); }}
+                                    onClick={() => {
+                                        app.$router.go(app.$router.createUrl('creator.level.edit', level.id));
+                                    }}
                                     parentName={level.parentName}
                                     price={level.price}
                                 />
@@ -227,7 +248,7 @@ class ProfileEditCreator extends Component {
     }
 
     async created () {
-        this.loadCreator();
+        await this.loadCreator();
     }
 }
 

@@ -163,7 +163,7 @@ class Router extends Component<{
         });
     }
 
-    createUrl (name: string, param: string = null) {
+    createUrl (name: string, param: string | number = null) {
         const route = this.props.routes.find((r) => {
             if (!r) return false;
             return r.name === name;
@@ -174,7 +174,7 @@ class Router extends Component<{
             return;
         }
 
-        return route.url.replace('*', param || '');
+        return route.url.replace('*', param === null ? '' : String(param));
     }
 }
 

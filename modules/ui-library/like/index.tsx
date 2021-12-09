@@ -10,7 +10,7 @@ class Like extends Component<{
     user: boolean,
     liked?: boolean,
     count?: number,
-    onClick: () => unknown
+    onClick?: () => unknown
 }> {
     defaultProps () {
         return {

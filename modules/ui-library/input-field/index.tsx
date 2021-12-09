@@ -2,6 +2,7 @@ import Component from 'irbis/component';
 import ValidationError from 'ui-library/validation-error';
 import './style.scss';
 
+export type ValidationRule = ((value: string) => (false | string));
 /**
  * Компонент поля ввода
  */
@@ -12,7 +13,7 @@ class InputField extends Component<{
     disabled?: boolean,
     onInput?: (e: InputEvent, value: string) => unknown,
     onChange?: (e: InputEvent) => unknown,
-    validation?: ((value: string) => (false | string))[],
+    validation?: ValidationRule[],
     validateAlways?: boolean
 }, {
     valid?: string

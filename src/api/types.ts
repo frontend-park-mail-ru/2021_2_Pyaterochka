@@ -20,7 +20,7 @@ type PostEntity = {
     title: string,
     published: Date,
     views: string,
-    likes: string,
+    likes: number,
     description: string,
     image: string,
 };
