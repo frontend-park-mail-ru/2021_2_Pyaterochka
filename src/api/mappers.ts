@@ -134,7 +134,7 @@ const mapComment = (data: InData): CommentEntity => {
             isCreator: !!data.as_creator
         },
         body: data.body,
-        published: new Date()
+        published: new Date(data.date)
     };
 };
 export {

@@ -38,6 +38,8 @@ class AddCommentForm extends Component<{
         const post = this.props.post;
         try {
             await api.postCommentLeave(post.creatorId, post.id, this.state.comment);
+
+            this.state.comment = '';
         } catch (e) {
             console.error(e);
             this.state.error = 'Произошла неизвестная ошибка';
@@ -56,6 +58,7 @@ class AddCommentForm extends Component<{
             <InputField
                 placeholder="Текст комментария"
                 onInput={(e) => {
+                    this.state.error = false;
                     this.state.comment = e.target.value;
                 }}
             />
@@ -63,23 +66,22 @@ class AddCommentForm extends Component<{
             {
                 this.state.error
                     ? <ValidationError value={this.state.error} />
-                    : ''
+                    : <div className="add-comment__actions">
+                        <Button
+                            color="primary"
+                            text="Отправить"
+                            onClick={() => {
+                                this.sendComment();
+                            }}
+                            loading={this.state.loading}
+                        />
+
+                        <span className="add-comment__actions_warn">
+                            {consts.communityWarning}
+                        </span>
+                    </div>
             }
 
-            <div className="add-comment__actions">
-                <Button
-                    color="primary"
-                    text="Отправить"
-                    onClick={() => {
-                        this.sendComment();
-                    }}
-                    loading={this.state.loading}
-                />
-
-                <span className="add-comment__actions_warn">
-                    {consts.communityWarning}
-                </span>
-            </div>
         </div>);
     }
 }
