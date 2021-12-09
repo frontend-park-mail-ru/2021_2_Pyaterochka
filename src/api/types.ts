@@ -1,4 +1,3 @@
-
 type IdType = string | number;
 
 type CreatorEntity = {
@@ -11,8 +10,9 @@ type CreatorEntity = {
 };
 
 interface InData {
-    [key: string]: string
+    [key: string]: string;
 }
+
 type PostEntity = {
     id: IdType,
     creatorId: IdType,
@@ -83,6 +83,18 @@ type ChangePasswordInData = {
     newPassword: string
 };
 
+type CommentEntity = {
+    id: IdType
+    user: {
+        username: string,
+        avatar: string,
+        id: IdType,
+        isCreator: boolean
+    },
+    body: string,
+    published: Date
+}
+
 export {
     IdType,
     CreatorEntity,
@@ -95,5 +107,6 @@ export {
     PaymentEntity,
     FullPostEntity,
     LoginInData,
-    ChangePasswordInData
+    ChangePasswordInData,
+    CommentEntity
 };

@@ -1,6 +1,6 @@
 import config from './config';
 import {
-    AttachmentEntity,
+    AttachmentEntity, CommentEntity,
     CreatorEntity,
     FullPostEntity,
     IdType,
@@ -108,7 +108,7 @@ const mapLevels = (data: InData[]): LevelWithParentEntity[] => {
     });
 };
 
-const mapPayment = (data: InData, i: IdType):PaymentEntity => {
+const mapPayment = (data: InData, i: IdType): PaymentEntity => {
     return {
         id: i,
         amount: data.amount,
@@ -124,6 +124,19 @@ const mapPayment = (data: InData, i: IdType):PaymentEntity => {
     };
 };
 
+const mapComment = (data: InData): CommentEntity => {
+    return {
+        id: data.id,
+        user: {
+            username: data.author_nickname,
+            avatar: data.author_avatar ? `${basename}/${data.author_avatar}` : config.fallback.avatar,
+            id: data.author_id,
+            isCreator: !!data.as_creator
+        },
+        body: data.body,
+        published: new Date()
+    };
+};
 export {
     mapCreator,
     mapPost,
@@ -131,5 +144,6 @@ export {
     mapProfile,
     mapLevel,
     mapLevels,
-    mapPayment
+    mapPayment,
+    mapComment
 };

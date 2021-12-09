@@ -15,7 +15,8 @@ import consts from '../../consts';
 import AudioPlayer from 'ui-library/audio-player';
 import VideoPlayer from 'ui-library/video-player';
 import Route from 'irbis-router/route';
-import { CreatorEntity, FullPostEntity, PostEntity } from '../../api/types';
+import { CommentEntity, CreatorEntity, FullPostEntity, PostEntity } from '../../api/types';
+import AddCommentForm from './includes/add-comment-form';
 
 class PostView extends Component<{
     route?: Route
@@ -23,15 +24,7 @@ class PostView extends Component<{
     post: FullPostEntity,
     creator: CreatorEntity,
     otherPosts: PostEntity[],
-    comments: {
-        id: string | number,
-        user: {
-            username: string,
-            avatar: string
-        },
-        body: string,
-        published: Date
-    }[],
+    comments: CommentEntity[],
     loading: boolean,
     errorFirstLoading?: boolean
 }> {
@@ -293,29 +286,12 @@ class PostView extends Component<{
                         </div>
 
                         <div className="comments-container">
-                            <div className="add-comment">
-                                <div className="add-comment__title">
-                                    {consts.leaveComment}
-                                </div>
-
-                                <InputField
-                                    placeholder="Текст комментария"
-                                    validation={[
-                                        // (v) => !v ? 'Поле не должно быть пустым' : null
-                                    ]}
-                                />
-
-                                <div className="add-comment__actions">
-                                    <Button
-                                        color="primary"
-                                        text="Отправить"
-                                    />
-
-                                    <span className="add-comment__actions_warn">
-                                        {consts.communityWarning}
-                                    </span>
-                                </div>
-                            </div>
+                            <AddCommentForm
+                                post={this.state.post}
+                                onSend={() => {
+                                    this.updateComments();
+                                }}
+                            />
 
                             {
                                 this.state.comments.map((comment) =>
@@ -385,32 +361,21 @@ class PostView extends Component<{
                     api.creatorInfo(this.userId),
                     api.postInfo(this.userId, this.postId, true)
                 ]);
+            this.state.post.creatorId = this.userId;
 
             this.state.loading = false;
 
             this.state.otherPosts = (await api.postsInfo(this.userId)).filter(p => String(p.id) !== String(this.postId));
 
-            this.state.comments = [];
-
-            for (let i = 0; i < 50; ++i) {
-                this.state.comments.push(
-                    {
-                        id: i,
-                        user: {
-                            username: 'IU7-memes',
-                            avatar: 'https://sun9-12.userapi.com/impf/c854228/v854228051/16558/K7rRvW0xelY.jpg?size=647x809&quality=96&sign=83e72450667c775a5831dac80fb2dea5&type=album'
-                        },
-                        body: 'Ортодоксальный предикат порождает и индуцирует интеллигибельность. Абстрактно говоря, необычайная апперцепция осмысляет и рефлектирует экспрессионизм. Параллелизм генетивен. Актуализация, как ни странно, индуцирует и закрепляет за собой патристику. Безусловный предикат заполняет метафоризм. Апокатастас, обходя, отделяет парадокс. Космизм подчеркивает и подчеркивает здравый смысл. Откровенно говоря из ряда вон выходящая атомистика не всем ясна. Обскурантизм, траснсформируя, преобразует апперцепцию.',
-                        published: new Date((new Date()).getTime() - Math.round(60 * 1000 * 60 * 5 * Math.random()))
-                    }
-                );
-            }
-
-            this.state.comments = this.state.comments.sort((b, a) => a.published.getTime() - b.published.getTime());
+            this.updateComments();
         } catch (e) {
             console.error(e);
             this.state.errorFirstLoading = true;
         }
+    }
+
+    async updateComments () {
+        this.state.comments = (await api.postComments(this.userId, this.postId));
     }
 }
 
