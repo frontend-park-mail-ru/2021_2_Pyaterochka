@@ -51,7 +51,7 @@ const mapPostFull = (data: InData & {
         const mappedAttach: AttachmentEntity = {
             id: attach.attach_id,
             type: attach.type === 'music' ? 'audio' : attach.type,
-            value: `${config.imageBasename}/${attach.value}`
+            value: attach.type === 'text' ? `${attach.value}` : `${config.imageBasename}/${attach.value}`
         };
         return mappedAttach;
     });
