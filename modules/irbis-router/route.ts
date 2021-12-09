@@ -8,7 +8,7 @@ class Route {
     component: () => Promise<{ default: ComponentConstructor }>;
     title: string;
     name: string = null;
-    data: any;
+    data: string;
 
     constructor (route: {
         url: string,

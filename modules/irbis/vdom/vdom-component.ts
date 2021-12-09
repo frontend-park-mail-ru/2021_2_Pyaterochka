@@ -2,10 +2,10 @@ import Component, { ComponentConstructor } from '../component';
 import VDomNode from './vdom-node';
 
 class VDomComponent implements VDomNode {
-    _component: Component = null;
-    Component: ComponentConstructor;
+    _component: Component<unknown, unknown> = null;
+    Component: ComponentConstructor<unknown, unknown>;
     props: {
-        [key: string]: any
+        [key: string]: unknown
     };
 
     slot: VDomNode[]
@@ -14,7 +14,7 @@ class VDomComponent implements VDomNode {
     parent = null;
 
     constructor (Component: ComponentConstructor, props: {
-        [key: string]: any
+        [key: string]: unknown
     }, slot: VDomNode[]) {
         this.Component = Component;
         this.props = props;

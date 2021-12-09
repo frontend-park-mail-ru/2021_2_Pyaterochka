@@ -14,11 +14,11 @@ class VDomElement implements VDomNode {
     } = {};
 
     listeners: {
-        [key: string]: (this: Element, ev: any) => void;
+        [key: string]: (this: Element, ev?: Event) => void;
     } = {};
 
     constructor (tagName: string, attributes: {
-        [key: string]: any;
+        [key: string]: unknown;
     }, jsxChildren: VDomNode[]) {
         this.attributes = {};
         this.listeners = {};
@@ -28,24 +28,26 @@ class VDomElement implements VDomNode {
         this.children = jsxChildren;
         this.children.forEach(child => { child.parent = this; });
 
-        Object.keys(attributes).forEach(key => {
+        Object.entries(attributes).forEach(([key, value]) => {
             if (!attributes[key]) { return; }
             if (key === 'children') { return; }
             if (key === 'className') {
-                if (Array.isArray(attributes[key])) {
-                    this.className = attributes[key].join(' ');
+                if (Array.isArray(value)) {
+                    this.className = value.join(' ');
                     return;
                 }
-                this.className = attributes[key];
+                this.className = String(attributes[key]);
                 return;
             }
-            if (key.startsWith('on')) {
-                if (attributes[key] instanceof Function) {
-                    this.listeners[key.substr(2).toLowerCase()] = attributes[key];
-                    return;
-                }
+            if (key.startsWith('on') && value instanceof Function) {
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
+                this.listeners[
+                    key.substring(2).toLowerCase()
+                ] = value;
+                return;
             }
-            this.attributes[key] = attributes[key];
+            this.attributes[key] = String(attributes[key]);
         });
     }
 

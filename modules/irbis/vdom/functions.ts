@@ -13,11 +13,12 @@ import VDomText from './vdom-text';
  * @param {Function | String} Element - тип компонента, если поле
  * представлено строкой, то название тега, иначе класс компонента
  * @param {Object} attributes атрибуты компонента
+ * @param key
  * @returns {Component | Text} представление компонента
  */
 function jsx (Element: ComponentConstructor | string, attributes: {
     children: VDomNode | string | null,
-    [key: string]: any
+    [key: string]: unknown
 }, key: string = null) {
     return createVDomNode(Element, attributes,
         attributes.children ? [attributes.children] : [], key);
@@ -35,7 +36,7 @@ function jsx (Element: ComponentConstructor | string, attributes: {
  */
 function jsxs (Element: ComponentConstructor | string, attributes: {
     children: (VDomNode | string)[],
-    [key: string]: any
+    [key: string]: unknown
 }, key: string = null) {
     return createVDomNode(Element, attributes, attributes.children, key);
 }
@@ -47,10 +48,11 @@ function jsxs (Element: ComponentConstructor | string, attributes: {
  * представлено строкой, то название тега, иначе класс компонента
  * @param {Object} attributes атрибуты компонента
  * @param {Array} jsxChildren дети компонента
+ * @param key
  * @returns {Component | Text} представление компонента
  */
 function createVDomNode (JsxElement: ComponentConstructor | string, attributes: {
-    [key: string]: any
+    [key: string]: unknown
 }, jsxChildren: (VDomNode | string)[], key: string) {
     const children = arrayOfArraysToArray(jsxChildren)
         .map(child => child || '')

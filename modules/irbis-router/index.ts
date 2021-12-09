@@ -2,13 +2,20 @@
  * @module Роутер
  */
 
-import Component from 'irbis/component';
+import Component, { ComponentConstructor } from 'irbis/component';
 import app from 'irbis';
 import VDomComponent from 'irbis/vdom/vdom-component';
 import Route from './route';
 import VDomNode from 'irbis/vdom/vdom-node';
+import VdomText from '../irbis/vdom/vdom-text';
 
-class Router extends Component {
+class Router extends Component<{
+    routes: Route[],
+    loadingView?: VDomNode,
+    errorView: VDomNode,
+    offlineView: VDomNode,
+    layout: ComponentConstructor
+}, never> {
     defaultProps () {
         return {
             routes: [],
@@ -21,7 +28,7 @@ class Router extends Component {
 
     propsChanged () {
         this.slot = [new VDomComponent(this.props.layout, {}, [
-            this.props.loadingView || ''
+            this.props.loadingView || new VdomText('')
         ])];
 
         this.start();
@@ -53,7 +60,7 @@ class Router extends Component {
      * @returns {Route} путь
      */
     getRoute (url: string): Route {
-        const route = this.props.routes.find((route: Route) => {
+        return this.props.routes.find((route: Route) => {
             if (route.url === '') return true;
             if (route.url.endsWith('*')) {
                 return url.startsWith(route.url.replace('*', ''));
@@ -62,7 +69,6 @@ class Router extends Component {
             if (!res) return false;
             return res.join('') === url;
         });
-        return route;
     }
 
     /**
@@ -81,6 +87,7 @@ class Router extends Component {
      * Перейти по адресу
      *
      * @param {string} url адрес
+     * @param rerender
      */
     go (url = '', rerender = true) {
         history.pushState(url, url, url);
@@ -113,7 +120,7 @@ class Router extends Component {
             const Component = (await route.component()).default;
             slot._component.slot = new VDomComponent(Component, { route }, []);
         } catch (e) {
-            console.error("Can't load page", e);
+            console.error('Can\'t load page', e);
             if (navigator.onLine) {
                 slot._component.slot = this.props.errorView;
             } else {
@@ -148,8 +155,12 @@ class Router extends Component {
      * Установка обработчиков
      */
     addRouterListeners () {
-        document.addEventListener('click', (e: MouseEvent) => { this.onClick(e); });
-        window.addEventListener('popstate', () => { this.onPopState(); });
+        document.addEventListener('click', (e: MouseEvent) => {
+            this.onClick(e);
+        });
+        window.addEventListener('popstate', () => {
+            this.onPopState();
+        });
     }
 
     createUrl (name: string, param: string = null) {
