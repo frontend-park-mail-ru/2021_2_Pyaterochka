@@ -15,6 +15,13 @@ type NotificationType = {
     closed?: boolean,
     added?: boolean,
 };
+
+declare module 'irbis' {
+    interface AppInterface {
+        $notification?: NotificationPool;
+    }
+}
+
 export default class NotificationPool extends Component<never, {
     notifications: NotificationType[];
 }> {

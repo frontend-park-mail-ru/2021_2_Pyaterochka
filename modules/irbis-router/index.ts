@@ -7,7 +7,13 @@ import app from 'irbis';
 import VDomComponent from 'irbis/vdom/vdom-component';
 import Route from './route';
 import VDomNode from 'irbis/vdom/vdom-node';
-import VdomText from '../irbis/vdom/vdom-text';
+import VDomText from '../irbis/vdom/vdom-text';
+
+declare module 'irbis' {
+    interface AppInterface {
+        $router?: Router;
+    }
+}
 
 class Router extends Component<{
     routes: Route[],
@@ -28,7 +34,7 @@ class Router extends Component<{
 
     propsChanged () {
         this.slot = [new VDomComponent(this.props.layout, {}, [
-            this.props.loadingView || new VdomText('')
+            this.props.loadingView || new VDomText('')
         ])];
 
         this.start();

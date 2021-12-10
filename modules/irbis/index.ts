@@ -2,10 +2,12 @@ import VDomNode from './vdom/vdom-node';
 
 interface AppInterface {
     setup (component: VDomNode, container: Element): void,
-    setComponent (component: VDomNode):void,
-    forceUpdate ():void,
+
+    setComponent (component: VDomNode): void,
+
+    forceUpdate (): void,
+
     update (): void,
-    [key: `$${string}`]: unknown,
 }
 
 class App {
@@ -33,8 +35,8 @@ class App {
     }
 }
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-const app:AppInterface = new App();
+const app: AppInterface = new App();
+
+export { AppInterface };
 
 export default app;
