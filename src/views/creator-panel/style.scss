@@ -22,11 +22,13 @@
 
   &__statistics {
     width: 600px;
-    height: 300px;
+    height: 400px;
     padding: 20px;
     max-width: calc(100vw - 90px);
-    display: inline-block;
-    margin-top: 20px;
+    overflow: auto;
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: center;
   }
 
   &__posts__last-cell {
@@ -54,11 +56,12 @@
   }
 
   .creator-panel__statistics {
-    height: 300px;
+    height: 250px;
     padding: 20px;
     width: calc(100vw - 5px);
-    display: inline-block;
     margin-top: 20px;
+    flex-wrap: nowrap;
+    white-space: nowrap;
   }
 
   .shadow {

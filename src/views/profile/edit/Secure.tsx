@@ -1,4 +1,3 @@
-import api from '../../../api';
 import app from 'irbis';
 import Button from 'ui-library/button';
 import Component from 'irbis/component';
@@ -8,6 +7,7 @@ import Skeleton from 'ui-library/skeleton';
 import TimeAgoComponent from 'ui-library/time-ago';
 import user from '../../../storage/user';
 import { PaymentEntity } from '../../../api/types';
+import * as api from '../../../api';
 
 class ProfileEditSecure extends Component<never, {
     payments: PaymentEntity[]

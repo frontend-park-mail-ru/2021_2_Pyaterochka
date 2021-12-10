@@ -4,8 +4,8 @@ import Component from 'irbis/component';
 import InputField, { ValidationRule } from 'ui-library/input-field';
 import ValidationError from 'ui-library/validation-error';
 
-import api from '../../../../api';
 import user from '../../../../storage/user';
+import * as api from '../../../../api';
 
 class EditNickname extends Component<{
     nickname: string

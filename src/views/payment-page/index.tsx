@@ -1,4 +1,3 @@
-import api from '../../api';
 import app from 'irbis';
 import Button from 'ui-library/button';
 import Component from 'irbis/component';
@@ -7,6 +6,7 @@ import CreatorCard from 'ui-library/creator-card';
 import ErrorPage from '../errorpage';
 import LevelCard from 'ui-library/level-card';
 import LoadingView from '../loading-view';
+import * as api from '../../api';
 
 import Route from 'irbis-router/route';
 import { CreatorEntity, LevelWithParentEntity } from '../../api/types';

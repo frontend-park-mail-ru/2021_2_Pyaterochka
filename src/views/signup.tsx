@@ -1,4 +1,3 @@
-import api from '../api/index';
 import app from 'irbis';
 import Button from 'ui-library/button';
 import Component from 'irbis/component';
@@ -6,6 +5,7 @@ import consts from '../consts';
 import ErrorPage from './errorpage';
 import InputField from 'ui-library/input-field';
 import user from '../storage/user';
+import * as api from '../api/index';
 
 class SignupView extends Component<never, {
     error: string | false,

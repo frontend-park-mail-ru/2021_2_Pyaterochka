@@ -1,10 +1,10 @@
-import api from '../../../api';
 import Button from '../../../../modules/ui-library/button';
 import Component from '../../../../modules/irbis/component';
 import consts from '../../../consts';
 import InputField from '../../../../modules/ui-library/input-field';
 import ValidationError from '../../../../modules/ui-library/validation-error';
 import { PostEntity } from '../../../api/types';
+import * as api from '../../../api';
 
 class AddCommentForm extends Component<{
     post?: PostEntity,

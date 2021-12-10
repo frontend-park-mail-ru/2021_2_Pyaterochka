@@ -1,11 +1,10 @@
-import api from '../../api/index';
 import Component from 'irbis/component';
 import CreatorCard from 'ui-library/creator-card';
 import ErrorPage from '../errorpage';
 import InputField from 'ui-library/input-field';
 import SelectComponent from 'ui-library/select';
-
 import { CreatorEntity } from '../../api/types';
+import * as api from '../../api/index';
 import './style.scss';
 
 const all = 'Любая категория';

@@ -1,4 +1,3 @@
-import api from '../../../api';
 import app from 'irbis';
 import Button from 'ui-library/button';
 import Component from 'irbis/component';
@@ -11,6 +10,7 @@ import Skeleton from 'ui-library/skeleton';
 import user from '../../../storage/user';
 import ValidationError from 'ui-library/validation-error';
 import { CreatorEntity, LevelWithParentEntity } from '../../../api/types';
+import * as api from '../../../api';
 
 class ProfileEditCreator extends Component<never, {
     loading: boolean,

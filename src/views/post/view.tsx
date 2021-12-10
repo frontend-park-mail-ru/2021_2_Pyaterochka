@@ -1,5 +1,4 @@
 import AddCommentForm from './includes/add-comment-form';
-import api from '../../api';
 import app from 'irbis';
 import AudioPlayer from 'ui-library/audio-player';
 import Button from 'ui-library/button';
@@ -16,6 +15,7 @@ import Skeleton from 'ui-library/skeleton';
 import user from '../../storage/user';
 import VideoPlayer from 'ui-library/video-player';
 import { CommentEntity, CreatorEntity, FullPostEntity, PostEntity } from '../../api/types';
+import * as api from '../../api';
 import './view.scss';
 
 class PostView extends Component<{

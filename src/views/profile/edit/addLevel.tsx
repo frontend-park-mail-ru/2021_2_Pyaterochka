@@ -1,10 +1,10 @@
-import api from '../../../api';
 import app from 'irbis';
 import Component from 'irbis/component';
 import ConfirmComponent from 'ui-library/confirm';
 import EditLevelComponent, { EditLevelExportType } from 'ui-library/edit-level';
 import LoadingView from '../../loading-view';
 import user from '../../../storage/user';
+import * as api from '../../../api';
 
 import Route from 'irbis-router/route';
 import { LevelEntity } from '../../../api/types';

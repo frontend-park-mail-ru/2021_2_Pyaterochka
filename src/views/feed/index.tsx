@@ -1,4 +1,3 @@
-import api from '../../api/index';
 import app from 'irbis';
 import Button from 'ui-library/button';
 import Component from 'irbis/component';
@@ -7,12 +6,13 @@ import PostCard from 'ui-library/post-card';
 import Route from 'irbis-router/route';
 import Skeleton from 'ui-library/skeleton';
 import { PostEntity } from '../../api/types';
+import { postsFeedInfo } from '../../api';
 import './style.scss';
 
 class FeedView extends Component<{
     route: Route
 }, {
-    posts?: PostEntity,
+    posts?: PostEntity[],
     loading: boolean,
     errorFirstLoading?: boolean
 }> {
@@ -104,7 +104,7 @@ class FeedView extends Component<{
     async created () {
         this.state.loading = true;
         try {
-            this.attributes.posts = await api.postsFeedInfo();
+            this.attributes.posts = await postsFeedInfo();
         } catch {
             this.attributes.errorFirstLoading = true;
         }

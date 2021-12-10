@@ -1,4 +1,3 @@
-import api from '../../api/index';
 import app from 'irbis';
 import Button from 'ui-library/button';
 import Component from 'irbis/component';
@@ -8,6 +7,7 @@ import ErrorPage from '../errorpage';
 import ProfileCard from 'ui-library/profile-card';
 import Skeleton from 'ui-library/skeleton';
 import user from '../../storage/user';
+import * as api from '../../api/index';
 
 import { CreatorEntity } from '../../api/types';
 import './style.scss';

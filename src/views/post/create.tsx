@@ -1,4 +1,3 @@
-import api from '../../api';
 import app from 'irbis';
 import Component from 'irbis/component';
 import EditorComponent, { PostExportType } from 'ui-library/editor';
@@ -6,6 +5,7 @@ import ErrorPage from '../errorpage';
 import LoadingView from '../loading-view';
 import user from '../../storage/user';
 import { LevelEntity } from '../../api/types';
+import * as api from '../../api';
 
 class CreatePostView extends Component<never, {
     loading: false | string,

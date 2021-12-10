@@ -1,4 +1,3 @@
-import api from '../../api/index';
 import app from 'irbis';
 import Button from 'ui-library/button';
 import Component from 'irbis/component';
@@ -9,6 +8,7 @@ import LockMessage from 'ui-library/lock-message';
 import PostCard from 'ui-library/post-card';
 import Skeleton from 'ui-library/skeleton';
 import user from '../../storage/user';
+import * as api from '../../api/index';
 
 import Route from 'irbis-router/route';
 import './style.scss';

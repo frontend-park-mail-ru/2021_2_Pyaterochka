@@ -1,28 +1,34 @@
-import api from '../../api';
 import app from 'irbis';
 import Button from 'ui-library/button';
 import Component from 'irbis/component';
 import CountersComponent from 'ui-library/counters';
 import CreatorCard from 'ui-library/creator-card';
+import ErrorPage from '../errorpage';
 import Skeleton from 'ui-library/skeleton';
+import StatisticsCard from './includes/StatisticsCard';
 import TimeAgoComponent from 'ui-library/time-ago';
 import user from '../../storage/user';
-
-import ErrorPage from '../errorpage';
 import { LevelEntity, PostEntity } from '../../api/types';
+import * as api from '../../api';
 import './style.scss';
 
 class CreatorPanel extends Component<never, {
     creator?: {
-        name:string,
-        avatar:string,
-        description:string,
+        name: string,
+        avatar: string,
+        description: string,
     },
     posts?: PostEntity[],
     errorFirstLoading?: boolean,
     levels?: LevelEntity[],
     levelsNames: {
         [key: string]: string
+    },
+    statistics?: {
+        remuneration: number,
+        views: number,
+        postsCount: number,
+        subscribers: number
     }
 }> {
     render () {
@@ -53,25 +59,51 @@ class CreatorPanel extends Component<never, {
                     <Button
                         color="default"
                         onClick={
-                            () => { app.$router.go(app.$router.createUrl('profile.edit', 'creator_settings')); }
+                            () => {
+                                app.$router.go(app.$router.createUrl('profile.edit', 'creator_settings'));
+                            }
                         }
                         text="Настройки автора"
                     />
 
                 </div>
 
-                <div>
-                    <div className="creator-panel__statistics shadow">
-                        Здесь будет статистика
-                    </div>
-                </div>
+                {
+                    this.state.statistics
+                        ? <div className="creator-panel__statistics">
+                            <StatisticsCard
+                                counter={this.state.statistics.postsCount}
+                                title="Кол-во постов" />
+
+                            <StatisticsCard
+                                counter={this.state.statistics.views}
+                                title="Просмотры" />
+
+                            <StatisticsCard
+                                counter={this.state.statistics.remuneration}
+                                title="Вознаграждение"
+                            />
+
+                            <StatisticsCard
+                                counter={this.state.statistics.subscribers}
+                                title="Подписчики"
+                            />
+                        </div>
+                        : <Skeleton
+                            width={600}
+                            height={400}
+                        />
+                }
+
             </div>
 
             <div className="creator-panel__add-post">
                 <Button
                     color="success"
                     onClick={
-                        () => { app.$router.go(app.$router.createUrl('post.create')); }
+                        () => {
+                            app.$router.go(app.$router.createUrl('post.create'));
+                        }
                     }
                     text="Добавить пост"
                 />
@@ -158,6 +190,15 @@ class CreatorPanel extends Component<never, {
                 this.state.levelsNames[level.id] = level.name;
             });
             this.state.posts = await api.postsInfo(user.user.id);
+
+            setTimeout(() => {
+                this.state.statistics = {
+                    views: 55,
+                    remuneration: 44,
+                    postsCount: this.state.posts.length,
+                    subscribers: 100
+                };
+            }, 1000);
         } catch (e) {
             this.state.errorFirstLoading = true;
         }

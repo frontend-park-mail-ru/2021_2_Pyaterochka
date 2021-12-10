@@ -1,4 +1,3 @@
-import api from '../../api';
 import app from 'irbis';
 import Component from 'irbis/component';
 import ConfirmComponent from 'ui-library/confirm';
@@ -8,6 +7,7 @@ import LoadingView from '../loading-view';
 import Route from '../../../modules/irbis-router/route';
 import user from '../../storage/user';
 import { LevelEntity, PostEntity } from '../../api/types';
+import * as api from '../../api';
 
 class CreatePostView extends Component<{
     route: Route

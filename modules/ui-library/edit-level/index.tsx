@@ -16,7 +16,7 @@ export type EditLevelExportType = {
 };
 
 type PropsType = {
-    level: EditLevelExportType
+    level?: EditLevelExportType
     title: string,
     onSave: (level: EditLevelExportType, file?: File) => unknown,
     onDelete?: (level: EditLevelExportType, file?: File) => unknown
