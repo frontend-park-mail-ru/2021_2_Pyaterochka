@@ -1,6 +1,7 @@
 import config from './config';
 import {
-    AttachmentEntity, CommentEntity,
+    AttachmentEntity,
+    CommentEntity,
     CreatorEntity,
     FullPostEntity,
     IdType,

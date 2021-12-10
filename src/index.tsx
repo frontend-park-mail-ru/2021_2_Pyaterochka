@@ -9,7 +9,7 @@ import routes from './routes';
 import './styles/index.scss';
 import Layout from './components/layout';
 
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener('DOMContentLoaded', () => {
     user.update();
 
     App.setup(
