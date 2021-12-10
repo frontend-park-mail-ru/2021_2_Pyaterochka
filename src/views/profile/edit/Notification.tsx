@@ -1,6 +1,6 @@
 import Component from 'irbis/component';
-import SwitchContainer from 'ui-library/switch-container';
 import consts from '../../../consts';
+import SwitchContainer from 'ui-library/switch-container';
 import user from '../../../storage/user';
 
 class ProfileEditNotification extends Component<never> {

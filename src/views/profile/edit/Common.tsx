@@ -1,10 +1,10 @@
 import api from '../../../api';
-import SwitchContainer from 'ui-library/switch-container';
-import ImageUploader from 'ui-library/image-uploader';
 import Component from 'irbis/component';
-import EditNickname from './includes/edit-nickname';
-import user from '../../../storage/user';
 import consts from '../../../consts';
+import EditNickname from './includes/edit-nickname';
+import ImageUploader from 'ui-library/image-uploader';
+import SwitchContainer from 'ui-library/switch-container';
+import user from '../../../storage/user';
 
 class ProfileEditCommon extends Component<never, {
     loadingImage: boolean

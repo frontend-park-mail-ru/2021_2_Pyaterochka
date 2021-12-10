@@ -1,8 +1,8 @@
 import Component from 'irbis/component';
-import Navbar from '../navbar';
-import user from '../../storage/user';
 import Footer from '../footer';
+import Navbar from '../navbar';
 import NotificationPool from 'ui-library/notification-pool';
+import user from '../../storage/user';
 
 /**
  * Компонент разметки страницы

@@ -1,11 +1,11 @@
-import Component from 'irbis/component';
-import Step from 'ui-library/step';
-import PrettySection from 'ui-library/pretty-main-section';
 import app from 'irbis';
+import Component from 'irbis/component';
+import PrettySection from 'ui-library/pretty-main-section';
+import Step from 'ui-library/step';
 import SwitchComponent from 'ui-library/switch';
 
-import './style.scss';
 import consts from '../../consts';
+import './style.scss';
 
 class MainPageView extends Component<never, { isCreator: boolean }> {
     constructor () {

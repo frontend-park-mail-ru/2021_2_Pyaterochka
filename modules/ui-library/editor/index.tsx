@@ -1,11 +1,11 @@
-import { nextTick } from 'irbis/vdom/utils';
 import AudioPlayer from '../audio-player';
-import Component from 'irbis/component';
 import Button from '../button';
+import Component from 'irbis/component';
 import FileUploader from '../file-uploader';
 import IconComponent from '../icon';
 import ImageUploader from '../image-uploader';
 import VideoPlayer from '../video-player';
+import { nextTick } from 'irbis/vdom/utils';
 import './style.scss';
 
 type AttachType = string;

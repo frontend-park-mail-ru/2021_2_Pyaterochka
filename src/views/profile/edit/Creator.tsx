@@ -1,15 +1,15 @@
 import api from '../../../api';
-import Component from 'irbis/component';
-import Button from 'ui-library/button';
-import InputField from 'ui-library/input-field';
-import SelectComponent from 'ui-library/select';
-import user from '../../../storage/user';
-import ImageUploader from 'ui-library/image-uploader';
-import LevelCard from 'ui-library/level-card';
 import app from 'irbis';
-import Skeleton from 'ui-library/skeleton';
-import ValidationError from 'ui-library/validation-error';
+import Button from 'ui-library/button';
+import Component from 'irbis/component';
 import consts from '../../../consts';
+import ImageUploader from 'ui-library/image-uploader';
+import InputField from 'ui-library/input-field';
+import LevelCard from 'ui-library/level-card';
+import SelectComponent from 'ui-library/select';
+import Skeleton from 'ui-library/skeleton';
+import user from '../../../storage/user';
+import ValidationError from 'ui-library/validation-error';
 import { CreatorEntity, LevelWithParentEntity } from '../../../api/types';
 
 class ProfileEditCreator extends Component<never, {

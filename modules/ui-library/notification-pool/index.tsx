@@ -5,8 +5,8 @@ import './style.scss';
 
 type NotificationProps = {
     message: string,
-    action: string,
-    onOpen: () => unknown,
+    action?: string,
+    onOpen?: () => unknown,
 };
 type NotificationType = {
     id: string,

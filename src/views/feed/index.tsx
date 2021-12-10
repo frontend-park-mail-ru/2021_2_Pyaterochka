@@ -1,14 +1,13 @@
 import api from '../../api/index';
-import Component from 'irbis/component';
 import app from 'irbis';
-import PostCard from 'ui-library/post-card';
-import Skeleton from 'ui-library/skeleton';
-import ErrorPage from '../errorpage';
-
-import './style.scss';
 import Button from 'ui-library/button';
+import Component from 'irbis/component';
+import ErrorPage from '../errorpage';
+import PostCard from 'ui-library/post-card';
 import Route from 'irbis-router/route';
+import Skeleton from 'ui-library/skeleton';
 import { PostEntity } from '../../api/types';
+import './style.scss';
 
 class FeedView extends Component<{
     route: Route

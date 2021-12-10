@@ -1,8 +1,8 @@
-import Component from 'irbis/component';
 import app from 'irbis';
-import ValidationError from 'ui-library/validation-error';
-import InputField, { ValidationRule } from 'ui-library/input-field';
 import Button from 'ui-library/button';
+import Component from 'irbis/component';
+import InputField, { ValidationRule } from 'ui-library/input-field';
+import ValidationError from 'ui-library/validation-error';
 
 import api from '../../../../api';
 import user from '../../../../storage/user';

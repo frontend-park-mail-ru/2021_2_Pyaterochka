@@ -1,11 +1,11 @@
 import api from '../api/index';
-import Component from 'irbis/component';
-import Button from 'ui-library/button';
-import InputField from 'ui-library/input-field';
-import consts from '../consts';
 import app from 'irbis';
-import user from '../storage/user';
+import Button from 'ui-library/button';
+import Component from 'irbis/component';
+import consts from '../consts';
 import ErrorPage from './errorpage';
+import InputField from 'ui-library/input-field';
+import user from '../storage/user';
 
 class SignupView extends Component<never, {
     error: string | false,

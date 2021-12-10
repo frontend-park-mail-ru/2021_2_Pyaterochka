@@ -1,5 +1,5 @@
-import { arrayOfArraysToArray, findReplacements } from './utils';
 import VDomNode from './vdom-node';
+import { arrayOfArraysToArray, findReplacements } from './utils';
 
 class VDomElement implements VDomNode {
     dom: Element = null;

@@ -1,12 +1,12 @@
 import api from '../../../api';
-import Component from 'irbis/component';
+import app from 'irbis';
 import Button from 'ui-library/button';
+import Component from 'irbis/component';
+import consts from '../../../consts';
+import EditPassword from './includes/edit-password';
 import Skeleton from 'ui-library/skeleton';
 import TimeAgoComponent from 'ui-library/time-ago';
-import consts from '../../../consts';
-import app from 'irbis';
 import user from '../../../storage/user';
-import EditPassword from './includes/edit-password';
 import { PaymentEntity } from '../../../api/types';
 
 class ProfileEditSecure extends Component<never, {

@@ -1,16 +1,16 @@
 import api from '../../api';
-import Component from 'irbis/component';
-import Button from 'ui-library/button';
-import CreatorCard from 'ui-library/creator-card';
-import LevelCard from 'ui-library/level-card';
-import consts from '../../consts';
 import app from 'irbis';
+import Button from 'ui-library/button';
+import Component from 'irbis/component';
+import consts from '../../consts';
+import CreatorCard from 'ui-library/creator-card';
 import ErrorPage from '../errorpage';
+import LevelCard from 'ui-library/level-card';
 import LoadingView from '../loading-view';
 
-import './style.scss';
 import Route from 'irbis-router/route';
 import { CreatorEntity, LevelWithParentEntity } from '../../api/types';
+import './style.scss';
 
 class PaymentPage extends Component<{
     route?: Route

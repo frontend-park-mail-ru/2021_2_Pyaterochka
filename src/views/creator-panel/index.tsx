@@ -1,16 +1,16 @@
-import Component from 'irbis/component';
-import app from 'irbis';
-import user from '../../storage/user';
 import api from '../../api';
-import CountersComponent from 'ui-library/counters';
-import TimeAgoComponent from 'ui-library/time-ago';
+import app from 'irbis';
 import Button from 'ui-library/button';
-import Skeleton from 'ui-library/skeleton';
+import Component from 'irbis/component';
+import CountersComponent from 'ui-library/counters';
 import CreatorCard from 'ui-library/creator-card';
+import Skeleton from 'ui-library/skeleton';
+import TimeAgoComponent from 'ui-library/time-ago';
+import user from '../../storage/user';
 
-import './style.scss';
 import ErrorPage from '../errorpage';
 import { LevelEntity, PostEntity } from '../../api/types';
+import './style.scss';
 
 class CreatorPanel extends Component<never, {
     creator?: {

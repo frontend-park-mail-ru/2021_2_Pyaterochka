@@ -1,5 +1,5 @@
-import Component from 'irbis/component';
 import Button from '../button';
+import Component from 'irbis/component';
 import './notification.scss';
 
 export default class Notification extends Component<{

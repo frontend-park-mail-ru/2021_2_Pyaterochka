@@ -1,35 +1,35 @@
-import Navbar from '../../components/navbar';
 import Footer from '../../components/footer';
+import Navbar from '../../components/navbar';
 
-import Component from 'irbis/component';
 import Button from 'ui-library/button';
+import Comment from 'ui-library/comment';
+import Component from 'irbis/component';
 import CreatorCard from 'ui-library/creator-card';
 import InputField from 'ui-library/input-field';
 import LevelCard from 'ui-library/level-card';
+import Like from 'ui-library/like/index';
 import LockMessage from 'ui-library/lock-message';
 import PostCard from 'ui-library/post-card';
+import PrettySection from 'ui-library/pretty-main-section';
 import ProfileCard from 'ui-library/profile-card';
 import Skeleton from 'ui-library/skeleton';
 import Spinner from 'ui-library/spinner';
 import Step from 'ui-library/step';
-import Comment from 'ui-library/comment';
-import PrettySection from 'ui-library/pretty-main-section';
-import Like from 'ui-library/like/index';
 
-import './style.scss';
 import app from 'irbis';
+import AudioPlayer from 'ui-library/audio-player';
 import EditorComponent from 'ui-library/editor';
-import { PropsView } from './PropsView';
-import TimeAgoComponent from 'ui-library/time-ago';
+import FileUploader from 'ui-library/file-uploader';
+import ImageUploader from 'ui-library/image-uploader';
+import SelectComponent from 'ui-library/select';
 import SimplifyNumComponent from 'ui-library/simplify-num';
 import SwitchComponent from 'ui-library/switch';
 import TabsPanel from 'ui-library/tabs-panel';
-import ImageUploader from 'ui-library/image-uploader';
-import SelectComponent from 'ui-library/select';
-import VideoPlayer from 'ui-library/video-player';
-import FileUploader from 'ui-library/file-uploader';
-import AudioPlayer from 'ui-library/audio-player';
+import TimeAgoComponent from 'ui-library/time-ago';
 import VDomComponent from 'irbis/vdom/vdom-component';
+import VideoPlayer from 'ui-library/video-player';
+import { PropsView } from './PropsView';
+import './style.scss';
 
 class IndexView extends Component {
     constructor () {

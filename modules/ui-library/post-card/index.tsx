@@ -1,10 +1,10 @@
-import Component from 'irbis/component';
+import app from 'irbis';
 import Button from '../button';
+import Component from 'irbis/component';
+import CountersComponent from '../counters';
 import LockMessage from '../lock-message';
 import TimeAgoComponent from '../time-ago';
 import './style.scss';
-import CountersComponent from '../counters';
-import app from 'irbis';
 
 /**
  * Компонент карточки записи

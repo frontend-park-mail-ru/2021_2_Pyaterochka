@@ -1,6 +1,6 @@
-import Component from 'irbis/component';
-import Button from 'ui-library/button';
 import app from 'irbis';
+import Button from 'ui-library/button';
+import Component from 'irbis/component';
 
 import './style.scss';
 

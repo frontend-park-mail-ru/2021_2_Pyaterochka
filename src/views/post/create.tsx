@@ -1,10 +1,10 @@
 import api from '../../api';
+import app from 'irbis';
 import Component from 'irbis/component';
 import EditorComponent, { PostExportType } from 'ui-library/editor';
-import app from 'irbis';
-import user from '../../storage/user';
 import ErrorPage from '../errorpage';
 import LoadingView from '../loading-view';
+import user from '../../storage/user';
 import { LevelEntity } from '../../api/types';
 
 class CreatePostView extends Component<never, {

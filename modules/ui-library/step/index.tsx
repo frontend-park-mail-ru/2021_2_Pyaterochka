@@ -1,6 +1,6 @@
 import Component from 'irbis/component';
-import './style.scss';
 import VDomNode from '../../irbis/vdom/vdom-node';
+import './style.scss';
 
 /**
  * Компонент шага

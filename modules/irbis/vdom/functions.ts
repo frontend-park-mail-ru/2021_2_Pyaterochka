@@ -1,10 +1,10 @@
-import { ComponentConstructor } from '../component';
 import Fragment from './fragment';
-import { arrayOfArraysToArray } from './utils';
 import VDomComponent from './vdom-component';
 import VDomElement from './vdom-element';
 import VDomNode from './vdom-node';
 import VDomText from './vdom-text';
+import { arrayOfArraysToArray } from './utils';
+import { ComponentConstructor } from '../component';
 
 /**
  * Обертка JSX для создания представления компонента с одним

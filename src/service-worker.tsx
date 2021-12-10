@@ -1,5 +1,5 @@
-import Layout from './components/layout';
 import app from 'irbis';
+import Layout from './components/layout';
 import LoadingView from './views/loading-view';
 
 const askUserToUpdate = reg => {

@@ -10,10 +10,14 @@ module.exports = {
     extends: [
         'plugin:@typescript-eslint/recommended',
         'standard',
-        'plugin:react/all',
+        'plugin:react/all'
 
     ],
-    plugins: ['@typescript-eslint', 'react'],
+    plugins: [
+        '@typescript-eslint',
+        'react',
+        'sort-imports-es6-autofix'
+    ],
     parserOptions: {
         ecmaVersion: 12,
         sourceType: 'module',
@@ -24,6 +28,11 @@ module.exports = {
     rules: {
         indent: ['error', 4],
         semi: [2, 'always'],
+        'sort-imports-es6-autofix/sort-imports-es6': ['error', {
+            ignoreCase: true,
+            ignoreMemberSort: false,
+            memberSyntaxSortOrder: ['single', 'multiple', 'all', 'none'],
+        }],
         'react/react-in-jsx-scope': 'off',
         'react/prop-types': 'off',
         'react/jsx-indent': ['error', 4],

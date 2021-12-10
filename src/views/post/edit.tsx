@@ -1,12 +1,12 @@
 import api from '../../api';
-import Component from 'irbis/component';
-import EditorComponent, { PostExportType } from 'ui-library/editor';
 import app from 'irbis';
-import user from '../../storage/user';
-import LoadingView from '../loading-view';
+import Component from 'irbis/component';
 import ConfirmComponent from 'ui-library/confirm';
+import EditorComponent, { PostExportType } from 'ui-library/editor';
 import ErrorPage from '../errorpage';
+import LoadingView from '../loading-view';
 import Route from '../../../modules/irbis-router/route';
+import user from '../../storage/user';
 import { LevelEntity, PostEntity } from '../../api/types';
 
 class CreatePostView extends Component<{

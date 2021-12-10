@@ -1,5 +1,5 @@
-import Component from 'irbis/component';
 import Button from '../button';
+import Component from 'irbis/component';
 import ImageUploader from '../image-uploader';
 import InputField from '../input-field';
 import LevelCard from '../level-card';

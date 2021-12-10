@@ -1,15 +1,15 @@
-import Component from 'irbis/component';
-import TabsContainer from 'ui-library/tabs-container';
-import consts from '../../../consts';
 import app from 'irbis';
+import Component from 'irbis/component';
+import consts from '../../../consts';
+import ErrorPage from '../../errorpage';
 import ProfileEditCommon from './Common';
 import ProfileEditCreator from './Creator';
 import ProfileEditNotification from './Notification';
 import ProfileEditSecure from './Secure';
-import ErrorPage from '../../errorpage';
+import TabsContainer from 'ui-library/tabs-container';
 
-import './style.scss';
 import Route from 'irbis-router/route';
+import './style.scss';
 
 class ProfileEditView extends Component<{
     route: Route

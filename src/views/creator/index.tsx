@@ -1,17 +1,17 @@
 import api from '../../api/index';
-import Component from 'irbis/component';
+import app from 'irbis';
 import Button from 'ui-library/button';
+import Component from 'irbis/component';
 import CreatorCard from 'ui-library/creator-card';
+import ErrorPage from '../errorpage';
 import LevelCard from 'ui-library/level-card';
 import LockMessage from 'ui-library/lock-message';
 import PostCard from 'ui-library/post-card';
 import Skeleton from 'ui-library/skeleton';
-import app from 'irbis';
 import user from '../../storage/user';
-import ErrorPage from '../errorpage';
 
-import './style.scss';
 import Route from 'irbis-router/route';
+import './style.scss';
 
 class CreatorView extends Component<{
     route?: Route

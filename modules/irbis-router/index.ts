@@ -2,10 +2,10 @@
  * @module Роутер
  */
 
-import Component, { ComponentConstructor } from 'irbis/component';
 import app from 'irbis';
-import VDomComponent from 'irbis/vdom/vdom-component';
+import Component, { ComponentConstructor } from 'irbis/component';
 import Route from './route';
+import VDomComponent from 'irbis/vdom/vdom-component';
 import VDomNode from 'irbis/vdom/vdom-node';
 import VDomText from '../irbis/vdom/vdom-text';
 

@@ -1,13 +1,13 @@
-import Router from 'irbis-router';
-import LoadingView from './views/loading-view';
-import user from './storage/user';
 import App from 'irbis';
 import ErrorPage from './views/errorpage';
+import LoadingView from './views/loading-view';
 import registerValidSW from './service-worker';
+import Router from 'irbis-router';
 import routes from './routes';
+import user from './storage/user';
 
-import './styles/index.scss';
 import Layout from './components/layout';
+import './styles/index.scss';
 
 document.addEventListener('DOMContentLoaded', () => {
     user.update();

@@ -1,8 +1,8 @@
 /** @module API */
 
-import { sendJSON, uploadFile } from './helpers';
-import { mapComment, mapCreator, mapLevels, mapPayment, mapPost, mapPostFull, mapProfile } from './mappers';
 import { AttachmentEntity, CommentEntity, CreatorEntity, IdType } from './types';
+import { mapComment, mapCreator, mapLevels, mapPayment, mapPost, mapPostFull, mapProfile } from './mappers';
+import { sendJSON, uploadFile } from './helpers';
 
 export default {
     /**

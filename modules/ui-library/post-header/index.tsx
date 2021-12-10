@@ -1,6 +1,6 @@
 import app from 'irbis';
-import CountersComponent from '../counters';
 import Component from 'irbis/component';
+import CountersComponent from '../counters';
 import TimeAgoComponent from '../time-ago';
 import './style.scss';
 

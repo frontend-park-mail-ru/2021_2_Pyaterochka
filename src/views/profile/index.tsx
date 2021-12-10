@@ -1,16 +1,16 @@
 import api from '../../api/index';
-import Component from 'irbis/component';
+import app from 'irbis';
 import Button from 'ui-library/button';
+import Component from 'irbis/component';
+import consts from '../../consts';
 import CreatorCard from 'ui-library/creator-card';
+import ErrorPage from '../errorpage';
 import ProfileCard from 'ui-library/profile-card';
 import Skeleton from 'ui-library/skeleton';
-import consts from '../../consts';
-import app from 'irbis';
 import user from '../../storage/user';
-import ErrorPage from '../errorpage';
 
-import './style.scss';
 import { CreatorEntity } from '../../api/types';
+import './style.scss';
 
 class ProfileView extends Component<never, {
     user?: {

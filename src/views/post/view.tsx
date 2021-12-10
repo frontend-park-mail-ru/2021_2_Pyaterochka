@@ -1,22 +1,22 @@
-import Component from 'irbis/component';
-import CreatorCard from 'ui-library/creator-card';
-import Comment from 'ui-library/comment';
-import Skeleton from 'ui-library/skeleton';
-import './view.scss';
-import InputField from 'ui-library/input-field';
+import AddCommentForm from './includes/add-comment-form';
+import api from '../../api';
+import app from 'irbis';
+import AudioPlayer from 'ui-library/audio-player';
 import Button from 'ui-library/button';
+import Comment from 'ui-library/comment';
+import Component from 'irbis/component';
+import consts from '../../consts';
+import CreatorCard from 'ui-library/creator-card';
+import ErrorPage from '../errorpage';
+import InputField from 'ui-library/input-field';
 import Like from 'ui-library/like';
 import PostHeaderComponent from 'ui-library/post-header';
-import api from '../../api';
-import ErrorPage from '../errorpage';
-import user from '../../storage/user';
-import app from 'irbis';
-import consts from '../../consts';
-import AudioPlayer from 'ui-library/audio-player';
-import VideoPlayer from 'ui-library/video-player';
 import Route from 'irbis-router/route';
+import Skeleton from 'ui-library/skeleton';
+import user from '../../storage/user';
+import VideoPlayer from 'ui-library/video-player';
 import { CommentEntity, CreatorEntity, FullPostEntity, PostEntity } from '../../api/types';
-import AddCommentForm from './includes/add-comment-form';
+import './view.scss';
 
 class PostView extends Component<{
     route?: Route
