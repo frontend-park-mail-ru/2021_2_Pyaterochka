@@ -64,7 +64,7 @@ jobs:
         with:
           host: 95.163.208.72
           username: ubuntu
-          key: ${{ secrets.PRIVATE_KEY }}
+          key: ${{ secrets.PRIVAT_KEY }}
           source: "build/*"
           target: "/home/ubuntu/tp/2021_2_Pyaterochka"
           strip_components: 1
