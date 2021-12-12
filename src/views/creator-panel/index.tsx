@@ -81,7 +81,7 @@ class CreatorPanel extends Component<never, {
 
                             <StatisticsCard
                                 counter={this.state.statistics.remuneration}
-                                title="Вознаграждение"
+                                title="Доход"
                             />
 
                             <StatisticsCard
@@ -191,12 +191,12 @@ class CreatorPanel extends Component<never, {
             });
             this.state.posts = await api.postsInfo(user.user.id);
 
-            setTimeout(() => {
+            setTimeout(async () => {
                 this.state.statistics = {
-                    views: 55,
-                    remuneration: 44,
-                    postsCount: this.state.posts.length,
-                    subscribers: 100
+                    views: await api.viewsCount(user.user.id),
+                    remuneration: await api.incomeCount(user.user.id),
+                    postsCount: await api.postsCount(user.user.id),
+                    subscribers: await api.subscribersCount(user.user.id)
                 };
             }, 1000);
         } catch (e) {

@@ -704,6 +704,62 @@ async function payments () {
     return (await req.json()).payments.map(mapPayment);
 }
 
+/**
+ * Статистика количества постов
+ */
+async function postsCount (id: IdType) {
+    const req = await sendJSON({
+        url: `/creators/${id}/statistics/posts/count`,
+        method: 'get'
+    });
+
+    const data = await req.json();
+
+    return data.count_posts;
+}
+
+/**
+ * Статистика количества просмотров
+ */
+async function viewsCount (id: IdType) {
+    const req = await sendJSON({
+        url: `/creators/${id}/statistics/posts/views?days=12`,
+        method: 'get'
+    });
+
+    const data = await req.json();
+
+    return data.count_posts_views;
+}
+
+/**
+ * Статистика количества подписчиков
+ */
+async function subscribersCount (id: IdType) {
+    const req = await sendJSON({
+        url: `/creators/${id}/statistics/subscribers`,
+        method: 'get'
+    });
+
+    const data = await req.json();
+
+    return data.count_subscribers;
+}
+
+/**
+ * Статистика дохода
+ */
+async function incomeCount (id: IdType) {
+    const req = await sendJSON({
+        url: `/creators/${id}/statistics/total_income?days=12`,
+        method: 'get'
+    });
+
+    const data = await req.json();
+
+    return data.total_income;
+}
+
 export {
     login,
     changePassword,
@@ -739,5 +795,9 @@ export {
     postCommentLeave,
     levelSubscribe,
     levelUnsubscribe,
-    payments
+    payments,
+    postsCount,
+    viewsCount,
+    subscribersCount,
+    incomeCount
 };
