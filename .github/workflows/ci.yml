@@ -66,5 +66,5 @@ jobs:
           username: ubuntu
           key: ${{ secrets.PRIVAT_KEY }}
           source: "build/*"
-          target: "/home/ubuntu/tp/2021_2_Pyaterochka"
+          target: "/home/ubuntu/tp/2021_2_Pyaterochka/static"
           strip_components: 1
