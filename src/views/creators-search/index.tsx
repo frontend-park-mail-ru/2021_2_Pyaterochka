@@ -119,34 +119,9 @@ class CreatorsSearch extends Component<never, {
             query: this.state.searchQuery,
             category: this.state.searchCategory === all ? '' : this.state.searchCategory
         });
-        // const p = new URLSearchParams({
-        //     query: this.state.searchQuery,
-        //     category: this.state.searchCategory
-        // });
-        // location.hash = p.toString();
     }
 
     async created () {
-        // try {
-        //     console.log(location.hash.substr(1))
-        //     const urlSearchParams = new URLSearchParams(location.hash.substr(1));
-
-        //     console.log(urlSearchParams)
-
-        //     const query = urlSearchParams.get('query');
-        //     const category = urlSearchParams.get('category');
-
-        //     if (query && category) {
-
-        //         this.state.searchQuery = query;
-        //         this.state.searchCategory = category;
-        //         return;
-        //     }
-        //     throw '';
-        // } catch {
-        //     location.hash = '';
-        // }
-
         const info = await api.info();
         this.state.categories = [all, ...info.category];
 

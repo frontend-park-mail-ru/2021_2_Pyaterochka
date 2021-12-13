@@ -4,6 +4,7 @@ import Component from 'irbis/component';
 import CountersComponent from 'ui-library/counters';
 import CreatorCard from 'ui-library/creator-card';
 import ErrorPage from '../errorpage';
+import SelectComponent from 'ui-library/select';
 import Skeleton from 'ui-library/skeleton';
 import StatisticsCard from './includes/StatisticsCard';
 import TimeAgoComponent from 'ui-library/time-ago';
@@ -29,8 +30,23 @@ class CreatorPanel extends Component<never, {
         views: number,
         postsCount: number,
         subscribers: number
-    }
+    },
+    categories: string[],
+    duration: string
 }> {
+    constructor () {
+        super();
+
+        this.state.categories = [
+            '10 дней',
+            'Месяц',
+            'Полгода',
+            'Год'
+        ];
+
+        this.state.duration = this.state.categories[0];
+    }
+
     render () {
         // if (this.attributes.errorFirstLoading) {
         //     return <ErrorPage desc="Нет соединения с интернетом" />;
@@ -71,21 +87,37 @@ class CreatorPanel extends Component<never, {
                 {
                     this.state.statistics
                         ? <div className="creator-panel__statistics">
-                            <StatisticsCard
-                                counter={this.state.statistics.postsCount}
-                                title="Кол-во постов" />
+                            <div className="creator-panel__statistics_select">
+                                <SelectComponent
+                                    inital={this.state.duration}
+                                    options={this.state.categories}
+                                    placeholder="Статистика за"
+                                    onChange={
+                                        (value: string) => {
+                                            this.state.duration = value;
+                                            this.setDuration();
+                                        }
+                                    }
+                                />
+                            </div>
 
                             <StatisticsCard
-                                counter={this.state.statistics.views}
-                                title="Просмотры" />
+                                counter={this.state.statistics.postsCount ? this.state.statistics.postsCount : '-'}
+                                title="Кол-во постов"
+                            />
 
                             <StatisticsCard
-                                counter={this.state.statistics.remuneration}
+                                counter={this.state.statistics.views ? this.state.statistics.views : '-'}
+                                title="Просмотры"
+                            />
+
+                            <StatisticsCard
+                                counter={this.state.statistics.remuneration ? this.state.statistics.remuneration : '-'}
                                 title="Доход"
                             />
 
                             <StatisticsCard
-                                counter={this.state.statistics.subscribers}
+                                counter={this.state.statistics.subscribers ? this.state.statistics.subscribers : '-'}
                                 title="Подписчики"
                             />
                         </div>
@@ -175,6 +207,29 @@ class CreatorPanel extends Component<never, {
         </div>);
     }
 
+    async setDuration () {
+        let days: string;
+        if (this.state.duration === this.state.categories[0]) {
+            days = '10';
+        }
+        if (this.state.duration === this.state.categories[1]) {
+            days = '30';
+        }
+        if (this.state.duration === this.state.categories[2]) {
+            days = '180';
+        }
+        if (this.state.duration === this.state.categories[3]) {
+            days = '365';
+        }
+
+        this.state.statistics = {
+            views: await api.viewsCount(user.user.id, days),
+            remuneration: await api.incomeCount(user.user.id, days),
+            postsCount: await api.postsCount(user.user.id),
+            subscribers: await api.subscribersCount(user.user.id)
+        };
+    }
+
     async created () {
         if (!user.user) {
             app.$router.go(app.$router.createUrl('signin'));
@@ -191,13 +246,8 @@ class CreatorPanel extends Component<never, {
             });
             this.state.posts = await api.postsInfo(user.user.id);
 
-            setTimeout(async () => {
-                this.state.statistics = {
-                    views: await api.viewsCount(user.user.id),
-                    remuneration: await api.incomeCount(user.user.id),
-                    postsCount: await api.postsCount(user.user.id),
-                    subscribers: await api.subscribersCount(user.user.id)
-                };
+            setTimeout(() => {
+                this.setDuration();
             }, 1000);
         } catch (e) {
             this.state.errorFirstLoading = true;

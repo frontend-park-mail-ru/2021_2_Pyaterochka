@@ -721,9 +721,9 @@ async function postsCount (id: IdType) {
 /**
  * Статистика количества просмотров
  */
-async function viewsCount (id: IdType) {
+async function viewsCount (id: IdType, days: string) {
     const req = await sendJSON({
-        url: `/creators/${id}/statistics/posts/views?days=12`,
+        url: `/creators/${id}/statistics/posts/views?days=${days}`,
         method: 'get'
     });
 
@@ -749,9 +749,9 @@ async function subscribersCount (id: IdType) {
 /**
  * Статистика дохода
  */
-async function incomeCount (id: IdType) {
+async function incomeCount (id: IdType, days: string) {
     const req = await sendJSON({
-        url: `/creators/${id}/statistics/total_income?days=12`,
+        url: `/creators/${id}/statistics/total_income?days=${days}`,
         method: 'get'
     });
 

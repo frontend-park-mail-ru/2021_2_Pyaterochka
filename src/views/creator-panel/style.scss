@@ -22,13 +22,17 @@
 
   &__statistics {
     width: 600px;
-    height: 400px;
+    height: 450px;
     padding: 20px;
     max-width: calc(100vw - 90px);
     overflow: auto;
     display: inline-flex;
     flex-wrap: wrap;
     justify-content: center;
+
+    &_select {
+      width: 100%;
+    }
   }
 
   &__posts__last-cell {
