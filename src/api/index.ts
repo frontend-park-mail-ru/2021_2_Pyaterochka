@@ -709,8 +709,9 @@ async function payments () {
 
 async function pay (level: LevelEntity, creator: CreatorEntity) {
     const tokenData = await sendJSON({
-        url: '/payments/token',
-        method: 'get'
+        url: '/user/payments/token',
+        method: 'get',
+        csrf: true
     });
 
     const token = (await tokenData.json() as {
