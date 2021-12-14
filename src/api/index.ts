@@ -735,7 +735,7 @@ async function pay (level: LevelEntity, creator: CreatorEntity) {
         paymentType: 'AC',
         sum: level.priceNumber,
         label: token,
-        successURL: `${location.origin}/${app.$router.createUrl('profile')}`
+        successURL: `${location.origin}${app.$router.createUrl('profile')}`
     });
 }
 
