@@ -722,7 +722,7 @@ async function pay (level: LevelEntity, creator: CreatorEntity) {
         url: `/creators/${creator.id}/awards/${level.id}/subscribe`,
         method: 'post',
         body: {
-            token
+            pay_token: token
         },
         csrf: true
     });
