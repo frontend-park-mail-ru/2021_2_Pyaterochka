@@ -1,8 +1,11 @@
 /** @module API */
 
-import { AttachmentEntity, CommentEntity, CreatorEntity, IdType } from './types';
+import { AttachmentEntity, CommentEntity, CreatorEntity, IdType, LevelEntity } from './types';
 import { mapComment, mapCreator, mapLevels, mapPayment, mapPost, mapPostFull, mapProfile } from './mappers';
 import { sendJSON, uploadFile } from './helpers';
+import consts from '../consts';
+import post from './hiddenForm';
+import app from '../../modules/irbis';
 
 /**
  * Авторизация
@@ -704,6 +707,37 @@ async function payments () {
     return (await req.json()).payments.map(mapPayment);
 }
 
+async function pay (level: LevelEntity, creator: CreatorEntity) {
+    const tokenData = await sendJSON({
+        url: '/payments/token',
+        method: 'get',
+    });
+
+    const token = (await tokenData.json() as {
+        token: string
+    }).token;
+
+    await sendJSON({
+        url: `/creators/${creator.id}/awards/${level.id}/subscribe`,
+        method: 'post',
+        body: {
+            token
+        },
+        csrf: true
+    });
+
+    const message = consts.subscribeOnLevel + ' ' + level.name + ' автора ' + creator.name;
+    post('https://yoomoney.ru/quickpay/confirm.xml', {
+        receiver: '410011824645986',
+        'quickpay-form': 'shop',
+        targets: message,
+        paymentType: 'AC',
+        sum: level.priceNumber,
+        label: token,
+        successURL: `${location.origin}/${app.$router.createUrl('profile')}`
+    });
+}
+
 export {
     login,
     changePassword,
@@ -739,5 +773,6 @@ export {
     postCommentLeave,
     levelSubscribe,
     levelUnsubscribe,
-    payments
+    payments,
+    pay
 };

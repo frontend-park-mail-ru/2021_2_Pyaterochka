@@ -11,6 +11,7 @@ import * as api from '../../api';
 import Route from 'irbis-router/route';
 import { CreatorEntity, LevelWithParentEntity } from '../../api/types';
 import './style.scss';
+import user from '../../storage/user';
 
 class PaymentPage extends Component<{
     route?: Route
@@ -47,9 +48,8 @@ class PaymentPage extends Component<{
             this.state.loadingMessage = 'Изменение подписки';
             await api.levelUnsubscribe(this.creatorId, this.state.creator.levelId);
         }
-        await api.levelSubscribe(this.creatorId, this.levelId);
 
-        app.$router.go(app.$router.createUrl('creator', this.creatorId));
+        api.pay(this.attributes.level, this.attributes.creator, user.user);
     }
 
     async unsubscribe () {

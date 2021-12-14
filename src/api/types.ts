@@ -44,7 +44,8 @@ type LevelEntity = {
     name: string
     cover: string
     benefits: string[]
-    price: string
+    price: string,
+    priceNumber: number,
     color: string
     parentId: IdType
 }
