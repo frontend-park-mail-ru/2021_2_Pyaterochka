@@ -1,12 +1,14 @@
 import App from 'irbis';
 import ErrorPage from './views/errorpage';
+import Layout from './components/layout';
 import LoadingView from './views/loading-view';
 import registerValidSW from './service-worker';
 import Router from 'irbis-router';
 import routes from './routes';
 import user from './storage/user';
 
-import Layout from './components/layout';
+import './pushes';
+
 import './styles/index.scss';
 
 document.addEventListener('DOMContentLoaded', () => {
