@@ -9,9 +9,9 @@ import LoadingView from '../loading-view';
 import * as api from '../../api';
 
 import Route from 'irbis-router/route';
+import user from '../../storage/user';
 import { CreatorEntity, LevelWithParentEntity } from '../../api/types';
 import './style.scss';
-import user from '../../storage/user';
 
 class PaymentPage extends Component<{
     route?: Route

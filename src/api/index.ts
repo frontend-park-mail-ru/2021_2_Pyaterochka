@@ -1,11 +1,11 @@
 /** @module API */
 
+import app from '../../modules/irbis';
+import consts from '../consts';
+import post from './hiddenForm';
 import { AttachmentEntity, CommentEntity, CreatorEntity, IdType, LevelEntity } from './types';
 import { mapComment, mapCreator, mapLevels, mapPayment, mapPost, mapPostFull, mapProfile } from './mappers';
 import { sendJSON, uploadFile } from './helpers';
-import consts from '../consts';
-import post from './hiddenForm';
-import app from '../../modules/irbis';
 
 /**
  * Авторизация
@@ -710,7 +710,7 @@ async function payments () {
 async function pay (level: LevelEntity, creator: CreatorEntity) {
     const tokenData = await sendJSON({
         url: '/payments/token',
-        method: 'get',
+        method: 'get'
     });
 
     const token = (await tokenData.json() as {
