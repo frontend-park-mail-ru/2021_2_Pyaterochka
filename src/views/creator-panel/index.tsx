@@ -31,27 +31,24 @@ class CreatorPanel extends Component<never, {
         postsCount: number,
         subscribers: number
     },
-    categories: string[],
     duration: string
 }> {
+    categories: string[]
+
     constructor () {
         super();
 
-        this.state.categories = [
+        this.categories = [
             '10 дней',
             'Месяц',
             'Полгода',
             'Год'
         ];
 
-        this.state.duration = this.state.categories[0];
+        this.state.duration = this.categories[0];
     }
 
     render () {
-        // if (this.attributes.errorFirstLoading) {
-        //     return <ErrorPage desc="Нет соединения с интернетом" />;
-        // }
-
         if (!navigator.onLine) {
             return <ErrorPage desc="Нет соединения с интернетом" />;
         }
@@ -87,18 +84,33 @@ class CreatorPanel extends Component<never, {
                 {
                     this.state.statistics
                         ? <div className="creator-panel__statistics">
-                            <div className="creator-panel__statistics_select">
-                                <SelectComponent
-                                    inital={this.state.duration}
-                                    options={this.state.categories}
-                                    placeholder="Статистика за"
-                                    onChange={
-                                        (value: string) => {
-                                            this.state.duration = value;
-                                            this.setDuration();
+                            <div className="creator-panel__statistics_choice">
+                                <div className="creator-panel__statistics_select">
+                                    <SelectComponent
+                                        inital="Выберите длительность"
+                                        options={this.categories}
+                                        placeholder="Статистика за"
+                                        onChange={
+                                            value => {
+                                                this.state.duration = value;
+                                                this.setDuration();
+                                            }
                                         }
-                                    }
-                                />
+                                    />
+                                </div>
+
+                                <div className="creator-panel__statistics_button">
+                                    <Button
+                                        color="primary"
+                                        onClick={
+                                            () => {
+                                                console.log(this.state.duration);
+                                                this.setDuration();
+                                            }
+                                        }
+                                        text="Показать"
+                                    />
+                                </div>
                             </div>
 
                             <StatisticsCard
@@ -209,16 +221,16 @@ class CreatorPanel extends Component<never, {
 
     async setDuration () {
         let days: string;
-        if (this.state.duration === this.state.categories[0]) {
+        if (this.state.duration === '10 дней') {
             days = '10';
         }
-        if (this.state.duration === this.state.categories[1]) {
+        if (this.state.duration === 'Месяц') {
             days = '30';
         }
-        if (this.state.duration === this.state.categories[2]) {
+        if (this.state.duration === 'Полгода') {
             days = '180';
         }
-        if (this.state.duration === this.state.categories[3]) {
+        if (this.state.duration === 'Год') {
             days = '365';
         }
 
