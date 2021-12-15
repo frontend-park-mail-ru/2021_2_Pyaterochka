@@ -29,7 +29,8 @@ class SelectComponent extends Component<PropsType, {
     }
 
     change (e: InputEvent) {
-        if (!(e.target instanceof HTMLInputElement)) {
+        if (!(e.target instanceof HTMLSelectElement)) {
+            console.error("Can't find select", e);
             return;
         }
         this.attributes.onChange(e.target.value);
