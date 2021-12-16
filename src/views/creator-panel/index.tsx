@@ -26,14 +26,14 @@ class CreatorPanel extends Component<never, {
         [key: string]: string
     },
     statistics?: {
-        remuneration: number,
+        remuneration: string,
         views: number,
         postsCount: number,
         subscribers: number
     },
     duration: string
 }> {
-    categories: string[]
+    categories: string[];
 
     constructor () {
         super();
@@ -243,9 +243,7 @@ class CreatorPanel extends Component<never, {
             });
             this.state.posts = await api.postsInfo(user.user.id);
 
-            setTimeout(() => {
-                this.setDuration();
-            }, 1000);
+            await this.setDuration();
         } catch (e) {
             this.state.errorFirstLoading = true;
         }
