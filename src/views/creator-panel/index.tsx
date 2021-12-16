@@ -84,33 +84,18 @@ class CreatorPanel extends Component<never, {
                 {
                     this.state.statistics
                         ? <div className="creator-panel__statistics">
-                            <div className="creator-panel__statistics_choice">
-                                <div className="creator-panel__statistics_select">
-                                    <SelectComponent
-                                        inital="Выберите длительность"
-                                        options={this.categories}
-                                        placeholder="Статистика за"
-                                        onChange={
-                                            value => {
-                                                this.state.duration = value;
-                                                this.setDuration();
-                                            }
+                            <div className="creator-panel__statistics_select">
+                                <SelectComponent
+                                    inital={this.state.duration}
+                                    options={this.categories}
+                                    placeholder="Статистика за"
+                                    onChange={
+                                        value => {
+                                            this.state.duration = value;
+                                            this.setDuration();
                                         }
-                                    />
-                                </div>
-
-                                <div className="creator-panel__statistics_button">
-                                    <Button
-                                        color="primary"
-                                        onClick={
-                                            () => {
-                                                console.log(this.state.duration);
-                                                this.setDuration();
-                                            }
-                                        }
-                                        text="Показать"
-                                    />
-                                </div>
+                                    }
+                                />
                             </div>
 
                             <StatisticsCard

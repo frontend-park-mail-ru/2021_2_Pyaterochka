@@ -30,20 +30,10 @@
     flex-wrap: wrap;
     justify-content: center;
 
-    &_choice {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    &_select {
       width: 100%;
     }
 
-    &_select {
-      width: 400px;
-    }
-
-    &_button {
-      width: 150px;
-    }
   }
 
   &__posts__last-cell {
