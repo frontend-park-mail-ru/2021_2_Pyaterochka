@@ -23,10 +23,10 @@ socket.onmessage = function (event) {
     if (message.type === 'Comment') {
         app.$notification.push('', 10000, {
             message: `Новый комментарий в посте "${message.push.post_title}"`,
-            action: 'Открыть пост',
-            onOpen: () => {
-                app.$router.go(app.$router.createUrl('post.view', `${message.push.creator_id}/${message.push.post_id}`));
-            }
+            // action: 'Открыть пост',
+            // onOpen: () => {
+            //     app.$router.go(app.$router.createUrl('post.view', `${message.push.creator_id}/${message.push.post_id}`));
+            // }
         });
     }
 };
