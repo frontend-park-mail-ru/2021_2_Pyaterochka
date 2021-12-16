@@ -11,6 +11,10 @@ socket.onmessage = function (event) {
     };
 
     if (message.type === 'Post') {
+        if (`${message.push.creator_id}/${message.push.post_id}` === '2/1') {
+            return;
+        }
+
         app.$notification.push('', 10000, {
             message: `Вышел новый пост "${message.push.post_title}" у автора ${message.push.creator_nickname}`,
             action: 'Открыть пост',
