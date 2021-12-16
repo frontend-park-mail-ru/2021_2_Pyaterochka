@@ -4,11 +4,13 @@ import './style.scss';
 class StatisticsCard extends Component<{
     title: string,
     counter: string | number
+    duration?: string
 }> {
     defaultProps () {
         return {
             title: '',
-            counter: 0
+            counter: 0,
+            duration: ''
         };
     }
 
@@ -21,6 +23,11 @@ class StatisticsCard extends Component<{
             <div className="statistics-card__counter">
                 {this.props.counter}
             </div>
+
+            <div className="statistics-card__duration">
+                {this.props.duration}
+            </div>
+
         </div>);
     }
 }

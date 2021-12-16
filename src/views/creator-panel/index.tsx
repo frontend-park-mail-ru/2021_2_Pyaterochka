@@ -106,11 +106,13 @@ class CreatorPanel extends Component<never, {
                             <StatisticsCard
                                 counter={this.state.statistics.views ? this.state.statistics.views : '-'}
                                 title="Просмотры"
+                                duration={this.state.duration}
                             />
 
                             <StatisticsCard
                                 counter={this.state.statistics.remuneration ? this.state.statistics.remuneration : '-'}
                                 title="Доход"
+                                duration={this.state.duration}
                             />
 
                             <StatisticsCard
