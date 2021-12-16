@@ -326,7 +326,7 @@ async function creators () {
 
     const data = await req.json();
 
-    return data.map(mapCreator);
+    return data.creators.map(mapCreator);
 }
 
 /**
@@ -572,7 +572,7 @@ async function levelsInfo (id: IdType) {
 
     const data = await req.json();
 
-    return mapLevels(data);
+    return mapLevels(data.awards);
 }
 
 /**
@@ -587,7 +587,7 @@ async function postsInfo (id: IdType) {
 
     const data = await req.json();
 
-    return data.map(p => mapPost(p, id));
+    return data.posts.map(p => mapPost(p, id));
 }
 
 /**
@@ -792,7 +792,7 @@ async function incomeCount (id: IdType, days: string) {
 
     const data = await req.json();
 
-    return data.total_income;
+    return data.total_income + ' ' + consts.rubble;
 }
 
 export {
