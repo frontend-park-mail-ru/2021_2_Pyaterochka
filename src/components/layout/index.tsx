@@ -1,7 +1,7 @@
 import Component from 'irbis/component';
 import Footer from '../footer';
 import Navbar from '../navbar';
-import NotificationPool from 'ui-library/notification-pool';
+// import NotificationPool from 'ui-library/notification-pool';
 import user from '../../storage/user';
 
 /**
@@ -28,7 +28,7 @@ class Layout extends Component<Record<string, never>> {
 
                 <Footer key='footer' />
 
-                <NotificationPool key='notification-pool' />
+                {/* <NotificationPool key='notification-pool' /> */}
             </div>
         );
     }

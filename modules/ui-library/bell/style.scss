@@ -1,0 +1,9 @@
+.bell {
+  display: flex;
+  width: 50px;
+  justify-content: space-between;
+
+  &__notification-number {
+    color: var(--color-default);
+  }
+}
