@@ -7,7 +7,7 @@
   &__avatar {
     width: 200px;
     height: 200px;
-    box-shadow: 0 4px 4px 0 #00000040;
+    box-shadow: var(--shadow-light);
     border-radius: 100%;
     background-size: cover;
     background-position: center;

@@ -7,14 +7,14 @@ class Route {
     url: string;
     component: () => Promise<{ default: ComponentConstructor }>;
     title: string;
-    name: string = null;
-    data: any;
+    name?: string = null;
+    data: string;
 
     constructor (route: {
         url: string,
         component: () => Promise<{ default: ComponentConstructor }>,
         title: string,
-        name: string
+        name?: string
     }
     ) {
         this.url = route.url;

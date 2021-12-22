@@ -9,7 +9,7 @@
   background: #555;
   color: #fff;
   transition: background ease 0.3s;
-  border-radius: 5px;
+  border-radius: var(--border-radius);
 
   &--horizontal {
     min-height: auto;

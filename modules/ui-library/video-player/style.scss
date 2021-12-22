@@ -1,7 +1,7 @@
 .video-player {
   position: relative;
   overflow: hidden;
-  border-radius: 5px;
+  border-radius: var(--border-radius);
 
   &__spinner {
     width: 100%;

@@ -10,7 +10,7 @@
   }
 
   &__subtitle {
-    color: #4d4d4d;
+    color: var(--color-text-light);
     font-family: Montserrat, sans-serif;
     font-size: 18px;
     font-style: normal;
@@ -37,6 +37,10 @@
   & > * {
     margin: 20px;
   }
+}
+
+.input-validation {
+  margin: 10px 2px 15px;
 }
 
 @media (max-width: 800px) {

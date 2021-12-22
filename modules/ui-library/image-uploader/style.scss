@@ -34,7 +34,7 @@
     max-width: 100%;
     width: 900px;
     height: 233px;
-    border-radius: 5px;
+    border-radius: var(--border-radius);
   }
 
   &:hover {

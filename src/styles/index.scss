@@ -1,3 +1,5 @@
+@import url(./fonts.scss);
+
 * {
   box-sizing: border-box;
 }
@@ -13,6 +15,8 @@ html {
 
 body {
   margin: 0;
+  color: var(--color-text);
+  background: var(--color-background);
 }
 
 html,
@@ -29,6 +33,9 @@ body,
 }
 
 :root {
+  --color-default: #fff;
+  --color-default-light: #fee;
+  --color-default-dark: #eee;
   --color-primary: #ff424d;
   --color-primary-light: #ff7b82;
   --color-primary-dark: #e42f2f;
@@ -44,8 +51,50 @@ body,
   --color-accent: #ff42b5;
   --color-accent-light: #ff7bcb;
   --color-accent-dark: #e12497;
+  --color-navbar: #ff424d;
+  --color-step-text: #7c7c7c;
+  --color-background: #fff;
+  --color-background-dark: #f4f4f4;
+  --color-text: #000;
+  --color-text-light: #777;
+  --color-border: #ddd;
+  --shadow: 0 2px 10px 0 #0003;
+  --shadow-light: 0 1px 4px 0 #0003;
+  --border-radius: 10px;
+}
+
+#root > .dark {
+  background: var(--color-background);
+  color: var(--color-text);
+
+  --color-default: #222;
+  --color-default-light: #333;
+  --color-default-dark: #000;
+  --color-primary: #e42f2f;
+  --color-primary-light: #ff424d;
+  --color-primary-dark: #be2727;
+  --color-success: #159408;
+  --color-success-light: #3bba2e;
+  --color-success-dark: #106b06;
+  --color-grey: #626262;
+  --color-grey-light: #8b8a8a;
+  --color-grey-dark: #535353;
+  --color-warning: #ea7f2d;
+  --color-warning-light: #ff9442;
+  --color-warning-dark: #be6623;
+  --color-accent: #e12497;
+  --color-accent-light: #ff42b5;
+  --color-accent-dark: #a71970;
   --color-navbar: #e42f2f;
   --color-step-text: #7c7c7c;
+  --color-background: #222;
+  --color-background-dark: #000;
+  --color-text: #fff;
+  --color-text-light: #ccc;
+  --color-border: #ddd;
+  --shadow: 0 2px 10px 0 #fff3;
+  --shadow-light: 0 1px 4px 0 #ffffff0d;
+  --border-radius: 10px;
 }
 
 .spinner {
@@ -73,7 +122,8 @@ body,
 }
 
 .shadow {
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+  box-shadow: var(--shadow);
+  border-radius: var(--border-radius);
 }
 
 .auth-block {
@@ -100,7 +150,7 @@ body,
 .auth-block .error {
   margin-bottom: 20px;
   text-align: center;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--color-primary-dark);
 }
 
@@ -119,6 +169,7 @@ a:visited {
 table {
   width: 100%;
   border-collapse: collapse;
+  border-spacing: 0;
 }
 
 td,

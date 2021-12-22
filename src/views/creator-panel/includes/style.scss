@@ -1,0 +1,19 @@
+.statistics-card {
+  width: 200px;
+  min-width: 200px;
+  margin: 20px;
+  padding: 20px;
+  text-align: center;
+
+  &__header {
+    font-size: 18px;
+    font-weight: 500;
+    font-family: Montserrat, sans-serif;
+  }
+
+  &__counter {
+    padding: 20px 0 10px;
+    font-size: 36px;
+    font-weight: 300;
+  }
+}

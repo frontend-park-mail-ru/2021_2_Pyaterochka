@@ -1,11 +1,12 @@
 .level-card {
   width: 260px;
   height: 420px;
-  border-radius: 5px;
+  border-radius: var(--border-radius);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  box-shadow: 0 2px 4px 0 #0003;
+  box-shadow: var(--shadow-light);
+  overflow: hidden;
 
   &--no-cover &__header::after {
     background: none;
@@ -72,7 +73,7 @@
 
     .per-month {
       font-size: 14px;
-      color: #4c4c4c;
+      color: var(--color-text-light);
     }
 
     .price {

@@ -22,11 +22,17 @@
 
   &__statistics {
     width: 600px;
-    height: 300px;
+    height: 500px;
     padding: 20px;
     max-width: calc(100vw - 90px);
-    display: inline-block;
-    margin-top: 20px;
+    overflow: auto;
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    &_select {
+      width: 100%;
+    }
   }
 
   &__posts__last-cell {
@@ -44,26 +50,6 @@
   }
 }
 
-.table-container{
-  overflow-x:auto;
-}
-
-table.table__posts-info {
-  border-collapse: collapse;
-  border-spacing: 0;
-  width: 100%;
-}
-
-table.table__posts-info th, table.table__posts-info td {
-  text-align: left;
-  padding: 8px;
-  border: 1px solid #ddd;
-}
-
-table.table__posts-info th{
-  font-weight: bold;
-}
-
 @media (max-width: 1000px) {
   .creator-panel__topper {
     display: flex;
@@ -74,20 +60,86 @@ table.table__posts-info th{
   }
 
   .creator-panel__statistics {
-    height: 300px;
+    height: 250px;
     padding: 20px;
     width: calc(100vw - 5px);
-    display: inline-block;
     margin-top: 20px;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    justify-content: flex-start;
+
+    .creator-panel__statistics_select {
+      display: none;
+    }
   }
 
   .shadow {
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+    box-shadow: var(--shadow);
   }
 
   .creator-panel__add-post {
     justify-content: center;
     width: 100%;
   }
-}
 
+  table,
+  thead,
+  tbody,
+  th,
+  td,
+  tr {
+    display: block;
+  }
+
+  thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  tr {
+    padding-bottom: 20px;
+  }
+
+  td {
+    border: 1px solid #ccc;
+    position: relative;
+    padding-left: 50%;
+    min-height: 40px;
+  }
+
+  td::before {
+    position: absolute;
+    top: auto;
+    left: 6px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+  }
+
+  td:nth-of-type(1)::before {
+    content: "Дата публикации";
+  }
+
+  td:nth-of-type(2)::before {
+    content: "Название";
+  }
+
+  td:nth-of-type(3)::before {
+    content: "Уровень";
+  }
+
+  .creator-panel__posts__last-cell {
+    display: flex;
+    justify-content: end;
+
+    .counters {
+      min-width: 100px;
+      padding: 5px 0;
+    }
+
+    .btn {
+      padding: 5px 15px;
+    }
+  }
+}

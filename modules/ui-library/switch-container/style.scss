@@ -8,10 +8,10 @@
   padding: 10px;
   cursor: pointer;
   transition: background 0.3s ease;
-  border-radius: 5px;
+  border-radius: var(--border-radius);
   margin: 0 -10px;
 
   &:hover {
-    background: #eee;
+    background: var(--color-background-dark);
   }
 }

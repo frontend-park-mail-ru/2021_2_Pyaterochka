@@ -3,7 +3,7 @@ const path = require('path');
 module.exports = {
     mode: process.env.PRODUCTION ? 'production' : 'development',
     entry: {
-        index: './src/index.jsx'
+        index: './src/index.tsx'
     },
     output: {
         path: path.resolve(__dirname, 'public/scripts'),
@@ -24,7 +24,7 @@ module.exports = {
                     loader: 'babel-loader',
                     options: {
                         presets: [
-                            "@babel/preset-typescript"
+                            '@babel/preset-typescript'
                         ],
                         plugins: [
                             '@babel/plugin-syntax-jsx',

@@ -1,5 +1,15 @@
 import VDomNode from './vdom/vdom-node';
 
+interface AppInterface {
+    setup (component: VDomNode, container: Element): void,
+
+    setComponent (component: VDomNode): void,
+
+    forceUpdate (): void,
+
+    update (): void,
+}
+
 class App {
     container: Element = null;
     component: VDomNode = null;
@@ -25,4 +35,8 @@ class App {
     }
 }
 
-export default new App();
+const app: AppInterface = new App();
+
+export { AppInterface };
+
+export default app;

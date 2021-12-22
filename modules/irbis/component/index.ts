@@ -1,17 +1,15 @@
 import VDomNode from '../vdom/vdom-node';
 import VDomText from '../vdom/vdom-text';
 
+type Extended<T> = T | Record<string, never>;
+
 /**
  * Базовый компонент, заложен интерфейс компонента и его обновление
  */
-class Component {
-    state: {
-        [key: string]: any
-    }
+class Component<PropsType, StateType = never> {
+    state: Extended<StateType>;
 
-    props: {
-        [key: string]: any
-    }
+    props: Extended<PropsType> = {};
 
     _slot: VDomNode | VDomNode[] = [];
 
@@ -35,8 +33,6 @@ class Component {
             set: update,
             get: getter
         });
-
-        this.props = {};
 
         this._slot = null;
         this.vdom = null;
@@ -66,11 +62,13 @@ class Component {
      * Параметры компонента по умолчанию
      * @returns
      */
-    defaultProps () {
-        return {};
+    defaultProps (): PropsType {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        return { };
     }
 
-    get attributes () {
+    get attributes (): Extended<PropsType & StateType> {
         const getter = (_, key) => this.state[key] || this.props[key];
 
         const update = (_, key, value) => {
@@ -152,7 +150,7 @@ class Component {
      *
      * @returns {Element | Text}
      */
-    renderReactive () {
+    renderReactive (): VDomNode {
         this.created();
         this.vdom = this.render() || new VDomText('');
         return this.vdom;
@@ -162,7 +160,7 @@ class Component {
 /**
  * Аккумулятор запросов на обновление компонентов
  */
-const updateBlocks = new Set<Component>();
+const updateBlocks = new Set<Component<unknown, unknown>>();
 
 /**
  * Применяет к компонентам аккумулированные запросы на обновление
@@ -185,8 +183,8 @@ function applyUpdates () {
 }
 requestAnimationFrame(applyUpdates);
 
-export interface ComponentConstructor {
-    new(props: any, ...slot: VDomNode[]): Component;
+export interface ComponentConstructor<U = Record<string, unknown>, T = Record<string, unknown>> {
+    new(props: U, ...slot: VDomNode[]): Component<U, T>;
 }
 
 export default Component;

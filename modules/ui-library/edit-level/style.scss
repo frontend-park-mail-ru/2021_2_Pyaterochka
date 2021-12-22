@@ -9,7 +9,7 @@
   }
 
   &__title {
-    color: #4d4d4d;
+    color: var(--color-text-light);
     font-family: Montserrat, sans-serif;
     font-size: 20px;
     font-style: normal;
@@ -25,13 +25,21 @@
 .input-field--delete-able {
   position: relative;
 
-  .btn {
-    width: 43px;
-    height: 43px;
+  &:hover &__btn {
+    opacity: 1;
+  }
+
+  &__btn {
+    opacity: 0;
+    width: 42px;
+    height: 60px;
     position: absolute;
     right: 0;
     top: 0;
     font-size: 25px;
-    padding: 0;
+    padding: 13px 0;
+    text-align: center;
+    cursor: pointer;
+    transition: opacity ease 0.3s;
   }
 }

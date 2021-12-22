@@ -16,12 +16,13 @@
     width: 900px;
     margin-top: -200px;
     max-width: 100%;
+    z-index: 1;
   }
 }
 
 .post {
   padding: 20px 50px;
-  border-radius: 5px;
+  border-radius: var(--border-radius);
 
   .creator-card {
     margin-top: -110px;
@@ -58,6 +59,7 @@
   width: 300px;
   min-width: 300px;
   padding: 20px;
+  border-radius: var(--border-radius);
 
   &__title {
     font-size: 20px;
@@ -71,14 +73,19 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  & > * {
+    width: 791px;
+    max-width: 100%;
+  }
 }
 
 .add-comment {
   padding: 20px;
   width: 791px;
-  background: #fff;
+  background: var(--color-background);
   margin: 20px;
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.25), 0 0 30px 20px #fff;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.25), 0 0 30px 20px var(--color-background);
   position: sticky;
   top: 0;
   z-index: 2;
@@ -109,8 +116,8 @@
 
 .other-posts,
 .post {
-  box-shadow: 0 2px 10px 0 hsla(0, 0%, 0%, 0.2);
-  background: #fff;
+  box-shadow: var(--shadow);
+  background: var(--color-background);
   margin-left: 20px;
   margin-right: 20px;
 
@@ -134,6 +141,7 @@
   .add-comment {
     top: calc(100vh - 190px);
     margin-bottom: -190px;
+    min-height: 190px;
   }
 
   .comments-container {
