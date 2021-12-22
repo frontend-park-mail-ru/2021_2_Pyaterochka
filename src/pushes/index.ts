@@ -11,10 +11,6 @@ socket.onmessage = function (event) {
     };
 
     if (message.type === 'Post') {
-        if (`${message.push.creator_id}/${message.push.post_id}` === '2/1') {
-            return;
-        }
-
         app.$notification.push('', 10000, {
             message: `Вышел новый пост "${message.push.post_title}" у автора ${message.push.creator_nickname}`,
             action: 'Открыть пост',
@@ -24,13 +20,23 @@ socket.onmessage = function (event) {
         });
     }
 
+    if (message.type === 'Payment') {
+        app.$notification.push('', 10000, {
+            message: `Оплата подписки автора ${message.push.creator_nickname} прошла успешно`,
+            action: 'Открыть автора',
+            onOpen: () => {
+                app.$router.go(app.$router.createUrl('creator', message.push.creator_id));
+            }
+        });
+    }
+
     if (message.type === 'Comment') {
         app.$notification.push('', 10000, {
             message: `Новый комментарий в посте "${message.push.post_title}"`,
-            // action: 'Открыть пост',
-            // onOpen: () => {
-            //     app.$router.go(app.$router.createUrl('post.view', `${message.push.creator_id}/${message.push.post_id}`));
-            // }
+            action: 'Открыть пост',
+            onOpen: () => {
+                app.$router.go(app.$router.createUrl('post.view', `${message.push.creator_id}/${message.push.post_id}`));
+            }
         });
     }
 };
@@ -38,15 +44,8 @@ socket.onmessage = function (event) {
 socket.onclose = function (event) {
     if (event.wasClean) {
         console.log(`[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`);
-
-        app.$notification.push('', 3000, {
-            message: `[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`
-        });
     } else {
         console.log('[close] Connection died');
-        app.$notification.push('', 3000, {
-            message: '[close] Connection died'
-        });
     }
 };
 
