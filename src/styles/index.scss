@@ -63,7 +63,7 @@ body,
   --border-radius: 10px;
 }
 
-#root .dark {
+#root > .dark {
   background: var(--color-background);
   color: var(--color-text);
 

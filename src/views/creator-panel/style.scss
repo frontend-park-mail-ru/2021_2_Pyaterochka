@@ -66,6 +66,11 @@
     margin-top: 20px;
     flex-wrap: nowrap;
     white-space: nowrap;
+    justify-content: flex-start;
+
+    .creator-panel__statistics_select {
+      display: none;
+    }
   }
 
   .shadow {
