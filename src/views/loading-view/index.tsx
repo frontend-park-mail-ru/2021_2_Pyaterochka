@@ -11,7 +11,7 @@ class LoadingView extends Component<never> {
 
     render () {
         return (<div className="loading-view_container">
-            <Spinner />
+            <Spinner color="var(--color-text)" />
 
             {this.slot}
         </div>);
