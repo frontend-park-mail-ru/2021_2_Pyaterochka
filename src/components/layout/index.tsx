@@ -15,20 +15,26 @@ class Layout extends Component<Record<string, never>> {
 
     render () {
         return (
-            <div className={user.theme}>
-                <div>
+            <div
+                key="layout"
+                className={user.theme}
+            >
+                <div key="layout_top">
                     <Navbar
+                        key="layout_top_navbar"
                         user={user.user}
-                        key='navbar' />
+                    />
 
-                    <div>
+                    <div
+                        key="layout_top_content"
+                    >
                         {this.slot}
                     </div>
                 </div>
 
-                <Footer key='footer' />
+                <Footer key="layout_footer" />
 
-                <NotificationPool key='notification-pool' />
+                <NotificationPool key="notification-pool" />
             </div>
         );
     }

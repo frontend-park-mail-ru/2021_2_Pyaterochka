@@ -134,7 +134,7 @@ class Component<PropsType, StateType = never> {
 
     set slot (component) {
         this._slot = component;
-        this.update(true);
+        this.update();
     }
 
     get slot () {
