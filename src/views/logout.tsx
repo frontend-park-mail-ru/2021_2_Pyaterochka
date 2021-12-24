@@ -7,8 +7,9 @@ class LogoutView extends Component<never> {
     render () {
         return (<ConfirmComponent
             dangerButton="Да"
-            onDanger={() => {
-                user.logout();
+            onDanger={async () => {
+                await user.logout();
+                app.$router.go(app.$router.createUrl('signin'));
             }}
             onPositive={
                 () => {

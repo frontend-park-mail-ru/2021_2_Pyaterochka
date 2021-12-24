@@ -50,6 +50,7 @@ class SigninView extends Component<never, {
         }
         try {
             await user.update();
+            app.$router.go(app.$router.createUrl('profile'));
         } catch {
             this.state.error = 'Неизвестная ошибка';
             this.state.loading = false;

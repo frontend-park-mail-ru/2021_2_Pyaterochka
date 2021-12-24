@@ -118,7 +118,8 @@ class SignupView extends Component<never, {
             password: this.form[2].getValue()
         });
 
-        user.update();
+        await user.update();
+        app.$router.go(app.$router.createUrl('profile'));
         this.state.loading = false;
     }
 
