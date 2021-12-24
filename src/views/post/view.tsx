@@ -236,7 +236,13 @@ class PostView extends Component<{
                                             className="post__text"
                                             key={id}
                                         >
-                                            {value}
+                                            {value.split('\n').map((p, i) => {
+                                                return (<>
+                                                    {i ? <br /> : ''}
+
+                                                    {p}
+                                                </>);
+                                            })}
                                         </p>);
                                     }
                                     if (type === 'image') {

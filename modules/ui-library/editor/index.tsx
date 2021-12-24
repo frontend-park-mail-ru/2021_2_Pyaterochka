@@ -109,7 +109,7 @@ class EditorComponent extends Component<Props, Props & {
     }
 
     fixText (text: string) {
-        return text?.replace(/\n/g, '')?.replace(/\r/g, '');
+        return text?.replace(/\r/g, '\n')?.replace(/\n\n/g, '\n');
     }
 
     editTitle (e) {
@@ -125,7 +125,7 @@ class EditorComponent extends Component<Props, Props & {
     }
 
     editTextBody (e, hash: string) {
-        this.state.body[this.findBody(hash)].value = this.fixText(e.target.textContent) || '';
+        this.state.body[this.findBody(hash)].value = this.fixText(e.target.innerText) || '';
         this.checkLast();
     }
 
@@ -228,18 +228,18 @@ class EditorComponent extends Component<Props, Props & {
             return;
         }
 
-        if (event.keyCode === 13) {
-            if (hash != null) {
-                const i = this.findBody(hash);
-                this.state.body.splice(i + 1, 0, this.newTextBody());
-                this.updatePartly();
-
-                this.focusBodyElement(i + 1);
-            }
-
-            event.preventDefault();
-            return;
-        }
+        // if (event.keyCode === 13) {
+        //     if (hash != null) {
+        //         const i = this.findBody(hash);
+        //         this.state.body.splice(i + 1, 0, this.newTextBody());
+        //         this.updatePartly();
+        //
+        //         this.focusBodyElement(i + 1);
+        //     }
+        //
+        //     event.preventDefault();
+        //     return;
+        // }
 
         if (event.keyCode !== 32) {
             this.update();
@@ -501,7 +501,7 @@ class EditorComponent extends Component<Props, Props & {
                                     {element.type === 'text'
                                         ? (
                                             <div
-                                                className={['editor__body-element', element.value === '' ? 'editor__body-element_show-placeholder' : '']}
+                                                className={['editor__body-element', !element.value.trim() ? 'editor__body-element--show-placeholder' : '']}
                                                 contentEditable
                                                 key={element.hash + '_element'}
                                                 onInput={(e) => {
@@ -512,7 +512,19 @@ class EditorComponent extends Component<Props, Props & {
                                                 }}
                                                 placeholder="Пишите текст вашей статьи здесь или выберите  нужный элемент слева"
                                             >
-                                                {element.value}
+                                                {element.value.split('\n').map((v, i) => {
+                                                    return (<>
+                                                        {' '}
+
+                                                        {i ? <br /> : ''}
+
+                                                        {' '}
+
+                                                        {v}
+
+                                                        {' '}
+                                                    </>);
+                                                })}
                                             </div>
                                         )
                                         : null}
