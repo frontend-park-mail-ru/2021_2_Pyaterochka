@@ -5,7 +5,6 @@ on:
   pull_request:
     branches:
       - main
-      - dev/volodya
 
 jobs:
   lint:
@@ -71,7 +70,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: build
-    if: github.ref == 'refs/heads/dev/template' || github.ref == 'refs/heads/main'
+#    if: github.ref == 'refs/heads/dev/template' || github.ref == 'refs/heads/main'
     steps:
       - name: Download build
         uses: actions/download-artifact@v1
