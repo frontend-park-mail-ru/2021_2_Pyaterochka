@@ -18,6 +18,13 @@
     justify-content: space-between;
     padding: 20px;
     flex-wrap: wrap;
+
+    .creator-card {
+      max-width: 300px;
+      max-height: 440px;
+      overflow: auto;
+      margin-bottom: 10px;
+    }
   }
 
   &__statistics {
@@ -57,16 +64,23 @@
     align-content: space-between;
     align-items: center;
     flex-direction: column;
+    padding: 0;
+
+    .creator-card {
+      max-width: 100%;
+    }
   }
 
   .creator-panel__statistics {
     height: 250px;
-    padding: 20px;
-    width: calc(100vw - 5px);
-    margin-top: 20px;
+    padding: 20px 10px;
+    max-width: max-content;
     flex-wrap: nowrap;
     white-space: nowrap;
     justify-content: flex-start;
+    margin: 0 -20px;
+    margin-top: 20px;
+    width: calc(100vw);
 
     .creator-panel__statistics_select {
       display: none;
