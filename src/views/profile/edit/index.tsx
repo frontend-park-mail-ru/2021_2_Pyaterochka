@@ -4,7 +4,6 @@ import consts from '../../../consts';
 import ErrorPage from '../../errorpage';
 import ProfileEditCommon from './Common';
 import ProfileEditCreator from './Creator';
-import ProfileEditNotification from './Notification';
 import ProfileEditSecure from './Secure';
 import TabsContainer from 'ui-library/tabs-container';
 
@@ -56,12 +55,12 @@ class ProfileEditView extends Component<{
                             key: 'secure',
                             title: 'Безопасность',
                             component: ProfileEditSecure
-                        },
-                        {
-                            key: 'notifications',
-                            title: 'Уведомления',
-                            component: ProfileEditNotification
                         }
+                        // {
+                        //     key: 'notifications',
+                        //     title: 'Уведомления',
+                        //     component: ProfileEditNotification
+                        // }
 
                     ]
 

@@ -454,7 +454,8 @@ async function createPost ({
         body: {
             description,
             title,
-            awards_id: levelId || null
+            awards_id: levelId || null,
+            is_draft: true
         },
         csrf: true
     });

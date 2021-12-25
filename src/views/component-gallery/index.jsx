@@ -18,14 +18,19 @@ import Step from 'ui-library/step';
 
 import app from 'irbis';
 import AudioPlayer from 'ui-library/audio-player';
+import ConfirmComponent from 'ui-library/confirm';
 import EditorComponent from 'ui-library/editor';
 import FileUploader from 'ui-library/file-uploader';
 import ImageUploader from 'ui-library/image-uploader';
+import NotificationComponent from 'ui-library/notification-pool/notification';
+import PostHeaderComponent from 'ui-library/post-header';
 import SelectComponent from 'ui-library/select';
 import SimplifyNumComponent from 'ui-library/simplify-num';
 import SwitchComponent from 'ui-library/switch';
+import SwitchContainer from '../../../modules/ui-library/switch-container';
 import TabsPanel from 'ui-library/tabs-panel';
 import TimeAgoComponent from 'ui-library/time-ago';
+import user from '../../storage/user';
 import VDomComponent from 'irbis/vdom/vdom-component';
 import VideoPlayer from 'ui-library/video-player';
 import { PropsView } from './PropsView';
@@ -35,6 +40,54 @@ class IndexView extends Component {
     constructor () {
         super();
         this.attributes.cps = [
+            {
+                name: 'Заголовок поста',
+                Component: PostHeaderComponent,
+                data: [
+                    {
+                        component: {
+                            size: '32px',
+                            title: 'Заголовок',
+                            published: new Date(),
+                            views: 234234,
+                            likes: 5234
+                        }
+                    }
+                ]
+            },
+            {
+                name: 'Уведомление',
+                Component: NotificationComponent,
+                data: [
+                    {
+                        name: 'С действием',
+                        component: {
+                            message: 'Сообщение',
+                            action: 'Кнопочка'
+                        }
+                    },
+                    {
+                        name: 'Нет действия',
+                        component: {
+                            message: 'Сообщение'
+                        }
+                    }
+                ]
+            },
+            {
+                name: 'Окно подтверждения',
+                Component: ConfirmComponent,
+                data: [
+                    {
+                        component: {
+                            title: 'Вы хотите тыкнуть?',
+                            description: 'Я знаю, что хотите',
+                            dangerButton: 'Нет',
+                            positiveButton: 'Да'
+                        }
+                    }
+                ]
+            },
             {
                 name: 'Видео плеер',
                 Component: VideoPlayer,
@@ -184,16 +237,6 @@ class IndexView extends Component {
                 Component: Like,
                 data: [
                     {
-                        name: 'Авторизирован',
-                        component: {
-                            user: {
-                                username: 'Person',
-                                avatar: 'https://thispersondoesnotexist.com/image'
-                            },
-                            count: 0
-                        }
-                    },
-                    {
                         name: 'Не авторизирован',
                         component: {
                             count: 230
@@ -266,14 +309,14 @@ class IndexView extends Component {
                     {
                         name: 'Со слотом',
                         component:
-                        {
-                            username: 'HenSI.Pro2929',
-                            supportCount: 15,
-                            avatar: 'https://thispersondoesnotexist.com/image'
-                        },
+                            {
+                                username: 'HenSI.Pro2929',
+                                supportCount: 15,
+                                avatar: 'https://thispersondoesnotexist.com/image'
+                            },
                         slot: <Button
-                            text='Редактировать профиль'
-                            color='primary' />
+                            text="Редактировать профиль"
+                            color="primary" />
                     }
                 ]
             },
@@ -286,12 +329,21 @@ class IndexView extends Component {
                         component: {}
                     },
                     {
+                        name: 'Прямоугольник с ограниченной шириной',
+                        component: {
+                            width: 100
+                        }
+                    },
+                    {
                         name: 'Текст',
                         component: { type: 'text' }
                     },
                     {
                         name: 'Круг',
-                        component: { type: 'circle', height: 100 }
+                        component: {
+                            type: 'circle',
+                            height: 100
+                        }
                     }
                 ]
             },
@@ -348,18 +400,6 @@ class IndexView extends Component {
                         component: {
                             text: 'Профи'
                         }
-                    },
-                    {
-                        name: 'Со слотом',
-                        component: {
-                            text: 'Стань патроном, чтобы продолжить наслаждаться работами автора'
-                        },
-                        slot:
-                            new Button({
-                                text: 'Стать патроном',
-                                color: 'primary'
-                            }).renderReactive()
-
                     }
                 ]
             },
@@ -542,7 +582,10 @@ class IndexView extends Component {
                     ...['default', 'primary', 'success', 'grey', 'warning', 'accent'].map(
                         (color) => ({
                             name: color,
-                            component: { text: 'Button ' + color, color: color }
+                            component: {
+                                text: 'Button ' + color,
+                                color: color
+                            }
                         })
                     ),
                     ...['default', 'primary', 'success', 'grey', 'warning', 'accent'].map(
@@ -638,50 +681,42 @@ class IndexView extends Component {
 
             componentWrappers.push(componentWrapper);
             componentMenu.push(
-                new Button({
-                    text: info.name,
-                    onClick: () => {
-                        window.scrollTo(0, componentWrapper.dom.offsetTop - 100);
+                <Button
+                    text={info.name}
+                    onClick={
+                        () => {
+                            window.scrollTo(0, componentWrapper.dom.offsetTop - 100);
+                        }
                     }
-                }).renderReactive()
+                />
             );
         });
 
         const element = (
             <div className="content">
                 <div className="container">
-                    <h1 className="text-center">
-                        Страницы
-                    </h1>
-
-                    <div>
-                        <a router-go={app.$router.createUrl('creator')}>
-                            {' '}
-                            Страница автора
-
-                            {' '}
-                        </a>
-
-                        <a router-go={app.$router.createUrl('profile')}>
-                            {' '}
-                            Профиль
-
-                            {' '}
-                        </a>
-
-                        <a router-go="/404">
-                            {' '}
-                            Страница ошибки
-
-                            {' '}
-                        </a>
-                    </div>
 
                     <h1 className="text-center">
-                        Компоненты
+                        Галерея компонентов
                     </h1>
+
+                    <SwitchContainer
+                        isOn={user.theme === 'dark'}
+                        onChange={
+                            () => {
+                                if (user.theme === 'dark') {
+                                    user.theme = 'default';
+                                } else {
+                                    user.theme = 'dark';
+                                }
+
+                                user.onUpdate();
+                            }
+                        }
+                        title="Тёмная тема" />
 
                     <div className="components-map">
+
                         {componentMenu}
                     </div>
 

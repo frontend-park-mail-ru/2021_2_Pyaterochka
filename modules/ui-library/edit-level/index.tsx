@@ -168,7 +168,7 @@ class EditLevelComponent extends Component<PropsType, {
                     onInput={(e) => {
                         this.state.level.price = e.target.value;
                     }}
-                    placeholder="Стоимость подписки в месяц"
+                    placeholder="Стоимость подписки в месяц, рубли"
                     type="number"
                     value={this.state.level.price}
                     validation={[
@@ -176,11 +176,14 @@ class EditLevelComponent extends Component<PropsType, {
                             return value !== '' ? null : 'Поле не должно быть пустым';
                         },
                         (value) => {
-                            return value === String(parseInt(value)) ? null : 'Поле должно быть числом';
+                            return value === String(parseInt(value)) ? null : 'Поле должно быть целым числом';
                         },
 
                         (value) => {
-                            return parseInt(value) > 0 ? null : 'Стоимость подписки в месяц должна быть больше нуля';
+                            return parseInt(value) > 1 ? null : 'Стоимость подписки в месяц должна быть больше 1 рубля';
+                        },
+                        (value) => {
+                            return parseInt(value) <= 5000 ? null : 'Стоимость подписки в месяц должна быть меньше или равна 5000 рублям';
                         }
                     ]}
                     validateAlways={!!this.state.error}

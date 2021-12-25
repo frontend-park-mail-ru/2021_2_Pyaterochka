@@ -1,8 +1,13 @@
 import Component from 'irbis/component';
 import InputField from 'ui-library/input-field';
 import SwitchContainer from 'ui-library/switch-container';
+import VDomComponent from 'irbis/vdom/vdom-component';
+import VDomElement from 'irbis/vdom/vdom-element';
+import VDomText from 'irbis/vdom/vdom-text';
 
-export class PropsView extends Component {
+export class PropsView extends Component<never> {
+    componentVDom: VDomComponent = null;
+
     constructor ({
         component
     }) {
@@ -13,15 +18,22 @@ export class PropsView extends Component {
             Component.prototype.updatePartly.bind(this.component)();
             this.update();
         };
+        const oldPropsChanged = this.component.propsChanged;
+        this.component.propsChanged = () => {
+            oldPropsChanged.bind(this.component)();
+            this.update();
+        };
     }
 
     get component () {
         return this.componentVDom._component;
     }
 
-    renderField (attribute, key, setter) {
+    renderField (attribute, key, setter, defValue = attribute) {
+        defValue = defValue || attribute;
+
         if (key.split('.').length > 10) return null;
-        if (attribute === null) {
+        if (defValue === null) {
             return (<InputField
                 disabled
                 key={key}
@@ -29,7 +41,19 @@ export class PropsView extends Component {
                 value={attribute}
             />);
         }
-        if (attribute instanceof Date) {
+        if (defValue instanceof VDomComponent || defValue instanceof VDomText || defValue instanceof VDomElement) {
+            return (<InputField
+                key={key}
+                onInput={(e) => {
+                    setter(e.target.valueAsDate || new Date());
+                }}
+                placeholder={key}
+                value="Встроен компонент"
+                disabled
+            />);
+        }
+
+        if (defValue instanceof Date) {
             return (<InputField
                 key={key}
                 onInput={(e) => {
@@ -40,7 +64,7 @@ export class PropsView extends Component {
                 value={attribute.toISOString().substr(0, 16)}
             />);
         }
-        switch (typeof (attribute)) {
+        switch (typeof (defValue)) {
         case 'string':
             return (<InputField
                 key={key}
@@ -48,7 +72,7 @@ export class PropsView extends Component {
                     setter(e.target.value);
                 }}
                 placeholder={key}
-                value={attribute[key]}
+                value={attribute}
             />);
         case 'number':
             return (<InputField
@@ -119,11 +143,11 @@ export class PropsView extends Component {
                 {' '}
             </div>
 
-            {Object.keys(this.component.defaultProps()).map((key) => {
+            {Object.entries(this.component.defaultProps()).map(([key, defValue]) => {
                 return this.renderField(this.component.props[key], key, (value) => {
                     this.component.props[key] = value;
                     this.component.update();
-                });
+                }, defValue);
             })}
 
             <div>
